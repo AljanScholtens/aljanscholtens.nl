@@ -1,0 +1,19 @@
+{
+  "name": "aljanscholtens.nl",
+  "description": "aljanscholtens.nl",
+  "version": "1.0.0",
+  "author": "Aljan Scholtens",
+  "license": "MIT",
+  "main": "gulpfile.js",
+  "devDependencies": {
+    "browser-sync": "^2.17.3",
+    "gulp": "latest",
+    "gulp-cssnano": "latest",
+    "gulp-nunjucks": "latest",
+    "gulp-postcss": "latest",
+    "gulp-sourcemaps": "latest",
+    "lost": "latest",
+    "postcss-cssnext": "latest",
+    "postcss-import": "latest"
+  }
+}

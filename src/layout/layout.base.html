@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-title" content="NOS">
+  <meta name="theme-color" content="#D02527">
+
+  <title>{% block meta_title %}Special{% endblock %} - NOS</title>
+  <meta name="description" content="{% block meta_description %}NOS Special{% endblock %}">
+
+  <link rel="stylesheet" href="assets/stylesheets/styles.css" crossorigin="anonymous">
+  <link rel="shortcut icon" href="assets/images/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" href="assets/images/apple-touch-icon.png">
+</head>
+
+<body>
+
+	{% include "components/components.sprite.html" %}
+
+	{% include "components/components.navigation.html" %}
+
+	{% block content %}{% endblock %}
+
+	{% include "components/components.footer.html" %}
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="assets/scripts/scripts.js"></script>
+
+</body>
+
+</html>
