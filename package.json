@@ -15,5 +15,8 @@
     "lost": "latest",
     "postcss-cssnext": "latest",
     "postcss-import": "latest"
+  },
+  "dependencies": {
+    "connect-modrewrite": "^0.9.0"
   }
 }

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block meta_title %}Styleguide{% endblock %} - Aljan Scholtens</title>
+  <meta name="description" content="{% block meta_description %}{% endblock %}">
+
+  <link rel="stylesheet" href="assets/stylesheets/styleguide.css" crossorigin="anonymous">
+  <link rel="shortcut icon" href="assets/images/favicon.ico">
+</head>
+
+<body>
+
+	{% include "components/components.sprite.html" %}
+
+	<div class="sg-wrapper">
+
+    <aside class="sg-aside">
+      <div class="l-container">
+        <h2 class="u-spacing">Styleguide</h2>
+        <ul class="sg-navigation">
+          <li><a href="styleguide">Components</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="sg-main">
+
+      <div class="l-container">
+
+				{% block content %}{% endblock %}
+
+			</div>
+
+    </main>
+
+  </div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="assets/scripts/scripts.js"></script>
+
+</body>
+
+</html>

@@ -18,21 +18,22 @@
 
 .sg-aside {
   background: var(--color-neutral-10);
+  display: none;
 
-  @media (--breakpoint-20) {
+  /*@media (--breakpoint-20) {
     overflow-y: auto;
     flex: 0 0 16rem;
     -webkit-overflow-scrolling: touch;
-  }
+  }*/
 }
 
 .sg-main {
 
-  @media (--breakpoint-20) {
+  /*@media (--breakpoint-20) {
     overflow-y: auto;
     flex: auto;
     -webkit-overflow-scrolling: touch;
-  }
+  }*/
 }
 
 .sg-navigation {

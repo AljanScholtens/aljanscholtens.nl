@@ -7,13 +7,19 @@ var lost = require('lost')
 var cssnext = require('postcss-cssnext')
 var nunjucks = require('gulp-nunjucks')
 var browserSync = require('browser-sync').create()
+var modRewrite  = require('connect-modrewrite')
 
 gulp.task('default', ['serve'])
 
 gulp.task('serve', ['build', 'watch'], function() {
   browserSync.init({
     server: {
-      baseDir: "./dist/"
+      baseDir: "./dist/",
+      middleware: [
+        modRewrite([
+          '^/([^\.]+)$ /$1.html [L]'
+        ])
+      ]
     },
     open: false
   });
@@ -51,7 +57,7 @@ gulp.task("css", function() {
     cssnext(),
     lost()
   ]
-  gulp.src(['src/assets/stylesheets/styles.css'])
+  gulp.src(['src/assets/stylesheets/styles.css', 'src/assets/stylesheets/styleguide.css'])
     .pipe(sourcemaps.init())
     .pipe(postcss(processors))
     .pipe(cssnano())

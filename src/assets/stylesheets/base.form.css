@@ -27,16 +27,18 @@ select {
   border-radius: var(--border-radius-10);
   color: inherit;
   display: block;
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-30);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-20);
+  font-weight: 500;
   line-height: 1.5em;
   margin: 0;
   padding: 0.5rem;
   vertical-align: baseline;
   width: 100%;
+  transition: border-color 60ms ease-out;
 
   &:focus {
-    border: 1px solid var(--color-neutral-50);
+    border: 1px solid var(--color-neutral-30);
     outline: 0;
   }
 }
