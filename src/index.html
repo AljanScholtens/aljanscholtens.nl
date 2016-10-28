@@ -2,8 +2,25 @@
 
 {% block meta_title %}Home{% endblock %}
 {% block meta_description %}{% endblock %}
+{% block var_body %}c-navigation--dark{% endblock %} <!-- Choose from c-navigation--dark and c-navigation--white -->
 
 {% block content %}
+
+  <div class="l-wrapper l-wrapper--image" style="background-image: url('http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg')">
+    <div class="l-wrapper__image-holder">
+      <div class="l-container">
+        <h2 class="c-heading c-heading--30">Dit is een container</h2>
+        <p>Met daaronder best een beetje content</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="l-wrapper">
+    <div class="l-container">
+      <h2 class="c-heading c-heading--30">Dit is een container</h2>
+      <p>Met daaronder best een beetje content</p>
+    </div>
+  </div>
 
   <div class="l-wrapper l-wrapper--neutral-10">
     <div class="l-container">
@@ -19,27 +36,11 @@
     </div>
   </div>
 
-  <div class="l-wrapper">
-    <div class="l-container">
-      <h2 class="c-heading c-heading--30">Dit is een container</h2>
-      <p>Met daaronder best een beetje content</p>
-    </div>
-  </div>
-
   <div class="l-wrapper l-wrapper--neutral-70">
     <div class="l-container">
       <h2 class="c-heading c-heading--30">Dit is een container</h2>
       <p>Met daaronder best een beetje content</p>
     </div>
   </div>
-
-  <div class="l-wrapper l-wrapper--image" style="background-image: url('http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg')">
-    <div class="l-container">
-      <h2 class="c-heading c-heading--30">Dit is een container</h2>
-      <p>Met daaronder best een beetje content</p>
-    </div>
-  </div>
-
-  <h1>Home</h1>
 
 {% endblock %}

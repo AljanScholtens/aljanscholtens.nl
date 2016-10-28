@@ -37,8 +37,10 @@ a {
  * Other
  */
 small {
+  font-family: var(--font-family-heading);
   color: var(--color-neutral-50);
-  font-size: var(--font-size-20);
+  font-size: var(--font-size-10);
+  font-weight: 500;
 }
 
 em {

@@ -27,7 +27,7 @@
  * COMPONENTS
  * Button...............Buttons
  * Card.................Cards
- * Example..............Example of how a component is build up
+ * Footer...............Footer
  * Form.................Forms
  * Heading..............Heading
  * Icon.................Icons
@@ -35,6 +35,8 @@
  * List.................List
  * Media................Media
  * Messages.............Messages
+ * Navigation-mobile....Navigation-mobile
+ * Navigation...........Navigation
  * Pagination...........Pagination
  * Panel................Panels
  * Paragraph............Paragraph
@@ -78,7 +80,7 @@
  */
 @import "components.button.css";
 @import "components.card.css";
-@import "components.example.css";
+@import "components.footer.css";
 @import "components.form.css";
 @import "components.heading.css";
 @import "components.icon.css";
@@ -86,6 +88,8 @@
 @import "components.list.css";
 @import "components.media.css";
 @import "components.messages.css";
+@import "components.navigation-mobile.css";
+@import "components.navigation.css";
 @import "components.pagination.css";
 @import "components.panel.css";
 @import "components.paragraph.css";

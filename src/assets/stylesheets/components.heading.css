@@ -9,16 +9,31 @@
 }
 
 .c-heading--10 {
-  font-size: 1.5rem;
-  line-height: 1.5em;
+  font-size: 1.1rem;
+  line-height: 1.35em;
 }
 
 .c-heading--30 {
-  font-size: 2rem;
-  line-height: 1.25em;
+  font-size: 1.4rem;
+  line-height: 1.2em;
 }
 
 .c-heading--50 {
-  font-size: 3rem;
-  line-height: 1em;
+  font-size: 1.75em;
+  font-weight: 500;
+  line-height: 1.1em;
+
+  @media (--breakpoint-20) {
+    font-size: 2.5em;
+  }
+
+  @media (--breakpoint-20) {
+    line-height: 1.2em;
+    font-size: 4.5vw;
+    margin-bottom: var(--spacing);
+  }
+
+  @media (--breakpoint-40) {
+    font-size: 3rem;
+  }
 }

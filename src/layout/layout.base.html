@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon-precomposed" href="assets/images/apple-touch-icon.png">
 </head>
 
-<body>
+<body class="{% block var_body %}{% endblock %}">
 
 	{% include "components/components.sprite.html" %}
 
@@ -24,6 +24,8 @@
 	{% block content %}{% endblock %}
 
 	{% include "components/components.footer.html" %}
+
+	{% include "components/components.navigation-mobile.html" %}
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
   <script src="assets/scripts/scripts.js"></script>

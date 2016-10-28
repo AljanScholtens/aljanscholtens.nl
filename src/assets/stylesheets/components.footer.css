@@ -1,0 +1,33 @@
+/*------------------------------------*\
+  #COMPONENTS-FOOTER
+\*------------------------------------*/
+
+.c-footer {
+
+}
+
+.c-footer__links {
+  list-style: none;
+  text-align: center;
+  margin: 0 0 var(--spacing) 0;
+}
+
+.c-footer__links-item {
+  display: inline-block;
+
+  & a {
+    padding: 0.25rem;
+    display: block;
+
+    &:hover svg {
+      fill: var(--color-neutral-50);
+    }
+  }
+
+  & svg {
+    height: 30px;
+    width: 30px;
+    fill: var(--color-neutral-30);
+    transition: fill 100ms ease-out;
+  }
+}

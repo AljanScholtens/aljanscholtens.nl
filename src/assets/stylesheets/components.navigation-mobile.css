@@ -1,0 +1,47 @@
+/*------------------------------------*\
+  #COMPONENTS-MOBILE
+\*------------------------------------*/
+
+.c-navigation-mobile {
+  position: fixed;
+  z-index: var(--z-index-30);
+  left: 6px;
+  right: 6px;
+  bottom: 0;
+  font-weight: 600;
+  font-family: var(--font-family-heading);
+  background: color(var(--color-primary-50) alpha(0.95));
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-flow: row nowrap;
+
+  @media (--breakpoint-20) {
+    display: none;
+  }
+}
+
+.c-navigation-mobile__item {
+  float: left;
+  position: relative;
+  flex-grow: 1;
+  font-size: var(--font-size-20);
+  text-align: center;
+
+  & a {
+    color: var(--color-white);
+    text-decoration: none;
+    display: block;
+    padding: 0.5rem 0 0.4rem 0;
+
+    &:hover { color: var(--color-white); }
+  }
+
+  & svg {
+    width: 1rem;
+    height: 1rem;
+    position: relative;
+    top: 3px;
+    fill: var(--color-white);
+  }
+}

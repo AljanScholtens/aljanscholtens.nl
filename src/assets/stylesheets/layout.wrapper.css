@@ -8,6 +8,10 @@
 .l-wrapper {
   clear: both;
   position: relative;
+
+  &:first-of-type {
+    padding-top: 1.95rem;
+  }
 }
 
 
@@ -50,18 +54,11 @@
 }
 
 .l-wrapper--image {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.l-wrapper--image {
   height: 100vh;
   max-height: 80vmin;
   min-height: 20rem;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+  align-items: flex-end;;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -93,3 +90,9 @@
     background-image: linear-gradient(180deg, color(var(--color-black) alpha(0.3)) 10%, rgba(0, 0, 0, 0) 50%);
   }
 }
+
+  .l-wrapper__image-holder {
+    position: relative;
+    width: 100%;
+    z-index: var(--z-index-10);
+  }
