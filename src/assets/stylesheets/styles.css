@@ -29,6 +29,7 @@
  * Card.................Cards
  * Footer...............Footer
  * Form.................Forms
+ * Gallery..............Gallery
  * Heading..............Heading
  * Icon.................Icons
  * Label................Labels
@@ -81,17 +82,18 @@
 @import "components.button.css";
 @import "components.card.css";
 @import "components.footer.css";
-@import "components.form.css";
+/*@import "components.form.css";*/
+@import "components.gallery.css";
 @import "components.heading.css";
 @import "components.icon.css";
 @import "components.label.css";
 @import "components.list.css";
 @import "components.media.css";
-@import "components.messages.css";
+/*@import "components.messages.css";*/
 @import "components.navigation-mobile.css";
 @import "components.navigation.css";
-@import "components.pagination.css";
-@import "components.panel.css";
+/*@import "components.pagination.css";*/
+/*@import "components.panel.css";*/
 @import "components.paragraph.css";
 
 

@@ -1,0 +1,142 @@
+/*------------------------------------*\
+  #COMPONENTS-GALLERY
+\*------------------------------------*/
+
+.c-gallery-wrapper {
+  clear: both;
+  margin-bottom: var(--spacing);
+
+  @media (--breakpoint-30) {
+
+  }
+}
+
+.c-gallery {
+  list-style: none;
+  margin: 0;
+  padding-left: 3px;
+  padding-right: 3px;
+  lost-utility: clearfix;
+}
+
+.c-gallery__item {
+  background-color: var(--color-neutral-10);
+  background-clip: content-box;
+  padding: 3px;
+  display: block;
+  position: relative;
+  height: 60vw;
+  width: 100%;
+  float: left;
+  max-height: 35rem;
+}
+
+.c-gallery__item--33 {
+
+  @media (--breakpoint-20) {
+    height: 30vw;
+    width: 50%;
+  }
+
+  @media (--breakpoint-30) {
+    height: 20vw;
+    max-height: 15rem;
+    width: 33.33333%;
+  }
+}
+
+.c-gallery__item--40 {
+
+  @media (--breakpoint-20) {
+    height: 30vw;
+    width: 50%;
+  }
+
+  @media (--breakpoint-30) {
+    height: 35vw;
+    max-height: 22rem;
+    width: 40%;
+  }
+}
+
+.c-gallery__item--50 {
+
+  @media (--breakpoint-20) {
+    height: 30vw;
+    width: 50%;
+  }
+
+  @media (--breakpoint-30) {
+    height: 30vw;
+    max-height: 22rem;
+    width: 50%;
+  }
+}
+
+.c-gallery__item--60 {
+
+  @media (--breakpoint-20) {
+    height: 30vw;
+    width: 50%;
+  }
+
+  @media (--breakpoint-30) {
+    height: 35vw;
+    max-height: 22rem;
+    width: 60%;
+  }
+}
+
+
+.c-gallery__image {
+  display: block;
+  margin: 0;
+  width: auto;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  overflow: hidden;
+
+  & figcaption {
+    position: absolute;
+    z-index: var(--z-index-10);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    line-height: 1.5em;
+    padding: 0.5rem 0.75rem;
+    padding-top: calc(var(--spacing) * 3);
+    color: color(var(--color-white) alpha(0.75));
+    font-size: var(--font-size-10);
+    font-weight: 500;
+    font-family: var(--font-family-heading);
+
+    &:after {
+      content: " ";
+      position: absolute;
+      z-index: -1;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background-image: linear-gradient(180deg, transparent, color(var(--color-black) alpha(0.4)));
+    }
+  }
+
+  & img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.c-gallery__footnote {
+  padding-top: var(--spacing);
+
+  & p {
+    margin: 0;
+    line-height: 1.1em;
+  }
+}
