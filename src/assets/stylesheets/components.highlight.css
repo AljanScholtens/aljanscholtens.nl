@@ -1,0 +1,17 @@
+/*------------------------------------*\
+  #COMPONENTS-HIGHLIGHT
+\*------------------------------------*/
+
+.c-highlight {
+  display: block;
+  text-align: center;
+  line-height: 1.5em;
+  font-size: var(--font-size-40);
+  margin: 0 0 var(--spacing) 0;
+  font-style: italic;
+
+  @media (--breakpoint-20) {
+    font-size: var(--font-size-50);
+    margin: var(--spacing) 0 calc(var(--spacing) * 2) 0;
+  }
+}

@@ -40,6 +40,10 @@
 .l-wrapper--neutral-70 {
   background: var(--color-neutral-70);
   color: var(--color-neutral-10);
+
+  & a {
+    color: var(--color-primary-30);
+  }
 }
 
 @keyframes l-wrapper--image {

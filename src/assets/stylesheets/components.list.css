@@ -29,11 +29,15 @@
 ul.c-list {
 
   & .c-list__item:before {
-    top: 0.95rem;
+    top: 1.15rem;
     height: 2px;
     width: 8px;
     background: var(--color-primary-50);
   }
+}
+
+.l-wrapper--neutral-70 .c-list__item:before {
+  background: var(--color-primary-30);
 }
 
 ol.c-list {

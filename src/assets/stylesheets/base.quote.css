@@ -2,30 +2,34 @@
   #BASE-QUOTE
 \*------------------------------------*/
 
+
 blockquote {
-  color: var(--color-neutral-50);
-  font: italic var(--font-size-40) Georgia, serif;
-  line-height: 1.5em;
-  margin: 0 0 var(--spacing) 0;
-  padding: 0 0 0 2.5rem;
+  margin-bottom: var(--spacing);
+  padding-left: 1rem;
+  margin-left: calc(1rem - 2px);
+  border-left: 2px solid var(--color-neutral-30);
   position: relative;
   quotes: none;
 
-  &:before {
-    background: var(--color-neutral-10);
-    bottom: 0;
-    content: " ";
-    display: block;
-    left: 1rem;
-    position: absolute;
-    top: 0;
-    width: 2px;
+  @media (--breakpoint-20) {
+    margin-left: calc(2rem - 2px);
+  }
+
+  & p {
+    color: var(--color-neutral-60);
+  }
+
+  & cite {
+    font-size: var(--font-size-20);
+
+    &:before { content: "\2014 \0020"; }
   }
 }
 
-cite {
-  display: block;
-  font-size: var(--font-size-20);
+.l-wrapper--neutral-70 blockquote {
+  border-left-color: var(--color-neutral-60);
 
-  &:before { content: "\2014 \0020"; }
+  & p {
+    color: var(--color-neutral-50);
+  }
 }

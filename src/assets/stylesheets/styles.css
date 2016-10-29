@@ -25,12 +25,14 @@
  * Grid.................Global grid system based on Lost
  *
  * COMPONENTS
+ * Author...............Author
  * Button...............Buttons
  * Card.................Cards
  * Footer...............Footer
  * Form.................Forms
  * Gallery..............Gallery
  * Heading..............Heading
+ * Highlight............Highlight
  * Icon.................Icons
  * Label................Labels
  * List.................List
@@ -79,14 +81,16 @@
 /**
  * #COMPONENTS
  */
+@import "components.author.css";
 @import "components.button.css";
 @import "components.card.css";
 @import "components.footer.css";
 /*@import "components.form.css";*/
 @import "components.gallery.css";
 @import "components.heading.css";
+@import "components.highlight.css";
 @import "components.icon.css";
-@import "components.label.css";
+/*@import "components.label.css";*/
 @import "components.list.css";
 @import "components.media.css";
 /*@import "components.messages.css";*/

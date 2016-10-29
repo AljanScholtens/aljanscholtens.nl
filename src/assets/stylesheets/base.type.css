@@ -27,7 +27,6 @@ p {
 a {
   color: var(--color-primary-50);
   cursor: pointer;
-  text-decoration: none;
 
   &:hover { color: var(--color-primary-70); }
 }

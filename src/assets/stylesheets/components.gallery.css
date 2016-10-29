@@ -31,6 +31,10 @@
   max-height: 35rem;
 }
 
+.l-wrapper--neutral-70 .c-gallery__item {
+  background-color: var(--color-neutral-90);
+}
+
 .c-gallery__item--33 {
 
   @media (--breakpoint-20) {

@@ -1,0 +1,34 @@
+{% extends "layout/layout.base.html" %}
+
+{% block meta_title %}Article-1{% endblock %}
+{% block meta_description %}{% endblock %}
+{% block var_body %}c-navigation--dark{% endblock %} <!-- Choose from c-navigation--dark and c-navigation--white -->
+
+{% set blog_category = 'Life' %}
+{% set blog_date = 'April 17, 2015' %}
+
+{% block content %}
+
+  <div class="l-wrapper l-wrapper--image" style="background-image: url('http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg')">
+    <div class="l-wrapper__image-holder">
+      <div class="l-container">
+        <h1 class="c-heading c-heading--50">Dit is een container</h1>
+        <p>Met daaronder best een beetje content</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="l-wrapper">
+    <div class="l-container">
+      <div class="l-single">
+        <h2 class="c-heading c-heading--30">Dit is een container</h2>
+        <p>Met daaronder best een beetje content</p>
+
+        {% include "components/components.author.html" %}
+
+        <p class="u-text-align-center"><strong>Next</strong>: <a href="http://www.aljanscholtens.nl/disconnected/">Disconnected</a></p>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
