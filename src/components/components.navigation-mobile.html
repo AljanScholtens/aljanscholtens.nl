@@ -1,6 +1,7 @@
 <ul class="c-navigation-mobile">
-  <li class="c-navigation-mobile__item"><a href="">Blog</a></li>
-  <li class="c-navigation-mobile__item"><a href="">Portfolio</a></li>
-  <li class="c-navigation-mobile__item"><a href="">About</a></li>
-  <li class="c-navigation-mobile__item"><a href=""><svg><use xlink:href="#icon-more"></use></svg></a></li>
+  <li class="c-navigation-mobile__item {% if navigation_selected == 'home' %}c-navigation-mobile__item--selected{% endif %}"><a href="/index">Home</a></li>
+  <li class="c-navigation-mobile__item {% if navigation_selected == 'design' %}c-navigation-mobile__item--selected{% endif %}"><a href="/design">Design</a></li>
+  <li class="c-navigation-mobile__item {% if navigation_selected == 'photography' %}c-navigation-mobile__item--selected{% endif %}"><a href="/photography">Photography</a></li>
+  <li class="c-navigation-mobile__item {% if navigation_selected == 'now' %}c-navigation-mobile__item--selected{% endif %}"><a href="/now">Now</a></li>
+  <!-- <li class="c-navigation-mobile__item"><a href=""><svg><use xlink:href="#icon-more"></use></svg></a></li> -->
 </ul>

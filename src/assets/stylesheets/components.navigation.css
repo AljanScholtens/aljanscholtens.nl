@@ -16,7 +16,7 @@
 }
 
 /* Global settings on the body */
-/*body*/.c-navigation--white {
+/*body*/.c-navigation--light {
 
 }
 
@@ -33,6 +33,10 @@
     &:hover {
       color: color(var(--color-white) alpha(0.5));
     }
+  }
+
+  & .c-navigation__item.c-navigation__item--selected a {
+    color: var(--color-white);
   }
 }
 
@@ -116,6 +120,10 @@
     &:nth-child(6) {
       animation-delay: 800ms;
     }
+  }
+
+  &.c-navigation__item--selected a {
+    color: var(--color-neutral-70);
   }
 
   & a {

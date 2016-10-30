@@ -1,0 +1,23 @@
+{% extends "layout/layout.base.html" %}
+
+{% block meta_title %}Design{% endblock %}
+{% block meta_description %}{% endblock %}
+{% set navigation_selected = 'design' %}
+{% block var_body %}c-navigation--light{% endblock %} <!-- Choose from c-navigation--dark and c-navigation--light -->
+
+{% block content %}
+
+  <div class="l-wrapper">
+    <div class="l-container">
+      <div class="l-single">
+
+        <h1 class="c-heading c-heading--50">Design</h1>
+        <p class="c-paragraph c-paragraph--lead">This is all about design.</p>
+
+        <p>You can contact me at <a href="mailto:aljan@scholtens.me" target="_blank">aljan@scholtens.me</a>.</p>
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

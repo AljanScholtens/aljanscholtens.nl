@@ -2,10 +2,9 @@
   <a class="c-navigation__logo" href="/">Aljan</a>
 
   <ul class="c-navigation__items">
-    <li class="c-navigation__item"><a href="">Home</a></li>
-    <li class="c-navigation__item"><a href="">Design</a></li>
-    <li class="c-navigation__item"><a href="">Photography</a></li>
-    <li class="c-navigation__item"><a href="">Blog</a></li>
-    <li class="c-navigation__item"><a href="">Now</a></li>
+    <li class="c-navigation__item {% if navigation_selected == 'home' %}c-navigation__item--selected{% endif %}"><a href="/">Home</a></li>
+    <li class="c-navigation__item {% if navigation_selected == 'design' %}c-navigation__item--selected{% endif %}"><a href="/design">Design</a></li>
+    <li class="c-navigation__item {% if navigation_selected == 'photography' %}c-navigation__item--selected{% endif %}"><a href="/photography">Photography</a></li>
+    <li class="c-navigation__item {% if navigation_selected == 'now' %}c-navigation__item--selected{% endif %}"><a href="/now">Now</a></li>
   </ul>
 </nav>
