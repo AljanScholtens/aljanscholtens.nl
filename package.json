@@ -11,12 +11,14 @@
     "gulp-cssnano": "latest",
     "gulp-nunjucks": "latest",
     "gulp-postcss": "latest",
+    "gulp-smushit": "^1.2.0",
     "gulp-sourcemaps": "latest",
     "lost": "latest",
     "postcss-cssnext": "latest",
     "postcss-import": "latest"
   },
   "dependencies": {
-    "connect-modrewrite": "^0.9.0"
+    "connect-modrewrite": "^0.9.0",
+    "del": "^2.2.2"
   }
 }

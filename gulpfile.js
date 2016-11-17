@@ -8,8 +8,10 @@ var cssnext = require('postcss-cssnext')
 var nunjucks = require('gulp-nunjucks')
 var browserSync = require('browser-sync').create()
 var modRewrite  = require('connect-modrewrite')
+var smushit = require('gulp-smushit');
+var del = require('del');
 
-gulp.task('default', ['serve'])
+gulp.task('default', ['clean', 'serve'])
 
 gulp.task('serve', ['build', 'watch'], function() {
   browserSync.init({
@@ -30,10 +32,15 @@ gulp.task('watch', function() {
   gulp.watch('src/**/*.html', ['html'])
   gulp.watch('src/assets/stylesheets/**/*.css', ['css'])
   gulp.watch('src/assets/images/**/*', ['images'])
+  gulp.watch('src/assets/media/**/*', ['media'])
   gulp.watch('src/assets/scripts/**/*', ['scripts'])
 })
 
-gulp.task('build', ['html', 'css', 'scripts', 'images'])
+gulp.task('build', ['html', 'css', 'scripts', 'images', 'media'])
+
+gulp.task('clean', function(cb) {
+  // return del('dist');
+});
 
 gulp.task('html', () =>
   gulp.src('src/*.html')
@@ -44,6 +51,12 @@ gulp.task('html', () =>
 gulp.task('images', () =>
   gulp.src('src/assets/images/*')
     .pipe(gulp.dest('dist/assets/images'))
+)
+
+gulp.task('media', () =>
+  gulp.src('src/assets/media/**/*')
+    .pipe(smushit())
+    .pipe(gulp.dest('dist/assets/media'))
 )
 
 gulp.task('scripts', () =>
