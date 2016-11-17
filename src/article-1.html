@@ -6,6 +6,7 @@
 
 {% set blog_category = 'Life' %}
 {% set blog_date = 'April 17, 2015' %}
+{% set gallery = 'pietje' %}
 
 {% block content %}
 
@@ -14,6 +15,7 @@
       <div class="l-container">
         <h1 class="c-heading c-heading--50">Dit is een container</h1>
         <p>Met daaronder best een beetje content</p>
+
       </div>
     </div>
   </div>
@@ -24,9 +26,31 @@
         <h2 class="c-heading c-heading--30">Dit is een container</h2>
         <p>Met daaronder best een beetje content</p>
 
+        {%
+          include "components/components.gallery.html"
+
+          set row 2
+            img '/assets/images/1.jpg'
+            caption 'Dit is een caption van 1'
+            img '/assets/images/2.jpg'
+            caption 'Dit is een caption van 2'
+
+          set row 1
+            img '/assets/images/1.jpg'
+            caption 'Dit is een caption van 1'
+        %}
+
         {% include "components/components.author.html" %}
 
         <p class="u-text-align-center"><strong>Next</strong>: <a href="http://www.aljanscholtens.nl/disconnected/">Disconnected</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="l-wrapper l-wrapper--neutral-10-gradient">
+    <div class="l-container">
+      <div class="l-single">
+        {% include "components/components.comments.html" %}
       </div>
     </div>
   </div>
