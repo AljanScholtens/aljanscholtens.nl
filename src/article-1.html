@@ -15,7 +15,6 @@
       <div class="l-container">
         <h1 class="c-heading c-heading--50">Dit is een container</h1>
         <p>Met daaronder best een beetje content</p>
-
       </div>
     </div>
   </div>
@@ -25,21 +24,26 @@
       <div class="l-single">
         <h2 class="c-heading c-heading--30">Dit is een container</h2>
         <p>Met daaronder best een beetje content</p>
+      </div>
 
-        {# }{%
-          include "components/components.gallery.html"
+      {% set gallery_content = [
+        [
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 40},
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 60}
+        ],
+        [
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 100}
+        ],
+        [
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 33},
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 33},
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 3", cols: 33}
+        ]
+      ] %}
 
-          set row 2
-            img '/assets/images/1.jpg'
-            caption 'Dit is een caption van 1'
-            img '/assets/images/2.jpg'
-            caption 'Dit is een caption van 2'
+      {% include "components/components.gallery.html" %}
 
-          set row 1
-            img '/assets/images/1.jpg'
-            caption 'Dit is een caption van 1'
-        %} #}
-
+      <div class="l-single">
         {% include "components/components.author.html" %}
 
         <p class="u-text-align-center"><strong>Next</strong>: <a href="http://www.aljanscholtens.nl/disconnected/">Disconnected</a></p>

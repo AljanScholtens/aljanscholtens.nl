@@ -1,73 +1,18 @@
-{% if gallery %}
-  <div class="c-gallery-wrapper">
+<div class="c-gallery-wrapper">
+  {% for row in gallery_content %}
     <ul class="c-gallery">
-
-      {# {% if row has 1 %}
-      <li class="c-gallery__item">
-        <figure class="c-gallery__image">
-          <img src="{% IMAGE %}">
-          <figcaption>{% CAPTION %}</figcaption>
-        </figure>
+      {% for image in row %}
+      <li class="c-gallery__item c-gallery__item--{{ image.cols }}">
+        {# <figure class="c-gallery__image"> #}
+          <img src="{{ image.img }}">
+          <figcaption class="c-gallery__figcaption">{{ image.caption }}</figcaption>
+        {# </figure> #}
       </li>
-      {% endif %}
-
-      {% if row has 2 %}
-
-      etc etc.. #}
-
-      <li class="c-gallery__item c-gallery__item--33">
-        <figure class="c-gallery__image">
-          <img src="http://www.aljanscholtens.nl/content/uploads/2016/10/MG_6568.jpg">
-          <figcaption>There was a lot of fog that day.</figcaption>
-        </figure>
-      </li>
-      <li class="c-gallery__item c-gallery__item--33"></li>
-      <li class="c-gallery__item c-gallery__item--33"></li>
-
-      <li class="c-gallery__item c-gallery__item--40"></li>
-      <li class="c-gallery__item c-gallery__item--60"></li>
-
-      <li class="c-gallery__item c-gallery__item--50"></li>
-      <li class="c-gallery__item c-gallery__item--50"></li>
-
+      {% endfor %}
     </ul>
+  {% endfor %}
 
-    <div class="l-single c-gallery__footnote">
-      <p><small><strong>Footnote</strong>: All these photos were taken with the Canon 6D and Tamron 150-600mm.</small></p>
-    </div>
+  <div class="l-single c-gallery__footnote">
+    <p><small><strong>Footnote</strong>: All these photos were taken with the Canon 6D and Tamron 150-600mm.</small></p>
   </div>
-{% else %}
-  <p>NIKS</p>
-{% endif %}
-
-
-<!-- {% if gallery %}
-  <div class="c-gallery-wrapper">
-    <ul class="c-gallery">
-
-      <li class="c-gallery__item"></li>
-
-      <li class="c-gallery__item c-gallery__item--33">
-        <figure class="c-gallery__image">
-          <img src="http://www.aljanscholtens.nl/content/uploads/2016/10/MG_6568.jpg">
-          <figcaption>There was a lot of fog that day.</figcaption>
-        </figure>
-      </li>
-      <li class="c-gallery__item c-gallery__item--33"></li>
-      <li class="c-gallery__item c-gallery__item--33"></li>
-
-      <li class="c-gallery__item c-gallery__item--40"></li>
-      <li class="c-gallery__item c-gallery__item--60"></li>
-
-      <li class="c-gallery__item c-gallery__item--50"></li>
-      <li class="c-gallery__item c-gallery__item--50"></li>
-
-    </ul>
-
-    <div class="l-single c-gallery__footnote">
-      <p><small><strong>Footnote</strong>: All these photos were taken with the Canon 6D and Tamron 150-600mm.</small></p>
-    </div>
-  </div>
-{% else %}
-  <p>NIKS</p>
-{% endif %} -->
+</div>

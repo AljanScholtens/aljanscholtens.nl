@@ -4,11 +4,10 @@
 
 .c-gallery-wrapper {
   clear: both;
+
   margin-bottom: var(--spacing);
 
-  @media (--breakpoint-30) {
 
-  }
 }
 
 .c-gallery {
@@ -17,19 +16,70 @@
   padding-left: 3px;
   padding-right: 3px;
   lost-utility: clearfix;
+  /*display: flex;*/
+  margin-left: calc(- var(--spacing));
+  margin-right: calc(- var(--spacing));
+
+  @media (--breakpoint-20) {
+    margin-left: calc(- var(--spacing) * 2);
+    margin-right: calc(- var(--spacing) * 2);
+  }
 }
 
 .c-gallery__item {
   background-color: var(--color-neutral-10);
   background-clip: content-box;
   padding: 3px;
-  display: block;
+  display: flex;
   position: relative;
   height: 60vw;
   width: 100%;
   float: left;
-  max-height: 35rem;
+  max-height: 15rem;
+
+  & img {
+    object-fit: cover;
+    width: 100%;
+  }
 }
+
+/*.c-gallery__item--1 {
+  width: calc(1/12*100)%;
+}
+.c-gallery__item--2 {
+  width: calc(2/12*100)%;
+}
+.c-gallery__item--3 {
+  width: calc(3/12*100)%;
+}
+.c-gallery__item--4 {
+  width: calc(4/12*100)%;
+}
+.c-gallery__item--5 {
+  width: calc(5/12*100)%;
+}
+.c-gallery__item--6 {
+  width: calc(6/12*100)%;
+}
+.c-gallery__item--7 {
+  width: calc(7/12*100)%;
+}
+.c-gallery__item--8 {
+  width: calc(8/12*100)%;
+}
+.c-gallery__item--9 {
+  width: calc(9/12*100)%;
+}
+.c-gallery__item--10 {
+  width: calc(10/12*100)%;
+}
+.c-gallery__item--11 {
+  width: calc(11/12*100)%;
+}
+.c-gallery__item--12 {
+  width: calc(12/12*100)%;
+}*/
+
 
 .l-wrapper--neutral-70 .c-gallery__item {
   background-color: var(--color-neutral-90);
@@ -91,24 +141,25 @@
   }
 }
 
+.c-gallery__item--100 {
 
-.c-gallery__image {
-  display: block;
-  margin: 0;
-  width: auto;
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  right: 3px;
-  bottom: 3px;
-  overflow: hidden;
+  @media (--breakpoint-20) {
+    height: 30vw;
+  }
 
-  & figcaption {
+  @media (--breakpoint-30) {
+    height: 60vw;
+    max-height: 40rem;
+  }
+}
+
+
+.c-gallery__figcaption {
     position: absolute;
     z-index: var(--z-index-10);
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 3px;
+    left: 3px;
+    right: 3px;
     line-height: 1.5em;
     padding: 0.5rem 0.75rem;
     padding-top: calc(var(--spacing) * 3);
@@ -128,13 +179,6 @@
       background-image: linear-gradient(180deg, transparent, color(var(--color-black) alpha(0.4)));
     }
   }
-
-  & img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-}
 
 .c-gallery__footnote {
   padding-top: var(--spacing);
