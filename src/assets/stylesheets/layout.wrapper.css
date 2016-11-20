@@ -38,7 +38,7 @@
 }
 
 .l-wrapper--neutral-70 {
-  background: var(--color-neutral-70);
+  background: var(--color-neutral-90);
   color: var(--color-neutral-10);
 
   & a {

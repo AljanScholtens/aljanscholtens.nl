@@ -4,56 +4,45 @@
 {% block meta_description %}{% endblock %}
 {% block var_body %}c-navigation--dark{% endblock %} <!-- Choose from c-navigation--dark and c-navigation--white -->
 
-{% set blog_category = 'Life' %}
-{% set blog_date = 'April 17, 2015' %}
+{% set blog_title = "Titel" %}
+{% set blog_subtitle = "Subtitel" %} <!-- Not required -->
+{% set blog_date = '17 April, 2015' %}
+
+{% set blog_photo = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %}
+{% set blog_thumbnail = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %}
+{% set blog_first_wrapper_dark = true %}
+
+{% set blog_related = 'Disconnected' %} <!-- Not required -->
+{% set blog_related_url = '#' %} <!-- Not required -->
+
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
 
 {% block content %}
 
-  <div class="l-wrapper l-wrapper--image" style="background-image: url('http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg')">
-    <div class="l-wrapper__image-holder">
-      <div class="l-container">
-        <h1 class="c-heading c-heading--50">Dit is een container</h1>
-        <p>Met daaronder best een beetje content</p>
-      </div>
-    </div>
-  </div>
+  {% set header = true %} <!-- true is a large header, false is no header -->
+  {% include "components/components.header.html" %}
 
-  <div class="l-wrapper">
-    <div class="l-container">
-      <div class="l-single">
-        <h2 class="c-heading c-heading--30">Dit is een container</h2>
-        <p>Met daaronder best een beetje content</p>
-      </div>
+  <h2 class="c-heading c-heading--30">Dit is een container</h2>
+  <p>Met daaronder best een beetje content</p>
 
-      {% set gallery_items = [
-        [
-          {img: "/assets/media/1.jpg", caption: "", cols: 40},
-          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 60},
-          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 100},
-          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 33},
-          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 33},
-          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 3", cols: 33}
-        ]
-      ] %}
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: "/assets/media/1.jpg", caption: "", cols: 40},
+      {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 60},
+      {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 100},
+      {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 33},
+      {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 33},
+      {img: "/assets/media/1.jpg", caption: "Dit is een caption van 3", cols: 33}
+    ]
+  ] %}
+  {% set gallery_footnote = 'All these photos were taken with the Canon 6D and Tamron 150-600mm.' %}
+  {% include "components/components.gallery.html" %}
+  <!-- End Gallery -->
 
-      {% set gallery_footnote = 'All these photos were taken with the Canon 6D and Tamron 150-600mm.' %}
+  {% include "components/components.meta.html" %}
 
-      {% include "components/components.gallery.html" %}
-
-      <div class="l-single">
-        {% include "components/components.author.html" %}
-
-        <p class="u-text-align-center"><strong>Next</strong>: <a href="http://www.aljanscholtens.nl/disconnected/">Disconnected</a></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="l-wrapper l-wrapper--neutral-10-gradient">
-    <div class="l-container">
-      <div class="l-single">
-        {% include "components/components.comments.html" %}
-      </div>
-    </div>
-  </div>
+  {% include "components/components.comments.html" %}
 
 {% endblock %}

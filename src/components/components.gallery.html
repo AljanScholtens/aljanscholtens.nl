@@ -1,18 +1,22 @@
-<div class="c-gallery-wrapper">
-  {% for row in gallery_items %}
-    <ul class="c-gallery">
-      {% for image in row %}
-      <li class="c-gallery__item c-gallery__item--{{ image.cols }}">
-        {# <figure class="c-gallery__image"> #}
+</div>
+
+  <div class="c-gallery-wrapper">
+    {% for row in gallery %}
+      <ul class="c-gallery">
+        {% for image in row %}
+        <li class="c-gallery__item c-gallery__item--{{ image.cols }}">
           <img src="{{ image.img }}">
           {% if image.caption %}<figcaption class="c-gallery__figcaption">{{ image.caption }}</figcaption>{% endif %}
-        {# </figure> #}
-      </li>
-      {% endfor %}
-    </ul>
-  {% endfor %}
+        </li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
 
-  <div class="l-single c-gallery__footnote">
-    <p><small><strong>Footnote</strong>: {{gallery_footnote | e}}</small></p>
+    {% if gallery_footnote %}
+      <div class="l-single c-gallery__footnote">
+        <p><small><strong>Footnote</strong>: {{gallery_footnote | e}}</small></p>
+      </div>
+    {% endif %}
   </div>
-</div>
+
+<div class="l-single">

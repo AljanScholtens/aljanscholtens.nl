@@ -1,0 +1,32 @@
+{% if header %}
+  <div class="l-wrapper l-wrapper--image" style="background-image: url('{{blog_photo | e}}')">
+    <div class="l-wrapper__image-holder">
+      <div class="l-container">
+        <h1 class="c-heading c-heading--50">{{blog_title | e}}</h1>
+        {% if blog_subtitle %}<p>{{blog_subtitle | e}}</p>{% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% if blog_first_wrapper_dark %}
+    <div class="l-wrapper l-wrapper--neutral-70">
+  {% else %}
+    <div class="l-wrapper">
+  {% endif %}
+
+    <div class="l-container">
+      <div class="l-single">
+
+{% else %}
+
+  {% if blog_first_wrapper_dark %}
+    <div class="l-wrapper l-wrapper--neutral-70">
+  {% else %}
+    <div class="l-wrapper">
+  {% endif %}
+
+  <div class="l-container">
+    <div class="l-single">
+      <h1 class="c-heading c-heading--50">{{blog_title | e}}</h1>
+
+{% endif %}
