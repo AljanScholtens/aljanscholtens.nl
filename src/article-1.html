@@ -6,7 +6,6 @@
 
 {% set blog_category = 'Life' %}
 {% set blog_date = 'April 17, 2015' %}
-{% set gallery = 'pietje' %}
 
 {% block content %}
 
@@ -26,20 +25,18 @@
         <p>Met daaronder best een beetje content</p>
       </div>
 
-      {% set gallery_content = [
+      {% set gallery_items = [
         [
-          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 40},
-          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 60}
-        ],
-        [
-          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 100}
-        ],
-        [
+          {img: "/assets/media/1.jpg", caption: "", cols: 40},
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 60},
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 100},
           {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 33},
           {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 33},
           {img: "/assets/media/1.jpg", caption: "Dit is een caption van 3", cols: 33}
         ]
       ] %}
+
+      {% set gallery_footnote = 'All these photos were taken with the Canon 6D and Tamron 150-600mm.' %}
 
       {% include "components/components.gallery.html" %}
 

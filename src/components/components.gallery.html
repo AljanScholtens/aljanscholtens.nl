@@ -1,11 +1,11 @@
 <div class="c-gallery-wrapper">
-  {% for row in gallery_content %}
+  {% for row in gallery_items %}
     <ul class="c-gallery">
       {% for image in row %}
       <li class="c-gallery__item c-gallery__item--{{ image.cols }}">
         {# <figure class="c-gallery__image"> #}
           <img src="{{ image.img }}">
-          <figcaption class="c-gallery__figcaption">{{ image.caption }}</figcaption>
+          {% if image.caption %}<figcaption class="c-gallery__figcaption">{{ image.caption }}</figcaption>{% endif %}
         {# </figure> #}
       </li>
       {% endfor %}
@@ -13,6 +13,6 @@
   {% endfor %}
 
   <div class="l-single c-gallery__footnote">
-    <p><small><strong>Footnote</strong>: All these photos were taken with the Canon 6D and Tamron 150-600mm.</small></p>
+    <p><small><strong>Footnote</strong>: {{gallery_footnote | e}}</small></p>
   </div>
 </div>
