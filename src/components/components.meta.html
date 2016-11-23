@@ -1,18 +1,15 @@
-    <div class="c-author u-text-align-center">
+<div class="c-author u-text-align-center">
 
-      {% if blog_author %}
-        <figure style="background-image: url('http://0.gravatar.com/avatar/6d912c82077895e24a70923172540d79?s=96&amp;d=mm&amp;r=g');"></figure>
-      {% endif %}
+  {% if blog_author == 'aljan' %}
+    <figure style="background-image: url('http://0.gravatar.com/avatar/6d912c82077895e24a70923172540d79?s=96&amp;d=mm&amp;r=g');"></figure>
+  {% endif %}
 
-      <p>
-        {% if blog_author %}
-          <small>Written by <a href="http://twitter.com/aljanscholtens" target="_blank"><span>Aljan Scholtens</span></a></small><br/>
-        {% endif %}
-        <small><time>{{blog_date | e}}</time></small>
-      </p>
-    </div>
-
-    {% if blog_related %}<p class="u-text-align-center"><strong>Related</strong>: <a href="{{blog_related_url | e}}">{{blog_related | e}}</a></p>{% endif %}
-    </div>
-  </div>
+  <p>
+    {% if blog_author == 'aljan' %}
+      <small>Written by <a href="http://twitter.com/aljanscholtens" target="_blank"><span>Aljan Scholtens</span></a></small><br/>
+    {% endif %}
+    <small><time>{{blog_date}}</time></small>
+  </p>
 </div>
+
+{% if blog_related %}<p class="u-text-align-center"><strong>Related</strong>: <a href="{{blog_related_url}}">{{blog_related}}</a></p>{% endif %}

@@ -56,6 +56,7 @@
 
 .sg-h2 {
   clear: both;
+  font-size: var(--font-size-40);
   padding-top: var(--spacing);
   margin-top: var(--spacing) * 2;
 

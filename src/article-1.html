@@ -6,11 +6,10 @@
 
 {% set blog_title = "Titel" %}
 {% set blog_subtitle = "Subtitel" %} <!-- Not required -->
-{% set blog_date = '17 April, 2015' %}
+{% set blog_date = '17 April 2015' %}
 
 {% set blog_photo = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %}
 {% set blog_thumbnail = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %}
-{% set blog_first_wrapper_dark = true %}
 
 {% set blog_related = 'Disconnected' %} <!-- Not required -->
 {% set blog_related_url = '#' %} <!-- Not required -->
@@ -23,26 +22,49 @@
   {% set header = true %} <!-- true is a large header, false is no header -->
   {% include "components/components.header.html" %}
 
-  <h2 class="c-heading c-heading--30">Dit is een container</h2>
-  <p>Met daaronder best een beetje content</p>
+  <div class="l-wrapper l-wrapper--neutral-70">
+    <div class="l-container">
+      <div class="l-single">
 
-  <!-- Gallery -->
-  {% set gallery = [
-    [
-      {img: "/assets/media/1.jpg", caption: "", cols: 40},
-      {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 60},
-      {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 100},
-      {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 33},
-      {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 33},
-      {img: "/assets/media/1.jpg", caption: "Dit is een caption van 3", cols: 33}
-    ]
-  ] %}
-  {% set gallery_footnote = 'All these photos were taken with the Canon 6D and Tamron 150-600mm.' %}
-  {% include "components/components.gallery.html" %}
-  <!-- End Gallery -->
 
-  {% include "components/components.meta.html" %}
+        {% if header == false %}
+          <h1 class="c-heading c-heading--50">{{blog_title}}</h1>
+        {% endif %}
 
-  {% include "components/components.comments.html" %}
+        <h2 class="c-heading c-heading--30">Dit is een container</h2>
+        <p>Met daaronder best een beetje content</p>
+
+      </div>
+
+      <!-- Gallery -->
+      {% set gallery = [
+        [
+          {img: "/assets/media/1.jpg", caption: "", cols: 40},
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 60},
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 100},
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 1", cols: 33},
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 2", cols: 33},
+          {img: "/assets/media/1.jpg", caption: "Dit is een caption van 3", cols: 33}
+        ]
+      ] %}
+      {% set gallery_footnote = 'All these photos were taken with the Canon 6D and Tamron 150-600mm.' %}
+      {% include "components/components.gallery.html" %}
+      <!-- End Gallery -->
+
+      <div class="l-single">
+
+        {% include "components/components.meta.html" %}
+
+      </div>
+    </div>
+  </div>
+
+  <div class="l-wrapper l-wrapper--neutral-10-gradient">
+    <div class="l-container">
+      <div class="l-single">
+        {% include "components/components.comments.html" %}
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
