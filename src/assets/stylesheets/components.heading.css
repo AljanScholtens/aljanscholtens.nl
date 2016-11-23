@@ -37,3 +37,26 @@
     font-size: 3rem;
   }
 }
+
+
+
+@keyframes c-heading--animation {
+
+  0% {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.c-heading--animation {
+
+  @media (--breakpoint-20) {
+    opacity: 0;
+    animation: c-heading--animation 600ms cubic-bezier(0, 0, 0, 1) forwards 200ms;
+  }
+}

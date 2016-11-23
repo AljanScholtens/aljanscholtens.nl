@@ -4,16 +4,14 @@
 {% block meta_description %}{% endblock %}
 {% block var_body %}c-navigation--dark{% endblock %} <!-- Choose from c-navigation--dark and c-navigation--white -->
 
-{% set blog_title = "Titel" %}
-{% set blog_subtitle = "Subtitel" %} <!-- Not required -->
+{% set page_title = "Titel" %}
+{% set page_subtitle = "Subtitel" %} <!-- Not required -->
+{% set page_photo = '/assets/media/1.jpg' %}
+{# {% set page_thumbnail = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %} #}
+
 {% set blog_date = '17 April 2015' %}
-
-{% set blog_photo = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %}
-{% set blog_thumbnail = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %}
-
 {% set blog_related = 'Disconnected' %} <!-- Not required -->
 {% set blog_related_url = '#' %} <!-- Not required -->
-
 {% set blog_author = 'aljan' %} <!-- Not required -->
 
 
@@ -25,7 +23,6 @@
   <div class="l-wrapper l-wrapper--neutral-70">
     <div class="l-container">
       <div class="l-single">
-
 
         {% if header == false %}
           <h1 class="c-heading c-heading--50">{{blog_title}}</h1>

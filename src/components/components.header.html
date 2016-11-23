@@ -1,9 +1,10 @@
 {% if header %}
-  <div class="l-wrapper l-wrapper--image" style="background-image: url('{{blog_photo}}')">
+  <div class="l-wrapper l-wrapper--image" style="background-image: url('{{page_photo}}')">
     <div class="l-wrapper__image-holder">
       <div class="l-container">
-        <h1 class="c-heading c-heading--50">{{blog_title}}</h1>
-        {% if blog_subtitle %}<p>{{blog_subtitle}}</p>{% endif %}
+        <h1 class="c-heading c-heading--50 c-heading--animation">{{page_title}}</h1>
+        {% if page_subtitle %}<p class="c-paragraph c-paragraph--lead c-paragraph--animation">{{page_subtitle}}</p>{% endif %}
+        <span class="l-wrapper__arrow"><svg class="icon"><use xlink:href="#icon-arrow" /></svg></div>
       </div>
     </div>
   </div>

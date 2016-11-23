@@ -12,6 +12,14 @@
   &:first-of-type {
     padding-top: 1.95rem;
   }
+
+  &:last-of-type {
+    padding-bottom: 3.5rem;
+
+    @media (--breakpoint-20) {
+      padding-bottom: 0;
+    }
+  }
 }
 
 
@@ -59,10 +67,11 @@
 
 .l-wrapper--image {
   height: 100vh;
-  max-height: 80vmin;
   min-height: 20rem;
   display: flex;
-  align-items: flex-end;;
+  padding-bottom: 5rem;
+  align-items: flex-end;
+  text-align: center;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -71,6 +80,8 @@
 
   @media (--breakpoint-20) {
     filter: grayscale(0.6);
+    max-height: 80vh;
+    padding-bottom: 1rem;
     animation: l-wrapper--image 600ms cubic-bezier(0, 0, 0, 1) forwards 500ms;
   }
 
@@ -100,3 +111,38 @@
     width: 100%;
     z-index: var(--z-index-10);
   }
+
+
+@keyframes header--arrow {
+
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) rotate(180deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(180deg);
+  }
+}
+
+.l-wrapper__arrow {
+  position: absolute;
+  height: 1rem;
+  width: 1rem;
+  left: 50%;
+  margin-left: -0.5rem;
+  display: block;
+  transform: rotate(180deg);
+
+  @media (--breakpoint-20) {
+    opacity: 0;
+    animation: header--arrow 300ms cubic-bezier(0, 0, 0, 1) forwards 800ms;
+  }
+
+  & svg {
+    height: 1rem;
+    width: 1rem;
+    fill: var(--color-white);
+  }
+}

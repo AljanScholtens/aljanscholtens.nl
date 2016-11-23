@@ -5,15 +5,15 @@
 {% set navigation_selected = 'home' %}
 {% block var_body %}c-navigation--dark{% endblock %} <!-- Choose from c-navigation--dark and c-navigation--white -->
 
+{% set page_title = "I’m Aljan. I design interfaces and compose landscape photos." %}
+{% set page_subtitle = "Occasionally I write about my dog, hiking and life." %} <!-- Not required -->
+{% set page_photo = '/assets/media/frontpage.jpg' %}
+
 {% block content %}
 
-  <div class="l-wrapper l-wrapper--image" style="background-image: url('http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg')">
-    <div class="l-wrapper__image-holder">
-      <div class="l-container">
-        <h2 class="c-heading c-heading--30">Dit is een container</h2>
-        <p>Met daaronder best een beetje content</p>
-      </div>
-    </div>
+  {% set header = true %} <!-- true is a large header, false is no header -->
+  {% include "components/components.header.html" %}
+
   </div>
 
   <div class="l-wrapper l-wrapper--neutral-10">
