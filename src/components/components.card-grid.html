@@ -7,12 +7,12 @@
         {% if card.thumbnail %}
           <figure class="c-card__image" style="background-image: url('{{ card.thumbnail }}');">
             {% if card.caption %}<figcaption>{{ card.caption }}</figcaption>{% endif %}
-            <a href=""></a>
+            <a href="{{ card.url }}"></a>
           </figure>
         {% endif %}
 
         <div class="c-card__content">
-          <h2 class="c-heading c-heading--10"><a href="">{{ card.title }}</a></h2>
+          <h2 class="c-heading c-heading--10"><a href="{{ card.url }}">{{ card.title }}</a></h2>
           <p>{{ card.content }}</p>
           <div class="c-card__meta">
             {% if card.author %}
