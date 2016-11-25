@@ -65,11 +65,15 @@
 {% include "components/components.meta.html" %}
 
 <h2 class="sg-h2">Component Header</h2>
-{% set blog_title = "Titel" %}
-{% set blog_subtitle = "Subtitel" %} <!-- Not required -->
-{% set blog_photo = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %}
+{% set page_title = "Titel" %}
+{% set page_subtitle = "Subtitel" %} <!-- Not required -->
+{% set page_photo = '/assets/media/1.jpg' %}
 {% set header = true %} <!-- true is a large header, false is no header -->
 {% include "components/components.header.html" %}
+
+<h3 class="sg-h3">Video</h3>
+{% set video = 'https://www.youtube.com/embed/PJ-zjBtjTI0' %}
+{% include "components/components.video.html" %}
 
 
 <h1 class="c-heading c-heading--30 u-spacing">Styleguide old</h1>
@@ -290,17 +294,6 @@
   <figure class="c-media c-media--image">
     <img class="c-media__image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Canis_lupus_laying.jpg/266px-Canis_lupus_laying.jpg"/>
     <figcaption class="c-media__caption">A Wolf</figcaption>
-  </figure>
-</div>
-
-
-
-
-
-<h3 class="sg-h3">Video</h3>
-<div class="sg-component">
-  <figure class="c-media c-media--video">
-    <iframe src="https://player.vimeo.com/video/155640569?title=0&byline=0&portrait=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
   </figure>
 </div>
 

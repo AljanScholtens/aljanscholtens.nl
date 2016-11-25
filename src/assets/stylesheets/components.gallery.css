@@ -33,6 +33,10 @@
   max-height: 100vh;
   float: left;
 
+  @media (--breakpoint-30) {
+    max-height: 40rem;
+  }
+
   & img {
     object-fit: cover;
     width: 100%;
