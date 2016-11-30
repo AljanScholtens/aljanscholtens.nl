@@ -1,4 +1,4 @@
-{% extends "layout/layout.base.html" %}
+{% extends "layout/layout.base.nunjucks" %}
 
 {% block meta_title %}Photography{% endblock %}
 {% block meta_description %}{% endblock %}

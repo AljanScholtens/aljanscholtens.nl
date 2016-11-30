@@ -1,4 +1,4 @@
-{% extends "layout/layout.base.html" %}
+{% extends "layout/layout.base.nunjucks" %}
 
 {% block meta_title %}Home{% endblock %}
 {% block meta_description %}{% endblock %}
@@ -11,8 +11,8 @@
 
 {% block content %}
 
-  {% set header = true %} <!-- true is a large header, false is no header -->
-  {% include "components/components.header.html" %}
+  {% set header = false %} <!-- true is a large header, false is no header -->
+  {% include "components/components.header.nunjucks" %}
 
   </div>
 
@@ -47,7 +47,7 @@
             }
           ]
         ] %}
-        {% include "components/components.card-grid.html" %}
+        {% include "components/components.card-grid.nunjucks" %}
 
       </div>
 
