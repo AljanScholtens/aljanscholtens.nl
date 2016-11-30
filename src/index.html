@@ -1,8 +1,10 @@
-{% extends "layout/layout.base.html" %}
+{% extends 'layout/layout.base.html' %}
 
-{% set page_title = "I’m Aljan. I design interfaces and compose landscape photos." %}
-{% set page_subtitle = "Occasionally I write about my dog, hiking and life." %} <!-- Not required -->
-{% set page_description = "Description" %} <!-- Not required -->
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'I’m Aljan. I design interfaces and compose landscape photos.' %}
+{% set page_subtitle = 'Occasionally I write about my dog, hiking and life.' %} <!-- Not required -->
+{% set page_description = 'Description' %} <!-- Not required -->
 {% set page_photo = '/assets/media/frontpage-2.jpg' %}
 {% set page_thumbnail = '/assets/media/frontpage-2.jpg' %}
 {% set navigation_selected = 'blog' %}
@@ -13,51 +15,48 @@
 {% block content %}
 
   {% if header == true %}
-    {% include "components/components.header.html" %}
+    {% include 'components/components.header.html' %}
   {% endif %}
 
-  <div class="l-wrapper l-wrapper--neutral-10">
-    <div class="l-container">
+  {% call wrapper('light') %}
 
-      <div class="l-single">
+    <div class="l-single">
 
-        {% if header == false %}
-          {% include "components/components.header.html" %}
-        {% endif %}
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
 
-        <p class="c-paragraph c-paragraph--lead">Symbols by their ID elsewhere in the HTML. If we don't do this, Safari won't show the images. We'll include the SVG just after the body opening tag. This is necessery because we will get symbols by their ID elsewhere in the HTML. If we don't do this, Safari won't show the images.</p>
-      </div>
+      <p class="c-paragraph c-paragraph--lead">Symbols by their ID elsewhere in the HTML. If we don't do this, Safari won't show the images. We'll include the SVG just after the body opening tag. This is necessery because we will get symbols by their ID elsewhere in the HTML. If we don't do this, Safari won't show the images.</p>
+    </div>
 
-      <div class="l-single-wide">
+    <div class="l-single-wide">
 
-        {% set card_grid = [
-          [
-            {
-              url: "/blog/article-1",
-              title: "Een trektocht door Noorwegen is in aantocht",
-              content: "I wanted to know if I could do the same amount of work in those 6 hours instead of my normal 9 hours. The reasoning was: if you have less time, you will probably work harder and get the same things done.",
-              author: "Aljan Scholtens",
-              date: "17 april 2015",
-              thumbnail: "/assets/media/1.jpg",
-              caption: "There was a lot of fog that day."
-            },
-            {
-              url: "/blog/article-1",
-              title: "Een trektocht door Noorwegen is in aantocht",
-              content: "I wanted to know if I could do the same amount of work in those 6 hours instead of my normal 9 hours. The reasoning was: if you have less time, you will probably work harder and get the same things done.",
-              author: "Aljan Scholtens",
-              date: "17 april 2015",
-              thumbnail: "/assets/media/1.jpg",
-              caption: ""
-            }
-          ]
-        ] %}
-        {% include "components/components.card-grid.html" %}
-
-      </div>
+      {% set card_grid = [
+        [
+          {
+            url: '/blog/article-1',
+            title: 'Een trektocht door Noorwegen is in aantocht',
+            content: 'I wanted to know if I could do the same amount of work in those 6 hours instead of my normal 9 hours. The reasoning was: if you have less time, you will probably work harder and get the same things done.',
+            author: 'Aljan Scholtens',
+            date: '17 april 2015',
+            thumbnail: '/assets/media/1.jpg',
+            caption: 'There was a lot of fog that day.'
+          },
+          {
+            url: '/blog/article-1',
+            title: 'Een trektocht door Noorwegen is in aantocht',
+            content: 'I wanted to know if I could do the same amount of work in those 6 hours instead of my normal 9 hours. The reasoning was: if you have less time, you will probably work harder and get the same things done.',
+            author: 'Aljan Scholtens',
+            date: '17 april 2015',
+            thumbnail: '/assets/media/1.jpg',
+            caption: ''
+          }
+        ]
+      ] %}
+      {% include 'components/components.card-grid.html' %}
 
     </div>
 
-  </div>
+  {% endcall %}
 
 {% endblock %}

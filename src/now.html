@@ -1,8 +1,10 @@
-{% extends "layout/layout.base.html" %}
+{% extends 'layout/layout.base.html' %}
 
-{% set page_title = "Now" %}
-{% set page_subtitle = "Subtitel" %} <!-- Not required -->
-{% set page_description = "Description" %} <!-- Not required -->
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Now' %}
+{% set page_subtitle = 'Subtitel' %} <!-- Not required -->
+{% set page_description = 'Description' %} <!-- Not required -->
 {% set page_photo = '/assets/media/1.jpg' %}
 {% set page_thumbnail = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %}
 {% set navigation_selected = 'now' %}
@@ -13,48 +15,48 @@
 {% block content %}
 
   {% if header == true %}
-    {% include "components/components.header.html" %}
+    {% include 'components/components.header.html' %}
   {% endif %}
 
-  <div class="l-wrapper">
-    <div class="l-container">
-      <div class="l-single">
+  {% call wrapper() %}
 
-        {% if header == false %}
-          {% include "components/components.header.html" %}
-        {% endif %}
+    <div class="l-single">
 
-        <p class="c-paragraph c-paragraph--lead">Last update on 22th June&nbsp;2016. The now page is inspired by <a href="http://nownownow.com/" target="_blank">Nownownow</a>.</p>
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
 
-        <h2 class="c-heading c-heading--30">Current focus</h2>
-        <ul class="c-list">
-          <li class="c-list__item">Currently I’m a freelance Product Owner, Interface Designer and CSS Architect.</li>
-          <li class="c-list__item">Formerly owner of&nbsp;the&nbsp;design agency <a href="http://studiowolf.com/" target="_blank">Studio Wolf</a>&nbsp;together with <a href="http://twitter.com/timsluis" target="_blank">Tim Sluis</a>.</li>
-          <li class="c-list__item">Training and loving our&nbsp;puppy Nikki, a <a href="https://www.google.nl/search?q=small+munsterlander&amp;source=lnms&amp;tbm=isch&amp;sa=X&amp;ved=0ahUKEwj17K3h4IPKAhVEdw8KHQ9SBXEQ_AUIBygB&amp;biw=1055&amp;bih=1174" target="_blank">Small Münsterländer</a>.&nbsp;<a href="https://www.instagram.com/p/BKOU3pZBz2r">This is her</a>.</li>
-          <li class="c-list__item">Looking for great&nbsp;freelancers to work with (design, css, js, react, d3), <a href="mailto:aljan@scholtens.me">contact me</a>.</li>
-          <li class="c-list__item">Supporting <a href="http://payt.nl/" target="_blank">Payt</a> two days a week with a design system and css architecture for their web applications. Working on Location in Groningen.</li>
-          <li class="c-list__item">Improving the design of <a href="http://voys.nl/" target="_blank">Voys</a> in Groningen one day a week with an upcoming update to WP and PostCSS</li>
-          <li class="c-list__item">Updating <a href="http://taigaboilerplate.com/" target="_blank">Taiga Boilerplate</a>&nbsp;to PostCSS, BEMIT and a stronger pattern library. Work in progress, but it’s on <a href="https://github.com/AljanScholtens/taiga-boilerplate">Github</a>.</li>
-          <li class="c-list__item">Running a meetup called <a href="http://www.meetup.com/refresh-groningen/" target="_blank">Refresh</a>, it’s for designers and front-end developers.</li>
-          <li class="c-list__item">Walking and preparing the next hike in the Alps. Read about the <a href="http://www.aljanscholtens.nl/the-fellowship-of-the-hardangervidda/">latest hike in Norway</a>.</li>
-          <li class="c-list__item">Writing about&nbsp;<a href="/" target="_blank">photography/other stuff</a>.</li>
-          <li class="c-list__item">Taking photos of beautiful <a href="http://www.aljanscholtens.nl/photography/" target="_blank">landscapes</a>.</li>
-          <li class="c-list__item">Posting&nbsp;on <a href="http://instagram.com/aljan" target="_blank">Instagram</a> and <a href="http://twitter.com/aljanscholtens" target="_blank">Twitter</a>.</li>
-        </ul>
+      <p class="c-paragraph c-paragraph--lead">Last update on 22th June&nbsp;2016. The now page is inspired by <a href="http://nownownow.com/" target="_blank">Nownownow</a>.</p>
 
-        <h2 class="c-heading c-heading--30">I’m currently interested in writing and speaking about</h2>
-        <ul class="c-list">
-          <li class="c-list__item">Design systems &amp; pattern libraries</li>
-          <li class="c-list__item">CSS Grid Layout</li>
-          <li class="c-list__item">Design teams &amp; business</li>
-          <li class="c-list__item">Hiking &amp; landscape photography</li>
-          <li class="c-list__item">Photography gear</li>
-        </ul>
+      <h2 class="c-heading c-heading--30">Current focus</h2>
+      <ul class="c-list">
+        <li class="c-list__item">Currently I’m a freelance Product Owner, Interface Designer and CSS Architect.</li>
+        <li class="c-list__item">Formerly owner of&nbsp;the&nbsp;design agency <a href="http://studiowolf.com/" target="_blank">Studio Wolf</a>&nbsp;together with <a href="http://twitter.com/timsluis" target="_blank">Tim Sluis</a>.</li>
+        <li class="c-list__item">Training and loving our&nbsp;puppy Nikki, a <a href="https://www.google.nl/search?q=small+munsterlander&amp;source=lnms&amp;tbm=isch&amp;sa=X&amp;ved=0ahUKEwj17K3h4IPKAhVEdw8KHQ9SBXEQ_AUIBygB&amp;biw=1055&amp;bih=1174" target="_blank">Small Münsterländer</a>.&nbsp;<a href="https://www.instagram.com/p/BKOU3pZBz2r">This is her</a>.</li>
+        <li class="c-list__item">Looking for great&nbsp;freelancers to work with (design, css, js, react, d3), <a href="mailto:aljan@scholtens.me">contact me</a>.</li>
+        <li class="c-list__item">Supporting <a href="http://payt.nl/" target="_blank">Payt</a> two days a week with a design system and css architecture for their web applications. Working on Location in Groningen.</li>
+        <li class="c-list__item">Improving the design of <a href="http://voys.nl/" target="_blank">Voys</a> in Groningen one day a week with an upcoming update to WP and PostCSS</li>
+        <li class="c-list__item">Updating <a href="http://taigaboilerplate.com/" target="_blank">Taiga Boilerplate</a>&nbsp;to PostCSS, BEMIT and a stronger pattern library. Work in progress, but it’s on <a href="https://github.com/AljanScholtens/taiga-boilerplate">Github</a>.</li>
+        <li class="c-list__item">Running a meetup called <a href="http://www.meetup.com/refresh-groningen/" target="_blank">Refresh</a>, it’s for designers and front-end developers.</li>
+        <li class="c-list__item">Walking and preparing the next hike in the Alps. Read about the <a href="http://www.aljanscholtens.nl/the-fellowship-of-the-hardangervidda/">latest hike in Norway</a>.</li>
+        <li class="c-list__item">Writing about&nbsp;<a href="/" target="_blank">photography/other stuff</a>.</li>
+        <li class="c-list__item">Taking photos of beautiful <a href="http://www.aljanscholtens.nl/photography/" target="_blank">landscapes</a>.</li>
+        <li class="c-list__item">Posting&nbsp;on <a href="http://instagram.com/aljan" target="_blank">Instagram</a> and <a href="http://twitter.com/aljanscholtens" target="_blank">Twitter</a>.</li>
+      </ul>
 
-        <p>You can contact me at <a href="mailto:aljan@scholtens.me" target="_blank">aljan@scholtens.me</a>.</p>
+      <h2 class="c-heading c-heading--30">I’m currently interested in writing and speaking about</h2>
+      <ul class="c-list">
+        <li class="c-list__item">Design systems &amp; pattern libraries</li>
+        <li class="c-list__item">CSS Grid Layout</li>
+        <li class="c-list__item">Design teams &amp; business</li>
+        <li class="c-list__item">Hiking &amp; landscape photography</li>
+        <li class="c-list__item">Photography gear</li>
+      </ul>
 
-      </div>
+      <p>You can contact me at <a href="mailto:aljan@scholtens.me" target="_blank">aljan@scholtens.me</a>.</p>
+
     </div>
-  </div>
+
+  {% endcall %}
 
 {% endblock %}

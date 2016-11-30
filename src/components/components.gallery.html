@@ -4,7 +4,7 @@
       {% for image in row %}
       <li class="c-gallery__item c-gallery__item--{{ image.cols }}">
         <img src="{{ image.img }}">
-        {% if image.caption %}<figcaption class="c-gallery__figcaption">{{ image.caption }}</figcaption>{% endif %}
+        {% if image.caption %}<figcaption class="c-gallery__figcaption">{{image.caption}}</figcaption>{% endif %}
       </li>
       {% endfor %}
     </ul>

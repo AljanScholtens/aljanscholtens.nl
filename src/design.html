@@ -1,8 +1,10 @@
-{% extends "layout/layout.base.html" %}
+{% extends 'layout/layout.base.html' %}
 
-{% set page_title = "Design" %}
-{% set page_subtitle = "Subtitel" %} <!-- Not required -->
-{% set page_description = "Description" %} <!-- Not required -->
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Design' %}
+{% set page_subtitle = 'Subtitel' %} <!-- Not required -->
+{% set page_description = 'Description' %} <!-- Not required -->
 {% set page_photo = '/assets/media/1.jpg' %}
 {% set page_thumbnail = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %}
 {% set navigation_selected = 'design' %}
@@ -13,23 +15,23 @@
 {% block content %}
 
   {% if header == true %}
-    {% include "components/components.header.html" %}
+    {% include 'components/components.header.html' %}
   {% endif %}
 
-  <div class="l-wrapper">
-    <div class="l-container">
-      <div class="l-single">
+  {% call wrapper() %}
 
-        {% if header == false %}
-          {% include "components/components.header.html" %}
-        {% endif %}
+    <div class="l-single">
 
-        <p class="c-paragraph c-paragraph--lead">This is all about design.</p>
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
 
-        <p>You can contact me at <a href="mailto:aljan@scholtens.me" target="_blank">aljan@scholtens.me</a>.</p>
+      <p class="c-paragraph c-paragraph--lead">This is all about design.</p>
 
-      </div>
+      <p>You can contact me at <a href="mailto:aljan@scholtens.me" target="_blank">aljan@scholtens.me</a>.</p>
+
     </div>
-  </div>
+
+  {% endcall %}
 
 {% endblock %}
