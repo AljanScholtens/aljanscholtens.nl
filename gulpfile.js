@@ -29,7 +29,7 @@ gulp.task('serve', ['build', 'watch'], function() {
 })
 
 gulp.task('watch', function() {
-  gulp.watch('src/**/*.nunjucks', ['html'])
+  gulp.watch('src/**/*.html', ['html'])
   gulp.watch('src/assets/stylesheets/**/*.css', ['css'])
   gulp.watch('src/assets/images/**/*', ['images'])
   gulp.watch('src/assets/media/**/*', ['media'])
@@ -43,7 +43,7 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('html', () =>
-  gulp.src('src/*.nunjucks')
+  gulp.src('src/*.html')
    .pipe(nunjucks.compile())
    .pipe(gulp.dest('dist'))
 )

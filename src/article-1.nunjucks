@@ -1,10 +1,10 @@
-{% extends "layout/layout.base.nunjucks" %}
+{% extends "layout/layout.base.html" %}
 
-{% block meta_title %}Testerij{% endblock %}
+{% block meta_title %}Article-1{% endblock %}
 {% block meta_description %}{% endblock %}
 {% block var_body %}c-navigation--dark{% endblock %} <!-- Choose from c-navigation--dark and c-navigation--white -->
 
-{% set page_title = "Titels" %}
+{% set page_title = "Titel" %}
 {% set page_subtitle = "Subtitel" %} <!-- Not required -->
 {% set page_photo = '/assets/media/1.jpg' %}
 {# {% set page_thumbnail = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %} #}
@@ -18,19 +18,19 @@
 {% block content %}
 
   {% set header = true %} <!-- true is a large header, false is no header -->
-  {% include "components/components.header.nunjucks" %}
+  {% include "components/components.header.html" %}
 
   <div class="l-wrapper">
     <div class="l-container">
       <div class="l-single">
 
-        <h2 class="c-heading c-heading--30">Dit is een containers</h2>
+        <h2 class="c-heading c-heading--30">Dit is een container</h2>
         <p>Met daaronder best een beetje content</p>
 
       </div>
 
       {% set video = 'https://www.youtube.com/embed/PJ-zjBtjTI0' %}
-      {% include "components/components.video.nunjucks" %}
+      {% include "components/components.video.html" %}
 
     </div>
   </div>
@@ -60,12 +60,12 @@
         ]
       ] %}
       {% set gallery_footnote = 'All these photos were taken with the Canon 6D and Tamron 150-600mm.' %}
-      {% include "components/components.gallery.nunjucks" %}
+      {% include "components/components.gallery.html" %}
       <!-- End Gallery -->
 
       <div class="l-single">
 
-        {% include "components/components.meta.nunjucks" %}
+        {% include "components/components.meta.html" %}
 
       </div>
     </div>
@@ -74,7 +74,7 @@
   <div class="l-wrapper l-wrapper--neutral-10-gradient">
     <div class="l-container">
       <div class="l-single">
-        {% include "components/components.comments.nunjucks" %}
+        {% include "components/components.comments.html" %}
       </div>
     </div>
   </div>
