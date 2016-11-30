@@ -7,15 +7,15 @@
   <meta name="apple-mobile-web-app-title" content="Aljan">
   <meta name="theme-color" content="#D02527">
 
-  <title>{% block meta_title %}Home{% endblock %} - Aljan Scholtens</title>
-  <meta name="description" content="{% block meta_description %}{% endblock %}">
+  <title>{{ page_title }} - Aljan Scholtens</title>
+  <meta name="description" content="{{ page_description }}">
 
-  <link rel="stylesheet" href="assets/stylesheets/styles.css" crossorigin="anonymous">
-  <link rel="shortcut icon" href="assets/images/favicon.ico">
-  <link rel="apple-touch-icon-precomposed" href="assets/images/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/stylesheets/styles.css" crossorigin="anonymous">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" href="/assets/images/apple-touch-icon.png">
 </head>
 
-<body class="{% block var_body %}{% endblock %}">
+<body>
 
 	{% include "components/components.sprite.html" %}
 

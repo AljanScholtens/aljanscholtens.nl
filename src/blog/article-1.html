@@ -1,28 +1,33 @@
 {% extends "layout/layout.base.html" %}
 
-{% block meta_title %}Testerij{% endblock %}
-{% block meta_description %}{% endblock %}
-{% block var_body %}c-navigation--dark{% endblock %} <!-- Choose from c-navigation--dark and c-navigation--white -->
-
-{% set page_title = "Titels" %}
+{% set page_title = "Title" %}
 {% set page_subtitle = "Subtitel" %} <!-- Not required -->
+{% set page_description = "Description" %} <!-- Not required -->
 {% set page_photo = '/assets/media/1.jpg' %}
-{# {% set page_thumbnail = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %} #}
+{% set page_thumbnail = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %}
+{% set navigation_selected = 'blog' %}
+
+{% set header = true %} <!-- true is a large header, false is no header -->
+{% set header_dark = true %}
 
 {% set blog_date = '17 April 2015' %}
 {% set blog_related = 'Disconnected' %} <!-- Not required -->
 {% set blog_related_url = '#' %} <!-- Not required -->
 {% set blog_author = 'aljan' %} <!-- Not required -->
 
-
 {% block content %}
 
-  {% set header = true %} <!-- true is a large header, false is no header -->
-  {% include "components/components.header.html" %}
+  {% if header == true %}
+    {% include "components/components.header.html" %}
+  {% endif %}
 
   <div class="l-wrapper">
     <div class="l-container">
       <div class="l-single">
+
+        {% if header == false %}
+          {% include "components/components.header.html" %}
+        {% endif %}
 
         <h2 class="c-heading c-heading--30">Dit is een containers</h2>
         <p>Met daaronder best een beetje content</p>
@@ -38,10 +43,6 @@
   <div class="l-wrapper l-wrapper--neutral-70">
     <div class="l-container">
       <div class="l-single">
-
-        {% if header == false %}
-          <h1 class="c-heading c-heading--50">{{blog_title}}</h1>
-        {% endif %}
 
         <h2 class="c-heading c-heading--30">Dit is een container</h2>
         <p>Met daaronder best een beetje content</p>

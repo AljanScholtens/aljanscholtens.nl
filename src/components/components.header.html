@@ -1,4 +1,4 @@
-{% if header %}
+{% if header == true %}
   <div class="l-wrapper l-wrapper--image" style="background-image: url('{{page_photo}}')">
     <div class="l-wrapper__image-holder">
       <div class="l-container">
@@ -10,4 +10,6 @@
       </div>
     </div>
   </div>
+{% else %}
+  <h1 class="c-heading c-heading--50">{{page_title}}</h1>
 {% endif %}
