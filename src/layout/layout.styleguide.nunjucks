@@ -14,7 +14,7 @@
 
 <body>
 
-	{% include "components/components.sprite.html" %}
+	{% include "components/components.sprite.nunjucks" %}
 
 	<div class="sg-wrapper">
 
