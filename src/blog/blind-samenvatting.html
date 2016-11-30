@@ -1,0 +1,64 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Blind: Samenvatting' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '' %} <!-- Not required -->
+{% set page_thumbnail = '' %} <!-- Not required -->
+{% set navigation_selected = 'blog' %}
+
+{% set header = false %} <!-- true is a large header, false is no header -->
+{% set header_dark = false %}
+
+{% set blog_date = '13 August 2014' %}
+{% set blog_related = 'Blind: Broodje' %} <!-- Not required -->
+{% set blog_related_url = '/blog/blind-broodje' %} <!-- Not required -->
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+
+
+
+<!-- START Content -->
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <p>Het is februari 2006 en ik ga bijna examen doen als 15-jarige aan het VMBO TL te Groningen. Langzaam word ik blind. Na een verkeerde diagnose van de huisarts en een dag veel onderzoeken in het ziekenhuis (bloedprikken, CT-scan, neurologisch onderzoek, ruggenprik) word ik naar huis gestuurd. Het is niet erg genoeg.</p>
+
+      <p>Binnen drie dagen lig ik aan het infuus met de zwaarste dosis prednison voor volwassenen in het UMCG. Ik zie niets meer. Na vele artsen gesproken te hebben, onderzoeken te hebben gehad, begint mijn zicht na een paar dagen weer terug te komen. De klachten zijn nooit daadwerkelijk teruggekeerd, de angst daarvoor is altijd een beetje gebleven.</p>
+
+      <p>De komende periode schrijf ik korte stukjes van mijn herinneringen over blindheid, om het van me af te schrijven en wellicht om anderen te helpen.</p>
+
+<!-- END Content -->
+
+
+
+
+      {% include 'components/components.meta.html' %}
+
+    </div>
+
+  {% endcall %}
+
+  {% call wrapper('gradient') %}
+
+    <div class="l-single">
+      {% include 'components/components.comments.html' %}
+    </div>
+
+  {% endcall %}
+
+{% endblock %}

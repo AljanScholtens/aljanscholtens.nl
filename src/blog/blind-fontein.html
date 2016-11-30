@@ -1,0 +1,62 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Blind: Fontein' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '' %} <!-- Not required -->
+{% set page_thumbnail = '' %} <!-- Not required -->
+{% set navigation_selected = 'blog' %}
+
+{% set header = false %} <!-- true is a large header, false is no header -->
+{% set header_dark = false %}
+
+{% set blog_date = '5 September 2014' %}
+{% set blog_related = 'Blind: Samenvatting' %} <!-- Not required -->
+{% set blog_related_url = '/blog/blind-samenvatting' %} <!-- Not required -->
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+
+
+
+<!-- START Content -->
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <p>Mijn vader links en mijn moeder rechts, ze ondersteunen me terwijl we met ons drieën een rondje door de grote hal aan de oostkant van het gebouw lopen. Ik hoor dat er mensen langslopen, maar voel me alleen. Alleen met mijn ouders. Zelfs schimmen zijn er niet. Een bord, heel dichtbij, we lopen langs een bord. Ik vraag aan mijn moeder: ‘Is dit bord nou geel?’, terwijl mijn moeder haar hoofd schudt en vertelt dat het rood is, knalrood. Rood is één van de kleuren die het snelst wegvalt bij slecht zicht.</p>
+
+      <p>Na dat moment hoor ik stromend water, maar mijn ouders horen helemaal niets. 10 minuten later naderen we een grote fontein aan de andere kant van het UMCG, dat heb ik dus gehoord. Mijn gehoor versterkt en neemt het over van mijn zicht. Mijn lichaam probeert te compenseren. Ergens ver weg voelt dat zelfs goed.</p>
+
+<!-- END Content -->
+
+
+
+
+      {% include 'components/components.meta.html' %}
+
+    </div>
+
+  {% endcall %}
+
+  {% call wrapper('gradient') %}
+
+    <div class="l-single">
+      {% include 'components/components.comments.html' %}
+    </div>
+
+  {% endcall %}
+
+{% endblock %}

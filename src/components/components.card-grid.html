@@ -15,9 +15,9 @@
           <h2 class="c-heading c-heading--10"><a href="{{ card.url }}">{{ card.title }}</a></h2>
           <p>{{ card.content }}</p>
           <div class="c-card__meta">
-            {% if card.author %}
+            {% if card.author == 'aljan' %}
               <figure style="background-image: url('https://pbs.twimg.com/profile_images/478898190578487296/_osAxppr.jpeg');"></figure>
-              <small>Written by <a href="">{{ card.author }}</a></small><br>
+              <small>Written by <a href="http://twitter.com/aljanscholtens">{{ card.author }}</a></small><br>
             {% endif %}
             <small>{{ card.date }}</small>
           </div>
