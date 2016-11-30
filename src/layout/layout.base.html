@@ -17,15 +17,15 @@
 
 <body class="{% block var_body %}{% endblock %}">
 
-	{% include "components/components.sprite.nunjucks" %}
+	{% include "components/components.sprite.html" %}
 
-	{% include "components/components.navigation.nunjucks" %}
+	{% include "components/components.navigation.html" %}
 
 	{% block content %}{% endblock %}
 
-	{% include "components/components.footer.nunjucks" %}
+	{% include "components/components.footer.html" %}
 
-	{% include "components/components.navigation-mobile.nunjucks" %}
+	{% include "components/components.navigation-mobile.html" %}
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
   <script src="assets/scripts/scripts.js"></script>

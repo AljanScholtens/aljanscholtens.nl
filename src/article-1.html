@@ -1,4 +1,4 @@
-{% extends "layout/layout.base.nunjucks" %}
+{% extends "layout/layout.base.html" %}
 
 {% block meta_title %}Testerij{% endblock %}
 {% block meta_description %}{% endblock %}
@@ -18,7 +18,7 @@
 {% block content %}
 
   {% set header = true %} <!-- true is a large header, false is no header -->
-  {% include "components/components.header.nunjucks" %}
+  {% include "components/components.header.html" %}
 
   <div class="l-wrapper">
     <div class="l-container">
@@ -30,7 +30,7 @@
       </div>
 
       {% set video = 'https://www.youtube.com/embed/PJ-zjBtjTI0' %}
-      {% include "components/components.video.nunjucks" %}
+      {% include "components/components.video.html" %}
 
     </div>
   </div>
@@ -60,12 +60,12 @@
         ]
       ] %}
       {% set gallery_footnote = 'All these photos were taken with the Canon 6D and Tamron 150-600mm.' %}
-      {% include "components/components.gallery.nunjucks" %}
+      {% include "components/components.gallery.html" %}
       <!-- End Gallery -->
 
       <div class="l-single">
 
-        {% include "components/components.meta.nunjucks" %}
+        {% include "components/components.meta.html" %}
 
       </div>
     </div>
@@ -74,7 +74,7 @@
   <div class="l-wrapper l-wrapper--neutral-10-gradient">
     <div class="l-container">
       <div class="l-single">
-        {% include "components/components.comments.nunjucks" %}
+        {% include "components/components.comments.html" %}
       </div>
     </div>
   </div>
