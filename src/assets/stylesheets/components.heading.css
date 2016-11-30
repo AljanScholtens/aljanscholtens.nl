@@ -13,7 +13,8 @@
   line-height: 1.35em;
 }
 
-.c-heading--30 {
+.c-heading--30,
+.u-content h2 {
   font-size: 1.4rem;
   line-height: 1.2em;
 }

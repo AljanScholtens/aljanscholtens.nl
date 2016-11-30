@@ -1,0 +1,67 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Appelbergen' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '' %} <!-- Not required -->
+{% set page_thumbnail = '' %} <!-- Not required -->
+{% set navigation_selected = 'blog' %}
+
+{% set header = false %} <!-- true is a large header, false is no header -->
+{% set header_dark = false %}
+
+{% set blog_date = '15 November 2014' %}
+{% set blog_related = '' %} <!-- Not required -->
+{% set blog_related_url = '' %} <!-- Not required -->
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+
+
+
+<!-- START Content -->
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <p>Om mijn Canon 6D te testen op videokwaliteit en mogelijkheden heb ik een kleine video gemaakt in de Appelbergen. Het was vroeg in de ochtend en de zon scheen werkelijk prachtig.</p>
+
+    </div>
+
+    {% set video = 'https://www.youtube.com/embed/PJ-zjBtjTI0' %}
+    {% include 'components/components.video.html' %}
+
+    <div class="l-single">
+
+<!-- END Content -->
+
+
+
+
+      {% include 'components/components.meta.html' %}
+
+    </div>
+
+  {% endcall %}
+
+  {% call wrapper('gradient') %}
+
+    <div class="l-single">
+      {% include 'components/components.comments.html' %}
+    </div>
+
+  {% endcall %}
+
+{% endblock %}

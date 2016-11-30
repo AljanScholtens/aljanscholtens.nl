@@ -5,9 +5,8 @@
 .c-list {
   list-style: none;
   margin: -0.3rem 0 calc(var(--spacing) - 0.3rem) 0;
-}
 
-  .c-list__item {
+  & li {
     padding: .3rem 0 .3rem 2rem;
     position: relative;
 
@@ -25,10 +24,11 @@
       }
     }
   }
+}
 
 ul.c-list {
 
-  & .c-list__item:before {
+  & li:before {
     top: 1.15rem;
     height: 2px;
     width: 8px;
@@ -36,13 +36,13 @@ ul.c-list {
   }
 }
 
-.l-wrapper--neutral-70 .c-list__item:before {
+.l-wrapper--neutral-70 .c-list li:before {
   background: var(--color-primary-30);
 }
 
 ol.c-list {
 
-  & .c-list__item {
+  & li {
     counter-increment: list__counter;
 
     &:before {
