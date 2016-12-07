@@ -1,0 +1,68 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Gramobsessie' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '/assets/media/gramobsessie.jpg' %} <!-- Not required -->
+{% set page_thumbnail = '' %} <!-- Not required -->
+{% set navigation_selected = 'blog' %}
+
+{% set header = true %} <!-- true is a large header, false is no header -->
+{% set header_dark = true %}
+
+{% set blog_date = '28 April 2015' %}
+{% set blog_related = '' %} <!-- Not required -->
+{% set blog_related_url = '' %} <!-- Not required -->
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+
+
+
+<!-- START Content -->
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <p>Een piepklein matje van 350 gram voor 150 euro. Een groot matje van 800 gram kost maar een tientje. Een slaapzak van 1200 gram of 750 gram? Het prijsverschil ga ik niet eens noemen. Oh ja, en ik neem sowieso een statief van 1,6 kilogram mee!</p>
+
+      <p>Komende zomer ga ik met vijf andere malloten de hoogvlaktes van Noorwegen verkennen, het natuurgebied de Hardangervidda. In zeven dagen lopen we van Finse naar Odda met volledige bepakking op de rug. Dit jaar geen huttentocht met luxe warme maaltijden, een redelijk goed bed en vriendelijke mensen, maar een trektocht met tentjes, brandertjes en ander materiaal wat ons in leven moet gaan houden. Ik wil graag luchtig lopen en kunnen genieten van de omgeving in plaats van hijgend rond te dolen met een gewicht waar je u tegen zegt. Daarom ben ik op de grammetjes gaan letten.</p>
+
+      <p>Zonder eten, drinken en camera-apparatuur zit ik momenteel op 6kg en dan ben ik volledig zelfvoorzienend. Dat houdt in sowieso een tent, kookspullen + gas, matje, slaapzak en allerlei andere kleine zaken zoals tandpasta, zonnebril, hoofdlampje etc. Bij die 6kg zit nog geen eten, drinken en camera-apparatuur. Ik weet het allemaal precies, ik heb een Google Spreadsheet waarbij ik letterlijk alles heb gewogen op een keukenweegschaaltje.</p>
+
+      <p>Officieel mag ik mezelf nu lightweight bepakt noemen. Nog geen ultra-lightweight, dan moet je onder de 5kg zitten, maar dan betaal je je helemaal scheel. Kortom, de kans is aanwezig dat als ik geen statief meeneem van 1600 gram, dat het voor mij in Noorwegen goed te doen zal zijn. Het enige wat ik nog hoef te doen is fit worden.</p>
+
+      <p>Komend weekend gaan we een weekend oefenen. Dat houdt in gezellig lopen met volle bepakking door het Drentse landschap, ‘s Avonds een matige maaltijd bereiden op een klein brandertje en ‘s nachts slapen in een piepklein tentje. Niet iedereen zal er hetzelfde over denken als ik, maar in ieder geval heb ik er zin in! :-D</p>
+
+<!-- END Content -->
+
+
+
+
+      {% include 'components/components.meta.html' %}
+
+    </div>
+
+  {% endcall %}
+
+  {% call wrapper('gradient') %}
+
+    <div class="l-single">
+      {% include 'components/components.comments.html' %}
+    </div>
+
+  {% endcall %}
+
+{% endblock %}

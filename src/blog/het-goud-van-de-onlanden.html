@@ -1,0 +1,85 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Het Goud van de Onlanden' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '/assets/media/het-goud-van-de-onlanden/1.jpg' %} <!-- Not required -->
+{% set page_thumbnail = '' %} <!-- Not required -->
+{% set navigation_selected = 'blog' %}
+
+{% set header = true %} <!-- true is a large header, false is no header -->
+{% set header_dark = true %}
+
+{% set blog_date = '20 September 2015' %}
+{% set blog_related = 'Onlanden in de avond' %} <!-- Not required -->
+{% set blog_related_url = '/blog/onlanden-in-de-avond' %} <!-- Not required -->
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+
+
+
+<!-- START Content -->
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <p>Nogmaals ren ik de trap op; nu om mijn statief te pakken. Ik heb haast. De lucht ziet er prachtig uit en ik moet maken dat ik in de Onlanden kom. Ik bevestig mijn Canon 24mm F2.8 aan de camera, gooi mijn rugzak over mijn schouder en loop naar de auto.</p>
+
+      <p>Op het moment dat ik in de auto rijd spinnen er allerlei gedachten door mijn hoofd. Ben ik wel op tijd voor een mooie lucht? Wat is de beste plek voor een landschapsfoto vanavond? Waar parkeer ik de auto? Vooral de eerste vraag blijkt altijd een probleem, de natuur doet toch wel wat ze wil.</p>
+
+      <p>De auto zet ik neer aan de noordkant van de Onlanden, vlakbij Peizermade. Vervolgens loop ik de fietsbrug over met de camera al op mijn statief geklikt om daarna het bekende zandpad in te lopen waar vaak Baardmannetjes te vinden zijn.</p>
+
+      <p>De eerste landt op mijn wang, de tweede vliegt met een vaart recht in mijn oor en maakt een hels kabaal! De andere duizenden broertjes en zusjes duiken dan voor mij op. Het is zo’n zomerse dag in de moerassige Onlanden, vol met muggen. Eén tip: negeer ze, want veel keuze heb je niet.</p>
+
+      <p>Helaas verdwijnt het prachtige wolkendek al snel en blijf ik alleen over met de zon, duizenden muggen en een strakblauwe hemel waar ik niets mee kan. Ik besluit de groothoeklens te verwisselen voor de telelens om mijn vogelfotografie-ervaring op te schroeven. Terwijl ik probeer een vogeltje te fotograferen blijkt het tegenlicht door het riet echt prachtig te zijn op 600mm. Daardoor deze avond geen landschapsfoto’s, maar natuurfoto’s met tegenlicht van de late-avondzon.</p>
+
+    </div>
+
+    <!-- Gallery -->
+    {% set gallery = [
+      [
+        {img: '/assets/media/het-goud-van-de-onlanden/2.jpg', caption: '', cols: 50},
+        {img: '/assets/media/het-goud-van-de-onlanden/3.jpg', caption: '', cols: 50},
+        {img: '/assets/media/het-goud-van-de-onlanden/1.jpg', caption: '', cols: 50},
+        {img: '/assets/media/het-goud-van-de-onlanden/4.jpg', caption: '', cols: 50}
+      ]
+    ] %}
+    {% set gallery_footnote = 'De foto’s zijn 27 juni geschoten met de Canon 6D en de Tamron 150-600mm.' %}
+    {% include 'components/components.gallery.html' %}
+    <!-- End Gallery -->
+
+    <div class="l-single">
+
+<!-- END Content -->
+
+
+
+
+      {% include 'components/components.meta.html' %}
+
+    </div>
+
+  {% endcall %}
+
+  {% call wrapper('gradient') %}
+
+    <div class="l-single">
+      {% include 'components/components.comments.html' %}
+    </div>
+
+  {% endcall %}
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Pups geboren' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '/assets/media/pups-geboren/1.jpg' %} <!-- Not required -->
+{% set page_thumbnail = '' %} <!-- Not required -->
+{% set navigation_selected = 'blog' %}
+
+{% set header = true %} <!-- true is a large header, false is no header -->
+{% set header_dark = true %}
+
+{% set blog_date = '1 February 2016' %}
+{% set blog_related = 'Nikki 16 weken' %} <!-- Not required -->
+{% set blog_related_url = '/blog/nikki-16-weken' %} <!-- Not required -->
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+
+
+
+<!-- START Content -->
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <p>Afgelopen 8 januari zijn de pups geboren van Venna. Een prachtige Heidewachtel van <a href="http://www.westpolderjagers.nl/site/hoofdindex.php?Sid=9&Gid=5">de Westpolderjagers</a>. 8 pups, waarvan 5 teefjes en 3 reutjes. Wij mogen in maart een teefje mee naar huis brengen.</p>
+
+      <p>Een week geleden zijn we wezen kijken bij de kleine pups.</p>
+
+    </div>
+
+    <!-- Gallery -->
+    {% set gallery = [
+      [
+        {img: '/assets/media/pups-geboren/2.jpg', caption: '', cols: 50},
+        {img: '/assets/media/pups-geboren/3.jpg', caption: '', cols: 50},
+        {img: '/assets/media/pups-geboren/4.jpg', caption: '', cols: 50},
+        {img: '/assets/media/pups-geboren/5.jpg', caption: '', cols: 50}
+      ]
+    ] %}
+    {% set gallery_footnote = '' %}
+    {% include 'components/components.gallery.html' %}
+    <!-- End Gallery -->
+
+    <div class="l-single">
+
+      <p>Komende week bezoeken we de kennel nogmaals, dan zijn ze vier weken oud en al een stuk actiever.</p>
+
+<!-- END Content -->
+
+
+
+
+      {% include 'components/components.meta.html' %}
+
+    </div>
+
+  {% endcall %}
+
+  {% call wrapper('gradient') %}
+
+    <div class="l-single">
+      {% include 'components/components.comments.html' %}
+    </div>
+
+  {% endcall %}
+
+{% endblock %}
