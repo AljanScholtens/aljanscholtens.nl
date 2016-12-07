@@ -84,10 +84,6 @@
     {% include 'components/components.gallery.html' %}
     <!-- End Gallery -->
 
-  {% endcall %}
-
-  {% call wrapper('dark') %}
-
     <div class="l-single">
 
       <h2>Zonnige taferelen (Dag 3)</h2>
@@ -99,19 +95,19 @@
 
     </div>
 
-      <!-- Gallery -->
-      {% set gallery = [
-        [
-          {img: '/assets/media/the-fellowship-of-the-hardangervidda/11.jpg', caption: 'Michiel geniet van de zon', cols: 100},
-          {img: '/assets/media/the-fellowship-of-the-hardangervidda/12.jpg', caption: '', cols: 50},
-          {img: '/assets/media/the-fellowship-of-the-hardangervidda/13.jpg', caption: '', cols: 50},
-          {img: '/assets/media/the-fellowship-of-the-hardangervidda/14.jpg', caption: 'Proberen de vliegen te verjagen met vuur, onsuccesvol', cols: 50},
-          {img: '/assets/media/the-fellowship-of-the-hardangervidda/15.jpg', caption: '', cols: 50}
-        ]
-      ] %}
-      {% set gallery_footnote = '' %}
-      {% include 'components/components.gallery.html' %}
-      <!-- End Gallery -->
+    <!-- Gallery -->
+    {% set gallery = [
+      [
+        {img: '/assets/media/the-fellowship-of-the-hardangervidda/11.jpg', caption: 'Michiel geniet van de zon', cols: 100},
+        {img: '/assets/media/the-fellowship-of-the-hardangervidda/12.jpg', caption: '', cols: 50},
+        {img: '/assets/media/the-fellowship-of-the-hardangervidda/13.jpg', caption: '', cols: 50},
+        {img: '/assets/media/the-fellowship-of-the-hardangervidda/14.jpg', caption: 'Proberen de vliegen te verjagen met vuur, onsuccesvol', cols: 50},
+        {img: '/assets/media/the-fellowship-of-the-hardangervidda/15.jpg', caption: '', cols: 50}
+      ]
+    ] %}
+    {% set gallery_footnote = '' %}
+    {% include 'components/components.gallery.html' %}
+    <!-- End Gallery -->
 
     <div class="l-single">
 
@@ -133,10 +129,6 @@
     {% set gallery_footnote = '' %}
     {% include 'components/components.gallery.html' %}
     <!-- End Gallery -->
-
-  {% endcall %}
-
-  {% call wrapper() %}
 
     <div class="l-single">
 

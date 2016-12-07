@@ -1,0 +1,76 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Nikki 16 weken' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '/assets/media/nikki-16-weken/1.jpg' %} <!-- Not required -->
+{% set page_thumbnail = '' %} <!-- Not required -->
+{% set navigation_selected = 'blog' %}
+
+{% set header = true %} <!-- true is a large header, false is no header -->
+{% set header_dark = true %}
+
+{% set blog_date = '3 May 2016' %}
+{% set blog_related = 'Pups geboren' %} <!-- Not required -->
+{% set blog_related_url = '/blog/pups-geboren' %} <!-- Not required -->
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+
+
+
+<!-- START Content -->
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <p>Inmiddels is Nikki 8 weken bij ons. Ondeugend, enthousiast, maar ontzettend lief.</p>
+
+    </div>
+
+    <!-- Gallery -->
+    {% set gallery = [
+      [
+        {img: '/assets/media/nikki-16-weken/2.jpg', caption: '', cols: 33},
+        {img: '/assets/media/nikki-16-weken/3.jpg', caption: '', cols: 33},
+        {img: '/assets/media/nikki-16-weken/4.jpg', caption: '', cols: 33}
+      ]
+    ] %}
+    {% set gallery_footnote = '' %}
+    {% include 'components/components.gallery.html' %}
+    <!-- End Gallery -->
+
+    <div class="l-single">
+
+<!-- END Content -->
+
+
+
+
+      {% include 'components/components.meta.html' %}
+
+    </div>
+
+  {% endcall %}
+
+  {% call wrapper('gradient') %}
+
+    <div class="l-single">
+      {% include 'components/components.comments.html' %}
+    </div>
+
+  {% endcall %}
+
+{% endblock %}
