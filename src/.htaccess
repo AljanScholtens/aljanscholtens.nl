@@ -4,4 +4,4 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 
 ErrorDocument 404 /404
 
-Redirect 301 /blog/karwendel-huttentocht http://www.aljanscholtens.nl/karwendel-huttentocht
+Redirect 301 /karwendel-huttentocht /blog/karwendel-huttentocht
