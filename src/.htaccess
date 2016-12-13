@@ -5,3 +5,21 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 ErrorDocument 404 /404
 
 Redirect 301 /karwendel-huttentocht /blog/karwendel-huttentocht
+Redirect 301 /het-ruige-eilend-madeira /blog/het-ruige-eiland-madeira
+Redirect 301 /nikki-16-weken /blog/nikki-16-weken
+Redirect 301 /pups-geboren /blog/pups-geboren
+Redirect 301 /highlights-zuid-afrika /blog/highlights-zuid-afrika
+Redirect 301 /onlanden-in-de-avond /blog/onlanden-in-de-avond
+Redirect 301 /het-goud-van-de-onlanden /blog/het-goud-van-de-onlanden
+Redirect 301 /the-fellowship-of-the-hardangervidda /blog/the-fellowship-of-the-hardangervidda
+Redirect 301 /kies-een-vriend /blog/kies-een-vriend
+Redirect 301 /gramobsessie /blog/gramobsessie
+Redirect 301 /het-verhaal-van-de-trein /blog/het-verhaal-van-de-trein
+Redirect 301 /lacey-nikki-en-bas /blog/lacey-nikki-en-bas
+Redirect 301 /disconnected /blog/disconnected
+Redirect 301 /my-6-hour-workday /blog/my-6-hour-workday
+Redirect 301 /appelbergen /blog/appelbergen
+Redirect 301 /blind-fontein /blog/blind-fontein
+Redirect 301 /blind-erfenis /blog/blind-erfenis
+Redirect 301 /blind-broodje /blog/blind-broodje
+Redirect 301 /blind-samenvatting /blog/blind-samenvatting
