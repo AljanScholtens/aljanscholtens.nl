@@ -55,7 +55,10 @@ gulp.task('images', () =>
 
 gulp.task('media', () =>
   gulp.src('src/assets/media/**/*')
-    .pipe(smushit())
+    // .pipe(smushit())
+    // .pipe(imagemin({
+    //     progressive: true,
+    // }))
     .pipe(gulp.dest('dist/assets/media'))
 )
 
