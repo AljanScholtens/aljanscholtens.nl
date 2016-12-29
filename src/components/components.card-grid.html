@@ -5,10 +5,11 @@
       <li class="c-card {% if card.thumbnail %}c-card--image{% endif %}">
 
         {% if card.thumbnail %}
-          <figure class="c-card__image" style="background-image: url('{{ card.thumbnail }}');">
+          <div class="c-card__image">
+            <img class="js-lazy" data-original="{{ card.thumbnail }}">
             {% if card.caption %}<figcaption>{{ card.caption }}</figcaption>{% endif %}
             <a href="{{ card.url }}"></a>
-          </figure>
+          </div>
         {% endif %}
 
         <div class="c-card__content">

@@ -3,7 +3,7 @@
     <ul class="c-gallery">
       {% for image in row %}
       <li class="c-gallery__item c-gallery__item--{{ image.cols }}">
-        <img src="{{ image.img }}">
+        <img class="js-lazy" data-original="{{ image.img }}">
         {% if image.caption %}<figcaption class="c-gallery__figcaption">{{image.caption}}</figcaption>{% endif %}
       </li>
       {% endfor %}

@@ -9,6 +9,7 @@
     "browser-sync": "^2.17.3",
     "gulp": "latest",
     "gulp-cssnano": "latest",
+    "gulp-imagemin": "^3.1.1",
     "gulp-nunjucks": "latest",
     "gulp-postcss": "latest",
     "gulp-smushit": "^1.2.0",
@@ -19,6 +20,6 @@
   },
   "dependencies": {
     "connect-modrewrite": "^0.9.0",
-    "del": "^2.2.2"
+    "del": "^2.2.2",
   }
 }

@@ -3,14 +3,18 @@
   $(document).ready(function() {
 
     // Modal window
-    $('.js-modal__toggle').click(function() {
-      $('.c-modal').toggleClass('is-open');
-      $('body').toggleClass('u-overflow-hidden');
-    });
+    // $('.js-modal__toggle').click(function() {
+    //   $('.c-modal').toggleClass('is-open');
+    //   $('body').toggleClass('u-overflow-hidden');
+    // });
+    //
+    // // This makes all the content in a timeline item visible when in a small container
+    // $('.c-timeline__clickable').click(function() {
+    //   $(this).addClass('is-open');
+    // });
 
-    // This makes all the content in a timeline item visible when in a small container
-    $('.c-timeline__clickable').click(function() {
-      $(this).addClass('is-open');
+    $("img.js-lazy").lazyload({
+      threshold: 1000
     });
 
     // $('.c-timeline__clickable').click(function() {

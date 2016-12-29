@@ -5,10 +5,11 @@ var cssnano = require('gulp-cssnano')
 var atImport = require('postcss-import')
 var lost = require('lost')
 var cssnext = require('postcss-cssnext')
+var imagemin = require('gulp-imagemin')
 var nunjucks = require('gulp-nunjucks')
 var browserSync = require('browser-sync').create()
 var modRewrite  = require('connect-modrewrite')
-var smushit = require('gulp-smushit');
+// var smushit = require('gulp-smushit');
 var del = require('del');
 
 gulp.task('default', ['clean', 'serve'])
@@ -32,7 +33,7 @@ gulp.task('watch', function() {
   gulp.watch('src/**/*.html', ['html'])
   gulp.watch('src/assets/stylesheets/**/*.css', ['css'])
   gulp.watch('src/assets/images/**/*', ['images'])
-  gulp.watch('src/assets/media/**/*', ['media'])
+  gulp.watch('src/media/**/*', ['media'])
   gulp.watch('src/assets/scripts/**/*', ['scripts'])
 })
 
@@ -54,12 +55,15 @@ gulp.task('images', () =>
 )
 
 gulp.task('media', () =>
-  gulp.src('src/assets/media/**/*')
-    // .pipe(smushit())
-    // .pipe(imagemin({
-    //     progressive: true,
-    // }))
-    .pipe(gulp.dest('dist/assets/media'))
+  gulp.src('src/media/**/*')
+  .pipe(imagemin({
+      optimizationLevel: 5,
+      progressive: true,
+      interlaced: true,
+      multipass: true,
+      use: [imagemin.jpegtran({ max: 80 })],
+    }))
+    .pipe(gulp.dest('dist/media'))
 )
 
 gulp.task('scripts', () =>
