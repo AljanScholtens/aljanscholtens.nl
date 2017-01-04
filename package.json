@@ -10,10 +10,13 @@
     "gulp": "latest",
     "gulp-cssnano": "latest",
     "gulp-imagemin": "^3.1.1",
+    "gulp-imageoptim": "^1.0.8",
     "gulp-nunjucks": "latest",
     "gulp-postcss": "latest",
     "gulp-smushit": "^1.2.0",
     "gulp-sourcemaps": "latest",
+    "gulp-util": "^3.0.8",
+    "imagemin-mozjpeg": "^6.0.0",
     "lost": "latest",
     "postcss-cssnext": "latest",
     "postcss-import": "latest"
@@ -21,5 +24,7 @@
   "dependencies": {
     "connect-modrewrite": "^0.9.0",
     "del": "^2.2.2",
+    "imagemin-jpegoptim": "^5.0.0",
+    "imagemin-jpegtran": "^5.0.2"
   }
 }
