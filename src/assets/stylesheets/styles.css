@@ -36,6 +36,7 @@
  * Icon.................Icons
  * Label................Labels
  * List.................List
+ * Logo-grid............Logo Grid
  * Media................Media
  * Messages.............Messages
  * Navigation-mobile....Navigation-mobile
@@ -92,6 +93,7 @@
 @import "components.icon.css";
 /*@import "components.label.css";*/
 @import "components.list.css";
+@import "components.logo-grid.css";
 @import "components.media.css";
 /*@import "components.messages.css";*/
 @import "components.navigation-mobile.css";

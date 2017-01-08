@@ -2,15 +2,15 @@
 
 {% from 'components/components.wrapper.html' import wrapper %}
 
-{% set page_title = 'Design' %}
+{% set page_title = 'Freelance interface designer' %}
 {% set page_subtitle = '' %} <!-- Not required -->
 {% set page_description = '' %} <!-- Not required -->
-{% set page_photo = '/media/1.jpg' %}
-{% set page_thumbnail = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %}
+{% set page_photo = '/media/design.jpg' %}
+{% set page_thumbnail = '' %}
 {% set navigation_selected = 'design' %}
 
-{% set header = false %} <!-- true is a large header, false is no header -->
-{% set header_dark = false %}
+{% set header = true %} <!-- true is a large header, false is no header -->
+{% set header_dark = true %}
 
 {% block content %}
 
@@ -26,11 +26,76 @@
         {% include 'components/components.header.html' %}
       {% endif %}
 
-      <p class="c-paragraph c-paragraph--lead">This is all about design.</p>
+      <p class="c-paragraph c-paragraph--lead">Ik ontwerp <a href="https://medium.com/eightshapes-llc/a-design-system-isn-t-a-project-it-s-a-product-serving-products-74dcfffef935">design systems</a> die resulteren in consistente webapps of websites. Met mijn ervaring in branding en ondernemerschap kan ik een design system organisatiebreed inzetten.</p>
 
-      <p>You can contact me at <a href="mailto:aljan@scholtens.me" target="_blank">aljan@scholtens.me</a>.</p>
+      <p>Mail me op <a href="mailto:aljan@scholtens.me">aljan@scholtens.me</a> of bel 06 133 689 01.</p>
+
+      <h2>Werkwijze</h2>
+      <p>Ik stel vragen en leid brainstormsessies. Daarna volgen vele schetsen waarvan een aantal wordt uitgewerkt in een ontwerp. Vervolgens wordt een op component gebaseerde style guide ingericht middels een CSS Prototype (mogelijk implementeerbare code) en kunnen pagina's samengesteld worden. Zo creëren we samen een logisch en vertrouwd digitaal product wat eenvoudig doorontwikkeld kan worden.</p>
+
+      <h2>Opdrachtgevers</h2>
+      <p>Een greep uit de opdrachtgevers waar ik in het verleden of momenteel mee samenwerk.
+      <ul class="c-logo-grid">
+        <li class="c-logo-grid__item">
+          <img src="/assets/images/logo-voys.png" />
+        </li>
+        <li class="c-logo-grid__item">
+          <img src="/assets/images/logo-topicus.png" />
+        </li>
+        <li class="c-logo-grid__item">
+          <img src="/assets/images/logo-payt.png" />
+        </li>
+        <li class="c-logo-grid__item">
+          <img src="/assets/images/logo-nos.jpg" />
+        </li>
+        <li class="c-logo-grid__item">
+          <img src="/assets/images/logo-dacom.png" />
+        </li>
+        <li class="c-logo-grid__item">
+          <img src="/assets/images/logo-parnassys.png" />
+        </li>
+        <li class="c-logo-grid__item">
+          <img src="/assets/images/logo-ov.png" />
+        </li>
+        <li class="c-logo-grid__item">
+          <img src="/assets/images/logo-debibliotheek.png" />
+        </li>
+      </ul>
+
+      <h2>Praktisch</h2>
+      <p>Het liefst draai ik op vaste dagen mee met het design- of ontwikkelteam op jouw locatie. Zo zorg ik ervoor dat binnen de organisatie design thinking sterker wordt.</p>
+
+      <p>Naast mijn rol als interface designer ben ik ook in te schakelen als product owner of lead designer.</p>
+
+      <p>Wat doe ik nog meer: interaction design, visual design, HTML, CSS, accessibility, design testing. Wat doe ik niet: online marketing, javascript, back-end code, drukwerk, illustraties, content strategie.</p>
+
+      <h2>Meer</h2>
+      <ul class="c-list">
+        <li>Naast mijn vaste projecten ontwikkel ik een <a href="https://github.com/AljanScholtens/taiga-boilerplate">CSS prototyping framework</a>; te vinden op Github. </li>
+        <li>Samen met Ron van de Graaf organiseer ik iedere twee maanden een <a href="https://www.meetup.com/refresh-groningen/">design &amp; front-end meet-up</a> genaamd Refresh.</li>
+        <li>De <a href="https://github.com/AljanScholtens/aljanscholtens.nl">code van deze website</a> is te vinden op Github.</li>
+      </ul>
+
+      <h2>Zet me in</h2>
+      <p>Interesse? Ik spreek graag af om kennis te maken. Mail me op <a href="mailto:aljan@scholtens.me">aljan@scholtens.me</a> of bel 06 133 689 01.</p>
+
+      <p>Ook ben ik bereikbaar via <a href="https://www.jellow.nl/">Jellow</a>, <a href="http://twitter.com/aljanscholtens">Twitter</a>, <a href="https://www.linkedin.com/in/aljanscholtens">LinkedIn</a>, <a href="http://dribbble.com/aljan">Dribbble</a> en <a href="http://instagram.com/aljan">Instagram</a>.</p>
 
     </div>
+
+    <!-- Gallery -->
+    {% set gallery = [
+      [
+        {img: '/media/design/aljanscholtens-1.jpg', caption: '', cols: 60},
+        {img: '/media/design/aljanscholtens-2.jpg', caption: '', cols: 40},
+        {img: '/media/design/aljanscholtens-3.jpg', caption: '', cols: 33},
+        {img: '/media/design/aljanscholtens-4.jpg', caption: '', cols: 33},
+        {img: '/media/design/aljanscholtens-5.jpg', caption: '', cols: 33}
+      ]
+    ] %}
+    {% set gallery_footnote = '' %}
+    {#}{% include 'components/components.gallery.html' %}#}
+    <!-- End Gallery -->
 
   {% endcall %}
 
