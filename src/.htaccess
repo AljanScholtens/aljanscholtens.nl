@@ -4,6 +4,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 
 ErrorDocument 404 /404
 
+Redirect 301 /blog /
 Redirect 301 /karwendel-huttentocht /blog/karwendel-huttentocht
 Redirect 301 /het-ruige-eilend-madeira /blog/het-ruige-eiland-madeira
 Redirect 301 /nikki-16-weken /blog/nikki-16-weken

@@ -12,6 +12,14 @@
   }
 }
 
+.l-single > .c-gallery-wrapper {
+
+  @media (--breakpoint-30) {
+    margin-bottom: var(--spacing);
+    padding-top: 0;
+  }
+}
+
 .c-gallery {
   list-style: none;
   margin: 0;
