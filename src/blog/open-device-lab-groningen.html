@@ -1,0 +1,95 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Open Device Lab Groningen' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '' %} <!-- Not required -->
+{% set page_thumbnail = '' %} <!-- Not required -->
+{% set navigation_selected = 'blog' %}
+
+{% set header = false %} <!-- true is a large header, false is no header -->
+{% set header_dark = false %}
+
+{% set blog_date = '30 November 2012' %}
+{% set blog_related = '' %} <!-- Not required -->
+{% set blog_related_url = '' %} <!-- Not required -->
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+
+
+
+<!-- START Content -->
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <!-- Gallery -->
+      {% set gallery = [
+        [
+          {img: '/media/weg-met-photoshop.jpg', caption: '', cols: 100}
+        ]
+      ] %}
+      {% include 'components/components.gallery.html' %}
+      <!-- End Gallery -->
+
+      <p>Testen of je responsive website of native app goed werkt kan in een klein team of als freelancer lastig zijn. Daarvoor heb je devices nodig. Deze kun je zelf regelen, of je gaat op zoek naar een locatie met veel devices waar je mag testen. In dat geval zou een <a href="http://mobile.smashingmagazine.com/2012/09/24/establishing-an-open-device-lab/">Open Device Lab</a> erg fijn zijn. Deze ontbreekt helaas in Groningen.</p>
+
+      <p>Dagelijks werken wij aan responsive websites en webapplicaties. Testen is erg lastig als iedereen op kantoor een iPhone of iPad heeft. Daarom maak ik regelmatig gebruik van familie en vrienden om op Windows Phone en Android devices te testen. Verre van ideaal.</p>
+
+      <h2>Waarom zo extreem testen?</h2>
+      <ol class="c-list">
+        <li>Resoluties verschillen op honderden devices. Wij moeten ervoor zorgen dat onze websites en applicaties hier goed op werken. Dus laten we verder kijken dan de media query breakpoints voor iPad en iPhone.</li>
+        <li>Er wordt qua fluid en responsiveness vaak te weinig getest in de hoogte. Op een device wordt je geforceerd om hiermee rekening te houden.</li>
+        <li>Performance van devices test je niet in een emulator; hiervoor heb je toch echt het device zelf nodig.</li>
+        <li>In browsers van devices zijn veel onverwachte bugs te vinden die je niet in je desktop browser zult tegenkomen.</li>
+      </ol>
+
+      <p>Kort gezegd; testen is van belang voor zowel kleine als grote projecten. Daarom ben ik op zoek naar manieren om dit het beste te faciliteren. Ik zoek daarom zoveel mogelijk designers en front-end developers die hier baat bij hebben. Samen met onder andere <a href="http://twitter.com/krisdejong">Kris de Jong</a>, <a href="http://twitter.com/baardbaard">Stef Thoen</a> en <a href="http://twitter.com/bramwillemse">Bram Willemse</a> ben ik tot de volgende opties gekomen:</p>
+
+      <ol class="c-list">
+        <li>Een Open Device Lab in centraal Groningen. Je kan overdag altijd binnenlopen en de devices zijn veilig. Hierbij kan een testomgeving opgezet worden met bijvoorbeeld Adobe Edge Inspect. Ongebruikte devices kunnen door collega’s, vrienden en familie in bruikleen aangeboden worden. Een solide en degelijk Open Device Lab, zoals velen van ons kennen, zou een oplossing kunnen zijn. Maar, is het echt nodig? Laten we naar de alternatieven kijken.</li>
+        <li>Een hybride Open Device Lab waarbij op een aantal locaties meerdere devices liggen en deze gemakkelijk uitgewisseld kunnen worden. Eén persoon zorgt voor het beheer en distributie.</li>
+        <li>Een Open Device Community. Dit zie ik meer als een online lijst waarbij mensen zich kunnen aanmelden als je je device (ook al is het maar één) en locatie ter beschikking wilt stellen. Dus kort gezegd: wil je testen, dan check je de lijst op het juiste device en de locatie en stuur je diegene een mail of tweet om een afspraak te maken.</li>
+      </ol>
+
+      <h2>Afspreken?</h2>
+      <p>Waarschijnlijk zijn er meer mooie mogelijkheden. Heb je hier ideeën over, dan spreek ik graag met je af. Mail me op <a href="mailto:aljan@studiowolf.nl">aljan@studiowolf.nl</a>.</p>
+
+      <h2>Starten Open Device Community</h2>
+      <p>Het lijkt me sowieso een goed idee om het laatste idee tot uitvoer te gaan brengen. Dus heb je één of meerdere devices en sta je er open voor om hierop te testen? Mail dan je <strong>naam</strong> en <strong>devices</strong> naar <a href="mailto:aljan@studiowolf.nl">aljan@studiowolf.nl</a>. Ik zal zorgen voor een online lijst.</p>
+
+      <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
+
+<!-- END Content -->
+
+
+
+
+      {% include 'components/components.meta.html' %}
+
+    </div>
+
+  {% endcall %}
+
+  {% call wrapper('gradient') %}
+
+    <div class="l-single">
+      {% include 'components/components.comments.html' %}
+    </div>
+
+  {% endcall %}
+
+{% endblock %}
