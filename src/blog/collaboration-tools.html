@@ -1,0 +1,104 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Collaboration tools' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '' %} <!-- Not required -->
+{% set page_thumbnail = '' %} <!-- Not required -->
+{% set navigation_selected = 'blog' %}
+
+{% set header = false %} <!-- true is a large header, false is no header -->
+{% set header_dark = false %}
+
+{% set blog_date = '3 May 2013' %}
+{% set blog_related = '' %} <!-- Not required -->
+{% set blog_related_url = '' %} <!-- Not required -->
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+
+
+
+<!-- START Content -->
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <!-- Gallery -->
+      {% set gallery = [
+        [
+          {img: '/media/collaboration-tools.jpg', caption: '', cols: 100}
+        ]
+      ] %}
+      {% include 'components/components.gallery.html' %}
+      <!-- End Gallery -->
+
+      <p>Binnen Studio Wolf zijn we continu op zoek naar mooie tools die efficiëntie en kwaliteit kunnen verbeteren. Hieronder vertel ik over drie belangrijke collaboration tools die we dagelijks gebruiken.</p>
+
+      <h2>Dropbox (for business)</h2>
+      <p>Een belangrijke tool voor ons is <a href="http://dropbox.com/">Dropbox</a>. Het zorgt ervoor dat we alle bestanden (PSD’s, voorstellen, beeldmateriaal) op één plek hebben. En dat is nodig.</p>
+
+      <p>Vlak voordat Kris begin 2012 bij ons team aansloot liepen we tegen de de volgende vraag aan: hoe kunnen we per direct verder werken aan een project als de verantwoordelijke designer vakantie heeft of om een andere reden afwezig is?</p>
+
+      <p>Een fileserver is geen oplossing, omdat deze op een vaste locatie staat en deze ingericht moet worden. Destijds hebben we besloten om ‘<a href="https://www.dropbox.com/business">Dropbox for business</a>‘ te kiezen, waarbij je 1 Terabyte (Fair use policy) aan ruimte tot je beschikking hebt voor 750 dollar per jaar t/m 5 personen.</p>
+
+      <p>Dankzij Dropbox hebben we nooit het probleem dat we bestanden niet hebben of niet kunnen vinden. Daarnaast heb je direct een solide back-up en zijn je bestanden overal beschikbaar.</p>
+
+      <p>Side note: Alle HTML/CSS staat niet in Dropbox, maar in GIT repositories bij <a href="http://bitbucket.org/">Bitbucket</a>.</p>
+
+      <h2>Flow</h2>
+      <p>Things, Wunderlist, Doit, Nirvana, Orchestra. Allemaal task-managers die we geprobeerd hebben. Helaas werkte geen van allen zo efficiënt als <a href="http://www.getflow.com/">Flow</a>.</p>
+
+      <p>Het fijne van Flow is dat je snel taken kan aanmaken; binnen projecten, op datum en dat je de optie hebt om te delegeren binnen het team. Diverse overzichten zijn erg handig, bijvoorbeeld het maandoverzicht bij het plannen van projecten.</p>
+
+      <p>Flow is onmisbaar geworden, vooral omdat we tegenwoordig zoveel taken hebben dat je ze moeilijk allemaal kunt onthouden. Vergeten iemand terug te bellen is erg zonde en vervelend. Discipline en tijd inschatten (voor zover mensen dat kunnen) zijn wel vereiste eigenschappen.</p>
+
+      <p>Flow heeft ook een <a href="http://www.getflow.com/tour/flow-for-ios/">iPhone</a>, <a href="http://www.getflow.com/tour/flow-for-ios/">iPad</a> en <a href="http://www.getflow.com/tour/flow-for-mac/">Mac</a> app (Geen Android of Windows Phone, maar dat maakt in ons geval niet uit). Middels deze apps gebruik ik Flow ook privé, omdat ik nog wel eens vergeet te stofzuigen. ;-)</p>
+
+      <p>Een <a href="http://www.getflow.com/future/">nieuwe versie</a> van Flow zit er aan te komen waar ik erg naar uit kijk.</p>
+
+      <h2>Hipchat</h2>
+      <p>Deze applicatie gebruiken we sinds Tom bij het team is gekomen. Van tevoren wisten we dat je met meer mensen in een ruimte sneller afgeleid wordt.</p>
+
+      <p>Met <a href="https://www.hipchat.com/">Hipchat</a> voorkomen we dat iedereen mee gaat doen aan conversaties en kan iedereen in zijn flow blijven. Dus alleen chatterij met diegene die je nodig hebt voor vragen.</p>
+
+      <p>Hipchat heeft een erg goede <a href="https://www.hipchat.com/mac">Mac App</a> (beta) en is tot 5 personen gratis. Bedankt <a href="https://twitter.com/tomdev">@Tomdev</a> voor de suggestie. ;-)</p>
+
+      <h2>Meer</h2>
+
+      <p>Binnenkort workflow tools met onder andere: Photoshop CS6, Sublime Text 2, LiveReload, iTerm en meer.</p>
+
+      <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
+
+<!-- END Content -->
+
+
+
+
+      {% include 'components/components.meta.html' %}
+
+    </div>
+
+  {% endcall %}
+
+  {% call wrapper('gradient') %}
+
+    <div class="l-single">
+      {% include 'components/components.comments.html' %}
+    </div>
+
+  {% endcall %}
+
+{% endblock %}

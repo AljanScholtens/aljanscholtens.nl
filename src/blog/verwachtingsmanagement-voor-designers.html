@@ -1,0 +1,108 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Verwachtingsmanagement voor designers' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '' %} <!-- Not required -->
+{% set page_thumbnail = '' %} <!-- Not required -->
+{% set navigation_selected = 'blog' %}
+
+{% set header = false %} <!-- true is a large header, false is no header -->
+{% set header_dark = false %}
+
+{% set blog_date = '24 January 2014' %}
+{% set blog_related = '' %} <!-- Not required -->
+{% set blog_related_url = '' %} <!-- Not required -->
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+
+
+
+<!-- START Content -->
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <!-- Gallery -->
+      {% set gallery = [
+        [
+          {img: '/media/verwachtingsmanagement-voor-designers.jpg', caption: '', cols: 100}
+        ]
+      ] %}
+      {% include 'components/components.gallery.html' %}
+      <!-- End Gallery -->
+
+      <p>Als designers hebben we te maken met verwachtingen van opdrachtgevers. Voordat ze bij je komen hebben ze al een idee hoe het eindproduct moet worden, ook al denken ze dit niet te weten. Dit is menselijk en zit in ons onderbewustzijn.</p>
+
+      <p>Deze verwachtingen zijn voor ons als designers niet altijd even gunstig. Een voorbeeld: je spreekt met de opdrachtgever af om het project door te spreken. Een paar weken later presenteer je het Photoshop ontwerp (<a title="Weg met Photoshop?" href="http://www.studiowolf.nl/notes/weg-met-photoshop/">of browser-ontwerp</a>). De opdrachtgever reageert met dat hij het vreselijk vindt. Dus kun je opnieuw aan de ‘ontwerptafel’.</p>
+
+      <p>Dat de opdrachtgever het vreselijk vindt, is <strong>onze fout</strong>. Het is onze taak om de opdrachtgever mee te nemen in de wereld van het web. Wij weten wat de beste manieren zijn om om te gaan met flows, indeling en merk. Daarom is het meenemen van de opdrachtgever in een degelijk proces van belang. Hiermee creëren we de verwachting.</p>
+
+      <p>Onze opdrachtgevers worden betrokken bij bijna ieder onderdeel van het ontwerptraject. Denk daarbij aan de volgende onderdelen:</p>
+
+      <ul class="c-list">
+        <li>Brainstorm;</li>
+        <li>Card sorting;</li>
+        <li>Flows uitleggen;</li>
+        <li>Structuur bepalen;</li>
+        <li>Schetsen;</li>
+        <li>Sfeerimpressie;</li>
+        <li>Prototype (eindproduct);</li>
+        <li>Ontwerp in HTML/CSS.</li>
+      </ul>
+
+      <p>De belangrijkste onderdelen om de standaard ingeprente verwachting te dempen zijn de schetsen en de sfeerimpressie. Schetsen geven aan wat de indeling gaat worden van de pagina’s, de sfeerimpressie is een soort digitaal moodboard waarbij we aangeven wat het gevoel van de website gaat worden. Denk hierbij aan het design van individuele elementen, zoals buttons, fotografie, headers, maar ook gekozen kleuren, typografie en project-specifieke elementen. Dit helpt de opdrachtgever om zich een nieuw beeld te schetsen van het eindproduct.</p>
+
+      <h2>Voorbeelden sfeerimpressies</h2>
+      <p>Hierbij een aantal voorbeelden van sfeerimpressies door de jaren heen.</p>
+
+      <p><small>2013 – ParnasSys</small></p>
+      <figure class="c-media"><img src="/media/verwachtingsmanagement-voor-designers-1.png" class="c-media__image"></figure>
+
+      <p><small>2011 – Ethnic Chic</small></p>
+      <figure class="c-media"><img src="/media/verwachtingsmanagement-voor-designers-2.jpg" class="c-media__image"></figure>
+
+      <p><small>2009 – Aquaverium</small></p>
+      <figure class="c-media"><img src="/media/verwachtingsmanagement-voor-designers-3.png" class="c-media__image"></figure>
+
+      <p>Doordat de opdrachtgever de schetsen en sfeerimpressie los van elkaar ziet, wordt er automatisch een nieuwe verwachting gecreëerd die aansluit bij het eindproduct.</p>
+
+      <p>Voordat we met sfeerimpressies werkten werd er regelmatig een ontwerp afgekeurd vanwege misverwachtingen. Sinds augustus 2009 hebben we ongeveer <strong>105 sfeerimpressies ontworpen</strong>, vanaf dat moment is er nog nooit één afgekeurd.</p>
+
+      <p>Het blijkt dat als we als designers aan verwachtingsmanagement doen we efficiënter en betere samenwerkingen creëren en dus voor iedereen een sterker eindresultaat.</p>
+
+      <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
+
+<!-- END Content -->
+
+
+
+
+      {% include 'components/components.meta.html' %}
+
+    </div>
+
+  {% endcall %}
+
+  {% call wrapper('gradient') %}
+
+    <div class="l-single">
+      {% include 'components/components.comments.html' %}
+    </div>
+
+  {% endcall %}
+
+{% endblock %}

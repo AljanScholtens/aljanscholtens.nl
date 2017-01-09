@@ -1,0 +1,113 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = '2012: Een spectaculair jaar' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '' %} <!-- Not required -->
+{% set page_thumbnail = '' %} <!-- Not required -->
+{% set navigation_selected = 'blog' %}
+
+{% set header = false %} <!-- true is a large header, false is no header -->
+{% set header_dark = false %}
+
+{% set blog_date = '31 December 2012' %}
+{% set blog_related = '' %} <!-- Not required -->
+{% set blog_related_url = '' %} <!-- Not required -->
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+
+
+
+<!-- START Content -->
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <!-- Gallery -->
+      {% set gallery = [
+        [
+          {img: '/media/2012-een-spectaculair-jaar.jpg', caption: '', cols: 100}
+        ]
+      ] %}
+      {% include 'components/components.gallery.html' %}
+      <!-- End Gallery -->
+
+      <p>Het afgelopen jaar, is zoals voor velen, een druk jaar geweest. Vooral veel verandering en hard werken tekenen dit jaar. Omdat we allemaal van overzichtjes houden aan het eind van het jaar: ons jaar in een overzicht.</p>
+
+      <h2>Kris</h2>
+      <p>Het begon in februari. Kris sloot zich aan als interface designer bij Studio Wolf. Voor ons een grote stap. De stap naar de eerste werknemer schijnt de grootste te zijn, dus dat scheelt. Met z’n drieën gingen we er tegenaan.</p>
+
+      <h2>Identiteit</h2>
+      <p>Misschien wel de grootste verandering van dit jaar: de lancering van onze nieuwe identiteit (en logo) tijdens de Nacht van Kunst en Wetenschap in de Heymanszaal van het Academiegebouw. Samen met de vrienden van Studio Wolf maakten we er een mooi feestje van. Een nieuwe huisstijl die beter ons verhaal vertelt; responsive interface design. Design voor alle apparaten.</p>
+
+      <h2>Taiga en Adaptive content</h2>
+      <p>Het mooie van responsive interface design is, dat het niet alleen maar om vormgeving gaat, maar ook steeds meer om de technieken daarachter. Het hele verhaal, van sfeer tot techniek moet kloppen om een écht responsive resultaat te bereiken.</p>
+
+      <p>Vanuit die filosofie is Taiga geboren. Taiga is een omgeving met een grid dat de responsive basis van een website of webapplicatie klaarlegt. Taiga is open source en voor iedereen gratis te gebruiken.</p>
+
+      <p>Naast Taiga werken we aan manieren om het principe van adaptive content toe te passen op de websites die we leveren (nog in de kinderschoenen). We raden je aan om deze <a href="https://karenmcgrane.com/2012/09/04/adapting-ourselves-to-adaptive-content-video-slides-and-transcript-oh-my/">video van Karen McGrane</a> te bekijken als je precies wilt weten wat het is. In de basis draait het om content, daarna pas om design en uitvoering.</p>
+
+      <h2>Responsive Workflow</h2>
+      <p>Niet alleen de producten die we maken, maar ook de manier waarop we werken veranderd. Het afgelopen half jaar is ook onze workflow meer responsive geworden. Weg met de waterval-methode, en zo snel mogelijk werken aan het eindproduct. Het stappenplan is daarop aangepast. Zo werken we bijvoorbeeld met Topicus aan een project via de SCRUM ontwikkelmethode. Mijn ervaring daarmee deel ik graag later nog een keer met jullie. Het vereist in ieder geval een andere manier van kijken en extreme flexibiliteit van de interface designer.</p>
+
+      <h2>Smashing Conference</h2>
+      <p>Geen verbetering zonder te leren. Ik wilde altijd al een keertje naar een grote conferentie. Dit jaar vond de eerste conferentie van <a href="http://smashingmagazine.com">Smashing Magazine</a> plaats in Freiburg, Duitsland. Met het team, en samen met een paar honderd gelijkgestemden namen we deel aan deze conferentie. Veel opgestoken. Iets dat ik iedereen kan aanbevelen.</p>
+
+      <h2>Design en front-end borrel</h2>
+      <p>Wij geloven erin dat de interface designer ook de front-end developer moet zijn. Om deze gedachte te bespreken met andere interface designers en front-end developers hebben Stef Thoen (<a href="https://twitter.com/baardbaard">@BaardBaard</a>) en ik een borrel georganiseerd. Of nou ja, eerder een toffe bijeenkomst die zo nu en dan plaats gaat vinden met een biertje erbij.</p>
+
+      <h2>Klanten</h2>
+      <p>Niet minder belangrijk, of eigenlijk, het meest belangrijk: onze klanten. Het is een prachtig jaar geweest en we hebben met geweldige mensen mogen samenwerken. Iedereen bedankt daarvoor. Een aantal mensen willen we speciaal bedanken die bijgedragen hebben aan de vorming van Studio Wolf zoals het nu is:</p>
+
+      <ul class="c-list">
+        <li>Mark Vletter en Erwin de Vries van <a href="http://www.voys.nl">Voys Telecom</a>;</li>
+        <li>Dirk-Jan Huizingh, Aimée Otte en Joshua Peper van <a href="http://www.peperzaken.nl/">Peperzaken</a>;</li>
+        <li>Koos Onderwater van KPN;</li>
+        <li>Andrea Kolrusch van de <a href="http://live.schaatsen.nl/">KNSB</a>;</li>
+        <li>Johan Stokking van <a href="http://www.emando.nl/">Emando</a>;</li>
+        <li>Marco van der Niet van <a href="http://www.topicus.nl">Topicus Onderwijs</a>;</li>
+        <li>En tot slot: Erik Rutkens van <a href="http://www.insitegroep.nl/">Insite Advies</a>.</li>
+      </ul>
+
+      <h2>2013</h2>
+      <p>Komend jaar gaat het jaar van adaptive interface design worden (vertel ik later in een note meer over). We gaan nog een stapje verder. Onze workflow zullen we continu aangepassen, maar de core-principes van Studio Wolf, zoals een iteratieve werkwijze, een informele sfeer, kwaliteit leveren en afspraken nakomen zullen absoluut gewaarborgd blijven.</p>
+
+      <p><strong>Bedankt en op naar een succesvol 2013!</strong></p>
+
+      <p>Aljan &amp; Tim</p>
+
+      <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
+
+<!-- END Content -->
+
+
+
+
+      {% include 'components/components.meta.html' %}
+
+    </div>
+
+  {% endcall %}
+
+  {% call wrapper('gradient') %}
+
+    <div class="l-single">
+      {% include 'components/components.comments.html' %}
+    </div>
+
+  {% endcall %}
+
+{% endblock %}
