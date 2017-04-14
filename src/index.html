@@ -2,12 +2,12 @@
 
 {% from 'components/components.wrapper.html' import wrapper %}
 
-{% set page_title = 'I’m Aljan. I design interfaces and compose landscape photos.' %}
-{% set page_subtitle = 'Occasionally I write about my dog, hiking and life.' %} <!-- Not required -->
+{% set page_title = "Ik ben Aljan. Ik design interfaces en composeer landschapsfoto's" %}
+{% set page_subtitle = '' %} <!-- Not required -->
 {% set page_description = '' %} <!-- Not required -->
-{% set page_photo = '/media/frontpage-2.jpg' %}
-{% set page_thumbnail = '/media/frontpage-2.jpg' %}
-{% set navigation_selected = 'blog' %}
+{% set page_photo = '/media/aljanscholtens.jpg' %}
+{% set page_thumbnail = '' %}
+{% set navigation_selected = '' %}
 
 {% set header = true %} <!-- true is a large header, false is no header -->
 {% set header_dark = true %}
@@ -26,7 +26,8 @@
         {% include 'components/components.header.html' %}
       {% endif %}
 
-      {# <p class="c-paragraph c-paragraph--lead">Symbols by their ID elsewhere in the HTML. If we don't do this, Safari won't show the images. We'll include the SVG just after the body opening tag. This is necessery because we will get symbols by their ID elsewhere in the HTML. If we don't do this, Safari won't show the images.</p> #}
+      {# <p class="c-paragraph c-paragraph--lead">Heeft jouw organisatie te maken met inconsistente interfaces en onnodige herhaling in design? Ik help organisaties design te schalen via <a href="https://medium.com/eightshapes-llc/a-design-system-isn-t-a-project-it-s-a-product-serving-products-74dcfffef935">design systems</a>. Met mijn ervaring in branding en ondernemerschap kan ik een design system organisatiebreed inzetten.</p> #}
+
     </div>
 
     <div class="l-single-wide">
@@ -34,396 +35,30 @@
       {% set card_grid = [
         [
           {
-            url: '/blog/nikki-de-heidewachtel-1-jaar',
-            title: 'Nikki de Heidewachtel 1 jaar',
-            content: 'Als kleine jongen was ik al gek op honden en ik wilde later als ik groot ben ook ééntje hebben. Inmiddels ben ik groot en is Nikki de Heidewachtel al een jaar oud. Tijd om eens terug te kijken op afgelopen jaar.',
-            author: 'aljan',
-            date: '5 January 2017',
+            url: '/design',
+            title: 'Freelance designer',
+            content: 'Heeft jouw organisatie te maken met inconsistente interfaces en onnodige herhaling in design? Ik help organisaties design te schalen via design systems. Met mijn ervaring in branding en ondernemerschap kan ik een design system organisatiebreed inzetten.',
+            author: '',
+            date: '',
+            thumbnail: 'media/design.jpg',
+            caption: ''
+          },
+          {
+            url: '/photography',
+            title: 'Landscape photographer',
+            content: 'When I was 15 years old I started taking photos with an old Pentax SLR of my father. After that I bought my first DSLR and within a few years my interest in landscape photography has grown. Especially 2016 was the year when I started to develop myself more as a landscape photographer.',
+            author: '',
+            date: '',
+            thumbnail: 'media/portfolio/aljanscholtens-14.jpg',
+            caption: ''
+          },
+          {
+            url: '/blog',
+            title: 'Blog',
+            content: 'Inmiddels schrijf ik al een aantal jaren op mijn blog over design, landschapsfotografie en hiking trips.',
+            author: '',
+            date: '',
             thumbnail: 'media/nikki-de-heidewachtel-1-jaar.jpg',
-            caption: 'Nikki onder de indruk van een luchtballon'
-          },
-
-
-
-
-
-
-
-
-
-
-          {
-            url: '/blog/karwendel-huttentocht',
-            title: 'Karwendel Huttentocht',
-            content: 'We gooien de autodeuren dicht, strikken de veters van onze bergschoenen, gooien onze rugzak op de rug en vertrekken richting het westen. De huttentocht van 2016 is van start, we wandelen het Karwendelgebergte van Oostenrijk binnen. In vijf dagen lopen we vanaf Vomp, vlakbij Innsbruck, in een rondje terug naar het beginpunt. Vier berghutten gaan...',
-            author: 'aljan',
-            date: '4 October 2016',
-            thumbnail: 'media/karwendel-huttentocht/1.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/het-ruige-eiland-madeira',
-            title: 'Het ruige eiland Madeira',
-            content: 'Om 01:00 uur in de nacht staan we op, wat nogal onmenselijk is, en rijden we naar Schiphol. Na een soepele vlucht landen we op de korte landingsbaan van het bloemeneiland Madeira. Het is nog geen week geleden dat 8% van de natuur op het eiland is afgebrand en voelt onze reis dus wat dubbel.',
-            author: 'aljan',
-            date: '22 September 2016',
-            thumbnail: 'media/het-ruige-eiland-madeira/1.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/nikki-16-weken',
-            title: 'Nikki 16 weken',
-            content: 'Inmiddels is Nikki 8 weken bij ons. Ondeugend, enthousiast, maar ontzettend lief.',
-            author: 'aljan',
-            date: '3 May 2016',
-            thumbnail: 'media/nikki-16-weken/1.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/pups-geboren',
-            title: 'Pups geboren',
-            content: 'Afgelopen 8 januari zijn de pups geboren van Venna. Een prachtige Heidewachtel van de Westpolderjagers. 8 pups, waarvan 5 teefjes en 3 reutjes. Wij mogen in maart een teefje mee naar huis brengen. Een week geleden zijn we wezen kijken bij de kleine pups. Komende week bezoeken we de kennel nogmaals, dan zijn ze vier weken...',
-            author: 'aljan',
-            date: '1 February 2016',
-            thumbnail: 'media/pups-geboren/1.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/highlights-zuid-afrika',
-            title: 'Highlights Zuid Afrika',
-            content: 'Zuid Afrika, een land van contrasten. In één land vind je woestijn, grootse bossen, armoede en rijkdom. Vanaf 10 november reisde ik samen met mijn vader naar Zuid Afrika. Voor hem de tweede keer na 32 jaar, voor mij de eerste keer. Hierbij mijn highlights van de reis. Kruger Park gamedrive Onze gids stapt in...',
-            author: 'aljan',
-            date: '25 January 2016',
-            thumbnail: 'media/highlights-zuid-afrika/1.jpg',
-            caption: 'Bij wijnboer Neethlingshof'
-          },
-
-
-
-
-
-
-
-
-
-
-          {
-            url: '/blog/refresh-the-meetup-for-designers-and-front-end-developers',
-            title: 'Refresh: The meetup for designers and front end developers',
-            content: 'There are a lot of great meet-ups in Groningen like PyGrunn, SMC050, Groningen.rb, Drupal Noord and more. But meet-ups for designers and front-end developers are hard to find. That’s why Ron van de Graaf and I organised several meet-ups for this group of people last year.',
-            author: 'aljan',
-            date: '9 December 2015',
-            thumbnail: 'media/refresh-the-meetup-for-designers-and-front-end-developers.png',
-            caption: ''
-          },
-          {
-            url: '/blog/onlanden-in-de-avond',
-            title: 'Onlanden in de avond',
-            content: 'De vorige keer kon ik de zonsondergang in de Onlanden niet goed vastleggen vanwege het gebrek aan wolken. Deze keer lukte dat een stuk beter, hoewel ik continu regenbuien over me heen kreeg. Neutral Density Op onderstaande foto’s heb ik een ND (Neutral Density) filter gebruikt om de sluitertijd rond de minuut te kunnen krijgen...',
-            author: 'aljan',
-            date: '6 October 2015',
-            thumbnail: 'media/onlanden-in-de-avond/1.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/het-goud-van-de-onlanden',
-            title: 'Het Goud van de onlanden',
-            content: 'Nogmaals ren ik de trap op; nu om mijn statief te pakken. Ik heb haast. De lucht ziet er prachtig uit en ik moet maken dat ik in de Onlanden kom. Ik bevestig mijn Canon 24mm F2.8 aan de camera, gooi mijn rugzak over mijn schouder en loop naar de auto. Op het moment dat...',
-            author: 'aljan',
-            date: '20 September 2015',
-            thumbnail: 'media/het-goud-van-de-onlanden/1.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/the-fellowship-of-the-hardangervidda',
-            title: 'The Fellowship of the Hardangervidda',
-            content: 'De wind duwt me zo hard opzij dat ik met mijn stokken weerstand moet bieden. Het voelt als windkracht negen en dan helpt een rugzak van veertien kilo niet om makkelijk overeind te blijven. Ondertussen gaat het regenen en dat blijft een paar uur doorgaan. De plassen beginnen groter te worden met teveel keien en...',
-            author: 'aljan',
-            date: '10 September 2015',
-            thumbnail: 'media/the-fellowship-of-the-hardangervidda/1.jpg',
-            caption: 'Zonsondergang tijdens de derde overnachting'
-          },
-          {
-            url: '/blog/element-queries',
-            title: 'Element Queries',
-            content: 'For a few years now we have been creating responsive websites. We do this with the famous media queries, and they are awesome. But what if we could do things a bit smarter, for instance with element queries? Lets dive into our current method first, media queries.',
-            author: 'aljan',
-            date: '26 May 2015',
-            thumbnail: '/media/element-queries.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/kies-een-vriend',
-            title: 'Kies een vriend',
-            content: 'Nadat we hadden besloten om voor een hond te gaan zorgen liepen we tegen een aantal vragen aan. Wordt het een hond uit het asiel? Gaan we naar een fokker? Reu of teef? Al snel besloten we na wat gelezen te hebben om voor een teef te gaan bij een fokker.',
-            author: 'aljan',
-            date: '12 May 2015',
-            thumbnail: 'media/kies-een-vriend/kies-een-vriend-2.jpg',
-            caption: 'Marjolein met twee Tatras'
-          },
-          {
-            url: '/blog/gramobsessie',
-            title: 'Gramobsessie',
-            content: 'Een piepklein matje van 350 gram voor 150 euro. Een groot matje van 800 gram kost maar een tientje. Een slaapzak van 1200 gram of 750 gram? Het prijsverschil ga ik niet eens noemen. Oh ja, en ik neem sowieso een statief van 1,6 kilogram mee! Komende zomer ga ik met vijf andere malloten...',
-            author: 'aljan',
-            date: '28 April 2015',
-            thumbnail: 'media/gramobsessie.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/het-verhaal-van-de-trein',
-            title: 'Het verhaal van de trein',
-            content: 'Schuin tegenover me zitten twee vrouwen met elkaar te praten over het ziekenhuis, waarvan één met een heel hoog stemmetje en de ander kijkt ongeïnteresseerd op haar telefoon en knikt af en toe. De man achter ze is duidelijk geïrriteerd en neemt nog een slok van zijn kiosk-koffie.',
-            author: 'aljan',
-            date: '28 April 2015',
-            thumbnail: '',
-            caption: ''
-          },
-          {
-            url: '/blog/lacey-nikki-en-bas',
-            title: 'Lacey, Nikki en Bas',
-            content: 'Als kleine jongen ging ik ieder jaar samen met mijn zusje en ouders richting het zuiden, Landgraaf. Daar wonen vrienden van ons met hun hond Lacey. Lacey was een Beagle met net iets te korte poten en een te kleine neus. Tijdens een lange wandeling met Lacey door het heuvelachtige Limburg vertelde Frans.',
-            author: 'aljan',
-            date: '17 April 2015',
-            thumbnail: '/media/lacey-nikki-en-bas.jpg',
-            caption: 'Lacey, mijn zusje en ik'
-          },
-          {
-            url: '/blog/sketch-vs-photoshop',
-            title: 'Sketch vs Photoshop',
-            content: 'Since about a year I am working with Sketch by Bohemian Coding. For those unknown with Sketch, it is a Mac application for interface design. Before using Sketch we mainly used Adobe Photoshop at Studio Wolf, a tool most of you probably know of.',
-            author: 'aljan',
-            date: '11 March 2015',
-            thumbnail: '/media/sketch-vs-photoshop.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/how-to-set-up-an-inline-svg-sprite',
-            title: 'How to set up an inline SVG sprite',
-            content: 'Years ago I worked with large PNG sprites with tons of icons, logo’s and other layout supporting images. Simply because it was the most efficient way to load images with the smallest amount of connections. Today SVG is supported by all major browsers. In this article I will explain how to set up an inline SVG sprite.',
-            author: 'aljan',
-            date: '8 January 2015',
-            thumbnail: '/media/how-to-set-up-an-inline-svg-sprite.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/disconnected',
-            title: 'Disconnected',
-            content: 'Rotsen, veel rotsen, ik zit op bijna 3000 meter hoogte en klauter over een grote rots dat lijkt op het hoofd van Steve Ballmer, kaal en onbegonnen. Met mijn wandelstok kan ik nog net voor me in de volgende rots prikken om mij omhoog te trekken. Gelukt, ik sta met twee voeten op meneer Ballmer.',
-            author: 'aljan',
-            date: '1 January 2015',
-            thumbnail: '/media/disconnected/disconnected.jpg',
-            caption: ''
-          },
-
-
-
-
-
-
-
-
-
-
-
-          {
-            url: '/blog/my-6-hour-workday',
-            title: 'My 6 hour workday',
-            content: 'For about two years now I’ ve been wandering around with the idea of working 6 hour days. 4 weeks ago the time felt right to try this experiment. From the 17th of November until the 12th of December I worked 6 hours a day, no more. Okay, to be honest, one day we had...',
-            author: 'aljan',
-            date: '18 December 2014',
-            thumbnail: '/media/my-6-hour-workday/my-6-hour-workday.jpg',
-            caption: 'Oops, I should be home by now'
-          },
-          {
-            url: '/blog/appelbergen',
-            title: 'Appelbergen',
-            content: 'Om mijn Canon 6D te testen op videokwaliteit en mogelijkheden heb ik een kleine video gemaakt in de Appelbergen. Het was vroeg in de ochtend en de zon scheen werkelijk prachtig.',
-            author: 'aljan',
-            date: '15 November 2014',
-            thumbnail: '',
-            caption: ''
-          },
-          {
-            url: '/blog/eating-the-hamburger-on-the-mobile-web',
-            title: 'Eating the hamburger on the mobile web',
-            content: 'People have been using the hamburger-icon on websites since at least the 1990’s. Since responsive websites and mobile apps have grown in popularity, usage of the hamburger-icon has exploded. We’re searching for a better mobile navigation for the web and would like to share our ideas and the issues we’re encountering. Today’s issue is iOS Safari.',
-            author: 'aljan',
-            date: '10 November 2014',
-            thumbnail: '/media/eating-the-hamburger-on-the-mobile-web.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/blind-fontein',
-            title: 'Blind: Fontein',
-            content: 'Mijn vader links en mijn moeder rechts, ze ondersteunen me terwijl we met ons drieën een rondje door de grote hal aan de oostkant van het gebouw lopen. Ik hoor dat er mensen langslopen, maar voel me alleen. Alleen met mijn ouders. Zelfs schimmen zijn er niet. Een bord, heel dichtbij, we lopen langs een...',
-            author: 'aljan',
-            date: '5 September 2014',
-            thumbnail: '',
-            caption: ''
-          },
-          {
-            url: '/blog/blind-erfenis',
-            title: 'Blind: Erfenis',
-            content: 'Inmiddels hebben 7 artsen (supervisoren) mijn ogen bekeken, maar niemand weet hoe het kan dat ik blind ben geworden. Speculaties, die zijn er genoeg, maar iets concreets? Nope. Terwijl ik de volgende supervisor te spreken krijg, heb ik weer volop hoop dat hij mij goed nieuws kan melden. Ik wil weer zien, ik wil mijn...',
-            author: 'aljan',
-            date: '3 September 2014',
-            thumbnail: '',
-            caption: ''
-          },
-          {
-            url: '/blog/blind-broodje',
-            title: 'Blind: Broodje',
-            content: 'Ik word wakker nadat ik mijn eerste nacht in het UMCG heb doorgebracht. Binnen een half uur komt de zuster bij me langs, met mijn eerste ziekenhuis-ontbijt. Ik hoor dat ze met een lach mij goedemorgen wenst en zet een dienblad neer op het tafeltje die inmiddels over mijn bed zweeft. Na een bedankje pak...',
-            author: 'aljan',
-            date: '15 August 2014',
-            thumbnail: '',
-            caption: ''
-          },
-          {
-            url: '/blog/blind-samenvatting',
-            title: 'Blind: Samenvatting',
-            content: 'Het is februari 2006 en ik ga bijna examen doen als 15-jarige aan het VMBO TL te Groningen. Langzaam word ik blind. Na een verkeerde diagnose van de huisarts en een dag veel onderzoeken in het ziekenhuis (bloedprikken, CT-scan, neurologisch onderzoek, ruggenprik) word ik naar huis gestuurd. Het is niet erg genoeg. Binnen drie dagen...',
-            author: 'aljan',
-            date: '13 August 2014',
-            thumbnail: '',
-            caption: ''
-          },
-          {
-            url: '/blog/light-lighter-lightest-lightestest',
-            title: 'Light, lighter, lightest, lightestest',
-            content: 'Kleurvariabelen in Sass of less kunnen erg lastig zijn om te onderhouden en uit te breiden. In deze note vertel ik de problemen waar wij tegen aan zijn gelopen en hoe we dat opgelost hebben.',
-            author: 'aljan',
-            date: '4 July 2014',
-            thumbnail: '/media/light-lighter-lightest-lightestest.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/cycles-design-in-een-iteratieve-werkwijze',
-            title: 'Cycles; Design in een iteratieve werkwijze',
-            content: 'Jarenlang hebben we via de waterval-methode aan onze projecten gewerkt. Concept, schets, design, front-end, back-end, en overdracht. Het is een prima methode, want de basis van iedere werkwijze is het goed communiceren van concrete stappen. Alleen naarmate je groeit in projecten en ervaring kom je langzaam tot de conclusie dat je een flexibeler en meer betrokken proces zoekt.',
-            author: 'aljan',
-            date: '27 June 2014',
-            thumbnail: '/media/cycles-design-in-een-iteratieve-werkwijze.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/verwachtingsmanagement-voor-designers',
-            title: 'Verwachtingsmanagement voor designers',
-            content: 'Als designers hebben we te maken met verwachtingen van opdrachtgevers. Voordat ze bij je komen hebben ze al een idee hoe het eindproduct moet worden, ook al denken ze dit niet te weten. Dit is menselijk en zit in ons onderbewustzijn.',
-            author: 'aljan',
-            date: '24 January 2014',
-            thumbnail: '/media/verwachtingsmanagement-voor-designers.jpg',
-            caption: ''
-          },
-
-
-
-
-
-
-
-
-
-
-          {
-            url: '/blog/community-en-miscommunicaties',
-            title: 'Community en miscommunicaties',
-            content: 'Mensen online bij elkaar brengen is altijd een wens van me geweest. Gezien mijn affiniteit met fotografie zou het helemaal gaaf zijn om het online samenbrengen van mensen te combineren met fotografie. Een community waarbij mensen discussiëren over allerlei facetten; hoe kan een foto beter worden qua licht en compositie? Welke lens kan ik het beste aanschaffen? Zal ik professioneel worden of niet?',
-            author: 'aljan',
-            date: '15 November 2013',
-            thumbnail: '/media/community-en-miscommunicaties.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/collaboration-tools',
-            title: 'Collaboration tools',
-            content: 'Binnen Studio Wolf zijn we continu op zoek naar mooie tools die efficiëntie en kwaliteit kunnen verbeteren. Hieronder vertel ik over drie belangrijke collaboration tools die we dagelijks gebruiken.',
-            author: 'aljan',
-            date: '3 May 2013',
-            thumbnail: '/media/collaboration-tools.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/performance-is-design',
-            title: 'Performance is design',
-            content: 'De Wifi-verbinding in de trein is te traag, dus bezoek je een website met je iets minder trage 3G-verbinding. De website laadt niet snel, maar het lukt, je hebt de pagina kunnen bereiken maar niet van harte.',
-            author: 'aljan',
-            date: '3 April 2013',
-            thumbnail: '/media/performance-is-design.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/afleiding-maakt-dom',
-            title: 'Afleiding maakt dom',
-            content: 'Het was eens een doodgewone zaterdag en ik wil verder lezen in de biografie van Steve Jobs. Tijdens het lezen kom ik erachter dat ik nog concertkaartjes van Katzenjammer voor die avond moet uitprinten. Alleen de inkt is op. Tijdens het vervangen van de inkt knoei ik het op mijn broek. Ik maak het rap schoon en print de kaarten uit.',
-            author: 'aljan',
-            date: '15 February 2013',
-            thumbnail: '/media/afleiding-maakt-dom.jpg',
-            caption: ''
-          },
-
-
-
-
-
-
-
-
-
-
-          {
-            url: '/blog/2012-een-spectaculair-jaar',
-            title: '2012: Een spectaculair jaar',
-            content: 'Het afgelopen jaar, is zoals voor velen, een druk jaar geweest. Vooral veel verandering en hard werken tekenen dit jaar. Omdat we allemaal van overzichtjes houden aan het eind van het jaar: ons jaar in een overzicht.',
-            author: 'aljan',
-            date: '31 December 2012',
-            thumbnail: '/media/2012-een-spectaculair-jaar.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/open-device-lab-groningen',
-            title: 'Open Device Lab Groningen',
-            content: 'Testen of je responsive website of native app goed werkt kan in een klein team of als freelancer lastig zijn. Daarvoor heb je devices nodig. Deze kun je zelf regelen, of je gaat op zoek naar een locatie met veel devices waar je mag testen. In dat geval zou een Open Device Lab erg fijn zijn. Deze ontbreekt helaas in Groningen.',
-            author: 'aljan',
-            date: '30 November 2012',
-            thumbnail: '/media/open-device-lab-groningen.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/sass-placeholders',
-            title: 'Sass placeholders',
-            content: 'Een veel voorkomend probleem met HTML zijn het aantal classes die we gebruiken zoals bijvoorbeeld .product .product-hat. Ook het dupliceren van CSS gebeurd te vaak om het gewenste resultaat te krijgen. Er is een oplossing.',
-            author: 'aljan',
-            date: '23 October 2012',
-            thumbnail: '/media/sass-placeholders.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/weg-met-photoshop',
-            title: 'Weg met Photoshop',
-            content: 'Vitaly Friedman en Marc Thiele van Smashing Magazine (een vooraanstaand blog over design en development) maakten de eerste Smashing Conference mogelijk in Freiburg. Wij waren erbij.',
-            author: 'aljan',
-            date: '26 September 2012',
-            thumbnail: '/media/weg-met-photoshop.jpg',
-            caption: ''
-          },
-          {
-            url: '/blog/coloring-with-sass',
-            title: 'Coloring with SASS',
-            content: 'When we color our designs with CSS, a very convenient way to achieve transparency is the alpha channel using the rgba() function. This function requires four params: a red, green and blue value and an alpha value.',
-            author: 'aljan',
-            date: '27 July 2012',
-            thumbnail: '',
-            caption: ''
-          },
-          {
-            url: '/blog/retina-data-conflict',
-            title: 'Retina data conflict',
-            content: 'Het Retina-scherm; een scherm met vier keer zoveel pixels op hetzelfde oppervlak, voor iPad, en sinds vorige week de MacBook Pro. Tekst en foto’s zijn op deze schermen werkelijk prachtig, alleen is nog lang niet iedereen hier klaar voor. Interface designers dienen met een aantal aspecten rekening te houden.',
-            author: 'aljan',
-            date: '22 June 2012',
-            thumbnail: '/media/retina-data-conflict.jpg',
             caption: ''
           }
         ]
