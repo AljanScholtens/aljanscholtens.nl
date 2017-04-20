@@ -17,6 +17,7 @@
     "gulp-sourcemaps": "latest",
     "gulp-util": "^3.0.8",
     "imagemin-mozjpeg": "^6.0.0",
+    "lodash": "^4.17.4",
     "lost": "latest",
     "postcss-cssnext": "latest",
     "postcss-import": "latest"
