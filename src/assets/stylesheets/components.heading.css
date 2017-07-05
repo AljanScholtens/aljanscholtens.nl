@@ -16,8 +16,11 @@
 
 .c-heading--30,
 .u-content h2 {
-  font-size: 1.4rem;
+  font-size: 1.579rem;
   line-height: 1.2em;
+  font-family: var(--font-family-a);
+  color: var(--color-primary-50);
+  font-weight: 500;
 }
 
 .c-heading--50 {
