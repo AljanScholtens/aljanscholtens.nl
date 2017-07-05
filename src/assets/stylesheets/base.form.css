@@ -28,7 +28,6 @@ select {
   color: inherit;
   display: block;
   font-family: var(--font-family-heading);
-  font-size: var(--font-size-20);
   font-weight: 500;
   line-height: 1.5em;
   margin: 0;

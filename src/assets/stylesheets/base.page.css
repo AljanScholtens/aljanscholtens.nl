@@ -9,7 +9,7 @@
 }
 
 html {
-  color: var(--color-neutral-70);
+  color: var(--color-neutral-50);
   font-weight: 400;
   font-size: var(--font-size-base);
   font-family: var(--font-family-body);
@@ -24,8 +24,6 @@ body {
   height: 100%;
   margin: 0;
   line-height: 1.35em;
-
-  @media (--breakpoint-20) {
-    line-height: 1.789em;
-  }
+  font-size: var(--font-size-default);
+  line-height: var(--line-height-base);
 }

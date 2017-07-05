@@ -8,7 +8,6 @@
   cursor: pointer;
   display: inline-block;
   font-family: var(--font-family-heading);
-  font-size: var(--font-size-20);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 600;

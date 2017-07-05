@@ -2,7 +2,14 @@
   #COMPONENTS-PARAGRAPH
 \*------------------------------------*/
 
-.c-paragraph--lead {
+.c-paragraph,
+.u-content p {
+  font-size: var(--font-size-40);
+  color: var(--color-neutral-90);
+}
+
+.c-paragraph--lead,
+.u-content .c-paragraph--lead {
   color: var(--color-primary-50);
   font-family: var(--font-family-b);
 

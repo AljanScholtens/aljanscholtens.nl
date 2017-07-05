@@ -4,7 +4,7 @@
 
 .c-navigation-mobile {
   position: fixed;
-  z-index: var(--z-index-30);
+  z-index: var(--layer-30);
   left: 6px;
   right: 6px;
   bottom: 0;
@@ -25,7 +25,6 @@
   float: left;
   position: relative;
   flex-grow: 1;
-  font-size: var(--font-size-20);
   text-align: center;
 
   & a {

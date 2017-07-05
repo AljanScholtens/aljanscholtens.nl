@@ -3,7 +3,6 @@
 \*------------------------------------*/
 
 .c-pagination {
-  font-size: var(--font-size-20);
   list-style: none;
   margin-bottom: var(--spacing);
 }

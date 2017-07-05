@@ -9,7 +9,7 @@ h1, h2, legend, h3, h4, h5, h6 {
   font-family: var(--font-family-heading);
   font-weight: 600;
   font-size: var(--font-size-50);
-  margin: 0 0 0.25em 0;
+  margin: 0;
 }
 
 
@@ -17,7 +17,8 @@ h1, h2, legend, h3, h4, h5, h6 {
  * Paragraphs
  */
 p {
-  margin: 0 auto var(--spacing) auto;
+  line-height: var(--line-height-default);
+  margin: var(--space-stack-default);
 }
 
 
@@ -40,7 +41,7 @@ a {
 small {
   font-family: var(--font-family-heading);
   color: var(--color-neutral-50);
-  font-size: var(--font-size-10);
+  font-size: var(--font-size-20);
   font-weight: 500;
 }
 
