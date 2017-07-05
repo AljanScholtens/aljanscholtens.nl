@@ -3,9 +3,10 @@
 \*------------------------------------*/
 
 .c-heading {
-  font-family: var(--font-family-heading);
+  font-family: var(--font-family-c);
   font-weight: 600;
   margin: 0 0 0.25em 0;
+  color: var(--color-primary-50);
 }
 
 .c-heading--10 {
@@ -21,7 +22,7 @@
 
 .c-heading--50 {
   font-size: 1.75em;
-  font-weight: 500;
+  font-weight: 300;
   line-height: 1.1em;
 
   @media (--breakpoint-20) {
@@ -35,7 +36,8 @@
   }
 
   @media (--breakpoint-40) {
-    font-size: 3rem;
+    font-size: 4.5rem;
+    line-height: 1em;
   }
 }
 

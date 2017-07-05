@@ -25,10 +25,12 @@ p {
  * Links
  */
 a {
-  color: var(--color-primary-50);
+  color: var(--color-secondary-50);
+  text-decoration: none;
+  font-weight: 500;
   cursor: pointer;
 
-  &:hover { color: var(--color-primary-70); }
+  &:hover { color: var(--color-neutral-90); }
 }
 
 

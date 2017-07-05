@@ -13,40 +13,50 @@
   /*
    * Primary colors
    */
-  --color-primary-30: #F96E7F;
-  --color-primary-50: #E62C43;
-  --color-primary-70: #BD0C22;
+  --color-primary-10: #F2F2F7;
+  --color-primary-30: #9C9AF4;
+  --color-primary-50: #514DD7;
+  --color-primary-70: #3330A6;
 
 
   /*
    * Secondary colors
    */
-  --color-secondary-50: #5F61C0;
+  --color-secondary-10: #FEECF2;
+  --color-secondary-50: #FF3473;
+  --color-secondary-70: #D31E56;
+
+
+  /*
+   * Tertiary colors
+   */
+  --color-tertiary-10: #FFF4EA;
+  --color-tertiary-30: #FFD3A6;
 
 
   /*
    * Success and positive colors
    */
-  --color-success-50: #39b924;
-  --color-success-70: #249c11;
+  --color-success-50: #41D57D;
+  --color-success-70: #21AB59;
 
 
   /*
    * Alert en negative colors
    */
-  --color-alert-50: #f3490d;
-  --color-alert-70: #d33e09;
+  --color-alert-50: var(--color-secondary-50);
+  --color-alert-70: var(--color-secondary-70);
 
 
   /*
    * Neutral colors
    */
-  --color-neutral-10: #EAEFED;
-  --color-neutral-30: #ccd6d2;
-  --color-neutral-50: #8d9994;
-  --color-neutral-60: #5F6663;
-  --color-neutral-70: #373836;
-  --color-neutral-90: #161716;
+  --color-neutral-10: #F2F2F7;
+  --color-neutral-30: #D2D1E5;
+  --color-neutral-50: #9493AD;
+  --color-neutral-60: #5E5C7D;
+  --color-neutral-70: #333250;
+  --color-neutral-90: #1E1D34;
 
 
   /*

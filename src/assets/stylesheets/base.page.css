@@ -26,6 +26,6 @@ body {
   line-height: 1.35em;
 
   @media (--breakpoint-20) {
-    line-height: 1.65em;
+    line-height: 1.789em;
   }
 }
