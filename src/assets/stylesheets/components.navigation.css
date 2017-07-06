@@ -28,6 +28,7 @@
   right: 0;
   top: 0;
   box-shadow: 0px 1px 20px color(var(--color-black) alpha(0.1));
+  box-shadow: var(--box-shadow-30);
 
   @media (--breakpoint-20) {
     justify-content: auto;

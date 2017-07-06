@@ -8,6 +8,8 @@
   & a {
     color: var(--color-neutral-70);
     text-decoration: none;
+    background-color: transparent;
+    padding: 0;  
   }
 
   & figure {

@@ -2,6 +2,11 @@
   #COMPONENTS-HEADING
 \*------------------------------------*/
 
+.c-heading a {
+  background-color: transparent;
+  padding: 0;  
+}
+
 .c-heading,
 .u-content h2 {
   font-family: var(--font-family-c);

@@ -80,9 +80,12 @@
 
   @media (--breakpoint-20) {
     filter: grayscale(1);
-    max-height: 80vh;
     padding-bottom: 1rem;
     animation: l-wrapper--image 2s var(--bezier-default) forwards 500ms;
+  }
+
+  @media (--breakpoint-40) {
+    max-height: 80vh;
   }
 
   &:after,
