@@ -4,7 +4,7 @@
 
 .c-logo-grid {
   list-style: none;
-  margin-bottom: var(--spacing);
+  margin: var(--space-stack-default);
   display: flex;
   flex-flow: row wrap;
 }

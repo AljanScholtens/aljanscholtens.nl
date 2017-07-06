@@ -14,12 +14,9 @@ h1, h2, legend, h3, h4, h5, h6 {
 
 
 /*
- * Paragraphs
+ * Paragraphs has been moved entirely to the paragraph component
  */
-p {
-  line-height: var(--line-height-default);
-  margin: var(--space-stack-default);
-}
+
 
 
 /*
@@ -42,7 +39,6 @@ small {
   font-family: var(--font-family-heading);
   color: var(--color-neutral-50);
   font-size: var(--font-size-20);
-  font-weight: 500;
 }
 
 em {
@@ -83,7 +79,7 @@ hr {
   border: solid var(--color-neutral-30);
   border-width: 1px 0 0;
   clear: both;
-  margin: 2.5rem var(--spacing);
+  margin: 2.5rem var(--space-default);
 }
 
 ul,

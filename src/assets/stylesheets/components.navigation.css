@@ -59,14 +59,15 @@
   margin-bottom: 4px;
   line-height: 1;
   font-weight: 600;
-  margin-right: 1rem;
   font-size: 1.5rem;
   color: var(--color-white);
   transition: background 60ms ease-out;
   background: linear-gradient(140deg, color(var(--color-primary-50) alpha(70%)), var(--color-primary-50));
   font-family: var(--font-family-d);
+  margin-right: 0;
 
   @media (--breakpoint-20) {
+    margin-right: 1rem;
     opacity: 0;
     animation: c-navigation 300ms cubic-bezier(0, 0, 0, 1) forwards 200ms;
   }

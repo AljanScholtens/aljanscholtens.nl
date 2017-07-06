@@ -13,10 +13,7 @@
  * #BASE
  */
 @import "base.page.css";
-@import "base.form.css";
-@import "base.table.css";
 @import "base.type.css";
-@import "base.quote.css";
 
 
 /**
@@ -34,24 +31,20 @@
 @import "components.button.css";
 @import "components.card.css";
 @import "components.footer.css";
-/*@import "components.form.css";*/
 @import "components.gallery.css";
 @import "components.heading.css";
 @import "components.highlight.css";
 @import "components.icon.css";
-/*@import "components.label.css";*/
 @import "components.list.css";
 @import "components.logo-grid.css";
 @import "components.media.css";
-/*@import "components.messages.css";*/
 @import "components.navigation-mobile.css";
 @import "components.navigation.css";
-/*@import "components.pagination.css";*/
-/*@import "components.panel.css";*/
 @import "components.paragraph.css";
+@import "components.quote.css";
 
 
 /**
  * #UTILITIES
  */
-@import "utilities.global.css";
+@import "utilities.css";

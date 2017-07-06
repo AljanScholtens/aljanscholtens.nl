@@ -9,7 +9,7 @@
 .c-footer__links {
   list-style: none;
   text-align: center;
-  margin: 0 0 var(--spacing) 0;
+  margin: var(--space-stack-default);
 }
 
 .c-footer__links-item {

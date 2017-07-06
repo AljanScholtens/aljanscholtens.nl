@@ -19,7 +19,9 @@
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 50%;
-    margin-bottom: calc(var(--spacing) / 2);
+    margin: var(--space-stack-20);
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 

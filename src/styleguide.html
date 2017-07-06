@@ -5,18 +5,18 @@
 
 {% block content %}
 
-  <h1 class="c-heading c-heading--30 u-spacing">Styleguide</h1>
+  <h1 class="c-heading c-heading--50">Styleguide</h1>
 
-  <h2 class="sg-h2">Component Blockquote</h2>
+  <h2 class="c-heading c-heading--30">Component Blockquote</h2>
   {% set blockquote = 'The release of atom power has changed everything except our way of thinking...the solution to this problem lies in the heart of mankind. If only I had known, I should have become a watchmaker.' %}
   {% set blockquote_author = 'Albert Einstein' %}
   {% include 'components/components.blockquote.html' %}
 
-  <h2 class="sg-h2">Component Highlight</h2>
+  <h2 class="c-heading c-heading--30">Component Highlight</h2>
   {% set highlight = "This is necessery because we will get symbols by their ID elsewhere in the HTML. If we don't do this, Safari won't show the images." %}
   {% include 'components/components.highlight.html' %}
 
-  <h2 class="sg-h2">Component Card Grid</h2>
+  <h2 class="c-heading c-heading--30">Component Card Grid</h2>
   {% set card_grid = [
     [
       {
@@ -39,7 +39,7 @@
   ] %}
   {% include 'components/components.card-grid.html' %}
 
-  <h2 class="sg-h2">Component Gallery</h2>
+  <h2 class="c-heading c-heading--30">Component Gallery</h2>
   <!-- Gallery -->
   {% set gallery = [
     [
@@ -55,28 +55,28 @@
   {% include 'components/components.gallery.html' %}
   <!-- End Gallery -->
 
-  <h2 class="sg-h2">Component Comments</h2>
+  <h2 class="c-heading c-heading--30">Component Comments</h2>
   {% include 'components/components.comments.html' %}
 
-  <h2 class="sg-h2">Component Meta</h2>
+  <h2 class="c-heading c-heading--30">Component Meta</h2>
   {% set blog_related = 'Disconnected' %} <!-- Not required -->
   {% set blog_related_url = '#' %} <!-- Not required -->
   {% set blog_author = 'aljan' %} <!-- Not required -->
   {% include 'components/components.meta.html' %}
 
-  <h2 class="sg-h2">Component Header</h2>
+  <h2 class="c-heading c-heading--30">Component Header</h2>
   {% set page_title = 'Titel' %}
   {% set page_subtitle = 'Subtitel' %} <!-- Not required -->
   {% set page_photo = '/media/1.jpg' %}
   {% set header = true %} <!-- true is a large header, false is no header -->
   {% include 'components/components.header.html' %}
 
-  <h3 class="sg-h3">Video</h3>
+  <h3 class="c-heading c-heading--30">Video</h3>
   {% set video = 'https://www.youtube.com/embed/PJ-zjBtjTI0' %}
   {% include 'components/components.video.html' %}
 
 
-  <h1 class="c-heading c-heading--30 u-spacing">Styleguide old</h1>
+  <h1 class="c-heading c-heading--50">Styleguide old</h1>
 
   <h2 class="sg-h2" id="buttons">Object Button</h2>
   <h3 class="sg-h3">Standard</h3>

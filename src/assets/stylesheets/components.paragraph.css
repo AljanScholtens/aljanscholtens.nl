@@ -2,8 +2,11 @@
   #COMPONENTS-PARAGRAPH
 \*------------------------------------*/
 
+p,
 .c-paragraph,
 .u-content p {
+  line-height: var(--line-height-default);
+  margin: var(--space-stack-default);
   font-size: var(--font-size-40);
   color: var(--color-neutral-90);
 }
@@ -17,6 +20,12 @@
     font-size: var(--font-size-60);
     line-height: 1.75em;
   }
+}
+
+.c-paragraph--soft,
+.u-content .c-paragraph--soft {
+  color: var(--color-neutral-50);
+  font-size: var(--font-size-default);
 }
 
 

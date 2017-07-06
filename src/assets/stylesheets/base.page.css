@@ -23,7 +23,7 @@ html {
 body {
   height: 100%;
   margin: 0;
-  line-height: 1.35em;
+  line-height: var(--line-height-20);
   font-size: var(--font-size-default);
   line-height: var(--line-height-base);
 }
