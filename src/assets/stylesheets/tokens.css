@@ -23,7 +23,7 @@
   --font-family-a: Orkney, 'Helvetica Neue', sans-serif;
   --font-family-b: Lora, Georgia, serif;
   --font-family-c: Stellar, 'Helvetica Neue', sans-serif;
-  --font-family-d: Aqua Grotesque, 'Helvetica Neue', sans-serif;
+  --font-family-d: Aqua, 'Helvetica Neue', sans-serif;
 
   /* Legacy */
   --font-family-heading: var(--font-family-a);

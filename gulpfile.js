@@ -64,7 +64,7 @@ gulp.task('watch', function() {
   gulp.watch('src/assets/scripts/**/*', ['scripts'])
 })
 
-gulp.task('build', ['html', 'css', 'scripts', 'images', 'media'])
+gulp.task('build', ['html', 'css', 'scripts', 'images', 'fonts', 'media'])
 
 gulp.task('clean', function(cb) {
 //   return del('dist');
@@ -79,6 +79,11 @@ gulp.task('html', () =>
 gulp.task('images', () =>
   gulp.src('src/assets/images/*')
     .pipe(gulp.dest('dist/assets/images'))
+)
+
+gulp.task('fonts', () =>
+  gulp.src('src/assets/fonts/*')
+    .pipe(gulp.dest('dist/assets/fonts'))
 )
 
 gulp.task('media', function() {
