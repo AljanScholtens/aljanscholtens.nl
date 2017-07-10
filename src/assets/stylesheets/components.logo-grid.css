@@ -4,7 +4,7 @@
 
 .c-logo-grid {
   list-style: none;
-  margin-bottom: var(--spacing);
+  margin: var(--space-stack-default);
   display: flex;
   flex-flow: row wrap;
 }
@@ -49,12 +49,7 @@
     margin: auto;
     width: auto;
     height: auto;
-    max-width: 100%;
+    max-width: 8rem;
     max-height: 6rem;
-
-    @media (--breakpoint-20) {
-      width: 100%;
-      max-width: 8rem;
-    }
   }
 }

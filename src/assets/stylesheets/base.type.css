@@ -9,26 +9,31 @@ h1, h2, legend, h3, h4, h5, h6 {
   font-family: var(--font-family-heading);
   font-weight: 600;
   font-size: var(--font-size-50);
-  margin: 0 0 0.25em 0;
+  margin: 0;
 }
 
 
 /*
- * Paragraphs
+ * Paragraphs has been moved entirely to the paragraph component
  */
-p {
-  margin: 0 auto var(--spacing) auto;
-}
+
 
 
 /*
  * Links
  */
 a {
-  color: var(--color-primary-50);
+  color: var(--color-secondary-50);
+  text-decoration: none;
+  font-weight: 500;
   cursor: pointer;
 
-  &:hover { color: var(--color-primary-70); }
+  &:hover { color: var(--color-neutral-90); }
+}
+
+.u-content a {
+  background-color: var(--color-secondary-10);
+  padding: 0.2em 0.5rem;
 }
 
 
@@ -38,8 +43,7 @@ a {
 small {
   font-family: var(--font-family-heading);
   color: var(--color-neutral-50);
-  font-size: var(--font-size-10);
-  font-weight: 500;
+  font-size: var(--font-size-20);
 }
 
 em {
@@ -80,7 +84,7 @@ hr {
   border: solid var(--color-neutral-30);
   border-width: 1px 0 0;
   clear: both;
-  margin: 2.5rem var(--spacing);
+  margin: 2.5rem var(--space-default);
 }
 
 ul,

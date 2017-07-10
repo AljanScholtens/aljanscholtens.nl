@@ -2,10 +2,18 @@
   #COMPONENTS-HEADING
 \*------------------------------------*/
 
-.c-heading {
-  font-family: var(--font-family-heading);
+.c-heading a {
+  background-color: transparent;
+  padding: 0;  
+}
+
+.c-heading,
+.u-content h2 {
+  font-family: var(--font-family-c);
   font-weight: 600;
-  margin: 0 0 0.25em 0;
+  margin: var(--space-stack-30);
+  color: var(--color-primary-50);
+  line-height: var(--line-height-10);
 }
 
 .c-heading--10 {
@@ -15,27 +23,24 @@
 
 .c-heading--30,
 .u-content h2 {
-  font-size: 1.4rem;
+  font-size: var(--font-size-60);
   line-height: 1.2em;
+  font-family: var(--font-family-a);
+  color: var(--color-primary-50);
+  font-weight: 500;
 }
 
 .c-heading--50 {
-  font-size: 1.75em;
-  font-weight: 500;
-  line-height: 1.1em;
+  font-size: 40px;
+  font-weight: 300;
 
   @media (--breakpoint-20) {
-    font-size: 2.5em;
+    font-size: 8vw;
+    margin: var(--space-stack-default);
   }
 
-  @media (--breakpoint-20) {
-    line-height: 1.2em;
-    font-size: 4.5vw;
-    margin-bottom: var(--spacing);
-  }
-
-  @media (--breakpoint-40) {
-    font-size: 3rem;
+  @media (--breakpoint-30) {
+    font-size: var(--font-size-70);
   }
 }
 

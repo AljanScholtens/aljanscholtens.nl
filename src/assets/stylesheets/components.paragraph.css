@@ -2,12 +2,30 @@
   #COMPONENTS-PARAGRAPH
 \*------------------------------------*/
 
-.c-paragraph--lead {
+p,
+.c-paragraph,
+.u-content p {
+  line-height: var(--line-height-default);
+  margin: var(--space-stack-default);
+  font-size: var(--font-size-40);
+  color: var(--color-neutral-90);
+}
+
+.c-paragraph--lead,
+.u-content .c-paragraph--lead {
+  color: var(--color-primary-50);
+  font-family: var(--font-family-b);
 
   @media (--breakpoint-20) {
-    font-size: var(--font-size-40);
+    font-size: var(--font-size-60);
     line-height: 1.75em;
   }
+}
+
+.c-paragraph--soft,
+.u-content .c-paragraph--soft {
+  color: var(--color-neutral-50);
+  font-size: var(--font-size-default);
 }
 
 

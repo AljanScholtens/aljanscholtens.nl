@@ -4,10 +4,13 @@
 
 .c-list {
   list-style: none;
-  margin: -0.3rem 0 calc(var(--spacing) - 0.3rem) 0;
+  font-size: var(--font-size-40);
+  color: var(--color-neutral-90);
+  line-height: var(--line-height-default);
+  margin: var(--space-stack-default);
 
   & li {
-    padding: .3rem 0 .3rem 2rem;
+    padding-left: 2rem;
     position: relative;
 
     @media (--breakpoint-20) {
@@ -29,9 +32,10 @@
 ul.c-list {
 
   & li:before {
-    top: 1.15rem;
-    height: 2px;
-    width: 8px;
+    top: 0.8rem;
+    height: 6px;
+    width: 6px;
+    border-radius: 50%;
     background: var(--color-primary-50);
   }
 }

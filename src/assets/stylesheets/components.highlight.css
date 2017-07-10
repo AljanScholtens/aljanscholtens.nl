@@ -7,7 +7,7 @@
   text-align: center;
   line-height: 1.5em;
   font-size: var(--font-size-40);
-  margin: 0 0 var(--spacing) 0;
+  margin: var(--space-stack-default);
   font-style: italic;
 
   @media (--breakpoint-20) {

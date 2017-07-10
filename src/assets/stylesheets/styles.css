@@ -2,73 +2,18 @@
   #STYLES
 \*------------------------------------*/
 
-/**
- * CONTENTS
- *
- * SETTINGS
- * Global...............Global variables and settings
- * Colors...............Global color variables
- *
- * TOOLS
- * -
- *
- * BASE
- * Page.................Page setup like html and body
- * Form.................Inputs
- * Table................Table
- * Type.................Header, links, paragraphs
- * Quote................Blockquote
- *
- * LAYOUT
- * Wrapper..............Wrappers for full width backgrounds
- * Container............Container to center your web site
- * Grid.................Global grid system based on Lost
- *
- * COMPONENTS
- * Author...............Author
- * Button...............Buttons
- * Card.................Cards
- * Footer...............Footer
- * Form.................Forms
- * Gallery..............Gallery
- * Heading..............Heading
- * Highlight............Highlight
- * Icon.................Icons
- * Label................Labels
- * List.................List
- * Logo-grid............Logo Grid
- * Media................Media
- * Messages.............Messages
- * Navigation-mobile....Navigation-mobile
- * Navigation...........Navigation
- * Pagination...........Pagination
- * Panel................Panels
- * Paragraph............Paragraph
- *
- * Utilities
- * Global...............Global utility states like u-hidden
- */
-
 
 /*
- * #SETTINGS
+ * #TOKENS
  */
-@import "settings.global.css";
-@import "settings.colors.css";
-
-/**
- * #TOOLS
- */
+@import "tokens.css";
 
 
 /**
  * #BASE
  */
 @import "base.page.css";
-@import "base.form.css";
-@import "base.table.css";
 @import "base.type.css";
-@import "base.quote.css";
 
 
 /**
@@ -86,24 +31,20 @@
 @import "components.button.css";
 @import "components.card.css";
 @import "components.footer.css";
-/*@import "components.form.css";*/
 @import "components.gallery.css";
 @import "components.heading.css";
 @import "components.highlight.css";
 @import "components.icon.css";
-/*@import "components.label.css";*/
 @import "components.list.css";
 @import "components.logo-grid.css";
 @import "components.media.css";
-/*@import "components.messages.css";*/
 @import "components.navigation-mobile.css";
 @import "components.navigation.css";
-/*@import "components.pagination.css";*/
-/*@import "components.panel.css";*/
 @import "components.paragraph.css";
+@import "components.quote.css";
 
 
 /**
  * #UTILITIES
  */
-@import "utilities.global.css";
+@import "utilities.css";

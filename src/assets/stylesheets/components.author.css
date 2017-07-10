@@ -3,19 +3,13 @@
 \*------------------------------------*/
 
 .c-author {
-  margin-bottom: var(--spacing);
-
-  @media (--breakpoint-20) {
-    padding-top: calc(var(--spacing) - 0.75rem);
-  }
-
-  & p {
-    line-height: 1.1em;
-  }
+  margin-bottom: var(--space-stack-default);
 
   & a {
     color: var(--color-neutral-70);
     text-decoration: none;
+    background-color: transparent;
+    padding: 0;  
   }
 
   & figure {
@@ -27,7 +21,9 @@
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 50%;
-    margin-bottom: calc(var(--spacing) / 2);
+    margin: var(--space-stack-20);
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
