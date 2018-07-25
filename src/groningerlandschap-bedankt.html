@@ -1,0 +1,37 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Bedankt voor je bestelling' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '/media/portfolio/aljanscholtens-21.jpg' %}
+{% set page_thumbnail = '' %}
+{% set navigation_selected = 'photography' %}
+
+{% set header = false %} <!-- true is a large header, false is no header -->
+{% set header_dark = false %}
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <p class="c-paragraph c-paragraph--lead">Gefeliciteerd, binnenkort heb je een echte Groninger Landschap foto vanuit de lucht in huis hangen. </p>
+
+      <p class="c-paragraph"><strong>Binnen 24 uur ontvang je een betaalverzoek in je inbox</strong>. Zodra deze betaald is, wordt de print naar je verzonden. Wil je nog een foto bestellen? Ga dan terug naar het <a href="/groningerlandschap.html">overzicht</a> van de kalender.</p>
+
+    </div>
+
+  {% endcall %}
+
+{% endblock %}

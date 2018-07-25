@@ -2,15 +2,17 @@
   #COMPONENTS-BUTTONS
 \*------------------------------------*/
 
+.u-content .c-button,
 .c-button {
   border: 0;
   border-radius: var(--border-radius-50);
   cursor: pointer;
   display: inline-block;
   font-family: var(--font-family-a);
+  font-size: inherit;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.5em;
   margin: 0;
   padding: 0.5rem 1.25rem;

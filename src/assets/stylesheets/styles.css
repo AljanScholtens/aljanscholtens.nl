@@ -33,6 +33,14 @@
 @import "components.card.css";
 @import "components.fancybox.css";
 @import "components.footer.css";
+
+@import "components.form-checkbox.css";
+@import "components.form-field.css";
+@import "components.form-input.css";
+@import "components.form-radiobutton.css";
+@import "components.form-select.css";
+@import "components.form-textarea.css";
+
 @import "components.gallery-grid.css";
 @import "components.gallery.css";
 @import "components.heading.css";
