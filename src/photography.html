@@ -28,42 +28,73 @@
 
       <p class="c-paragraph c-paragraph--lead">When I was 15 years old I started taking photos with an old Pentax SLR of my father. After that I bought my first DSLR and within a few years my interest in landscape photography has grown. Especially 2016 was the year when I started to develop myself more as a landscape photographer.</p>
 
-      <p class="c-paragraph">Most of the time I'm taking photos in the Netherlands and frequently I travel to other countries as well. I always bring my Canon 6D, Canon 24mm F2.8 IS USM, Canon 70-200mm F4L IS USM, Benro TMA37C tripod and some Nisi Filters with me.</p>
+      <p class="c-paragraph">Most of the time I'm taking photos in the Netherlands and frequently I travel to other countries as well. I always bring my Canon 6D, Canon 24mm F2.8 IS USM, Canon 70-200mm F4L IS USM, Canon 85mm F1.4 L IS USM, Benro TMA37C tripod and some Nisi Filters with me.</p>
 
 
-      <p class="c-paragraph">If you want to hire me as a photographer, contact me at <a href="mailto:aljan@scholtens.me" target="_blank">aljan@scholtens.me</a>. You can also hire me as a drone photographer/videographer. For more inspiration and frequent work, follow me on <a href="https://instagram.com/aljan">Instagram</a>.</p>
+      <p class="c-paragraph">If you want to hire me as a photographer or request a print, contact me at <a href="mailto:aljan@scholtens.me" target="_blank">aljan@scholtens.me</a>. You can also hire me as a drone photographer/videographer. For more inspiration and frequent work, follow me on <a href="https://instagram.com/aljan">Instagram</a>.</p>
 
     </div>
 
     <!-- Gallery -->
     {# {% set gallery_gutter = 'large' %} #}
-    {% set gallery = [
+    {% set galleryGrid = [
       [
-        {img: '/media/portfolio/aljanscholtens-24.jpg', caption: 'Gasterse Duinen', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-15.jpg', caption: 'On the dike in Aduarderzijl', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-23.jpg', caption: 'One of the many Dolmen (Hunebed)', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-25.jpg', caption: 'Drents Friese Wold', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-4.jpg', caption: 'Italian alps in the rain', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-26.jpg', caption: 'Lauwersmeer', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-22.jpg', caption: 'Sunset in Austria', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-11.jpg', caption: 'Cape of Good Hope in South Africe', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-21.jpg', caption: 'Austria', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-20.jpg', caption: 'Morning tops in Austria', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-16.jpg', caption: 'The northern coast of Madeira during sunset', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-14.jpg', caption: 'Typical Groningen landscape', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-13.jpg', caption: 'Dutch mill near the city Groningen', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-7.jpg', caption: 'A small bird during sunset in a nature reserve near Groningen', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-6.jpg', caption: 'Millions of flies', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-3.jpg', caption: 'A young sheep in the Scottish Highlands', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-2.jpg', caption: 'Sunset on Ardnamurchan, Scotland', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-19.jpg', caption: 'Austrian sunset', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-12.jpg', caption: 'Path through the lands of South Africa', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-10.jpg', caption: 'Tiny waterfall in Tsitsikamma Forest, South Africa', cols: 100},
-        {img: '/media/portfolio/aljanscholtens-1.jpg', caption: 'Viewpoint to the Mont Blanc from Italy', cols: 100}
+        {img: '/media/portfolio/aljanscholtens-20.jpg', caption: 'Fairy Pools, Isle of Skye', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-17.jpg', caption: 'Iceland', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-21.jpg', caption: 'Niehove, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-18.jpg', caption: 'Glencoe, Scotland', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-16.jpg', caption: 'Iceland', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-14.jpg', caption: 'Gasterse Duinen, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-19.jpg', caption: 'Castle Stalker, Scotland', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-13.jpg', caption: 'Dolmen', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-15.jpg', caption: 'Drents Friese Wold', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-9.jpg', caption: 'Aduarderzijl, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-11.jpg', caption: 'Austria', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-12.jpg', caption: 'Austria', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-10.jpg', caption: 'Madeira, Portugal', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-8.jpg', caption: 'De Poffert, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-7.jpg', caption: 'Paterswolde, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-5.jpg', caption: 'Onlanden, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-6.jpg', caption: 'Cape of Good Hope, South Africa', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-4.jpg', caption: 'Onlanden, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-3.jpg', caption: 'Italian Alps', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-2.jpg', caption: 'Ardnamurchan, Scotland', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-1.jpg', caption: 'Ardnamurchan, Scotland', cols: 100}
+      ]
+    ] %}
+    {% set galleryGrid_footnote = '' %}
+    {% include 'components/components.gallery-grid.html' %}
+    <!-- End Gallery -->
+
+    <!-- Gallery -->
+    {# {% set gallery_gutter = 'large' %} #}
+    {# {% set gallery = [
+      [
+        {img: '/media/portfolio/aljanscholtens-20.jpg', caption: 'Fairy Pools, Isle of Skye', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-17.jpg', caption: 'Iceland', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-21.jpg', caption: 'Niehove, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-18.jpg', caption: 'Glencoe, Scotland', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-16.jpg', caption: 'Iceland', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-14.jpg', caption: 'Gasterse Duinen, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-19.jpg', caption: 'Castle Stalker, Scotland', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-13.jpg', caption: 'Dolmen', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-15.jpg', caption: 'Drents Friese Wold', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-9.jpg', caption: 'Aduarderzijl, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-11.jpg', caption: 'Austria', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-12.jpg', caption: 'Austria', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-10.jpg', caption: 'Madeira, Portugal', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-8.jpg', caption: 'De Poffert, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-7.jpg', caption: 'Paterswolde, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-5.jpg', caption: 'Onlanden, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-6.jpg', caption: 'Cape of Good Hope, South Africa', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-4.jpg', caption: 'Onlanden, Netherlands', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-3.jpg', caption: 'Italian Alps', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-2.jpg', caption: 'Ardnamurchan, Scotland, South Africa', cols: 100},
+        {img: '/media/portfolio/aljanscholtens-1.jpg', caption: 'Ardnamurchan, Scotland', cols: 100}
       ]
     ] %}
     {% set gallery_footnote = '' %}
-    {% include 'components/components.gallery.html' %}
+    {% include 'components/components.gallery.html' %} #}
     <!-- End Gallery -->
 
   {% endcall %}

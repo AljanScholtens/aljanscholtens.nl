@@ -1,0 +1,124 @@
+/*------------------------------------*\
+  #COMPONENTS-GALLERY
+\*------------------------------------*/
+
+.c-gallery-grid-wrapper {
+  clear: both;
+  margin: var(--space-stack-default);
+  padding-left: 6px;
+  padding-right: 6px;
+
+  @media (--breakpoint-30) {
+    margin: var(--space-stack-50);
+    padding-top: var(--space-40);
+  }
+}
+
+.c-gallery-grid {
+  list-style: none;
+  margin: 0;
+  margin-left: calc(- var(--space-default));
+  margin-right: calc(- var(--space-default));
+  display: grid;
+  grid-gap: 6px;
+
+  @media (--breakpoint-10) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (--breakpoint-20) {
+    margin-left: calc(- var(--space-default) * 2);
+    margin-right: calc(- var(--space-default) * 2);
+
+  }
+
+  @media (--breakpoint-30) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.c-gallery-grid__item {
+  background-color: var(--color-neutral-90);
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+
+  @media (--breakpoint-30) {
+    max-height: 40rem;
+  }
+
+  & a {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: none;
+    padding: 0;
+
+    &:hover:after {
+      opacity: 0.2;
+    }
+
+    &:after {
+      content: " ";
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      background-color: var(--color-primary-50);
+      transition: opacity 200ms var(--bezier-default);
+    }
+  }
+
+  & img {
+    pointer-events: none;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 1;
+  }
+
+  & img[data-src] {
+	  opacity: 0;
+    transition: opacity 5s;
+  }
+}
+
+.c-gallery-grid__figcaption {
+  position: absolute;
+  z-index: var(--layer-10);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  line-height: 1.5em;
+  padding: 0.5rem 0.75rem;
+  padding-top: calc(var(--spacing) * 3);
+  font-weight: 400;
+  font-family: var(--font-family-c);
+  color: color(var(--color-white) alpha(0.75));
+  font-size: var(--font-size-30);
+
+  &:after {
+    content: " ";
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background-image: linear-gradient(180deg, transparent, color(var(--color-black) alpha(0.4)));
+  }
+}
+
+.c-gallery__footnote {
+  padding-top: var(--spacing);
+
+  & p {
+    margin: 0;
+  }
+}

@@ -31,7 +31,9 @@
 @import "components.author.css";
 @import "components.button.css";
 @import "components.card.css";
+@import "components.fancybox.css";
 @import "components.footer.css";
+@import "components.gallery-grid.css";
 @import "components.gallery.css";
 @import "components.heading.css";
 @import "components.highlight.css";

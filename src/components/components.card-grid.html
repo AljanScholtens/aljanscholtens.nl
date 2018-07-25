@@ -15,13 +15,16 @@
         <div class="c-card__content">
           <h2 class="c-heading c-heading--30"><a href="{{ card.url }}">{{ card.title }}</a></h2>
           <p>{{ card.content }}</p>
-          <div class="c-card__meta c-paragraph c-paragraph--soft">
-            <figure style="background-image: url('/assets/images/aljanscholtens.jpg');"></figure>
-            <div>
-              Written by <a href="https://twitter.com/aljanscholtens">Aljan Scholtens</a><br/>
-              {{ card.date }}
+
+          {% if card.author %}
+            <div class="c-card__meta c-paragraph c-paragraph--soft">
+              <figure style="background-image: url('/assets/images/aljanscholtens.jpg');"></figure>
+              <div>
+                Written by <a href="https://twitter.com/aljanscholtens">Aljan Scholtens</a><br/>
+                {{ card.date }}
+              </div>
             </div>
-          </div>
+          {% endif %}
         </div>
       </li>
     {% endfor %}
