@@ -7,12 +7,8 @@ var lost = require('lost')
 var cssnext = require('postcss-cssnext')
 var gutil = require('gulp-util')
 
-// var imageOptim = require('gulp-imageoptim')
 var imagemin = require('gulp-imagemin')
 var jpegtran = require('imagemin-jpegtran')
-// var jpegoptim = require('imagemin-jpegoptim')
-// var mozjpeg = require('imagemin-mozjpeg')
-// var smushit = require('gulp-smushit')
 
 var nunjucks = require('gulp-nunjucks')
 var browserSync = require('browser-sync').create()
@@ -21,17 +17,10 @@ var modRewrite  = require('connect-modrewrite')
 var debounce = require('lodash/debounce');
 var debouncedReload = debounce(browserSync.reload, 200)
 
-// var del = require('del')
-
 gulp.task('default', ['clean', 'serve'])
 
 gulp.task('serve', ['build', 'watch'], function() {
-  // browserSync.init({
-  //   serveStatic: ['./dist'],
-  //   serveStaticOptions: {
-  //     extensions: ['html']
-  //   }
-  // });
+
   browserSync.init({
     server: {
       baseDir: "./dist/",
@@ -41,18 +30,7 @@ gulp.task('serve', ['build', 'watch'], function() {
     },
     open: false
   });
-  // browserSync.init({
-  //   server: {
-  //     baseDir: "./dist/",
-  //     middleware: [
-  //       modRewrite([
-  //         '^/blog$ /blog [L]',
-  //         '^/([^\.]+)$ /$1.html [L]'
-  //       ])
-  //     ]
-  //   },
-  //   open: false
-  // });
+
   gulp.watch('dist/**/*').on('change', debouncedReload)
 })
 
@@ -89,24 +67,10 @@ gulp.task('fonts', () =>
 gulp.task('media', function() {
   return gulp.src('src/media/**/*')
 
-    // .pipe(imagemin({
-    //   progressive: true,
-    //   use: [mozjpeg({ quality: '20' })]
-    // }))
-
     .pipe(imagemin({
       progressive: true,
       use: [jpegtran({ max: '20' })]
     }))
-
-    // .pipe(imagemin({
-    //   progressive: true,
-    //   use: [jpegoptim({ max: '20' })]
-    // }))
-
-    // .pipe(smushit())
-
-    // .pipe(imageOptim.optimize())
 
     .on('error', gutil.log)
 

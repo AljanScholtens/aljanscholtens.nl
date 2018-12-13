@@ -26,11 +26,18 @@
 
 
 /**
+ * #PLUGINS
+ */
+@import "plugin.flickity.css";
+
+
+/**
  * #COMPONENTS
  */
 @import "components.author.css";
 @import "components.button.css";
 @import "components.card.css";
+@import "components.carousel.css";
 @import "components.fancybox.css";
 @import "components.footer.css";
 

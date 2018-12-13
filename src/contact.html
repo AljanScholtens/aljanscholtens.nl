@@ -1,0 +1,74 @@
+{% extends 'layout/layout.base.html' %}
+
+{% from 'components/components.wrapper.html' import wrapper %}
+
+{% set page_title = 'Contact' %}
+{% set page_subtitle = '' %} <!-- Not required -->
+{% set page_description = '' %} <!-- Not required -->
+{% set page_photo = '/assets/images/header-08.jpg' %}
+{% set page_thumbnail = 'http://www.aljanscholtens.nl/raw/media/_MG_1277.jpg' %}
+{% set navigation_selected = 'contact' %}
+
+{% set header = true %} <!-- true is a large header, false is no header -->
+{% set header_dark = true %}
+
+{% block content %}
+
+  {% if header == true %}
+    {% include 'components/components.header.html' %}
+  {% endif %}
+
+  {% call wrapper() %}
+
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      <p class="c-paragraph c-paragraph--lead">Last update on 1th December 2018. The now page is inspired by <a href="http://nownownow.com/">Nownownow</a>.</p>
+
+      <!-- <h2 class="c-heading c-heading--30">Design</h2>
+      <ul class="c-list">
+        <li>Currently I’m a <a href="/design">freelance designer</a> and product owner setting up design systems for organisations.</li>
+        <li>Organizing <a href="http://www.refreshconference.nl/">Refresh Conference</a>, a conference in Groningen for designers and front-end developers with great speakers. It's on 26th of October 2018, get your tickets. ;-)</li>
+        <li>Running a meetup called <a href="http://www.meetup.com/refresh-groningen/">Refresh</a>, it’s for designers and front-end developers.</li>
+        <li>Designing the new website of <a href="https://www.qbit.nl/">Qbit</a>, a complete rebranding of the cyber security companies Insite Security and ITSec.</li>
+        <li>Improving the design system of <a href="http://voys.nl/">Voys</a> in Groningen one day a week.</li>
+        <li>Updating CSS framework <a href="https://github.com/AljanScholtens/taiga-boilerplate">Taiga Boilerplate</a>, it is based on ITCSS, PostCSS, BEM and Nunjucks.</li>
+        <li>Formerly owner of the design agency <a href="http://studiowolf.com/">Studio Wolf</a> together with <a href="http://twitter.com/timsluis">Tim Sluis</a>.</li>
+      </ul> -->
+
+      <h2 class="c-heading c-heading--30">Photography</h2>
+      <ul class="c-list">
+        <li>Setting up my small business as a landscape photographer, I started on the 1th of December 2018.</li>
+        <li>Starting a <a href="https://www.youtube.com/watch?v=99wWFRlj-cM">Youtube Channel</a> about landscape photography, first video is about the inner critic.</li>
+        <li>Planning a photography book about a Dutch nature reserve.</li>
+        <li>Opened an <a href="https://www.etsy.com/shop/aljanscholtens">Etsy shop</a> where you can buy prints of my landschape photos.</li>
+        <li>Regularly posting landscape photos to <a href="https://instagram.com/aljan">Instagram</a>.</li>
+        <li>Photographing the calendar of 2019 for <a href="http://groningerlandschap.nl">'het Groninger Landschap'</a>, you can <a href="https://aljanscholtens.nl/groningerlandschap">buy prints</a>.</li>
+        <li>I recently bought a Canon A2 printer, so if you want a print, just <a href="mailto:aljan@scholtens.me">contact me</a>.</li>
+        <li>Preparing photography trips to Scotland and New Zealand.</li>
+        <li>Photographer for 'het Groninger Landschap', check my <a href="https://www.youtube.com/watch?v=Em30YozBjwM&t=37s">latest work</a> in a video.</li>
+        <li>Posting photos of our <a href="http://www.instagram.com/munsterlandernikki/">Small Münsterländer Nikki</a> on Instagram, she is sweet, stubborn and enthusiastic!</li>
+        <li>Preparing the next hike with friends this summer in Austria. Watch a video of our <a href="https://www.youtube.com/watch?v=yY4lhMk03uw">hike in the Dolomites, Italy</a> last year.</li>
+        <li>Photographing all 54 Dolmens (<a href="http://www.hunebeddenwijzer.nl/hunebedden/">Hunebedden</a>) in the Netherlands for an upcoming book.</li>
+        <li>Formerly owner of the design agency <a href="http://studiowolf.com/">Studio Wolf</a> together with <a href="http://twitter.com/timsluis">Tim Sluis</a>.</li>
+      </ul>
+
+      <h2 class="c-heading c-heading--30">I’m currently interested in writing and speaking about</h2>
+      <ul class="c-list">
+        <!-- <li>Design systems &amp; pattern libraries</li>
+        <li>CSS Grid Layout</li> -->
+        <li>The art of seeing in landscape photography</li>
+        <li>Traveling as a landscape photographer</li>
+        <li>Starting a business in landscape photograhy</li>
+      </ul>
+
+      <p>You can contact me at <a href="mailto:aljan@scholtens.me">aljan@scholtens.me</a>.</p>
+
+    </div>
+
+  {% endcall %}
+
+{% endblock %}

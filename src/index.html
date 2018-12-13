@@ -1,4 +1,4 @@
-{% extends 'layout/layout.base.html' %}
+{% extends 'layout/layout.empty.html' %}
 
 {% from 'components/components.wrapper.html' import wrapper %}
 
@@ -9,7 +9,7 @@
 {% set page_thumbnail = '' %}
 {% set navigation_selected = '' %}
 
-{% set header = true %} <!-- true is a large header, false is no header -->
+{% set header = false %} <!-- true is a large header, false is no header -->
 {% set header_dark = true %}
 
 {% block content %}
@@ -18,55 +18,53 @@
     {% include 'components/components.header.html' %}
   {% endif %}
 
-  {% call wrapper('light') %}
+  <nav class="c-navigation {% if header_dark == true %}c-navigation--dark{% endif %}">
+    <a class="c-navigation__logo" href="/">aljan</a>
+  </nav>
 
-    <div class="l-single">
-
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
-      {% endif %}
-
-      {# <p class="c-paragraph c-paragraph--lead">Heeft jouw organisatie te maken met inconsistente interfaces en onnodige herhaling in design? Ik help organisaties design te schalen via <a href="https://medium.com/eightshapes-llc/a-design-system-isn-t-a-project-it-s-a-product-serving-products-74dcfffef935">design systems</a>. Met mijn ervaring in branding en ondernemerschap kan ik een design system organisatiebreed inzetten.</p> #}
-
-    </div>
-
-    <div class="l-single-wide">
-
-      {% set card_grid = [
-        [
-          {
-            url: '/groningerlandschap',
-            title: 'Kalender Groninger Landschap',
-            content: 'Voor het jaar 2019 heb ik de kalender van het Groninger Landschap mogen fotograferen. Het thema is Groningen vanuit de lucht. Prints zijn te bestellen tot A2 formaat',
-            author: '',
-            date: '',
-            thumbnail: 'media/groningerlandschap/gl-kalender-2019-front.jpg',
-            caption: ''
-          },
-          {
-            url: '/design',
-            title: 'Freelance designer',
-            content: 'Heeft jouw organisatie te maken met inconsistente interfaces en onnodige herhaling in design? Ik help organisaties design te schalen via design systems. Met mijn ervaring in branding en ondernemerschap kan ik een design system organisatiebreed inzetten.',
-            author: '',
-            date: '',
-            thumbnail: 'media/design.jpg',
-            caption: ''
-          },
-          {
-            url: '/photography',
-            title: 'Landscape photographer',
-            content: 'When I was 15 years old I started taking photos with an old Pentax SLR of my father. After that I bought my first DSLR and within a few years my interest in landscape photography has grown. Especially 2016 was the year when I started to develop myself more as a landscape photographer.',
-            author: '',
-            date: '',
-            thumbnail: 'media/portfolio/aljanscholtens-17.jpg',
-            caption: ''
-          }
-        ]
-      ] %}
-      {% include 'components/components.card-grid.html' %}
-
-    </div>
-
-  {% endcall %}
+  <nav class="c-carousel">
+    <a href="/landscape-photography" class="c-carousel__item c-carousel__item--first">
+      <header class="c-carousel__body">
+        <h1>Landscape <br/>photography</h1>
+        <p>Hi there, I’m Aljan, a landscape photographer. I want to present you nature, the most peaceful place on earth.</p>
+      </header>
+      <div class="c-carousel__image" data-flickity-bg-lazyload="/assets/images/header-01.jpg"></div>
+    </a>
+    <a href="/groningerlandschap" class="c-carousel__item"">
+      <header class="c-carousel__body">
+        <h3>Calendar</h3>
+        <p>Landscape calendar 2019</p>
+      </header>
+      <div class="c-carousel__image" data-flickity-bg-lazyload="/assets/images/header-04.jpg"></div>
+    </a>
+    <a href="/gallery" class="c-carousel__item"">
+      <header class="c-carousel__body">
+        <h3>Gallery</h3>
+        <p>Favorite photographs</p>
+      </header>
+      <div class="c-carousel__image" data-flickity-bg-lazyload="/assets/images/header-08.jpg"></div>
+    </a>
+    <a href="/about" class="c-carousel__item"">
+      <header class="c-carousel__body">
+        <h3>About</h3>
+        <p>Who am I?</p>
+      </header>
+      <div class="c-carousel__image" data-flickity-bg-lazyload="/assets/images/header-06.jpg"></div>
+    </a>
+    <a href="/workshops" class="c-carousel__item"">
+      <header class="c-carousel__body">
+        <h3>Workshops</h3>
+        <p>Learn and grow</p>
+      </header>
+      <div class="c-carousel__image" data-flickity-bg-lazyload="/assets/images/header-05.jpg"></div>
+    </a>
+    <a href="/blog" class="c-carousel__item"">
+      <header class="c-carousel__body">
+        <h3>Blog</h3>
+        <p>Notes about my projects</p>
+      </header>
+      <div class="c-carousel__image" data-flickity-bg-lazyload="/assets/images/header-07.jpg"></div>
+    </a>
+  </nav>
 
 {% endblock %}

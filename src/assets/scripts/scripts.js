@@ -17,6 +17,19 @@
       threshold: 1000
     });
 
+    $('.c-carousel').flickity({
+      // options
+      cellAlign: 'center',
+      initialIndex: 1,
+      cellSelector: '.c-carousel__item',
+      contain: true,
+      freeScroll: true,
+      wrapAround: true,
+      pageDots: false,
+      bgLazyLoad: 2,
+      prevNextButtons: false
+    });
+
     // $('.c-timeline__clickable').click(function() {
     //   $(this).parent().find('.c-accordion__content').slideToggle(100);
     //   $(this).parent().toggleClass('is-open');
