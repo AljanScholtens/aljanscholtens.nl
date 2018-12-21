@@ -3,7 +3,7 @@
 {% from 'components/components.wrapper.html' import wrapper %}
 
 {% set page_title = 'Blog' %}
-{% set page_subtitle = 'Ik schrijf onder andere over design, fotografie en hiking.' %} <!-- Not required -->
+{% set page_subtitle = 'Notes about landscape photography & travel' %} <!-- Not required -->
 {% set page_description = '' %} <!-- Not required -->
 {% set page_photo = '/assets/images/header-07.jpg' %}
 {% set page_thumbnail = '/media/frontpage-2.jpg' %}
@@ -32,6 +32,15 @@
 
       {% set card_grid = [
         [
+          {
+            url: '/blog/old-lenses',
+            title: 'Using ancient lenses as a backup',
+            content: 'Recently I have been using a very old manual lens on my Sony A7iii, and to be honest, I shot some of my best images with this lens.',
+            author: 'aljan',
+            date: '21 December 2018',
+            thumbnail: '/media/old-lenses.jpg',
+            caption: 'My little museum'
+          },
           {
             url: '/blog/54-hunebedden',
             title: '54 Hunebedden',
