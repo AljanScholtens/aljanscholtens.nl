@@ -17,6 +17,8 @@
       threshold: 1000
     });
 
+    // $('c-carousel').height($(window).height()/2);
+
     $('.c-carousel').flickity({
       // options
       cellAlign: 'center',

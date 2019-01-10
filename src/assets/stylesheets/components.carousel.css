@@ -2,15 +2,30 @@
   #COMPONENTS-CAROUSEL
 \*------------------------------------*/
 
+html.home .c-carousel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: auto;
+}
+
 .c-carousel {
   width: 100%;
   height: 100vh;
   background: var(--color-neutral-90);
 }
 
+  html.home .c-carousel__item {
+    height: auto;
+  }
+
   .c-carousel__item {
     width: 86%;
     height: 100vh;
+    top: 0;
+    bottom: 0;
     color: var(--color-white);
     display: flex;
     align-items: flex-end;
