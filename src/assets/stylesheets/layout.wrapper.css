@@ -118,6 +118,7 @@
   .l-wrapper__image-holder {
     position: relative;
     width: 100%;
+    padding-bottom: 96px;
     z-index: var(--layer-10);
   }
 

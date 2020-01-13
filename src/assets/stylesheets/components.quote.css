@@ -22,6 +22,7 @@
 
   & cite {
     font-size: var(--font-size-20);
+    font-style: normal;
 
     &:before { content: "\2014 \0020"; }
   }

@@ -79,10 +79,8 @@
 }
 
 .sg-grid {
-  lost-utility: clearfix;
 
   & div {
-    /*lost-column: 1/12;*/
     background: var(--color-neutral-30);
     margin-bottom: 2.08333%;
     padding: 0.5rem;
@@ -102,7 +100,6 @@
  * Colors
  */
 .sg-colors {
-  lost-utility: clearfix;
 
   & ul {
     width: 50%;

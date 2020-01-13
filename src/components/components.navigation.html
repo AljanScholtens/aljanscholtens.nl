@@ -1,7 +1,7 @@
 <nav class="c-navigation {% if header_dark == true %}c-navigation--dark{% endif %}">
   <a class="c-navigation__logo" href="/">aljan</a>
 
-  <ul class="c-navigation__items">
+  <ul class="c-navigation__items {% if navigation_hide == true %}u-display-none{% endif %}">
     <li class="c-navigation__item {% if navigation_selected == 'landscape-photography' %}c-navigation__item--selected{% endif %}"><a href="/landscape-photography">What I do</a></li>
     <li class="c-navigation__item {% if navigation_selected == 'gallery' %}c-navigation__item--selected{% endif %}"><a href="/gallery">Gallery</a></li>
     <!-- <li class="c-navigation__item {% if navigation_selected == 'workshops' %}c-navigation__item--selected{% endif %}"><a href="/workshops">Workshops</a></li> -->

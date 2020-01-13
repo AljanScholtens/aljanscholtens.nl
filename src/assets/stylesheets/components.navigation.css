@@ -68,7 +68,7 @@ html.home .c-navigation {
   color: var(--color-white);
   transition: background 60ms ease-out;
   background: linear-gradient(140deg, color-mod(var(--color-primary-50) alpha(70%)), var(--color-primary-50));
-  font-family: var(--font-family-d);
+  font-family: Aqua;
   margin-right: 0;
 
   @media (--breakpoint-20) {

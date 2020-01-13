@@ -11,7 +11,6 @@
   max-width: var(--max-width);
   padding: var(--spacing) var(--spacing) 0.1px var(--spacing);
   position: relative;
-  lost-utility: clearfix;
 
   @media (--breakpoint-20) {
     padding: calc(var(--spacing) * 2);

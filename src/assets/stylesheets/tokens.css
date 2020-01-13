@@ -105,7 +105,6 @@
 
 
   /* Grid gutter */
-  @lost gutter 25px; /* Legacy */
   --gutter: 25px;
 
 

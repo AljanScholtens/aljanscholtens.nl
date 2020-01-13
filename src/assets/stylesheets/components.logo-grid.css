@@ -13,8 +13,8 @@
   display: flex;
   padding: var(--spacing);
   border-bottom: 1px solid var(--color-neutral-10);
-  lost-column: 1/2 auto 0;
   border-bottom: 0;
+  width: 50%;
 
   &:last-of-type {
     border-bottom: 0;
@@ -29,8 +29,8 @@
   }
 
   @media (--breakpoint-30) {
-    lost-column: 1/4 auto 0;
     border-right: 1px solid var(--color-neutral-10);
+    width: 25%;
 
     /* Reset previous breakpoint borders */
     &:nth-child(1n+3) { border-top: 0; }
