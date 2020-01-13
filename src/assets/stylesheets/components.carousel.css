@@ -52,7 +52,7 @@ html.home .c-carousel {
       left: 0;
       right: 0;
       height: 50%;
-      background-image: linear-gradient(180deg, color(var(--color-neutral-90) alpha(0%)), color(var(--color-neutral-90) alpha(70%)));
+      background-image: linear-gradient(180deg, color-mod(var(--color-neutral-90) alpha(0%)), color-mod(var(--color-neutral-90) alpha(70%)));
     }
 
     @media (--breakpoint-30) {

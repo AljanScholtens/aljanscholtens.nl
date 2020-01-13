@@ -1,97 +1,200 @@
-var gulp = require('gulp')
-var sourcemaps = require('gulp-sourcemaps')
-var postcss = require('gulp-postcss')
-var cssnano = require('gulp-cssnano')
-var atImport = require('postcss-import')
-var lost = require('lost')
-var cssnext = require('postcss-cssnext')
-var gutil = require('gulp-util')
+/**
+ * Paths to project folders
+ */
 
-var imagemin = require('gulp-imagemin')
-var jpegtran = require('imagemin-jpegtran')
+var paths = {
+  input: "src/",
+  output: "dist/",
+  scripts: {
+    input: "src/assets/scripts/*",
+    output: "dist/assets/scripts/"
+  },
+  styles: {
+    input: [
+      "src/assets/stylesheets/styles.css",
+      "src/assets/stylesheets/styleguide.css"
+    ],
+    output: "dist/assets/stylesheets/"
+  },
+  images: {
+    input: "src/assets/images/**/*",
+    output: "dist/assets/images/"
+  },
+  fonts: {
+    input: "src/assets/fonts/**/*",
+    output: "dist/assets/fonts/"
+  },
+  media: {
+    input: "src/media/**/*",
+    output: "dist/media/"
+  },
+  html: {
+    input: "src/**/*.html",
+    output: "dist/"
+  },
+  reload: "./dist/"
+};
 
-var nunjucks = require('gulp-nunjucks')
-var browserSync = require('browser-sync').create()
-var modRewrite  = require('connect-modrewrite')
+/**
+ * Gulp Packages
+ */
 
-var debounce = require('lodash/debounce');
-var debouncedReload = debounce(browserSync.reload, 200)
+// General
+var { src, dest, watch, series, parallel } = require("gulp");
+var del = require("del");
+var flatmap = require("gulp-flatmap");
+var lazypipe = require("lazypipe");
+var sourcemaps = require("gulp-sourcemaps");
+var package = require("./package.json");
 
-gulp.task('default', ['clean', 'serve'])
+// Scripts
+var jshint = require("gulp-jshint");
+var concat = require("gulp-concat");
+var uglify = require("gulp-terser");
+var optimizejs = require("gulp-optimize-js");
 
-gulp.task('serve', ['build', 'watch'], function() {
+// Styles
+var postcss = require("gulp-postcss");
+var postcssPresetEnv = require("postcss-preset-env");
+var postcssImport = require("postcss-import");
+var cssnano = require("cssnano");
+var purgecss = require("@fullhuman/postcss-purgecss");
+var reporter = require("postcss-reporter");
 
+// BrowserSync
+var browserSync = require("browser-sync");
+
+// Nunjucks
+var nunjucks = require("gulp-nunjucks");
+
+/**
+ * Export tasks
+ */
+
+// Watch for changes to the src directory
+var startServer = function(done) {
+  // Initialize BrowserSync
   browserSync.init({
     server: {
-      baseDir: "./dist/",
+      baseDir: paths.reload,
       serveStaticOptions: {
-        extensions: ['html']
+        extensions: ["html"]
       }
     },
     open: false
   });
 
-  gulp.watch('dist/**/*').on('change', debouncedReload)
-})
+  done();
+};
 
-gulp.task('watch', function() {
-  gulp.watch('src/**/*.html', ['html'])
-  gulp.watch('src/assets/stylesheets/**/*.css', ['css'])
-  gulp.watch('src/assets/images/**/*', ['images'])
-  gulp.watch('src/media/**/*', ['media'])
-  gulp.watch('src/assets/scripts/**/*', ['scripts'])
-})
+// Reload the browser when files change
+var reloadBrowser = function(done) {
+  browserSync.reload();
+  done();
+};
 
-gulp.task('build', ['html', 'css', 'scripts', 'images', 'fonts', 'media'])
+// Watch for changes
+var watchSource = function(done) {
+  watch(paths.input, series(exports.default, reloadBrowser));
+  done();
+};
 
-gulp.task('clean', function(cb) {
-//   return del('dist');
-});
+// Remove pre-existing content from output folders
+var cleanDist = function(done) {
+  // Clean the dist folder
+  del.sync([paths.output]);
+  return done();
+};
 
-gulp.task('html', () =>
-  gulp.src('src/**/*.html')
-   .pipe(nunjucks.compile())
-   .pipe(gulp.dest('dist'))
-)
+function buildHtml() {
+  return src(paths.html.input)
+    .pipe(nunjucks.compile())
+    .pipe(dest(paths.html.output));
+}
 
-gulp.task('images', () =>
-  gulp.src('src/assets/images/*')
-    .pipe(gulp.dest('dist/assets/images'))
-)
-
-gulp.task('fonts', () =>
-  gulp.src('src/assets/fonts/*')
-    .pipe(gulp.dest('dist/assets/fonts'))
-)
-
-gulp.task('media', function() {
-  return gulp.src('src/media/**/*')
-
-    .pipe(imagemin({
-      progressive: true,
-      use: [jpegtran({ max: '20' })]
-    }))
-
-    .on('error', gutil.log)
-
-    .pipe(gulp.dest('dist/media'))
-});
-
-gulp.task('scripts', () =>
-  gulp.src('src/assets/scripts/*')
-    .pipe(gulp.dest('dist/assets/scripts'))
-)
-
-gulp.task("css", function() {
-  var processors = [
-    atImport,
-    cssnext(),
-    lost()
-  ]
-  gulp.src(['src/assets/stylesheets/styles.css', 'src/assets/stylesheets/styleguide.css'])
+var buildStyles = function(done) {
+  return src(paths.styles.input)
     .pipe(sourcemaps.init())
-    .pipe(postcss(processors))
-    .pipe(cssnano())
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/assets/stylesheets'))
-})
+    .pipe(
+      postcss([
+        postcssImport,
+        // purgecss({
+        //   content: [paths.html.input],
+        //   rejected: true
+        // }),
+        postcssPresetEnv({
+          stage: 0,
+          browsers: "last 2 versions",
+          features: {
+            "color-mod-function": { unresolved: "warn" }
+          }
+        }),
+        reporter({
+          filter: function(message) {
+            return true;
+          }
+        }),
+        cssnano({
+          discardComments: {
+            removeAll: true
+          }
+        })
+      ])
+    )
+    .pipe(sourcemaps.write("."))
+    .pipe(dest(paths.styles.output));
+};
+
+// Repeated JavaScript tasks
+var jsTasks = lazypipe()
+  .pipe(sourcemaps.init)
+  .pipe(uglify)
+  .pipe(optimizejs)
+  .pipe(sourcemaps.write, ".")
+  .pipe(dest, paths.scripts.output);
+
+var buildScripts = function(done) {
+  // Run tasks on script files
+  return src(paths.scripts.input).pipe(
+    flatmap(function(stream, file) {
+      // If the file is a directory
+      if (file.isDirectory()) {
+        // Grab all files and concatenate them
+        src(file.path + "/*.js")
+          .pipe(concat(file.relative + ".js"))
+          .pipe(jsTasks());
+
+        return stream;
+      }
+
+      // Otherwise, process the file
+      return stream.pipe(jsTasks());
+    })
+  );
+};
+
+// Lint scripts
+var lintScripts = function(done) {
+  // Lint scripts
+  return src(paths.scripts.input)
+    .pipe(jshint())
+    .pipe(jshint.reporter("jshint-stylish"));
+};
+
+// Copy static files into output folder
+var copyFiles = function(done) {
+  src(paths.media.input).pipe(dest(paths.media.output));
+  src(paths.images.input).pipe(dest(paths.images.output));
+  return src(paths.fonts.input).pipe(dest(paths.fonts.output));
+};
+
+/**
+ * Export tasks
+ */
+
+exports.default = series(
+  cleanDist,
+  parallel(buildScripts, buildStyles, buildHtml, lintScripts, copyFiles)
+);
+
+exports.watch = series(exports.default, startServer, watchSource);

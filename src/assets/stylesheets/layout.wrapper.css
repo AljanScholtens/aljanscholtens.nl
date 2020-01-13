@@ -100,12 +100,12 @@
 
   &:after {
     bottom: 0;
-    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, color(var(--color-black) alpha(0.4)) 100%);
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, color-mod(var(--color-black) alpha(0.4)) 100%);
   }
 
   &:before {
     height: 50%;
-    background-image: linear-gradient(180deg, color(var(--color-black) alpha(0.3)) 10%, rgba(0, 0, 0, 0) 50%);
+    background-image: linear-gradient(180deg, color-mod(var(--color-black) alpha(0.3)) 10%, rgba(0, 0, 0, 0) 50%);
   }
 
   & .c-heading--50,

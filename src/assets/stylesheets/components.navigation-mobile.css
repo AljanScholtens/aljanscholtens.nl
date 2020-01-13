@@ -10,7 +10,7 @@
   bottom: 0;
   font-weight: 600;
   font-family: var(--font-family-heading);
-  background: color(var(--color-primary-50) alpha(0.95));
+  background: color-mod(var(--color-primary-50) alpha(0.95));
 
   &:after {
     content: "";

@@ -72,7 +72,7 @@ del {
 }
 
 mark {
-  background: color(yellow alpha(-50%));
+  background: color-mod(yellow alpha(-50%));
 }
 
 figure {

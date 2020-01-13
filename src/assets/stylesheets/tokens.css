@@ -180,8 +180,8 @@
 
   /* Shadows */
   --box-shadow-default: var(--box-shadow-10);
-  --box-shadow-10: 0px 2px 10px color(var(--color-black) alpha(10%));
-  --box-shadow-30: 0px 10px 50px color(var(--color-black) alpha(10%));
+  --box-shadow-10: 0px 2px 10px color-mod(var(--color-black) alpha(10%));
+  --box-shadow-30: 0px 10px 50px color-mod(var(--color-black) alpha(10%));
 
 
   /* Animation beziers */
