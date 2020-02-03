@@ -26,4 +26,4 @@ Redirect 301 /blind-fontein /blog/blind-fontein
 Redirect 301 /blind-erfenis /blog/blind-erfenis
 Redirect 301 /blind-broodje /blog/blind-broodje
 Redirect 301 /blind-samenvatting /blog/blind-samenvatting
-Redirect 301 /photography /gallery
+Redirect 301 /gallery /photography
