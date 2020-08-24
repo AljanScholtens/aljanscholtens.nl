@@ -51,5 +51,6 @@
     height: auto;
     max-width: 8rem;
     max-height: 6rem;
+    mix-blend-mode: darken;
   }
 }

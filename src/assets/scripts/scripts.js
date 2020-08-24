@@ -2,34 +2,8 @@
 
   $(document).ready(function() {
 
-    // Modal window
-    // $('.js-modal__toggle').click(function() {
-    //   $('.c-modal').toggleClass('is-open');
-    //   $('body').toggleClass('u-overflow-hidden');
-    // });
-    //
-    // // This makes all the content in a timeline item visible when in a small container
-    // $('.c-timeline__clickable').click(function() {
-    //   $(this).addClass('is-open');
-    // });
-
     $("img.js-lazy").lazyload({
       threshold: 1000
-    });
-
-    // $('c-carousel').height($(window).height()/2);
-
-    $('.c-carousel').flickity({
-      // options
-      cellAlign: 'center',
-      initialIndex: 1,
-      cellSelector: '.c-carousel__item',
-      contain: true,
-      freeScroll: true,
-      wrapAround: true,
-      pageDots: false,
-      bgLazyLoad: 2,
-      prevNextButtons: false
     });
 
     // $('.c-timeline__clickable').click(function() {

@@ -109,23 +109,23 @@ html.home .c-navigation {
     }
 
     &:nth-child(2) {
-      animation-delay: 400ms;
+      animation-delay: 350ms;
     }
 
     &:nth-child(3) {
-      animation-delay: 500ms;
+      animation-delay: 400ms;
     }
 
     &:nth-child(4) {
-      animation-delay: 600ms;
+      animation-delay: 450ms;
     }
 
     &:nth-child(5) {
-      animation-delay: 700ms;
+      animation-delay: 500ms;
     }
 
     &:nth-child(6) {
-      animation-delay: 800ms;
+      animation-delay: 550ms;
     }
   }
 
@@ -175,7 +175,9 @@ html.home .c-navigation {
   list-style: none;
 
   @media (--breakpoint-20) {
+    opacity: 0;
     padding-right: 16px;
+    animation: c-navigation 300ms cubic-bezier(0, 0, 0, 1) forwards 450ms;
   }
 }
 

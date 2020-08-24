@@ -48,7 +48,7 @@
   --line-height-default: var(--line-height-10);
   --line-height-10: 1;
   --line-height-20: 1.35em;
-  --line-height-30: 1.75em;
+  --line-height-30: 1.65em;
 
 
   /* Letter spacing */
@@ -148,12 +148,19 @@
 
 
   /* Neutral colors */
-  --color-neutral-10: #F2F2F7;
+  --color-neutral-10: #FEF9F2;
+  --color-neutral-30: #D5D3CE;
+  --color-neutral-50: #8F8D87;
+  --color-neutral-60: #615F5B;
+  --color-neutral-70: #3C3B38;
+  --color-neutral-90: #201E1C;
+
+  /* --color-neutral-10: #F2F2F7;
   --color-neutral-30: #D2D1E5;
   --color-neutral-50: #9493AD;
   --color-neutral-60: #5E5C7D;
   --color-neutral-70: #333250;
-  --color-neutral-90: #1E1D34;
+  --color-neutral-90: #1E1D34; */
 
 
   /* Black and white */

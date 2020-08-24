@@ -6,7 +6,7 @@
   list-style: none;
   font-size: var(--font-size-40);
   color: var(--color-neutral-90);
-  line-height: var(--line-height-default);
+  line-height: var(--line-height-30);
   margin: var(--space-stack-default);
 
   & li {

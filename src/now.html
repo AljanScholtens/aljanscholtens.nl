@@ -9,8 +9,8 @@
 {% set page_thumbnail = '' %}
 {% set navigation_selected = 'now' %}
 
-{% set header = true %} <!-- true is a large header, false is no header -->
-{% set header_dark = true %}
+{% set header = false %} <!-- true is a large header, false is no header -->
+
 
 {% block content %}
 
@@ -21,6 +21,10 @@
   {% call wrapper() %}
 
     <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
 
       <p class="c-paragraph c-paragraph--lead">This is the page which get regular updates about the things I'm doing right now.</p>
 

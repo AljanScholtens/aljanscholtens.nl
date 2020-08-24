@@ -94,9 +94,9 @@
     padding: 0.5rem 0.75rem;
     padding-top: 4.5rem;
     font-weight: 400;
-    font-family: var(--font-family-c);
+    font-family: var(--font-family-body);
     color: color-mod(var(--color-white) alpha(0.75));
-    font-size: var(--font-size-30);
+    font-size: var(--font-size-20);
 
     &:after {
       content: " ";

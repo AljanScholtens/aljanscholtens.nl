@@ -10,6 +10,7 @@
 
 
 html {
+  background-color: var(--color-neutral-10);
   color: var(--color-neutral-50);
   font-weight: 400;
   font-size: var(--font-size-base);
