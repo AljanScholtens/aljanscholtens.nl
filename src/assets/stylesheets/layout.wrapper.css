@@ -2,6 +2,13 @@
   #LAYOUT-WRAPPERS
 \*------------------------------------*/
 
+
+/* All items with dark theme gets a white color */
+.t-dark {
+  color: var(--color-white);
+}
+
+
 /*
  * Get full width backgrounds around your content
  */
@@ -20,6 +27,10 @@
       padding-bottom: 0;
     }
   }
+}
+
+.t-dark .l-wrapper {
+  background: var(--color-primary-90);
 }
 
 

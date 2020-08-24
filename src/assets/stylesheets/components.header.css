@@ -2,17 +2,6 @@
   #COMPONENTS-HEADER
 \*------------------------------------*/
 
-@keyframes c-header {
-
-  0% {
-    filter: grayscale(1);
-  }
-
-  100% {
-    filter: grayscale(0);
-  }
-}
-
 .c-header {
   position: relative;
   height: 100vh;
@@ -23,8 +12,6 @@
 
   @media (--breakpoint-20) {
     min-height: 800px;
-    filter: grayscale(1);
-    animation: c-header 2s linear forwards 500ms;
   }
 
   @media (--breakpoint-40) {
@@ -153,7 +140,27 @@
 
 
 
+@keyframes c-header-image-a {
 
+  0% {
+    filter: grayscale(1);
+  }
+
+  100% {
+    filter: grayscale(0);
+  }
+}
+
+@keyframes c-header-image-b {
+
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
 
 .c-header__image {
   position: absolute;
@@ -165,11 +172,14 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-color: var(--color-primary-90);
-  background-blend-mode: lighten;
-  opacity: 0.8;
+  mix-blend-mode: lighten;
+  /* background-color: var(--color-primary-90); */
+  /* background-blend-mode: lighten; */
+  /* opacity: 0.8; */
 
-  @media (--breakpoint-40) {
-
+  @media (--breakpoint-20) {
+    filter: grayscale(1);
+    opacity: 0;
+    animation: c-header-image-a 2s linear forwards 500ms, c-header-image-b 500ms ease-out;
   }
 }

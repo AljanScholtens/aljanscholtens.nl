@@ -29,6 +29,10 @@
   }
 }
 
+.t-dark .c-list {
+  color: var(--color-white);
+}
+
 ul.c-list {
 
   & li:before {

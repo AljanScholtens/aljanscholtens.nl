@@ -30,6 +30,11 @@
   font-weight: 500;
 }
 
+.t-dark .c-heading--30,
+.t-dark .u-content h2 {
+  color: var(--color-primary-30);
+}
+
 .c-heading--50 {
   font-family: var(--font-family-b);
   font-size: 40px;

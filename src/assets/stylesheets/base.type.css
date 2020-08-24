@@ -36,6 +36,14 @@ a {
   padding: 0.2em 0.5rem;
 }
 
+.t-dark .u-content a {
+  /* color: var(--color-secondary-30); */
+  background-color: color-mod(var(--color-secondary-50) alpha(20%));
+
+  &:hover {
+    color: var(--color-white);
+  }
+}
 
 /*
  * Other
