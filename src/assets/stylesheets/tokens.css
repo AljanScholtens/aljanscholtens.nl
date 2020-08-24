@@ -20,9 +20,9 @@
 
 
   /* Fonts */
-  --font-family-a: Orkney, 'Helvetica Neue', sans-serif;
+  --font-family-a: Sofia Pro, 'Helvetica Neue', sans-serif;
   --font-family-b: Lora, Georgia, serif;
-  --font-family-c: Stellar, 'Helvetica Neue', sans-serif;
+  --font-family-c: comic sans;
   --font-family-d: Aqua, 'Helvetica Neue', sans-serif;
 
   /* Legacy */
@@ -45,10 +45,8 @@
 
 
   /* Line-height */
-  --line-height-base: 1em;
-
-  --line-height-default: var(--line-height-30);
-  --line-height-10: 1em;
+  --line-height-default: var(--line-height-10);
+  --line-height-10: 1;
   --line-height-20: 1.35em;
   --line-height-30: 1.75em;
 
@@ -125,6 +123,7 @@
   --color-primary-30: #9C9AF4;
   --color-primary-50: #514DD7;
   --color-primary-70: #3330A6;
+  --color-primary-90: #121138;
 
 
   /* Secondary colors */

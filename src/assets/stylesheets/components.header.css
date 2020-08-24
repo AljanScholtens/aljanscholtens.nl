@@ -1,0 +1,144 @@
+/*------------------------------------*\
+  #COMPONENTS-HEADER
+\*------------------------------------*/
+
+@keyframes c-header {
+
+  0% {
+    filter: grayscale(1);
+  }
+
+  100% {
+    filter: grayscale(0);
+  }
+}
+
+.c-header {
+  position: relative;
+  height: 100vh;
+  min-height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background-color: var(--color-primary-90);
+
+  @media (--breakpoint-20) {
+    filter: grayscale(1);
+    animation: c-header 2s var(--bezier-default) forwards 500ms;
+  }
+
+  @media (--breakpoint-40) {
+    max-height: 80vh;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 100px;
+    background-image: linear-gradient(180deg, var(--color-primary-90), transparent);
+    z-index: 2;
+  }
+}
+
+
+.c-header--studio {
+
+  &:before {
+    display: none;
+  }
+
+  & .c-header__image {
+
+    @media (--breakpoint-40) {
+      background-size: 1300px auto;
+      background-position: center bottom;
+      opacity: 1;
+    }
+  }
+}
+
+
+
+
+
+
+.c-header__content {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 3rem;
+  width: 100%;
+  background-image: linear-gradient(180deg, transparent, var(--color-primary-90));
+}
+
+.c-header__body {
+  max-width: 700px;
+  margin: auto;
+}
+
+
+.c-header__title {
+  text-align: center;
+  padding-bottom: 16px;
+  font-family: var(--font-family-b);
+  line-height: 1em;
+  font-weight: 400;
+  font-size: 70px;
+  margin: var(--space-stack-30);
+  background: linear-gradient(180deg, #FFF2DC, #FFDCA2);
+
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  @media (--breakpoint-20) {
+    margin: var(--space-stack-40);
+    font-size: 100px;
+  }
+}
+
+.c-header__title--gradient {
+  background: linear-gradient(180deg, #FFDCA2 -20%, transparent 90%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+.c-header__subtitle {
+  color: var(--color-white);
+  text-align: center;
+  font-size: 30px;
+
+  @media (--breakpoint-20) {
+    font-size: 40px;
+  }
+
+  & em {
+    font-style: normal;
+    color: var(--color-primary-30);
+  }
+}
+
+
+
+
+
+.c-header__image {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--color-primary-90);
+  background-blend-mode: lighten;
+  opacity: 0.8;
+
+  @media (--breakpoint-40) {
+
+  }
+}

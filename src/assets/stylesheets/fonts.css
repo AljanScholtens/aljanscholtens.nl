@@ -3,21 +3,21 @@
 \*------------------------------------*/
 
 @font-face {
-  font-family: "Orkney";
+  font-family: "Sofia Pro";
   font-weight: 400;
-  src: url('../fonts/orkney_regular.woff2') format("woff2");
+  src: url('../fonts/sofia-pro-regular.woff2') format("woff2");
 }
 
 @font-face {
-  font-family: "Orkney";
+  font-family: "Sofia Pro";
   font-weight: 500;
-  src: url('../fonts/orkney_medium.woff2') format("woff2");
+  src: url('../fonts/sofia-pro-medium.woff2') format("woff2");
 }
 
 @font-face {
-  font-family: "Orkney";
+  font-family: "Sofia Pro";
   font-weight: 700;
-  src: url('../fonts/orkney_bold.woff2') format("woff2");
+  src: url('../fonts/sofia-pro-semibold.woff2') format("woff2");
 }
 
 @font-face {
@@ -27,13 +27,7 @@
 }
 
 @font-face {
-  font-family: "Stellar";
-  font-weight: 300;
-  src: url('../fonts/stellar_light.woff2') format("woff2");
-}
-
-@font-face {
   font-family: "Aqua";
   font-weight: 400;
-  src: url('../fonts/aqua.woff2') format("woff2");
+  src: url('../fonts/aqua-regular.woff2') format("woff2");
 }

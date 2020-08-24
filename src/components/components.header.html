@@ -1,5 +1,19 @@
 {% if header == true %}
-  <div class="l-wrapper l-wrapper--image" style="background-image: url('{{page_photo}}')">
+  <div class="c-header {% if header_studio == true %}c-header--studio{% endif %}">
+    <div class="c-header__content">
+      <div class="c-header__body">
+        <h1 class="c-header__title {% if header_title_gradient == true %}c-header__title--gradient{% endif %}">{{page_title}}</h1>
+        {% if page_subtitle %}
+          <p class="c-header__subtitle">{{page_subtitle}}</p>
+        {% endif %}
+        <!-- <span class="l-wrapper__arrow"><svg class="icon"><use xlink:href="#icon-arrow" /></svg></span> -->
+      </div>
+    </div>
+
+    <div class="c-header__image" style="background-image: url('{{page_photo}}')"></div>
+
+  </div>
+  <!-- <div class="l-wrapper l-wrapper--image" style="background-image: url('{{page_photo}}')">
     <div class="l-wrapper__image-holder">
       <div class="l-container">
         <h1 class="c-heading c-heading--50 c-heading--animation">{{page_title}}</h1>
@@ -9,7 +23,7 @@
         <span class="l-wrapper__arrow"><svg class="icon"><use xlink:href="#icon-arrow" /></svg></span>
       </div>
     </div>
-  </div>
+  </div> -->
 {% else %}
   <h1 class="c-heading c-heading--50">{{page_title}}</h1>
 {% endif %}

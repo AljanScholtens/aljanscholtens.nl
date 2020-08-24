@@ -4,12 +4,12 @@
 
 .c-heading a {
   background-color: transparent;
-  padding: 0;  
+  padding: 0;
 }
 
 .c-heading,
 .u-content h2 {
-  font-family: var(--font-family-c);
+  font-family: var(--font-family-a);
   font-weight: 600;
   margin: var(--space-stack-30);
   color: var(--color-primary-50);
@@ -31,6 +31,7 @@
 }
 
 .c-heading--50 {
+  font-family: var(--font-family-b);
   font-size: 40px;
   font-weight: 300;
 
