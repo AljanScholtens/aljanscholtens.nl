@@ -110,7 +110,7 @@ html.home .c-carousel {
     }
 
     & p {
-      font-family: var(--font-family-c);
+      font-family: var(--font-family-body);
       color: var(--color-white);
       font-size: 21px;
       line-height: 1.35;

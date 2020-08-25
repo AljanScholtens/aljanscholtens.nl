@@ -45,6 +45,10 @@
   }
 }
 
+.t-dark .c-card {
+  background: color-mod(var(--color-white) alpha(10%));
+}
+
 
 
 
@@ -81,7 +85,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    transition: transform 1s var(--bezier-default);
+    transition: transform 200ms ease-out;
   }
 
   & figcaption {
@@ -117,7 +121,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    background-color: transparent;
+    background-color: transparent !important;
     padding: 0;
   }
 }
@@ -129,6 +133,10 @@
 .c-card__meta {
   display: flex;
   align-items: center;
+
+  & div {
+    line-height: 1.35em;
+  }
 
   & figure {
     height: 3rem;

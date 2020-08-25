@@ -37,8 +37,8 @@ a {
 }
 
 .t-dark .u-content a {
-  /* color: var(--color-secondary-30); */
-  background-color: color-mod(var(--color-secondary-50) alpha(20%));
+  color: var(--color-secondary-30);
+  background-color: color-mod(var(--color-secondary-30) alpha(20%));
 
   &:hover {
     color: var(--color-white);

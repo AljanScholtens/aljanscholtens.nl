@@ -2,9 +2,32 @@
 
   $(document).ready(function() {
 
+
+    // Lazy load images
     $("img.js-lazy").lazyload({
       threshold: 1000
     });
+
+
+    // Gallery fancybox
+    $('[data-fancybox="gallery"]').fancybox({
+    	animationDuration: 200
+    });
+
+
+    // Dark mode
+    var mq = window.matchMedia( '(prefers-color-scheme: dark)' );
+    if ( mq.matches ){
+      $( "html" ).addClass( "t-dark" );
+    }
+
+    // const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+    // if (prefersDarkScheme.matches) {
+    //   document.html.classList.add("dark-theme");
+    // } else {
+    //   document.html.classList.remove("dark-theme");
+    // }
 
     // $('.c-timeline__clickable').click(function() {
     //   $(this).parent().find('.c-accordion__content').slideToggle(100);

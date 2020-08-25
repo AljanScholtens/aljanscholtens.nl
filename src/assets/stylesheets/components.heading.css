@@ -50,6 +50,10 @@
   }
 }
 
+.t-dark .c-heading--50 {
+  color: var(--color-primary-30);
+}
+
 
 
 @keyframes c-heading--animation {

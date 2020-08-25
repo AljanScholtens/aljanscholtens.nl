@@ -54,3 +54,12 @@
     mix-blend-mode: darken;
   }
 }
+
+.c-logo-grid__item {
+  border-color: color-mod(var(--color-white) alpha(10%)) !important;
+}
+
+.t-dark .c-logo-grid__item img {
+  filter: invert(100%) grayscale(100%);
+  mix-blend-mode: screen;
+}

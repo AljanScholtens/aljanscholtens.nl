@@ -44,6 +44,7 @@ ul.c-list {
   }
 }
 
+.t-dark .c-list li:before,
 .l-wrapper--neutral-70 .c-list li:before {
   background: var(--color-primary-30);
 }

@@ -28,10 +28,7 @@
   }
 }
 
+.t-dark blockquote,
 .l-wrapper--neutral-70 blockquote {
-  border-left-color: var(--color-neutral-60);
-
-  & p {
-    color: var(--color-neutral-50);
-  }
+  border-left-color: color-mod(var(--color-white) alpha(10%));
 }

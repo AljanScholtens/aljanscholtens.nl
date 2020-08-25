@@ -22,8 +22,9 @@
   /* Fonts */
   --font-family-a: Sofia Pro, 'Helvetica Neue', sans-serif;
   --font-family-b: Lora, Georgia, serif;
-  --font-family-c: comic sans;
+  --font-family-c: Nanum Pen, Lucida Handwriting;
   --font-family-d: Aqua, 'Helvetica Neue', sans-serif;
+
 
   /* Legacy */
   --font-family-heading: var(--font-family-a);
@@ -128,6 +129,7 @@
 
   /* Secondary colors */
   --color-secondary-10: #FEECF2;
+  --color-secondary-30: #FF6B99;
   --color-secondary-50: #FF3473;
   --color-secondary-70: #D31E56;
 
@@ -154,13 +156,6 @@
   --color-neutral-60: #615F5B;
   --color-neutral-70: #3C3B38;
   --color-neutral-90: #201E1C;
-
-  /* --color-neutral-10: #F2F2F7;
-  --color-neutral-30: #D2D1E5;
-  --color-neutral-50: #9493AD;
-  --color-neutral-60: #5E5C7D;
-  --color-neutral-70: #333250;
-  --color-neutral-90: #1E1D34; */
 
 
   /* Black and white */
@@ -199,6 +194,8 @@
   --layer-20: 20;
   --layer-30: 30;
 }
+
+
 
 /* Breakpoints */
 @custom-media --breakpoint-10 (min-width: 600px);

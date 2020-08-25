@@ -31,3 +31,9 @@
   font-weight: 400;
   src: url('../fonts/aqua-regular.woff2') format("woff2");
 }
+
+@font-face {
+  font-family: "Nanum Pen";
+  font-weight: 400;
+  src: url('../fonts/nanum-pen-regular.woff2') format("woff2");
+}
