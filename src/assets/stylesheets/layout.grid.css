@@ -14,8 +14,18 @@
 }
 
 .l-single-wide {
-  max-width: 60rem;
+  max-width: 54rem;
   margin: auto;
   clear: both;
   position: relative;
+}
+
+
+.c-grid {
+  display: grid;
+  grid-gap: var(--space-40);
+}
+
+.c-grid--halves {
+  grid-template-columns: 1fr 1fr;
 }

@@ -16,8 +16,9 @@
   line-height: var(--line-height-10);
 }
 
-.c-heading--10 {
-  font-size: 1.1rem;
+.c-heading--10,
+.u-content h3 {
+  font-size: 22px;
   line-height: 1.35em;
 }
 

@@ -3,13 +3,14 @@
 {% from 'components/components.wrapper.html' import wrapper %}
 
 {% set page_title = 'Blog' %}
-{% set page_subtitle = 'Notes about landscape photography & travel' %} <!-- Not required -->
+{% set page_subtitle = '' %} <!-- Not required -->
 {% set page_description = '' %} <!-- Not required -->
-{% set page_photo = '/assets/images/header-07.jpg' %}
+{% set page_photo = '/assets/images/header-03.jpg' %}
 {% set page_thumbnail = '/media/frontpage-2.jpg' %}
 {% set navigation_selected = 'blog' %}
 
 {% set header = true %} <!-- true is a large header, false is no header -->
+{% set header_title_gradient = true %}
 
 
 {% block content %}
@@ -25,6 +26,8 @@
       {% if header == false %}
         {% include 'components/components.header.html' %}
       {% endif %}
+
+      <!-- <p class="c-paragraph c-paragraph--lead">This is the page which get regular updates about the things I'm doing right now.</p> -->
 
     </div>
 
