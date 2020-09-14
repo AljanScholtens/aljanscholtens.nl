@@ -5,14 +5,14 @@
 {% set page_title = 'De frustratie van kabels' %}
 {% set page_subtitle = '' %} <!-- Not required -->
 {% set page_description = '' %} <!-- Not required -->
-{% set page_photo = '' %} <!-- Not required -->
+{% set page_photo = '/media/kabeltjes.jpg' %} <!-- Not required -->
 {% set page_thumbnail = '' %} <!-- Not required -->
 {% set navigation_selected = 'blog' %}
 
 {% set header = false %} <!-- true is a large header, false is no header -->
 
 
-{% set blog_date = '8 September 2020' %}
+{% set blog_date = '14 September 2020' %}
 {% set blog_related = '' %} <!-- Not required -->
 {% set blog_related_url = '' %} <!-- Not required -->
 {% set blog_author = 'aljan' %} <!-- Not required -->
@@ -47,6 +47,15 @@
 
       <h2>Terug naar één kabel</h2>
       <p>Ik bedacht, wat nou als ik een goede Thunderbolt-3 USB-C kabel zou kopen met piepkleine adapters naar male Micro-USB en male Lightning, dan heb ik nog maar één kabel nodig, die van de toekomst. Als ik dan bijvoorbeeld geen Lightning apparaten meer heb, kan ik de adapter hiervoor weglaten. Daarnaast heb ik ook nog een 18W USB-C stekker gekocht, zodat ik alle apparaten via dezelfde stekker en kabel kan opladen.</p>
+
+      <!-- Gallery -->
+      {% set gallery = [
+        [
+          {img: '/media/kabeltjes.jpg', caption: '', cols: 100}
+        ]
+      ] %}
+      {% include 'components/components.gallery.html' %}
+      <!-- End Gallery -->
 
       <p>Eén nadeel is dat ik niet meerdere apparaten tegelijk kan gebruiken of opladen, maar heel eerlijk, dat doe ik vrijwel nooit, dus voor mij niet zo'n probleem.</p>
 
