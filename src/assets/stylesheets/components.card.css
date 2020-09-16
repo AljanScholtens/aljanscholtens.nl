@@ -3,45 +3,33 @@
 \*------------------------------------*/
 
 .c-card-grid {
-  margin: 0;
-  margin: var(--space-stack-default);
-  list-style: none;
 
-  @media (--breakpoint-20) {
-    display: grid;
-    grid-column-gap: var(--space-default);
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (--breakpoint-30) {
-    display: block;
-  }
-
-  & > li {
-    margin: var(--space-stack-30);
-
-    @media (--breakpoint-30) {
-      margin: var(--space-stack-default);
-    }
-  }
 }
 
 
 
 
 
-.c-card {
-  background: var(--color-white);
-  border-radius: var(--border-radius-10);
-  box-shadow: var(--box-shadow-30);
+.c-card,
+a.c-card {
+  background: transparent;
+  padding: 0;
+  font-weight: inherit;
+  display: block;
   overflow: hidden;
-  margin: var(--space-stack-default);
+  margin-bottom: 16px;
   width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
 
-  @media (--breakpoint-30) {
-    flex-flow: row nowrap;
+
+  &:hover {
+
+    & .c-card__inner {
+
+      @media (--breakpoint-30) {
+        background-color: color-mod(var(--color-neutral-30) alpha(40%));
+        transform: scale(0.99);
+      }
+    }
   }
 }
 
@@ -50,42 +38,57 @@
 }
 
 
+.c-card__inner {
+  display: flex;
+  flex-flow: row nowrap;
+
+  @media (--breakpoint-30) {
+    padding: 16px;
+    backface-visibility: hidden;
+    transition: transform 150ms var(--bezier-a), background-color 150ms var(--bezier-a);
+  }
+}
 
 
 
 .c-card__content {
-  flex: 5;
-  padding: var(--space-inset-default);
 
-  @media (--breakpoint-30) {
-    padding: var(--space-inset-50);
+
+  & .c-paragraph--soft {
+    margin-bottom: 0;
+  }
+
+  & h2,
+  & h2.c-heading {
+    margin-bottom: 8px;
   }
 }
 
 
-.c-card--image {
-  display: flex;
-}
-
 
 .c-card__image {
-  flex: 4;
   position: relative;
   overflow: hidden;
+  margin-right: 16px;
+  flex: 0 0 64px;
+  height: 64px;
 
-  &:hover img {
-    transform: scale(1.1);
+  @media (--breakpoint-30) {
+    margin-right: 32px;
+    flex: 0 0 200px;
+    height: 200px;
   }
 
   & img {
     object-fit: cover;
-    width: 100%;
-    height: 100%;
     display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    transition: transform 200ms ease-out;
+    width: 64px;
+    height: 64px;
+
+    @media (--breakpoint-30) {
+      width: 200px;
+      height: 200px;
+    }
   }
 
   & figcaption {
@@ -110,19 +113,8 @@
       left: 0;
       right: 0;
       height: 50%;
-      background-image: linear-gradient(180deg, transparent, color-mod(var(--color-black) alpha(0.4)));
+      background-image: linear-gradient(180deg, transparent, color-mod(var(--color-primary-90) alpha(0.8)));
     }
-  }
-
-  & a {
-    position: absolute;
-    z-index: var(--layer-10);
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background-color: transparent !important;
-    padding: 0;
   }
 }
 

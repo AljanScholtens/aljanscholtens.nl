@@ -21,8 +21,9 @@
     left: 0;
     top: 0;
     right: 0;
-    height: 100px;
-    background-image: linear-gradient(180deg, var(--color-primary-90), transparent);
+    height: 200px;
+    background-image: linear-gradient(180deg, color-mod(var(--color-primary-90) alpha(80%)), transparent);
+    mix-blend-mode: multiply;
     z-index: 2;
   }
 }

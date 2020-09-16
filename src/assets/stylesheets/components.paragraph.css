@@ -11,7 +11,7 @@ p,
   color: var(--color-neutral-90);
 
   @media (--breakpoint-20) {
-    margin: var(--space-stack-40);
+    /* margin: var(--space-stack-40); */
   }
 }
 
@@ -40,7 +40,7 @@ p,
 
 .c-paragraph--soft,
 .u-content .c-paragraph--soft {
-  color: var(--color-neutral-60);
+  color: var(--color-neutral-50);
   font-size: var(--font-size-default);
   line-height: 1.5em;
   /* margin: var(--space-stack-30); */

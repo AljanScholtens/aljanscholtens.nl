@@ -12,7 +12,7 @@
   font-family: var(--font-family-heading);
   background: color-mod(var(--color-primary-50) alpha(0.95));
 
-  &:after {
+  /* &:after {
     content: "";
     position: absolute;
     z-index: 1;
@@ -32,7 +32,7 @@
     bottom: 0;
     width: 1rem;
     background: linear-gradient(-90deg, transparent, var(--color-primary-50));
-  }
+  } */
 }
 
 .c-navigation-mobile {

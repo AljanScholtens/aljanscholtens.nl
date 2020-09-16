@@ -1,4 +1,35 @@
 {% for row in card_grid %}
+  <div class="c-card-grid">
+
+    {% for card in row %}
+      <a href="{{ card.url }}" class="c-card">
+
+        <div class="c-card__inner">
+
+          {% if card.thumbnail %}
+            <div class="c-card__image">
+              <img class="js-lazy" data-original="{{ card.thumbnail }}">
+              {% if card.caption %}<figcaption>{{ card.caption }}</figcaption>{% endif %}
+            </div>
+          {% endif %}
+
+          <div class="c-card__content">
+            <p class="c-paragraph c-paragraph--soft">{{ card.date }}</p>
+            <h2 class="c-heading c-heading--30">{{ card.title }}</h2>
+            <p>{{ card.content }}</p>
+          </div>
+
+        </div>
+        
+      </a>
+    {% endfor %}
+
+  </div>
+{% endfor %}
+
+
+
+<!-- {% for row in card_grid %}
   <ul class="c-card-grid">
 
     {% for card in row %}
@@ -30,4 +61,4 @@
     {% endfor %}
 
   </ul>
-{% endfor %}
+{% endfor %} -->
