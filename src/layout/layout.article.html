@@ -1,0 +1,31 @@
+{% include 'layout/layout.head.html' %}
+
+{% if header == true %}
+  {% include 'components/components.header.html' %}
+{% endif %}
+
+<div class="l-wrapper">
+  <div class="l-container">
+    <div class="l-single">
+
+      {% if header == false %}
+        {% include 'components/components.header.html' %}
+      {% endif %}
+
+      {% block content %}{% endblock %}
+
+      {% include 'components/components.meta.html' %}
+
+    </div>
+  </div>
+</div>
+
+<div class="l-wrapper">
+  <div class="l-container">
+    <div class="l-single">
+      {% include 'components/components.comments.html' %}
+    </div>
+  </div>
+</div>
+
+{% include 'layout/layout.footer.html' %}
