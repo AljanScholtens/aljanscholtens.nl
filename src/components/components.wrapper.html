@@ -1,6 +1,6 @@
 {% macro wrapper(type) %}
   <div class="l-wrapper {% if type == 'dark' %}l-wrapper--neutral-70{% elseif type == 'light' %}l-wrapper--neutral-10{% elseif type =='gradient' %}l-wrapper--neutral-10-gradient{% endif %}">
-    <div class="l-container u-content">
+    <div class="l-container">
       {{ caller() }}
     </div>
   </div>

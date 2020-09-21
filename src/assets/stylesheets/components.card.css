@@ -10,8 +10,7 @@
 
 
 
-.c-card,
-a.c-card {
+.c-card {
   background: transparent;
   padding: 0;
   font-weight: inherit;
@@ -34,7 +33,16 @@ a.c-card {
 }
 
 .t-dark .c-card {
-  background: color-mod(var(--color-white) alpha(10%));
+
+  &:hover {
+
+    & .c-card__inner {
+
+      @media (--breakpoint-30) {
+        background-color: color-mod(var(--color-white) alpha(10%));
+      }
+    }
+  }
 }
 
 
