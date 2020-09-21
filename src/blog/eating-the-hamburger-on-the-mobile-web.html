@@ -1,6 +1,4 @@
-{% extends 'layout/layout.base.html' %}
-
-{% from 'components/components.wrapper.html' import wrapper %}
+{% extends 'layout/layout.article.html' %}
 
 {% set page_title = 'Eating the hamburger on the mobile web' %}
 {% set page_subtitle = '' %} <!-- Not required -->
@@ -11,7 +9,6 @@
 
 {% set header = false %} <!-- true is a large header, false is no header -->
 
-
 {% set blog_date = '10 November 2014' %}
 {% set blog_related = '' %} <!-- Not required -->
 {% set blog_related_url = '' %} <!-- Not required -->
@@ -19,88 +16,52 @@
 
 {% block content %}
 
-  {% if header == true %}
-    {% include 'components/components.header.html' %}
-  {% endif %}
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: '/media/eating-the-hamburger-on-the-mobile-web.jpg', caption: '', cols: 100}
+    ]
+  ] %}
+  {% include 'components/components.gallery.html' %}
+  <!-- End Gallery -->
 
+  <p>People have been using the hamburger-icon on websites since <a href="http://blog.placeit.net/history-of-the-hamburger-icon/">at least the 1990’s</a>. Since responsive websites and mobile apps have grown in popularity, usage of the hamburger-icon has exploded. We’re searching for a better mobile navigation for the web and would like to share our ideas and the issues we’re encountering. Today’s issue is iOS Safari.</p>
 
+  <h2>Navigating in Apps</h2>
+  <p>Lately there’s been a lot of <a href="http://mor10.com/hamburger-bad/">discussion about the icon</a>. A short while ago <a href="http://blog.manbolo.com/2014/06/30/apple-on-hamburger-menus">Apple also wrote a piece</a> on the usage of the hamburger as a way of navigating.</p>
 
+  <p>According to Apple the icon is abstract and does not trigger users enough. Luke Wroblewski also wrote a blog about the hamburger on <a href="http://www.lukew.com/ff/entry.asp?1927">large mobile screens</a>.</p>
 
-<!-- START Content -->
+  <p>The icon isn’t vary self-explanatory and hard to reach with a single hand on large screens.</p>
 
-  {% call wrapper() %}
+  <h2>What about the mobile web?</h2>
+  <p>A lot of these articles and opinions are on the usage of this icon in apps, but it’s important not to forget websites.</p>
 
-    <div class="l-single">
+  <p>In fact, on the web you basically run in to the same problems:</p>
 
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
-      {% endif %}
+  <ul class="c-list">
+    <li>Your screen might be too large to easily reach the navigation item sitting at the top of your screen.</li>
+    <li>The purpose of the hamburger icon isn’t very obvious and thus doesn’t invite users to use it.</li>
+    <li>The use of such an icon also hides (most of) the navigation completely on default so that users have to tap or click before seeing the navigation.</li>
+  </ul>
 
-      <!-- Gallery -->
-      {% set gallery = [
-        [
-          {img: '/media/eating-the-hamburger-on-the-mobile-web.jpg', caption: '', cols: 100}
-        ]
-      ] %}
-      {% include 'components/components.gallery.html' %}
-      <!-- End Gallery -->
+  <p>An easy way to solve this problem is to place a navigationbar at the bottom of the screen. This immediately shows which other elements are on the website and the menu is easily reachable on both small and large screens.</p>
 
-      <p>People have been using the hamburger-icon on websites since <a href="http://blog.placeit.net/history-of-the-hamburger-icon/">at least the 1990’s</a>. Since responsive websites and mobile apps have grown in popularity, usage of the hamburger-icon has exploded. We’re searching for a better mobile navigation for the web and would like to share our ideas and the issues we’re encountering. Today’s issue is iOS Safari.</p>
+  <h2>Kielzog as an example</h2>
+  <p>One example of this usage is the website of Kielzog, a project we’re working on right now. Kielzog is a local theater and centre of arts. A lot of visitors only know Kielzog for its theater performances and are unaware that the theater also offers lessons in music, dance, theater and fine arts. With the full navigation directly visible, a user can easily scan through the different pages (services) the theater has to offer. These items are easily overseen when the user has to tap a menu-icon first.</p>
 
-      <h2>Navigating in Apps</h2>
-      <p>Lately there’s been a lot of <a href="http://mor10.com/hamburger-bad/">discussion about the icon</a>. A short while ago <a href="http://blog.manbolo.com/2014/06/30/apple-on-hamburger-menus">Apple also wrote a piece</a> on the usage of the hamburger as a way of navigating.</p>
+  <p>On desktop the navigation at the top of the website is fully visible but on mobile this is harder to achieve. This is why we made the choice to show the navigation on the bottom of the screen when visiting the website on mobile.</p>
 
-      <p>According to Apple the icon is abstract and does not trigger users enough. Luke Wroblewski also wrote a blog about the hamburger on <a href="http://www.lukew.com/ff/entry.asp?1927">large mobile screens</a>.</p>
+  <p>This solution allows the user to easily see other elements on the website and makes it easy for users to use the navigation without having to reposition their hand. By showing the navigation in full on mobile, the user immediately sees what other services the theater has to offer.</p>
 
-      <p>The icon isn’t vary self-explanatory and hard to reach with a single hand on large screens.</p>
+  <figure class="c-media"><img class="c-media__image" src="/media/eating-the-hamburger-on-the-mobile-web-1.jpg"></figure>
 
-      <h2>What about the mobile web?</h2>
-      <p>A lot of these articles and opinions are on the usage of this icon in apps, but it’s important not to forget websites.</p>
+  <p>This sounds like a proper alternative for the hamburger-icon, an alternative that Apple hopefully approves of. Sounds all good, except for one problem. The native usage of mobile Safari causes the browser to pop-up its buttons when a user taps on an item in the navigation. This results in users having to tap a menu-item twice before it leads them to the next page. Having to tap twice is unacceptable of course. The same goes for non-sticky links at the bottom of a page, these are equally untapable for the first time.</p>
 
-      <p>In fact, on the web you basically run in to the same problems:</p>
+  <p>To conclude all of this, it basically comes down to us, the developers, not being able to implement an easy way for the user to navigate by using a navigation at the bottom of the screen (at least, without having to tap twice).</p>
 
-      <ul class="c-list">
-        <li>Your screen might be too large to easily reach the navigation item sitting at the top of your screen.</li>
-        <li>The purpose of the hamburger icon isn’t very obvious and thus doesn’t invite users to use it.</li>
-        <li>The use of such an icon also hides (most of) the navigation completely on default so that users have to tap or click before seeing the navigation.</li>
-      </ul>
+  <p>What consensus are we looking for here? Should we make the hamburger more descriptive by adding the word ‘menu’ next to it? Or should we look for another implementation of the mobile navigation all together? I’m curious to find out how Apple and you guys think about this problem.</p>
 
-      <p>An easy way to solve this problem is to place a navigationbar at the bottom of the screen. This immediately shows which other elements are on the website and the menu is easily reachable on both small and large screens.</p>
-
-      <h2>Kielzog as an example</h2>
-      <p>One example of this usage is the website of Kielzog, a project we’re working on right now. Kielzog is a local theater and centre of arts. A lot of visitors only know Kielzog for its theater performances and are unaware that the theater also offers lessons in music, dance, theater and fine arts. With the full navigation directly visible, a user can easily scan through the different pages (services) the theater has to offer. These items are easily overseen when the user has to tap a menu-icon first.</p>
-
-      <p>On desktop the navigation at the top of the website is fully visible but on mobile this is harder to achieve. This is why we made the choice to show the navigation on the bottom of the screen when visiting the website on mobile.</p>
-
-      <p>This solution allows the user to easily see other elements on the website and makes it easy for users to use the navigation without having to reposition their hand. By showing the navigation in full on mobile, the user immediately sees what other services the theater has to offer.</p>
-
-      <figure class="c-media"><img class="c-media__image" src="/media/eating-the-hamburger-on-the-mobile-web-1.jpg"></figure>
-
-      <p>This sounds like a proper alternative for the hamburger-icon, an alternative that Apple hopefully approves of. Sounds all good, except for one problem. The native usage of mobile Safari causes the browser to pop-up its buttons when a user taps on an item in the navigation. This results in users having to tap a menu-item twice before it leads them to the next page. Having to tap twice is unacceptable of course. The same goes for non-sticky links at the bottom of a page, these are equally untapable for the first time.</p>
-
-      <p>To conclude all of this, it basically comes down to us, the developers, not being able to implement an easy way for the user to navigate by using a navigation at the bottom of the screen (at least, without having to tap twice).</p>
-
-      <p>What consensus are we looking for here? Should we make the hamburger more descriptive by adding the word ‘menu’ next to it? Or should we look for another implementation of the mobile navigation all together? I’m curious to find out how Apple and you guys think about this problem.</p>
-
-      <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
-
-<!-- END Content -->
-
-
-
-
-      {% include 'components/components.meta.html' %}
-
-    </div>
-
-  {% endcall %}
-
-  {% call wrapper('gradient') %}
-
-    <div class="l-single">
-      {% include 'components/components.comments.html' %}
-    </div>
-
-  {% endcall %}
+  <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
 
 {% endblock %}

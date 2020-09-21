@@ -1,6 +1,4 @@
-{% extends 'layout/layout.base.html' %}
-
-{% from 'components/components.wrapper.html' import wrapper %}
+{% extends 'layout/layout.article.html' %}
 
 {% set page_title = 'Sketch vs Photoshop' %}
 {% set page_subtitle = '' %} <!-- Not required -->
@@ -11,7 +9,6 @@
 
 {% set header = false %} <!-- true is a large header, false is no header -->
 
-
 {% set blog_date = '11 March 2015' %}
 {% set blog_related = '' %} <!-- Not required -->
 {% set blog_related_url = '' %} <!-- Not required -->
@@ -19,83 +16,47 @@
 
 {% block content %}
 
-  {% if header == true %}
-    {% include 'components/components.header.html' %}
-  {% endif %}
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: '/media/sketch-vs-photoshop.jpg', caption: '', cols: 100}
+    ]
+  ] %}
+  {% include 'components/components.gallery.html' %}
+  <!-- End Gallery -->
 
+  <p>Since about a year I'm working with <a href="http://bohemiancoding.com/sketch/">Sketch by Bohemian Coding</a>. For those unknown with Sketch, it’s a Mac application for interface design. Before using Sketch we mainly used Adobe Photoshop at Studio Wolf, a tool most of you probably know of.</p>
 
+  <p>After not using Photoshop for a year (for Interface design that is) we’ve been asked to use Photoshop for a project because a client desired so (mostly because their technical party doesn’t use Sketch).</p>
 
+  <p>I thought to myself: “I’ve been using Photoshop for over 10 years, so this shouldn’t be a problem right?” I was kind of wrong there. Photoshop frustrated me after using Sketch for over a year. Falling back on Photoshop made me realise what the true power of Sketch is: <strong>creative speed and flexibility with Artboards</strong>.</p>
 
-<!-- START Content -->
+  <h2>Artboards</h2>
+  <p>A Sketch file exists of one or several artboards. You can compare an artboard to a piece of canvas. Sketch allows you to put multiple artboards (without size constrictions) in one file. This is pretty convenient if you want to put your desktop and mobile designs in one file.</p>
 
-  {% call wrapper() %}
+  <p>Imagine I made a product overview in Sketch. I’m pretty happy with the result but quickly want to see the difference between various contrasts and whitespace. I duplicate my artboard, put it next to the other one, edit my contrasts and whitespace and I’m able to quickly see the difference without having to open my file in a new window in Photoshop, save it as a different file, edit and compare.</p>
 
-    <div class="l-single">
+  <figure class="c-media"><img class="c-media__image" src="/media/sketch-vs-photoshop-1.png"></figure>
 
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
-      {% endif %}
+  <p>Having your different versions in different files makes it a lot harder to quickly see an overview of the design process. I sometimes make up to 10 different versions and Sketch offers me the possibility to quickly compare the differences in just one file. Because I believe the process is one of the most important things in design, I really like this feature.</p>
 
-      <!-- Gallery -->
-      {% set gallery = [
-        [
-          {img: '/media/sketch-vs-photoshop.jpg', caption: '', cols: 100}
-        ]
-      ] %}
-      {% include 'components/components.gallery.html' %}
-      <!-- End Gallery -->
+  <p>The artboard feature in Sketch makes the design process more visible and clear. I can quickly copy, try out some design ideas and discuss these with the client.</p>
 
-      <p>Since about a year I'm working with <a href="http://bohemiancoding.com/sketch/">Sketch by Bohemian Coding</a>. For those unknown with Sketch, it’s a Mac application for interface design. Before using Sketch we mainly used Adobe Photoshop at Studio Wolf, a tool most of you probably know of.</p>
+  <p>During the project in which the client requested to make the designs in Photoshop, I first designed a couple of concepts in Sketch and continued to work them out in Photoshop. This made me keep my creativity and flexibility without having to disappoint the client by not using Photoshop.</p>
 
-      <p>After not using Photoshop for a year (for Interface design that is) we’ve been asked to use Photoshop for a project because a client desired so (mostly because their technical party doesn’t use Sketch).</p>
+  <h2>A couple of other things in Sketch that brighten my daily design work</h2>
+  <ol class="c-list">
+    <li><strong>Font rendering</strong>. Sketch is nearly equal to the browser on the field of fontrendering. This might be a small difference but for the designer this has a gigantic impact when designing.</li>
+    <li><strong>Vector</strong>. Sketch is entirely vector-based (just as Illustrator). One of the key advantages of being vector-based is that I won’t have to design two times as big, as in Photoshop.</li>
+    <li><strong>Export</strong>. The export function to export artboards, layers or groups is awesome. Select and export, easy as pie. A little side note: The export for SVG (for SVG sprites) doesn’t always work as hoped, which causes me to sometimes fall back on Illustrator.</li>
+    <li><strong>File size &amp; performance.</strong> The file size of Sketch files stays relatively small (between 1 and 10MB), where as Photoshop quickly goes towards 100MB when working on big projects. The performance of Sketch on my Macbook air is great and without stuttering.</li>
+    <li><strong>Masks</strong>. Working with masks in Sketch is fast and flexibel. Want to put multiple fill gradients on top of eachother? No biggie at all!</li>
+  </ol>
 
-      <p>I thought to myself: “I’ve been using Photoshop for over 10 years, so this shouldn’t be a problem right?” I was kind of wrong there. Photoshop frustrated me after using Sketch for over a year. Falling back on Photoshop made me realise what the true power of Sketch is: <strong>creative speed and flexibility with Artboards</strong>.</p>
+  <p>Because it can’t be all rainbows and butterflies I’d like to point out a downside of Sketch as well. If I want to select a layer and drag it to a different position, while there’s a second layer on top of it, it automatically grabs the top layer. This causes quite some fowl words from time to time in our office. If you have some workarounds for this downside let me know!</p>
 
-      <h2>Artboards</h2>
-      <p>A Sketch file exists of one or several artboards. You can compare an artboard to a piece of canvas. Sketch allows you to put multiple artboards (without size constrictions) in one file. This is pretty convenient if you want to put your desktop and mobile designs in one file.</p>
+  <p>Sketch on!</p>
 
-      <p>Imagine I made a product overview in Sketch. I’m pretty happy with the result but quickly want to see the difference between various contrasts and whitespace. I duplicate my artboard, put it next to the other one, edit my contrasts and whitespace and I’m able to quickly see the difference without having to open my file in a new window in Photoshop, save it as a different file, edit and compare.</p>
-
-      <figure class="c-media"><img class="c-media__image" src="/media/sketch-vs-photoshop-1.png"></figure>
-
-      <p>Having your different versions in different files makes it a lot harder to quickly see an overview of the design process. I sometimes make up to 10 different versions and Sketch offers me the possibility to quickly compare the differences in just one file. Because I believe the process is one of the most important things in design, I really like this feature.</p>
-
-      <p>The artboard feature in Sketch makes the design process more visible and clear. I can quickly copy, try out some design ideas and discuss these with the client.</p>
-
-      <p>During the project in which the client requested to make the designs in Photoshop, I first designed a couple of concepts in Sketch and continued to work them out in Photoshop. This made me keep my creativity and flexibility without having to disappoint the client by not using Photoshop.</p>
-
-      <h2>A couple of other things in Sketch that brighten my daily design work</h2>
-      <ol class="c-list">
-        <li><strong>Font rendering</strong>. Sketch is nearly equal to the browser on the field of fontrendering. This might be a small difference but for the designer this has a gigantic impact when designing.</li>
-        <li><strong>Vector</strong>. Sketch is entirely vector-based (just as Illustrator). One of the key advantages of being vector-based is that I won’t have to design two times as big, as in Photoshop.</li>
-        <li><strong>Export</strong>. The export function to export artboards, layers or groups is awesome. Select and export, easy as pie. A little side note: The export for SVG (for SVG sprites) doesn’t always work as hoped, which causes me to sometimes fall back on Illustrator.</li>
-        <li><strong>File size &amp; performance.</strong> The file size of Sketch files stays relatively small (between 1 and 10MB), where as Photoshop quickly goes towards 100MB when working on big projects. The performance of Sketch on my Macbook air is great and without stuttering.</li>
-        <li><strong>Masks</strong>. Working with masks in Sketch is fast and flexibel. Want to put multiple fill gradients on top of eachother? No biggie at all!</li>
-      </ol>
-
-      <p>Because it can’t be all rainbows and butterflies I’d like to point out a downside of Sketch as well. If I want to select a layer and drag it to a different position, while there’s a second layer on top of it, it automatically grabs the top layer. This causes quite some fowl words from time to time in our office. If you have some workarounds for this downside let me know!</p>
-
-      <p>Sketch on!</p>
-
-      <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
-
-<!-- END Content -->
-
-
-
-
-      {% include 'components/components.meta.html' %}
-
-    </div>
-
-  {% endcall %}
-
-  {% call wrapper('gradient') %}
-
-    <div class="l-single">
-      {% include 'components/components.comments.html' %}
-    </div>
-
-  {% endcall %}
+  <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
 
 {% endblock %}

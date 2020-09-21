@@ -1,6 +1,4 @@
-{% extends 'layout/layout.base.html' %}
-
-{% from 'components/components.wrapper.html' import wrapper %}
+{% extends 'layout/layout.article.html' %}
 
 {% set page_title = 'Blind: Broodje' %}
 {% set page_subtitle = '' %} <!-- Not required -->
@@ -11,7 +9,6 @@
 
 {% set header = false %} <!-- true is a large header, false is no header -->
 
-
 {% set blog_date = '15 August 2014' %}
 {% set blog_related = 'Blind: Samenvatting' %} <!-- Not required -->
 {% set blog_related_url = '/blog/blind-samenvatting' %} <!-- Not required -->
@@ -19,42 +16,6 @@
 
 {% block content %}
 
-  {% if header == true %}
-    {% include 'components/components.header.html' %}
-  {% endif %}
-
-
-
-
-<!-- START Content -->
-
-  {% call wrapper() %}
-
-    <div class="l-single">
-
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
-      {% endif %}
-
-      <p>Ik word wakker nadat ik mijn eerste nacht in het UMCG heb doorgebracht. Binnen een half uur komt de zuster bij me langs, met mijn eerste ziekenhuis-ontbijt. Ik hoor dat ze met een lach mij goedemorgen wenst en zet een dienblad neer op het tafeltje die inmiddels over mijn bed zweeft. Na een bedankje pak ik een broodje en neem een hap. Droog, geen beleg. Ik mag het zelf smeren, wat ik niet kan.</p>
-
-<!-- END Content -->
-
-
-
-
-      {% include 'components/components.meta.html' %}
-
-    </div>
-
-  {% endcall %}
-
-  {% call wrapper('gradient') %}
-
-    <div class="l-single">
-      {% include 'components/components.comments.html' %}
-    </div>
-
-  {% endcall %}
+  <p>Ik word wakker nadat ik mijn eerste nacht in het UMCG heb doorgebracht. Binnen een half uur komt de zuster bij me langs, met mijn eerste ziekenhuis-ontbijt. Ik hoor dat ze met een lach mij goedemorgen wenst en zet een dienblad neer op het tafeltje die inmiddels over mijn bed zweeft. Na een bedankje pak ik een broodje en neem een hap. Droog, geen beleg. Ik mag het zelf smeren, wat ik niet kan.</p>
 
 {% endblock %}

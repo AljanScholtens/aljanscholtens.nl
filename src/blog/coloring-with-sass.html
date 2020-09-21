@@ -1,6 +1,4 @@
-{% extends 'layout/layout.base.html' %}
-
-{% from 'components/components.wrapper.html' import wrapper %}
+{% extends 'layout/layout.article.html' %}
 
 {% set page_title = 'Coloring with Sass' %}
 {% set page_subtitle = '' %} <!-- Not required -->
@@ -11,7 +9,6 @@
 
 {% set header = false %} <!-- true is a large header, false is no header -->
 
-
 {% set blog_date = '27 July 2012' %}
 {% set blog_related = '' %} <!-- Not required -->
 {% set blog_related_url = '' %} <!-- Not required -->
@@ -19,30 +16,13 @@
 
 {% block content %}
 
-  {% if header == true %}
-    {% include 'components/components.header.html' %}
-  {% endif %}
+  <p>When we color our designs with CSS, a very convenient way to achieve transparency is the alpha channel using the <code>rgba()</code> function. This function requires four params: a red, green and blue value and an alpha value. For example: <code>rgba(78, 85, 58, 0.5)</code> where we generate a Studio Wolf green color with a 50% transparency.</p>
 
+  <p>The only thing is: you never work with RGB values on the web. You work with hexadecimal colors. Fortunately for us, we have Sass. Sass automatically transforms your hex code to a valid RGB input. We can use the <code>rgba()</code> function in Sass like this: <code>rgba(#4e553a, 0.5)</code>. Sass will then transform this to <code>rgba(78, 85, 58, 0.5)</code> for us. And we all live happily ever after.</p>
 
+  <p>Sass also offers functions to lighten and darken colors without changing the hex codes. The <code>lighten()</code> and <code>darken()</code> functions both have two params. The first one is your hex code and the second one is the percentage you want to lighten or darken your color. For example: <code>lighten(#4e553a, 10%);</code>.</p>
 
-
-<!-- START Content -->
-
-  {% call wrapper() %}
-
-    <div class="l-single">
-
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
-      {% endif %}
-
-      <p>When we color our designs with CSS, a very convenient way to achieve transparency is the alpha channel using the <code>rgba()</code> function. This function requires four params: a red, green and blue value and an alpha value. For example: <code>rgba(78, 85, 58, 0.5)</code> where we generate a Studio Wolf green color with a 50% transparency.</p>
-
-      <p>The only thing is: you never work with RGB values on the web. You work with hexadecimal colors. Fortunately for us, we have Sass. Sass automatically transforms your hex code to a valid RGB input. We can use the <code>rgba()</code> function in Sass like this: <code>rgba(#4e553a, 0.5)</code>. Sass will then transform this to <code>rgba(78, 85, 58, 0.5)</code> for us. And we all live happily ever after.</p>
-
-      <p>Sass also offers functions to lighten and darken colors without changing the hex codes. The <code>lighten()</code> and <code>darken()</code> functions both have two params. The first one is your hex code and the second one is the percentage you want to lighten or darken your color. For example: <code>lighten(#4e553a, 10%);</code>.</p>
-
-      <p>By using these Sass functions it’s easy to change the colors within your project without the need to dive into an extra tool to find out RGB values or look up different hex colours. Check out the following example:</p>
+  <p>By using these Sass functions it’s easy to change the colors within your project without the need to dive into an extra tool to find out RGB values or look up different hex colours. Check out the following example:</p>
 
 <p><pre>
 $brand-color: green;
@@ -54,29 +34,10 @@ a.button {
 }
 </pre></p>
 
-      <p>Tip: try <code>hsla()</code> instead of <code>rgba()</code> to quickly change hue or saturation.</p>
+  <p>Tip: try <code>hsla()</code> instead of <code>rgba()</code> to quickly change hue or saturation.</p>
 
-      <p>Its possible to combine the functions <code>rgba()</code>, <code>lighten()</code> and <code>darken()</code>. Combine with caution, it can get cluttered pretty quickly.</p>
+  <p>Its possible to combine the functions <code>rgba()</code>, <code>lighten()</code> and <code>darken()</code>. Combine with caution, it can get cluttered pretty quickly.</p>
 
-      <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
-
-<!-- END Content -->
-
-
-
-
-      {% include 'components/components.meta.html' %}
-
-    </div>
-
-  {% endcall %}
-
-  {% call wrapper('gradient') %}
-
-    <div class="l-single">
-      {% include 'components/components.comments.html' %}
-    </div>
-
-  {% endcall %}
+  <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
 
 {% endblock %}

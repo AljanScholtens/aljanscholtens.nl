@@ -1,6 +1,4 @@
-{% extends 'layout/layout.base.html' %}
-
-{% from 'components/components.wrapper.html' import wrapper %}
+{% extends 'layout/layout.article.html' %}
 
 {% set page_title = 'How to set up an inline SVG sprite' %}
 {% set page_subtitle = '' %} <!-- Not required -->
@@ -11,7 +9,6 @@
 
 {% set header = false %} <!-- true is a large header, false is no header -->
 
-
 {% set blog_date = '8 January 2015' %}
 {% set blog_related = '' %} <!-- Not required -->
 {% set blog_related_url = '' %} <!-- Not required -->
@@ -19,50 +16,33 @@
 
 {% block content %}
 
-  {% if header == true %}
-    {% include 'components/components.header.html' %}
-  {% endif %}
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: '/media/how-to-set-up-an-inline-svg-sprite.jpg', caption: '', cols: 100}
+    ]
+  ] %}
+  {% include 'components/components.gallery.html' %}
+  <!-- End Gallery -->
 
+  <p>Years ago I worked with large PNG sprites with tons of icons, logo’s and other layout supporting images. Simply because it was the most efficient way to load images with the smallest amount of connections. Today SVG is supported by all major browsers. In this article I'll explain how to set up an inline SVG sprite.</p>
 
+  <p>Back in the days designing for the web was hard. We had to use sprites for almost everything. Fortunately the web grew better. CSS transformations, border radiuses, gradients and much more fancy techniques entered our workspace. Now, only icons were left in the PNG sprite.</p>
 
+  <h2>Font icons</h2>
+  <p>Sadly, working with PNG causes a mayor issue. PNG is not a vector format. The solution: put icons in fonts. Font icons! Font icons made me happy. They’re vector and they kept me out of Photoshop to create sprites. But there’s also a downside: performance and flexibility. Mostly I only use around 10 icons and still needed to load an icon font with 200 icons over 100kb in size. It felt a little stupid.</p>
 
-<!-- START Content -->
+  <p>Tip: With <a href="https://icomoon.io/">IcoMoon</a> you can build your own icon fonts with less icons.</p>
 
-  {% call wrapper() %}
+  <h2>Scalable Vector Graphics</h2>
+  <p>Allright, let’s move on to the good stuff. Since SVG is widely <a href="http://caniuse.com/#feat=svg">supported across browsers</a> it sounds like a good solution to replace icon fonts with SVG. SVG stands for Scalable Vector Graphics and are scalable, adjustable and even animatable.</p>
 
-    <div class="l-single">
+  <p>So how do you make your own inline SVG sprite? Let’s get started!</p>
 
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
-      {% endif %}
+  <h2>Setting up a SVG element</h2>
+  <p>We’ll place our SVG sprite inline in the HTML by wrapping it in a SVG element.</p>
 
-      <!-- Gallery -->
-      {% set gallery = [
-        [
-          {img: '/media/how-to-set-up-an-inline-svg-sprite.jpg', caption: '', cols: 100}
-        ]
-      ] %}
-      {% include 'components/components.gallery.html' %}
-      <!-- End Gallery -->
-
-      <p>Years ago I worked with large PNG sprites with tons of icons, logo’s and other layout supporting images. Simply because it was the most efficient way to load images with the smallest amount of connections. Today SVG is supported by all major browsers. In this article I'll explain how to set up an inline SVG sprite.</p>
-
-      <p>Back in the days designing for the web was hard. We had to use sprites for almost everything. Fortunately the web grew better. CSS transformations, border radiuses, gradients and much more fancy techniques entered our workspace. Now, only icons were left in the PNG sprite.</p>
-
-      <h2>Font icons</h2>
-      <p>Sadly, working with PNG causes a mayor issue. PNG is not a vector format. The solution: put icons in fonts. Font icons! Font icons made me happy. They’re vector and they kept me out of Photoshop to create sprites. But there’s also a downside: performance and flexibility. Mostly I only use around 10 icons and still needed to load an icon font with 200 icons over 100kb in size. It felt a little stupid.</p>
-
-      <p>Tip: With <a href="https://icomoon.io/">IcoMoon</a> you can build your own icon fonts with less icons.</p>
-
-      <h2>Scalable Vector Graphics</h2>
-      <p>Allright, let’s move on to the good stuff. Since SVG is widely <a href="http://caniuse.com/#feat=svg">supported across browsers</a> it sounds like a good solution to replace icon fonts with SVG. SVG stands for Scalable Vector Graphics and are scalable, adjustable and even animatable.</p>
-
-      <p>So how do you make your own inline SVG sprite? Let’s get started!</p>
-
-      <h2>Setting up a SVG element</h2>
-      <p>We’ll place our SVG sprite inline in the HTML by wrapping it in a SVG element.</p>
-
-      <p>The best place to include a SVG element is after the <code>&lt;body&gt;</code> opening tag. A SVG element exists out of one or multiple symbols. Each symbol is an image. A symbol contains a path element. We’ll get back to this later. Make sure you place the SVG right after the <code>&lt;body&gt;</code>, if you don’t do this, Safari won’t show the images.</p>
+  <p>The best place to include a SVG element is after the <code>&lt;body&gt;</code> opening tag. A SVG element exists out of one or multiple symbols. Each symbol is an image. A symbol contains a path element. We’ll get back to this later. Make sure you place the SVG right after the <code>&lt;body&gt;</code>, if you don’t do this, Safari won’t show the images.</p>
 
 <p><pre>
 &lt;body&gt;
@@ -78,32 +58,32 @@
 &lt;/body&gt;
 </pre></p>
 
-      <p>Don’t forget to hide your SVG! If you don’t hide it, your images will be shown on the top of your page. Also, don’t use <code>display: none;</code>, this will hide all your symbols used on the page. The best way is to use <code>visibility: hidden;</code> in combination with <code>position: absolute;</code> and <code>z-index: -1;</code>.</p>
+  <p>Don’t forget to hide your SVG! If you don’t hide it, your images will be shown on the top of your page. Also, don’t use <code>display: none;</code>, this will hide all your symbols used on the page. The best way is to use <code>visibility: hidden;</code> in combination with <code>position: absolute;</code> and <code>z-index: -1;</code>.</p>
 
-      <p>Besides an inline SVG you can also use a real .svg file, which can be cached! More on this later.</p>
+  <p>Besides an inline SVG you can also use a real .svg file, which can be cached! More on this later.</p>
 
-      <h2>Create your SVG sprite</h2>
-      <p>The first step is to open up Illustrator or Sketch and create/open a shape or icon. To create a SVG icon you need two things:</p>
+  <h2>Create your SVG sprite</h2>
+  <p>The first step is to open up Illustrator or Sketch and create/open a shape or icon. To create a SVG icon you need two things:</p>
 
-      <ul class="c-list">
-        <li><strong>Path</strong>: paths are used to draw advanced shapes combined from lines, arcs, curves etc. with or without fill. In fact, it is your image. Check out this <a href="https://www.youtube.com/watch?v=k6TWzfLGAKo&amp;list=PLL8woMHwr36F2tCFnWTbVBQAGQ6nTcXOO">video tutorial</a> on paths.</li>
-        <li><strong>Viewbox</strong>: if you think of the whole SVG image as a canvas, the view box is part of the canvas you want the viewer to see. A more elaborate description of viewports <a href="http://tutorials.jenkov.com/svg/svg-viewport-view-box.html">here</a>.</li>
-      </ul>
+  <ul class="c-list">
+    <li><strong>Path</strong>: paths are used to draw advanced shapes combined from lines, arcs, curves etc. with or without fill. In fact, it is your image. Check out this <a href="https://www.youtube.com/watch?v=k6TWzfLGAKo&amp;list=PLL8woMHwr36F2tCFnWTbVBQAGQ6nTcXOO">video tutorial</a> on paths.</li>
+    <li><strong>Viewbox</strong>: if you think of the whole SVG image as a canvas, the view box is part of the canvas you want the viewer to see. A more elaborate description of viewports <a href="http://tutorials.jenkov.com/svg/svg-viewport-view-box.html">here</a>.</li>
+  </ul>
 
-      <p>For Illustrator choose ‘Save as’ and pick ‘SVG’. After clicking ‘Save’ you’ll get the option ‘SVG Code’, open it and copy the path(s). If you use Sketch you can create a new art board and export it as SVG. Open the SVG and copy the path(s).</p>
+  <p>For Illustrator choose ‘Save as’ and pick ‘SVG’. After clicking ‘Save’ you’ll get the option ‘SVG Code’, open it and copy the path(s). If you use Sketch you can create a new art board and export it as SVG. Open the SVG and copy the path(s).</p>
 
 <p><pre>
 &lt;path d="M8.914,5.79C9.039,5.379,9.188,4.951,9.188,4.5c0-2.485-1.983-4.5-4.469-4.5S0.234,2.015,0.234,4.5S2.257,9,4.742,9C5.193,9,5.5,8.913,5.91,8.79L6,9v2h2v2h2v2h2.25l1,1H16v-3L8.914,5.79z M3.75,5c-0.829,0-1.5-0.671-1.5-1.5S2.921,2,3.75,2s1.5,0.671,1.5,1.5S4.579,5,3.75,5z" /&gt;
 </pre></p>
 
-      <p>If all your icons have the same size, for example 16×16 units, then you should create an Illustrator file or Sketch art board with that specific size/aspect ratio. Since we’re working with vector graphics here, units only define the aspect ratio. 16×16 is the same as 4×4. Use the units in your viewbox as follows:</p>
+  <p>If all your icons have the same size, for example 16×16 units, then you should create an Illustrator file or Sketch art board with that specific size/aspect ratio. Since we’re working with vector graphics here, units only define the aspect ratio. 16×16 is the same as 4×4. Use the units in your viewbox as follows:</p>
 
 <p><pre>
 &lt;symbol viewBox="0 0 16 16" /&gt;
 </pre></p>
 
-      <h2>Putting your inline SVG together</h2>
-      <p>If we copy our viewbox and path into our inline SVG element, we’ll get the following:</p>
+  <h2>Putting your inline SVG together</h2>
+  <p>If we copy our viewbox and path into our inline SVG element, we’ll get the following:</p>
 
 <p><pre>
 &lt;svg xmlns="http://www.w3.org/2000/svg"&gt;
@@ -113,22 +93,22 @@
 &lt;/svg&gt;
 </pre></p>
 
-      <p>In this example, SVG only contains one symbol. Add more to create a real sprite. Note that I added two more things to the symbol element: the preserveAspectRatio to keep the original aspect ration and an ID to identify symbols so we can use them later on.</p>
+  <p>In this example, SVG only contains one symbol. Add more to create a real sprite. Note that I added two more things to the symbol element: the preserveAspectRatio to keep the original aspect ration and an ID to identify symbols so we can use them later on.</p>
 
-      <h2>Show your images to the world</h2>
-      <p>So we have our SVG element, with one or more symbols inside it. We can now use the ID of a symbol, in this example ‘icon-id’, and include it in the web page with the &lt;use&gt; element:</p>
+  <h2>Show your images to the world</h2>
+  <p>So we have our SVG element, with one or more symbols inside it. We can now use the ID of a symbol, in this example ‘icon-id’, and include it in the web page with the &lt;use&gt; element:</p>
 
 <p><pre>
 &lt;svg class="icon"&gt;&lt;use xlink:href="#icon-id" /&gt;&lt;/svg&gt;
 </pre></p>
 
-      <p>You can do the same if you have an external SVG file, just type it like this:</p>
+  <p>You can do the same if you have an external SVG file, just type it like this:</p>
 
 <p><pre>
 &lt;svg class="icon"&gt;&lt;use xlink:href="path/to/file.svg#icon-id" /&gt;&lt;/svg&gt;
 </pre></p>
 
-      <p>The last step is adding some CSS to the class ‘icon’ as defined above. Style your icon the way you want it. The ‘fill’ property is the color of your symbol.</p>
+  <p>The last step is adding some CSS to the class ‘icon’ as defined above. Style your icon the way you want it. The ‘fill’ property is the color of your symbol.</p>
 
 <p><pre>
 svg.icon {
@@ -139,37 +119,18 @@ svg.icon {
 }
 </pre></p>
 
-      <h2>Wrap up</h2>
-      <p>SVG sprites are a new way to efficiently add scalable icons to your designs. Making a SVG sprite is not hard. Follow these steps and you’re right on your way:</p>
+  <h2>Wrap up</h2>
+  <p>SVG sprites are a new way to efficiently add scalable icons to your designs. Making a SVG sprite is not hard. Follow these steps and you’re right on your way:</p>
 
-      <ul class="c-list">
-        <li>Set up the inline SVG file wrapper;</li>
-        <li>Create a SVG symbol via Illustrator or Sketch and get the paths and viewbox and place it inside your SVG element;</li>
-        <li>Include a symbol from your SVG sprite on your web page with &lt;use&gt;</li>
-        <li>Style the symbol with CSS.</li>
-      </ul>
+  <ul class="c-list">
+    <li>Set up the inline SVG file wrapper;</li>
+    <li>Create a SVG symbol via Illustrator or Sketch and get the paths and viewbox and place it inside your SVG element;</li>
+    <li>Include a symbol from your SVG sprite on your web page with &lt;use&gt;</li>
+    <li>Style the symbol with CSS.</li>
+  </ul>
 
-      <p>Do you work with <a href="http://www.taigaboilerplate.com/">Taiga Boilerplate</a>? This approach is also embedded in Taiga.</p>
+  <p>Do you work with <a href="http://www.taigaboilerplate.com/">Taiga Boilerplate</a>? This approach is also embedded in Taiga.</p>
 
-      <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
-
-<!-- END Content -->
-
-
-
-
-      {% include 'components/components.meta.html' %}
-
-    </div>
-
-  {% endcall %}
-
-  {% call wrapper('gradient') %}
-
-    <div class="l-single">
-      {% include 'components/components.comments.html' %}
-    </div>
-
-  {% endcall %}
+  <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
 
 {% endblock %}

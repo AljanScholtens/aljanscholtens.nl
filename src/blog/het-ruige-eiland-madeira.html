@@ -1,6 +1,4 @@
-{% extends 'layout/layout.base.html' %}
-
-{% from 'components/components.wrapper.html' import wrapper %}
+{% extends 'layout/layout.article.html' %}
 
 {% set page_title = 'Het ruige eiland Madeira' %}
 {% set page_subtitle = '' %} <!-- Not required -->
@@ -11,7 +9,6 @@
 
 {% set header = true %} <!-- true is a large header, false is no header -->
 
-
 {% set blog_date = '22 September 2016' %}
 {% set blog_related = '' %} <!-- Not required -->
 {% set blog_related_url = '' %} <!-- Not required -->
@@ -19,100 +16,64 @@
 
 {% block content %}
 
-  {% if header == true %}
-    {% include 'components/components.header.html' %}
-  {% endif %}
+    <p>Om 01:00 uur in de nacht staan we op, wat nogal onmenselijk is, en rijden we naar Schiphol. Na een soepele vlucht landen we op de korte landingsbaan van het bloemeneiland Madeira. Het is nog geen week geleden dat 8% van de natuur op het eiland is afgebrand en voelt onze reis dus wat dubbel. Toch zijn we van ‘plan’ om er een vakantie zonder al te veel plannen van te maken.</p>
 
+    <p>Een uurtje later rijden we op weg naar onze eerste overnachting, een Quinta in het Noord-Oosten van het eiland. Het landschap is er dor en droog, veel bloemen zijn er op deze plek niet te vinden. Die avond lopen we vanaf de Quinta naar de noordkant van het eiland (wat nog geen kwartier lopen is) en arriveren we bij prachtige rotswanden waar de ruige zee tegenop klotst. Een ondergaande zon, enorm veel wind, maar een prachtige locatie.</p>
 
+  </div>
 
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: '/media/het-ruige-eiland-madeira/2.jpg', caption: '', cols: 100},
+      {img: '/media/het-ruige-eiland-madeira/3.jpg', caption: '', cols: 50},
+      {img: '/media/het-ruige-eiland-madeira/4.jpg', caption: '', cols: 50},
+      {img: '/media/het-ruige-eiland-madeira/5.jpg', caption: '', cols: 50},
+      {img: '/media/het-ruige-eiland-madeira/6.jpg', caption: '', cols: 50}
+    ]
+  ] %}
+  {% set gallery_footnote = '' %}
+  {% include 'components/components.gallery.html' %}
+  <!-- End Gallery -->
 
-<!-- START Content -->
+  <div class="l-single">
 
-  {% call wrapper() %}
+    <p>De volgende ochtend wil ik de kust bij de Quinta verkennen, dus stond ik op rond half 7. Helaas geen opkomende zon, het was bewolkt. Toch een paar foto’s kunnen nemen met ND filter en mezelf maar als onderwerp neergezet.</p>
 
-    <div class="l-single">
+  </div>
 
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
-      {% endif %}
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: '/media/het-ruige-eiland-madeira/7.jpg', caption: '', cols: 50},
+      {img: '/media/het-ruige-eiland-madeira/8.jpg', caption: '', cols: 50}
+    ]
+  ] %}
+  {% set gallery_footnote = '' %}
+  {% include 'components/components.gallery.html' %}
+  <!-- End Gallery -->
 
-      <p>Om 01:00 uur in de nacht staan we op, wat nogal onmenselijk is, en rijden we naar Schiphol. Na een soepele vlucht landen we op de korte landingsbaan van het bloemeneiland Madeira. Het is nog geen week geleden dat 8% van de natuur op het eiland is afgebrand en voelt onze reis dus wat dubbel. Toch zijn we van ‘plan’ om er een vakantie zonder al te veel plannen van te maken.</p>
+  <div class="l-single">
 
-      <p>Een uurtje later rijden we op weg naar onze eerste overnachting, een Quinta in het Noord-Oosten van het eiland. Het landschap is er dor en droog, veel bloemen zijn er op deze plek niet te vinden. Die avond lopen we vanaf de Quinta naar de noordkant van het eiland (wat nog geen kwartier lopen is) en arriveren we bij prachtige rotswanden waar de ruige zee tegenop klotst. Een ondergaande zon, enorm veel wind, maar een prachtige locatie.</p>
+    <p>De dagen erop merken we dat het eiland vreselijk divers is, dit is iets wat ik totaal niet had verwacht. In het uiterste oosten bevinden zich kale droge vlaktes. In het binnenland is het land zo groen dat het lijkt alsof je in een jungle loopt. Boven de boomgrens krijg je prachtige ‘steppes’ en diep in de bergen vind je verborgen watervallen. Het enige nadeel op het eiland is de vele bebouwing, vrijwel de gehele kust is volgebouwd met vooral woningen.</p>
 
-    </div>
+  </div>
 
-    <!-- Gallery -->
-    {% set gallery = [
-      [
-        {img: '/media/het-ruige-eiland-madeira/2.jpg', caption: '', cols: 100},
-        {img: '/media/het-ruige-eiland-madeira/3.jpg', caption: '', cols: 50},
-        {img: '/media/het-ruige-eiland-madeira/4.jpg', caption: '', cols: 50},
-        {img: '/media/het-ruige-eiland-madeira/5.jpg', caption: '', cols: 50},
-        {img: '/media/het-ruige-eiland-madeira/6.jpg', caption: '', cols: 50}
-      ]
-    ] %}
-    {% set gallery_footnote = '' %}
-    {% include 'components/components.gallery.html' %}
-    <!-- End Gallery -->
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: '/media/het-ruige-eiland-madeira/9.jpg', caption: '', cols: 60},
+      {img: '/media/het-ruige-eiland-madeira/10.jpg', caption: '', cols: 40},
+      {img: '/media/het-ruige-eiland-madeira/11.jpg', caption: '', cols: 50},
+      {img: '/media/het-ruige-eiland-madeira/12.jpg', caption: '', cols: 50}
+    ]
+  ] %}
+  {% set gallery_footnote = '' %}
+  {% include 'components/components.gallery.html' %}
+  <!-- End Gallery -->
 
-    <div class="l-single">
+  <div class="l-single">
 
-      <p>De volgende ochtend wil ik de kust bij de Quinta verkennen, dus stond ik op rond half 7. Helaas geen opkomende zon, het was bewolkt. Toch een paar foto’s kunnen nemen met ND filter en mezelf maar als onderwerp neergezet.</p>
-
-    </div>
-
-    <!-- Gallery -->
-    {% set gallery = [
-      [
-        {img: '/media/het-ruige-eiland-madeira/7.jpg', caption: '', cols: 50},
-        {img: '/media/het-ruige-eiland-madeira/8.jpg', caption: '', cols: 50}
-      ]
-    ] %}
-    {% set gallery_footnote = '' %}
-    {% include 'components/components.gallery.html' %}
-    <!-- End Gallery -->
-
-    <div class="l-single">
-
-      <p>De dagen erop merken we dat het eiland vreselijk divers is, dit is iets wat ik totaal niet had verwacht. In het uiterste oosten bevinden zich kale droge vlaktes. In het binnenland is het land zo groen dat het lijkt alsof je in een jungle loopt. Boven de boomgrens krijg je prachtige ‘steppes’ en diep in de bergen vind je verborgen watervallen. Het enige nadeel op het eiland is de vele bebouwing, vrijwel de gehele kust is volgebouwd met vooral woningen.</p>
-
-    </div>
-
-    <!-- Gallery -->
-    {% set gallery = [
-      [
-        {img: '/media/het-ruige-eiland-madeira/9.jpg', caption: '', cols: 60},
-        {img: '/media/het-ruige-eiland-madeira/10.jpg', caption: '', cols: 40},
-        {img: '/media/het-ruige-eiland-madeira/11.jpg', caption: '', cols: 50},
-        {img: '/media/het-ruige-eiland-madeira/12.jpg', caption: '', cols: 50}
-      ]
-    ] %}
-    {% set gallery_footnote = '' %}
-    {% include 'components/components.gallery.html' %}
-    <!-- End Gallery -->
-
-    <div class="l-single">
-
-      <p>Na 8 dagen op het eiland rondgereden te hebben met een oude Renault Clio (die de berg nauwelijks opkwam) en bij 3 verschillende Quintas te hebben overnacht kunnen we zeggen dat het een prachtig divers eiland is. We hebben vooral gewandeld door de ruige landschappen, smalle en steile weggetjes bereden en uiteraard lekker gegeten. Het was een prima vakantie om op te laden.</p>
-
-<!-- END Content -->
-
-
-
-
-      {% include 'components/components.meta.html' %}
-
-    </div>
-
-  {% endcall %}
-
-  {% call wrapper('gradient') %}
-
-    <div class="l-single">
-      {% include 'components/components.comments.html' %}
-    </div>
-
-  {% endcall %}
+    <p>Na 8 dagen op het eiland rondgereden te hebben met een oude Renault Clio (die de berg nauwelijks opkwam) en bij 3 verschillende Quintas te hebben overnacht kunnen we zeggen dat het een prachtig divers eiland is. We hebben vooral gewandeld door de ruige landschappen, smalle en steile weggetjes bereden en uiteraard lekker gegeten. Het was een prima vakantie om op te laden.</p>
 
 {% endblock %}

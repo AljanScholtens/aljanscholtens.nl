@@ -1,6 +1,4 @@
-{% extends 'layout/layout.base.html' %}
-
-{% from 'components/components.wrapper.html' import wrapper %}
+{% extends 'layout/layout.article.html' %}
 
 {% set page_title = 'Element Queries' %}
 {% set page_subtitle = '' %} <!-- Not required -->
@@ -11,7 +9,6 @@
 
 {% set header = false %} <!-- true is a large header, false is no header -->
 
-
 {% set blog_date = '26 May 2015' %}
 {% set blog_related = '' %} <!-- Not required -->
 {% set blog_related_url = '' %} <!-- Not required -->
@@ -19,38 +16,21 @@
 
 {% block content %}
 
-  {% if header == true %}
-    {% include 'components/components.header.html' %}
-  {% endif %}
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: '/media/element-queries.jpg', caption: '', cols: 100}
+    ]
+  ] %}
+  {% include 'components/components.gallery.html' %}
+  <!-- End Gallery -->
 
+  <p>For a few years now we've been creating responsive websites. We do this with the famous media queries, and they are awesome. But what if we could do things a bit smarter, for instance with element queries? Let's dive into our current method first, media queries.</p>
 
+  <h2>The media query</h2>
+  <p>A media query can define a breakpoint. On a breakpoint we can change our design. In responsive design we usually work with height and/or width changes based on the viewport of our browser.</p>
 
-
-<!-- START Content -->
-
-  {% call wrapper() %}
-
-    <div class="l-single">
-
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
-      {% endif %}
-
-      <!-- Gallery -->
-      {% set gallery = [
-        [
-          {img: '/media/element-queries.jpg', caption: '', cols: 100}
-        ]
-      ] %}
-      {% include 'components/components.gallery.html' %}
-      <!-- End Gallery -->
-
-      <p>For a few years now we've been creating responsive websites. We do this with the famous media queries, and they are awesome. But what if we could do things a bit smarter, for instance with element queries? Let's dive into our current method first, media queries.</p>
-
-      <h2>The media query</h2>
-      <p>A media query can define a breakpoint. On a breakpoint we can change our design. In responsive design we usually work with height and/or width changes based on the viewport of our browser.</p>
-
-      <p>So let’s say we want the page to change on a minimum viewport width of 700 pixels. Most of the time we do this (Code is in SCSS):</p>
+  <p>So let’s say we want the page to change on a minimum viewport width of 700 pixels. Most of the time we do this (Code is in SCSS):</p>
 
 <p><pre>
 .product-list li {
@@ -65,18 +45,18 @@
 }
 </pre></p>
 
-      <p>We use a module called .product-list. On mobile the product list has two items next to each other. When the width of the browser turns 1000 pixels, we’ll put four items next to each other and increase the padding. Awesome!</p>
+  <p>We use a module called .product-list. On mobile the product list has two items next to each other. When the width of the browser turns 1000 pixels, we’ll put four items next to each other and increase the padding. Awesome!</p>
 
-      <figure class="c-media"><img class="c-media__image" src="/media/element-queries-1.gif" alt=""></figure>
+  <figure class="c-media"><img class="c-media__image" src="/media/element-queries-1.gif" alt=""></figure>
 
-      <p>But the above happens if we’re going to put our product list in a small sidebar. They’ll still be standing next to each other. Ugly.</p>
+  <p>But the above happens if we’re going to put our product list in a small sidebar. They’ll still be standing next to each other. Ugly.</p>
 
-      <h2>Element queries</h2>
-      <p>With element queries we can adjust the module contents based on the width of the module instead of the width of the viewport like media queries.</p>
+  <h2>Element queries</h2>
+  <p>With element queries we can adjust the module contents based on the width of the module instead of the width of the viewport like media queries.</p>
 
-      <figure class="c-media"><img class="c-media__image" src="/media/element-queries-1.gif"></figure>
+  <figure class="c-media"><img class="c-media__image" src="/media/element-queries-1.gif"></figure>
 
-      <p>Let’s get back to the product list. When the module is bigger than 1000 pixels we want the items to get a width of 25% and more padding, not when the viewport gets bigger than 1000 pixels. Like the example below.</p>
+  <p>Let’s get back to the product list. When the module is bigger than 1000 pixels we want the items to get a width of 25% and more padding, not when the viewport gets bigger than 1000 pixels. Like the example below.</p>
 
 <p><pre>
 .product-list li {
@@ -91,42 +71,23 @@
 }
 </pre></p>
 
-      <p>This is awesome right? We can now build our modules to <strong>adjust to their own width and place them anywhere</strong>. In the main content, the sidebar and anywhere else. Especially for larger web apps this can be quite handy, because some modules should fit into different size panels.</p>
+  <p>This is awesome right? We can now build our modules to <strong>adjust to their own width and place them anywhere</strong>. In the main content, the sidebar and anywhere else. Especially for larger web apps this can be quite handy, because some modules should fit into different size panels.</p>
 
-      <p>Element queries should be combined with media queries. Use media queries for the layout rules or the grid and element queries for the individual modules and components. Otherwise it could be a complex job to get columns next to each other and the layout could fall apart. So they are actually good friends and not competitors.</p>
+  <p>Element queries should be combined with media queries. Use media queries for the layout rules or the grid and element queries for the individual modules and components. Otherwise it could be a complex job to get columns next to each other and the layout could fall apart. So they are actually good friends and not competitors.</p>
 
-      <h2>Browser support &amp; polyfill</h2>
+  <h2>Browser support &amp; polyfill</h2>
 
-      <p>None. It only works with a little bit of Javascript. For now you can use the <a href="https://github.com/marcj/css-element-queries">polyfill</a> by <a href="https://twitter.com/MarcJSchmidt">Marc Schmidt</a>.</p>
+  <p>None. It only works with a little bit of Javascript. For now you can use the <a href="https://github.com/marcj/css-element-queries">polyfill</a> by <a href="https://twitter.com/MarcJSchmidt">Marc Schmidt</a>.</p>
 
-      <h2>The future</h2>
-      <p>I hope that element queries will work in native CSS within a few years. There are some challenges however. You can read more about them in the articles below.</p>
+  <h2>The future</h2>
+  <p>I hope that element queries will work in native CSS within a few years. There are some challenges however. You can read more about them in the articles below.</p>
 
-      <ul class="c-list">
-        <li><a href="http://www.xanthir.com/b4VG0">http://www.xanthir.com/b4VG0</a></li>
-        <li><a href="http://www.filamentgroup.com/lab/element-query-workarounds.html">http://www.filamentgroup.com/lab/element-query-workarounds.html</a></li>
-        <li><a href="https://responsiveimagescg.github.io/eq-usecases/">https://responsiveimagescg.github.io/eq-usecases/</a></li>
-      </ul>
+  <ul class="c-list">
+    <li><a href="http://www.xanthir.com/b4VG0">http://www.xanthir.com/b4VG0</a></li>
+    <li><a href="http://www.filamentgroup.com/lab/element-query-workarounds.html">http://www.filamentgroup.com/lab/element-query-workarounds.html</a></li>
+    <li><a href="https://responsiveimagescg.github.io/eq-usecases/">https://responsiveimagescg.github.io/eq-usecases/</a></li>
+  </ul>
 
-      <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
-
-<!-- END Content -->
-
-
-
-
-      {% include 'components/components.meta.html' %}
-
-    </div>
-
-  {% endcall %}
-
-  {% call wrapper('gradient') %}
-
-    <div class="l-single">
-      {% include 'components/components.comments.html' %}
-    </div>
-
-  {% endcall %}
+  <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
 
 {% endblock %}

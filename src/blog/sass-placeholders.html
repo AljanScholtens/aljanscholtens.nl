@@ -1,6 +1,4 @@
-{% extends 'layout/layout.base.html' %}
-
-{% from 'components/components.wrapper.html' import wrapper %}
+{% extends 'layout/layout.article.html' %}
 
 {% set page_title = 'Sass Placeholders' %}
 {% set page_subtitle = '' %} <!-- Not required -->
@@ -11,7 +9,6 @@
 
 {% set header = false %} <!-- true is a large header, false is no header -->
 
-
 {% set blog_date = '23 October 2012' %}
 {% set blog_related = '' %} <!-- Not required -->
 {% set blog_related_url = '' %} <!-- Not required -->
@@ -19,37 +16,20 @@
 
 {% block content %}
 
-  {% if header == true %}
-    {% include 'components/components.header.html' %}
-  {% endif %}
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: '/media/sass-placeholders.jpg', caption: '', cols: 100}
+    ]
+  ] %}
+  {% include 'components/components.gallery.html' %}
+  <!-- End Gallery -->
 
+  <p>Een veel voorkomend probleem met HTML zijn het aantal classes die we gebruiken zoals bijvoorbeeld <code>&lt;div class="product product-hat"&gt;</code>. Ook het dupliceren van CSS gebeurd te vaak om het gewenste resultaat te krijgen. Er is een oplossing.</p>
 
+  <p>Tijdens de <a href="http://smashingconf.com/">Smashing Conference</a> in Freiburg vertelde Nicole Sullivan (<a href="https://twitter.com/stubbornella">@Stubornella</a>) over de <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#placeholder_selectors_">SASS placeholder</a> (werkt vanaf SASS 3.2). De placeholder is een type selector die niet in de CSS output komt na compilen.</p>
 
-
-<!-- START Content -->
-
-  {% call wrapper() %}
-
-    <div class="l-single">
-
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
-      {% endif %}
-
-      <!-- Gallery -->
-      {% set gallery = [
-        [
-          {img: '/media/sass-placeholders.jpg', caption: '', cols: 100}
-        ]
-      ] %}
-      {% include 'components/components.gallery.html' %}
-      <!-- End Gallery -->
-
-      <p>Een veel voorkomend probleem met HTML zijn het aantal classes die we gebruiken zoals bijvoorbeeld <code>&lt;div class="product product-hat"&gt;</code>. Ook het dupliceren van CSS gebeurd te vaak om het gewenste resultaat te krijgen. Er is een oplossing.</p>
-
-      <p>Tijdens de <a href="http://smashingconf.com/">Smashing Conference</a> in Freiburg vertelde Nicole Sullivan (<a href="https://twitter.com/stubbornella">@Stubornella</a>) over de <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#placeholder_selectors_">SASS placeholder</a> (werkt vanaf SASS 3.2). De placeholder is een type selector die niet in de CSS output komt na compilen.</p>
-
-      <p>Waarbij we normaal <code>.selector</code> of <code>#selector</code> gebruiken, pakken we nu de <code>%selector</code>. Aan onderstaand <code>%product</code> heb je niets, het komt namelijk niet in de CSS output.</p>
+  <p>Waarbij we normaal <code>.selector</code> of <code>#selector</code> gebruiken, pakken we nu de <code>%selector</code>. Aan onderstaand <code>%product</code> heb je niets, het komt namelijk niet in de CSS output.</p>
 
 <p><pre>
 %product {
@@ -59,9 +39,9 @@
 }
 </pre></p>
 
-      <p>Maar we kunnen er wel degelijk iets mee. Het voordeel zit hem in de combinatie met <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#extend">@extend</a>.</p>
+  <p>Maar we kunnen er wel degelijk iets mee. Het voordeel zit hem in de combinatie met <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#extend">@extend</a>.</p>
 
-      <p>In CSS gebruiken we bijvoorbeeld div.product. Stel we verkopen schoenen en hoedjes via een webshop. In het productoverzicht hebben alle producten een aantal dezelfde eigenschappen zoals background, border en padding. Alleen verschillen de schoenen en hoedjes van border kleur middels de volgende SCSS:</p>
+  <p>In CSS gebruiken we bijvoorbeeld div.product. Stel we verkopen schoenen en hoedjes via een webshop. In het productoverzicht hebben alle producten een aantal dezelfde eigenschappen zoals background, border en padding. Alleen verschillen de schoenen en hoedjes van border kleur middels de volgende SCSS:</p>
 
 <p><pre>
 %product {
@@ -81,9 +61,9 @@ div.product-hat {
 }
 </pre></p>
 
-      <p><small>Tip: De @extend wordt altijd als laatste binnen de selector ingeladen, overschrijven kan dus lastig zijn.</small></p>
+  <p><small>Tip: De @extend wordt altijd als laatste binnen de selector ingeladen, overschrijven kan dus lastig zijn.</small></p>
 
-      <p><code>%product</code> komt op deze manier niet in de output, maar de schoen en de hoed kunnen wel gebruik maken van de eigenschappen van <code>%product</code>. Dus hiermee krijg je de output:</p>
+  <p><code>%product</code> komt op deze manier niet in de output, maar de schoen en de hoed kunnen wel gebruik maken van de eigenschappen van <code>%product</code>. Dus hiermee krijg je de output:</p>
 
 <p><pre>
 div.product-shoe, div.product-hat {
@@ -101,31 +81,12 @@ div.product-hat {
 }
 </pre></p>
 
-      <p>Hiermee wordt de HTML simpeler en <strong>semantischer</strong>, je krijgt geen <code>&lt;div class="product product-hat"&gt;</code>, maar alleen <code>&lt;div class="product-hat"&gt;</code>.</p>
+  <p>Hiermee wordt de HTML simpeler en <strong>semantischer</strong>, je krijgt geen <code>&lt;div class="product product-hat"&gt;</code>, maar alleen <code>&lt;div class="product-hat"&gt;</code>.</p>
 
-      <p>Daarnaast hoef je in de SCSS geen code te dupliceren voor zowel <code>.product-shoe</code> als <code>.product-hat</code>. <strong>Minder code</strong>.</p>
+  <p>Daarnaast hoef je in de SCSS geen code te dupliceren voor zowel <code>.product-shoe</code> als <code>.product-hat</code>. <strong>Minder code</strong>.</p>
 
-      <p>Als interface designer een goed te onderhouden framework en voor de bezoeker betere performance.</p>
+  <p>Als interface designer een goed te onderhouden framework en voor de bezoeker betere performance.</p>
 
-      <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
-
-<!-- END Content -->
-
-
-
-
-      {% include 'components/components.meta.html' %}
-
-    </div>
-
-  {% endcall %}
-
-  {% call wrapper('gradient') %}
-
-    <div class="l-single">
-      {% include 'components/components.comments.html' %}
-    </div>
-
-  {% endcall %}
+  <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
 
 {% endblock %}

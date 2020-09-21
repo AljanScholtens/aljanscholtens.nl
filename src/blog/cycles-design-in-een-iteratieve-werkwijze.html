@@ -1,6 +1,4 @@
-{% extends 'layout/layout.base.html' %}
-
-{% from 'components/components.wrapper.html' import wrapper %}
+{% extends 'layout/layout.article.html' %}
 
 {% set page_title = 'Cycles; Design in een iteratieve werkwijze' %}
 {% set page_subtitle = '' %} <!-- Not required -->
@@ -11,7 +9,6 @@
 
 {% set header = false %} <!-- true is a large header, false is no header -->
 
-
 {% set blog_date = '27 June 2014' %}
 {% set blog_related = '' %} <!-- Not required -->
 {% set blog_related_url = '' %} <!-- Not required -->
@@ -19,91 +16,55 @@
 
 {% block content %}
 
-  {% if header == true %}
-    {% include 'components/components.header.html' %}
-  {% endif %}
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: '/media/cycles-design-in-een-iteratieve-werkwijze.jpg', caption: '', cols: 100}
+    ]
+  ] %}
+  {% include 'components/components.gallery.html' %}
+  <!-- End Gallery -->
 
+  <p>Jarenlang hebben we via de waterval-methode aan onze projecten gewerkt. Concept, schets, design, front-end, back-end, en overdracht. Het is een prima methode, want de basis van iedere werkwijze is het goed communiceren van concrete stappen. Alleen naarmate je groeit in projecten en ervaring kom je langzaam tot de conclusie dat je een flexibeler en meer betrokken proces zoekt. Voordat ik verder ga over dit nieuwe proces vertel ik eerst een stukje geschiedenis.</p>
 
+  <h2>Scrum als basis</h2>
+  <p>Anderhalf jaar geleden vroeg <a href="http://topicus.nl/">Topicus</a> ons om het design-systeem voor Digdag op te zetten. Digdag is een applicatie-suite voor de kinderopvang. Denk hierbij aan apps en responsive webapps voor kinderopvang-locaties, pedagogisch medewerkers en ouders. Het Digdag ontwikkel-team begon destijds met de <a href="http://en.wikipedia.org/wiki/Scrum_(software_development)">projectmethode Scrum</a> en daar draaide ik in mee.</p>
 
+  <p>Met Scrum werken is fijn, met iedere twee weken een sprint weet je precies wat er komt. Na zo’n sprint bepaal je wat er in de volgende sprint gebeurd. Evaluaties en proberen zorgden voor een continu sterker Scrum-traject tijdens de ontwikkeling van Digdag.</p>
 
-<!-- START Content -->
+  <p>Het mooie van scrum is <strong>focus</strong>. Doordat je focust op één onderdeel krijg je betere kwaliteit. Dat leek ons ook wel wat. Alleen heeft scrum regels die niet passen bij een klein team dat aan meerdere projecten tegelijk werkt. Met scrum werk je full-time samen in een vast team. Wij hebben een Scrum-methode nodig dat <strong>dient voor kleine design-teams</strong>. Dus waarbij maar een paar dagen gewerkt wordt aan een project met misschien maximaal twee a drie personen.</p>
 
-  {% call wrapper() %}
+  <h2>Cycles</h2>
+  <p>Na een korte en krachtige brainstorm-sessie zijn de <strong>Cycles</strong> ontstaan. Een Cycle duurt ongeveer één a drie weken waarbij een concreet onderdeel uitgewerkt wordt. Een groot verschil dus in vergelijking met de waterval-methode. Cycle voor Cycle een website of webapplicatie ontwerpen waarbij de website in principe al na een enkele Cycle live kan.</p>
 
-    <div class="l-single">
+  <p>De Cycles lossen ook een ander probleem op ten opzichte van de waterval-methode, fixed pricing. Het is moeilijk om van tevoren nauwkeurig in te schatten hoeveel een project kost op basis van de waterval-methode. Met Cycles kun je dat afspreken per Cycle.</p>
 
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
-      {% endif %}
+  <h2>Richtlijnen voor cycles</h2>
+  <ul class="c-list">
+    <li>Cycles duren gemiddeld één a drie weken, dit lijkt op Scrum;</li>
+    <li>Je bepaalt zelf hoeveel dagen je aan een Cycle werkt voor een project, meestal één a drie dagen per week;</li>
+    <li>Binnen een Cycle lever je minimaal één concreet en werkend onderdeel op;</li>
+    <li>De inhoud van de Cycles bepaal je in een voortraject door middel van user stories. Op basis van prioriteit bepalen we de eerstvolgende Cycle;</li>
+    <li>Bij iedere Cycle is de klant actief betrokken.</li>
+  </ul>
 
-      <!-- Gallery -->
-      {% set gallery = [
-        [
-          {img: '/media/cycles-design-in-een-iteratieve-werkwijze.jpg', caption: '', cols: 100}
-        ]
-      ] %}
-      {% include 'components/components.gallery.html' %}
-      <!-- End Gallery -->
+  <h2>Drie stappen</h2>
+  <ul class="c-list">
+    <li>Brainstormen en schetsen met de klant: Deze stap is belangrijk, wij als designers weten veel van het web, maar de klant weet alles van zijn branche, organisatie of product. Laat je klant actief meedenken, brainstorm en schetsen op een white board;</li>
+    <li>Designen en HTML/CSS uitwerken;</li>
+    <li>Testen en evalueren.</li>
+  </ul>
 
-      <p>Jarenlang hebben we via de waterval-methode aan onze projecten gewerkt. Concept, schets, design, front-end, back-end, en overdracht. Het is een prima methode, want de basis van iedere werkwijze is het goed communiceren van concrete stappen. Alleen naarmate je groeit in projecten en ervaring kom je langzaam tot de conclusie dat je een flexibeler en meer betrokken proces zoekt. Voordat ik verder ga over dit nieuwe proces vertel ik eerst een stukje geschiedenis.</p>
+  <h2>Valkuilen</h2>
+  <p>Niet alles kun je opvangen met Cycles, daarom zijn er een aantal valkuilen:</p>
 
-      <h2>Scrum als basis</h2>
-      <p>Anderhalf jaar geleden vroeg <a href="http://topicus.nl/">Topicus</a> ons om het design-systeem voor Digdag op te zetten. Digdag is een applicatie-suite voor de kinderopvang. Denk hierbij aan apps en responsive webapps voor kinderopvang-locaties, pedagogisch medewerkers en ouders. Het Digdag ontwikkel-team begon destijds met de <a href="http://en.wikipedia.org/wiki/Scrum_(software_development)">projectmethode Scrum</a> en daar draaide ik in mee.</p>
+  <ul class="c-list">
+    <li>Verlies het concept niet uit het oog, houdt de hoofddoelen scherp;</li>
+    <li>Het design-systeem kan in verval raken, zorg altijd voor consistentie en netheid in design zowel als code.</li>
+  </ul>
 
-      <p>Met Scrum werken is fijn, met iedere twee weken een sprint weet je precies wat er komt. Na zo’n sprint bepaal je wat er in de volgende sprint gebeurd. Evaluaties en proberen zorgden voor een continu sterker Scrum-traject tijdens de ontwikkeling van Digdag.</p>
+  <p>De Cycles zijn een interpretatie van onze eigen iteratieve design werkwijze en zal zich de komende tijd continu ontwikkelen. Op dit moment hebben we zes projecten met Cycles uitgevoerd, naarmate we een tijdje verder zijn zal ik een update posten met bevindingen en aanpassingen van de Cycles.</p>
 
-      <p>Het mooie van scrum is <strong>focus</strong>. Doordat je focust op één onderdeel krijg je betere kwaliteit. Dat leek ons ook wel wat. Alleen heeft scrum regels die niet passen bij een klein team dat aan meerdere projecten tegelijk werkt. Met scrum werk je full-time samen in een vast team. Wij hebben een Scrum-methode nodig dat <strong>dient voor kleine design-teams</strong>. Dus waarbij maar een paar dagen gewerkt wordt aan een project met misschien maximaal twee a drie personen.</p>
-
-      <h2>Cycles</h2>
-      <p>Na een korte en krachtige brainstorm-sessie zijn de <strong>Cycles</strong> ontstaan. Een Cycle duurt ongeveer één a drie weken waarbij een concreet onderdeel uitgewerkt wordt. Een groot verschil dus in vergelijking met de waterval-methode. Cycle voor Cycle een website of webapplicatie ontwerpen waarbij de website in principe al na een enkele Cycle live kan.</p>
-
-      <p>De Cycles lossen ook een ander probleem op ten opzichte van de waterval-methode, fixed pricing. Het is moeilijk om van tevoren nauwkeurig in te schatten hoeveel een project kost op basis van de waterval-methode. Met Cycles kun je dat afspreken per Cycle.</p>
-
-      <h2>Richtlijnen voor cycles</h2>
-      <ul class="c-list">
-        <li>Cycles duren gemiddeld één a drie weken, dit lijkt op Scrum;</li>
-        <li>Je bepaalt zelf hoeveel dagen je aan een Cycle werkt voor een project, meestal één a drie dagen per week;</li>
-        <li>Binnen een Cycle lever je minimaal één concreet en werkend onderdeel op;</li>
-        <li>De inhoud van de Cycles bepaal je in een voortraject door middel van user stories. Op basis van prioriteit bepalen we de eerstvolgende Cycle;</li>
-        <li>Bij iedere Cycle is de klant actief betrokken.</li>
-      </ul>
-
-      <h2>Drie stappen</h2>
-      <ul class="c-list">
-        <li>Brainstormen en schetsen met de klant: Deze stap is belangrijk, wij als designers weten veel van het web, maar de klant weet alles van zijn branche, organisatie of product. Laat je klant actief meedenken, brainstorm en schetsen op een white board;</li>
-        <li>Designen en HTML/CSS uitwerken;</li>
-        <li>Testen en evalueren.</li>
-      </ul>
-
-      <h2>Valkuilen</h2>
-      <p>Niet alles kun je opvangen met Cycles, daarom zijn er een aantal valkuilen:</p>
-
-      <ul class="c-list">
-        <li>Verlies het concept niet uit het oog, houdt de hoofddoelen scherp;</li>
-        <li>Het design-systeem kan in verval raken, zorg altijd voor consistentie en netheid in design zowel als code.</li>
-      </ul>
-
-      <p>De Cycles zijn een interpretatie van onze eigen iteratieve design werkwijze en zal zich de komende tijd continu ontwikkelen. Op dit moment hebben we zes projecten met Cycles uitgevoerd, naarmate we een tijdje verder zijn zal ik een update posten met bevindingen en aanpassingen van de Cycles.</p>
-
-      <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
-
-<!-- END Content -->
-
-
-
-
-      {% include 'components/components.meta.html' %}
-
-    </div>
-
-  {% endcall %}
-
-  {% call wrapper('gradient') %}
-
-    <div class="l-single">
-      {% include 'components/components.comments.html' %}
-    </div>
-
-  {% endcall %}
+  <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
 
 {% endblock %}

@@ -1,6 +1,4 @@
-{% extends 'layout/layout.base.html' %}
-
-{% from 'components/components.wrapper.html' import wrapper %}
+{% extends 'layout/layout.article.html' %}
 
 {% set page_title = 'Onlanden in de avond' %}
 {% set page_subtitle = '' %} <!-- Not required -->
@@ -11,7 +9,6 @@
 
 {% set header = true %} <!-- true is a large header, false is no header -->
 
-
 {% set blog_date = '6 October 2015' %}
 {% set blog_related = 'Het Goud van de Omlanden' %} <!-- Not required -->
 {% set blog_related_url = '/blog/het-goud-van-de-onlanden' %} <!-- Not required -->
@@ -19,79 +16,43 @@
 
 {% block content %}
 
-  {% if header == true %}
-    {% include 'components/components.header.html' %}
-  {% endif %}
+    <p>De vorige keer kon ik de <a href="/blog/het-goud-van-de-onlanden">zonsondergang in de Onlanden</a> niet goed vastleggen vanwege het gebrek aan wolken. Deze keer lukte dat een stuk beter, hoewel ik continu regenbuien over me heen kreeg.</p>
 
+  </div>
 
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: '/media/onlanden-in-de-avond/2.jpg', caption: '', cols: 50},
+      {img: '/media/onlanden-in-de-avond/3.jpg', caption: '', cols: 50},
+      {img: '/media/onlanden-in-de-avond/4.jpg', caption: '', cols: 50},
+      {img: '/media/onlanden-in-de-avond/5.jpg', caption: '', cols: 50},
+      {img: '/media/onlanden-in-de-avond/6.jpg', caption: '', cols: 100}
+    ]
+  ] %}
+  {% set gallery_footnote = '' %}
+  {% include 'components/components.gallery.html' %}
+  <!-- End Gallery -->
 
+  <div class="l-single">
 
-<!-- START Content -->
+    <h2>Neutral Density</h2>
+    <p>Op onderstaande foto’s heb ik een ND (Neutral Density) filter gebruikt om de sluitertijd rond de minuut te kunnen krijgen waardoor je een mooi effect krijgt in de wolken en in dit geval wordt het water erg glad.</p>
 
-  {% call wrapper() %}
+  </div>
 
-    <div class="l-single">
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: '/media/onlanden-in-de-avond/7.jpg', caption: '', cols: 100},
+      {img: '/media/onlanden-in-de-avond/8.jpg', caption: '', cols: 50},
+      {img: '/media/onlanden-in-de-avond/9.jpg', caption: '', cols: 50}
+    ]
+  ] %}
+  {% set gallery_footnote = 'Alle foto’s zijn geschoten met de Canon 6D met de Canon 25mm F2.8 IS USM.' %}
+  {% include 'components/components.gallery.html' %}
+  <!-- End Gallery -->
 
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
-      {% endif %}
-
-      <p>De vorige keer kon ik de <a href="/blog/het-goud-van-de-onlanden">zonsondergang in de Onlanden</a> niet goed vastleggen vanwege het gebrek aan wolken. Deze keer lukte dat een stuk beter, hoewel ik continu regenbuien over me heen kreeg.</p>
-
-    </div>
-
-    <!-- Gallery -->
-    {% set gallery = [
-      [
-        {img: '/media/onlanden-in-de-avond/2.jpg', caption: '', cols: 50},
-        {img: '/media/onlanden-in-de-avond/3.jpg', caption: '', cols: 50},
-        {img: '/media/onlanden-in-de-avond/4.jpg', caption: '', cols: 50},
-        {img: '/media/onlanden-in-de-avond/5.jpg', caption: '', cols: 50},
-        {img: '/media/onlanden-in-de-avond/6.jpg', caption: '', cols: 100}
-      ]
-    ] %}
-    {% set gallery_footnote = '' %}
-    {% include 'components/components.gallery.html' %}
-    <!-- End Gallery -->
-
-    <div class="l-single">
-
-      <h2>Neutral Density</h2>
-      <p>Op onderstaande foto’s heb ik een ND (Neutral Density) filter gebruikt om de sluitertijd rond de minuut te kunnen krijgen waardoor je een mooi effect krijgt in de wolken en in dit geval wordt het water erg glad.</p>
-
-    </div>
-
-    <!-- Gallery -->
-    {% set gallery = [
-      [
-        {img: '/media/onlanden-in-de-avond/7.jpg', caption: '', cols: 100},
-        {img: '/media/onlanden-in-de-avond/8.jpg', caption: '', cols: 50},
-        {img: '/media/onlanden-in-de-avond/9.jpg', caption: '', cols: 50}
-      ]
-    ] %}
-    {% set gallery_footnote = 'Alle foto’s zijn geschoten met de Canon 6D met de Canon 25mm F2.8 IS USM.' %}
-    {% include 'components/components.gallery.html' %}
-    <!-- End Gallery -->
-
-    <div class="l-single">
-
-<!-- END Content -->
-
-
-
-
-      {% include 'components/components.meta.html' %}
-
-    </div>
-
-  {% endcall %}
-
-  {% call wrapper('gradient') %}
-
-    <div class="l-single">
-      {% include 'components/components.comments.html' %}
-    </div>
-
-  {% endcall %}
+  <div class="l-single">
 
 {% endblock %}

@@ -1,6 +1,4 @@
-{% extends 'layout/layout.base.html' %}
-
-{% from 'components/components.wrapper.html' import wrapper %}
+{% extends 'layout/layout.article.html' %}
 
 {% set page_title = 'Refresh: The meetup for designers and front end developers' %}
 {% set page_subtitle = '' %} <!-- Not required -->
@@ -11,7 +9,6 @@
 
 {% set header = false %} <!-- true is a large header, false is no header -->
 
-
 {% set blog_date = '9 December 2015' %}
 {% set blog_related = '' %} <!-- Not required -->
 {% set blog_related_url = '' %} <!-- Not required -->
@@ -19,65 +16,29 @@
 
 {% block content %}
 
-  {% if header == true %}
-    {% include 'components/components.header.html' %}
-  {% endif %}
+  <!-- Gallery -->
+  {% set gallery = [
+    [
+      {img: '/media/refresh-the-meetup-for-designers-and-front-end-developers.png', caption: '', cols: 100}
+    ]
+  ] %}
+  {% include 'components/components.gallery.html' %}
+  <!-- End Gallery -->
 
+  <p>There are a lot of great meet-ups in Groningen like <a href="http://www.meetup.com/PyGrunn/">PyGrunn</a>, <a href="http://www.meetup.com/SMC050/">SMC050</a>, <a href="http://www.meetup.com/Groningen-rb/">Groningen.rb</a>, <a href="http://www.meetup.com/Drupal-Noord-Meetup/">Drupal Noord</a>&nbsp;and more. But meet-ups for designers and front-end developers are hard to find.</p>
 
+  <p>That’s why <a href="https://twitter.com/ronvandegraaf">Ron van de Graaf</a> and I organised several meet-ups for this group of people last year. Within each session we watched video conference talks including those of <a href="https://twitter.com/aarron">Aarron Walter</a> and <a href="https://twitter.com/monteiro">Mike Monteiro</a>. This led the evening to natural and good discussions. During these first trial sessions we invited people from HackerOne, Spindle, Blixx, Concept7 and Studio Wolf. After a few drinks it was clear to us this meet-up needed a follow-up. That’s how Refresh was founded in the summer of 2015.</p>
 
+  <p>The goal of Refresh is to inspire each other and help us grow as designers and front-end developers. But the most important thing is to <strong>bring these people together</strong>. Because with different skills, specialties and insights the most beautiful collaborations and products can emerge.</p>
 
-<!-- START Content -->
+  <p>To reach this goal we’re going to make a pattern for the meet-up. Once per two months on a Tuesday evening is the regular Refresh meet-up with talks, video talks, discussions and beer on a changing location in Groningen. Also there will be a sporadic Refresh Special meet-up once in a while. Think of little hackathons, BBQ, book evenings or something else. With these two types of sessions we hope to mix inspiration, knowledge and sociable evenings.</p>
 
-  {% call wrapper() %}
+  <p><a href="https://twitter.com/timsluis">Tim</a> started to tell this story in Amsterdam. It was received very well, especially by <a href="https://twitter.com/borq">Roel van de Wal</a>, owner of <a href="https://www.uncinc.nl/">Unc Inc</a>. This november they organised the first Refresh in Amsterdam.</p>
 
-    <div class="l-single">
+  <figure class="c-media"><img class="c-media__image" src="/media/refresh-the-meetup-for-designers-and-front-end-developers-1.jpeg"></figure>
 
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
-      {% endif %}
+  <p>Refresh is at the moment a closed meet-up, but that might change soon. Sign up via <a href="http://meetup.com/refresh-groningen">http://meetup.com/refresh-groningen</a> or <a href="http://meetup.com/refresh-amsterdam">http://meetup.com/refresh-amsterdam</a> and we’ll let you in when we’re ready. Nice to know: Refresh also has a Slack group to share experiences, knowledge and fun stuff.</p>
 
-      <!-- Gallery -->
-      {% set gallery = [
-        [
-          {img: '/media/refresh-the-meetup-for-designers-and-front-end-developers.png', caption: '', cols: 100}
-        ]
-      ] %}
-      {% include 'components/components.gallery.html' %}
-      <!-- End Gallery -->
-
-      <p>There are a lot of great meet-ups in Groningen like <a href="http://www.meetup.com/PyGrunn/">PyGrunn</a>, <a href="http://www.meetup.com/SMC050/">SMC050</a>, <a href="http://www.meetup.com/Groningen-rb/">Groningen.rb</a>, <a href="http://www.meetup.com/Drupal-Noord-Meetup/">Drupal Noord</a>&nbsp;and more. But meet-ups for designers and front-end developers are hard to find.</p>
-
-      <p>That’s why <a href="https://twitter.com/ronvandegraaf">Ron van de Graaf</a> and I organised several meet-ups for this group of people last year. Within each session we watched video conference talks including those of <a href="https://twitter.com/aarron">Aarron Walter</a> and <a href="https://twitter.com/monteiro">Mike Monteiro</a>. This led the evening to natural and good discussions. During these first trial sessions we invited people from HackerOne, Spindle, Blixx, Concept7 and Studio Wolf. After a few drinks it was clear to us this meet-up needed a follow-up. That’s how Refresh was founded in the summer of 2015.</p>
-
-      <p>The goal of Refresh is to inspire each other and help us grow as designers and front-end developers. But the most important thing is to <strong>bring these people together</strong>. Because with different skills, specialties and insights the most beautiful collaborations and products can emerge.</p>
-
-      <p>To reach this goal we’re going to make a pattern for the meet-up. Once per two months on a Tuesday evening is the regular Refresh meet-up with talks, video talks, discussions and beer on a changing location in Groningen. Also there will be a sporadic Refresh Special meet-up once in a while. Think of little hackathons, BBQ, book evenings or something else. With these two types of sessions we hope to mix inspiration, knowledge and sociable evenings.</p>
-
-      <p><a href="https://twitter.com/timsluis">Tim</a> started to tell this story in Amsterdam. It was received very well, especially by <a href="https://twitter.com/borq">Roel van de Wal</a>, owner of <a href="https://www.uncinc.nl/">Unc Inc</a>. This november they organised the first Refresh in Amsterdam.</p>
-
-      <figure class="c-media"><img class="c-media__image" src="/media/refresh-the-meetup-for-designers-and-front-end-developers-1.jpeg"></figure>
-
-      <p>Refresh is at the moment a closed meet-up, but that might change soon. Sign up via <a href="http://meetup.com/refresh-groningen">http://meetup.com/refresh-groningen</a> or <a href="http://meetup.com/refresh-amsterdam">http://meetup.com/refresh-amsterdam</a> and we’ll let you in when we’re ready. Nice to know: Refresh also has a Slack group to share experiences, knowledge and fun stuff.</p>
-
-      <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
-
-<!-- END Content -->
-
-
-
-
-      {% include 'components/components.meta.html' %}
-
-    </div>
-
-  {% endcall %}
-
-  {% call wrapper('gradient') %}
-
-    <div class="l-single">
-      {% include 'components/components.comments.html' %}
-    </div>
-
-  {% endcall %}
+  <p>&mdash; This post was originally written on the Studio Wolf blog.</p>
 
 {% endblock %}
