@@ -46,7 +46,7 @@
 }
 
 .c-gallery__item {
-  background-color: var(--color-neutral-10);
+  background-color: var(--color-neutral-30);
   background-clip: content-box;
   padding: 3px;
   display: flex;
