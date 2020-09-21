@@ -3,13 +3,14 @@
 \*------------------------------------*/
 
 .c-author {
-  margin-bottom: var(--space-stack-default);
+  margin-bottom: var(--space-stack-40);
+  padding-top: var(--space-40);
 
   & a {
     color: var(--color-neutral-70);
     text-decoration: none;
     background-color: transparent;
-    padding: 0;  
+    padding: 0;
   }
 
   & figure {

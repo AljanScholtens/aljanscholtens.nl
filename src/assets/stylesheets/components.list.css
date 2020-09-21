@@ -7,7 +7,7 @@
   font-size: var(--font-size-40);
   color: var(--color-neutral-90);
   line-height: var(--line-height-30);
-  margin: var(--space-stack-default);
+  margin: var(--space-stack-30);
 
   & li {
     padding-left: 2rem;

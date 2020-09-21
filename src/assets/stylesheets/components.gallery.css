@@ -14,10 +14,20 @@
 
 .l-single > .c-gallery-wrapper {
 
-  @media (--breakpoint-30) {
-    /*margin: var(--space-stack-default);*/
-    /*padding-top: 0;*/
+  /* @media (--breakpoint-20) {
+    margin-left: -5%;
+    margin-right: -5%;
   }
+
+  @media (--breakpoint-30) {
+    margin-left: -20%;
+    margin-right: -20%;
+  }
+
+  @media (--breakpoint-40) {
+    margin-left: -30%;
+    margin-right: -30%;
+  } */
 }
 
 .c-gallery {
@@ -26,15 +36,11 @@
   padding-left: 3px;
   padding-right: 3px;
   overflow: hidden;
-  /* margin-left: calc(- var(--space-default)); */
   margin-left: -16px;
-  /* margin-right: calc(- var(--space-default)); */
   margin-right: -16px;
 
   @media (--breakpoint-20) {
-    /* margin-left: calc(- var(--space-default) * 2); */
     margin-left: -32px;
-    /* margin-right: calc(- var(--space-default) * 2); */
     margin-right: -32px;
   }
 }

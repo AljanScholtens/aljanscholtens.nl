@@ -5,7 +5,7 @@
 {% endif %}
 
 <div class="l-wrapper">
-  <div class="l-container u-content">
+  <article class="l-container u-content">
     <div class="l-single">
 
       {% if header == false %}
@@ -14,18 +14,12 @@
 
       {% block content %}{% endblock %}
 
+      {% include 'components/components.comments.html' %}
+
       {% include 'components/components.meta.html' %}
 
     </div>
-  </div>
-</div>
-
-<div class="l-wrapper">
-  <div class="l-container">
-    <div class="l-single u-content">
-      {% include 'components/components.comments.html' %}
-    </div>
-  </div>
+  </article>
 </div>
 
 {% include 'layout/layout.footer.html' %}

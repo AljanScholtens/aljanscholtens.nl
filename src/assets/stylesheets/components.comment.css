@@ -1,0 +1,21 @@
+/*------------------------------------*\
+  #COMPONENTS-COMMENT
+\*------------------------------------*/
+
+.c-comment {
+  font-size: var(--font-size-20);
+  padding-top: var(--space-30);
+  text-align: center;
+
+  & a {
+    color: var(--color-neutral-70);
+    text-decoration: none;
+    background-color: transparent;
+    padding: 0;
+  }
+}
+
+.c-comment__inner {
+  padding-top: var(--space-40);
+  border-top: 2px solid var(--color-neutral-30);
+}
