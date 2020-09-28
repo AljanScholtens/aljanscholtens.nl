@@ -19,7 +19,7 @@
 
   @media (--breakpoint-20) {
     padding: calc(var(--spacing) * 5);
-    padding-bottom: var(--spacing) * 3;
+    padding-bottom: calc(var(--spacing) * 3);
   }
 }
 

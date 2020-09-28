@@ -11,7 +11,17 @@
 
     // Gallery fancybox
     $('[data-fancybox="gallery"]').fancybox({
-    	animationDuration: 200
+    	animationDuration: 200,
+      scrolling: 'no'
+    });
+
+
+    $('.c-carousel').flickity({
+      cellSelector: '.c-carousel__item',
+      cellAlign: 'left',
+      contain: true,
+      prevNextButtons: false,
+      pageDots: false
     });
 
 

@@ -12,7 +12,7 @@
   font-family: var(--font-family-a);
   font-weight: 600;
   margin: var(--space-stack-30);
-  padding-top: 8px;
+  padding-top: 12px;
   color: var(--color-primary-50);
   line-height: var(--line-height-10);
 }

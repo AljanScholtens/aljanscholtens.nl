@@ -2,137 +2,89 @@
   #COMPONENTS-CAROUSEL
 \*------------------------------------*/
 
-html.home .c-carousel {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: auto;
-}
-
 .c-carousel {
-  width: 100%;
-  height: 100vh;
-  background: var(--color-neutral-90);
+  /* padding-left: 10rem; */
 }
 
-  html.home .c-carousel__item {
-    height: auto;
-  }
 
   .c-carousel__item {
-    width: 86%;
-    height: 100vh;
-    top: 0;
-    bottom: 0;
-    color: var(--color-white);
-    display: flex;
-    align-items: flex-end;
-    cursor: inherit;
+    padding-right: var(--space-default);
 
-    &:after {
-      content: "";
-      position: absolute;
-      z-index: 2;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      top: 0;
-      opacity: 0;
-      background-color: var(--color-primary-50);
-      transition: opacity 200ms var(--bezier-default);
+    &:hover .c-carousel__inner {
+
+      @media (--breakpoint-30) {
+        background-color: color-mod(var(--color-neutral-30) alpha(40%));
+        transform: scale(0.99);
+      }
     }
 
-    &:before {
-      content: "";
+    @media (--breakpoint-20) {
+      padding-right: 48px;
+    }
+
+    &:first-child {
+
+      @media (--breakpoint-20) {
+        padding-left: 10rem;
+      }
+    }
+
+    &:nth-child(2n+1) {
+
+      @media (--breakpoint-20) {
+        margin-top: 32px;
+      }
+    }
+  }
+
+
+  .c-carousel__inner {
+    display: block;
+    padding: var(--space-default);
+    backface-visibility: hidden;
+    transition: transform 150ms var(--bezier-a), background-color 150ms var(--bezier-a);
+  }
+
+
+  .c-carousel__image {
+    position: relative;
+
+    & img {
+      display: block;
+      object-fit: cover;
+      width: 80vw;
+      height: 300px;
+
+      @media (--breakpoint-20) {
+        width: 400px;
+        height: 500px;
+      }
+    }
+  }
+
+
+  .c-carousel__caption {
+    position: absolute;
+    z-index: var(--layer-10);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    line-height: 1.5em;
+    padding: 0.5rem 0.75rem;
+    padding-top: calc(var(--spacing) * 3);
+    font-weight: 400;
+    font-family: var(--font-family-body);
+    color: color-mod(var(--color-white) alpha(0.75));
+    font-size: var(--font-size-30);
+
+    &:after {
+      content: " ";
       position: absolute;
-      z-index: 2;
+      z-index: -1;
       bottom: 0;
       left: 0;
       right: 0;
       height: 50%;
-      background-image: linear-gradient(180deg, color-mod(var(--color-neutral-90) alpha(0%)), color-mod(var(--color-neutral-90) alpha(70%)));
+      background-image: linear-gradient(180deg, transparent, color-mod(var(--color-black) alpha(0.4)));
     }
-
-    @media (--breakpoint-30) {
-      width: 45%;
-
-      &:hover {
-
-        &:after {
-          opacity: 0.2;
-        }
-
-        & .c-carousel__image {
-          /* background-position: 55%; */
-        }
-      }
-    }
-
-    @media (--breakpoint-40) {
-      width: 30%;
-    }
-  }
-
-  .c-carousel__item--first {
-
-    & .c-carousel__body {
-
-      & h1,
-      & h3 {
-        margin: var(--space-stack-30);
-      }
-
-      & p {
-        /* font-size: 22px; */
-      }
-    }
-  }
-
-  .c-carousel__body {
-    position: relative;
-    z-index: 3;
-    padding: var(--space-inset-40);
-
-    & h1,
-    & h3 {
-      font-family: var(--font-family-d);
-      font-weight: 400;
-      font-size: 32px;
-      line-height: 1.25;
-      color: var(--color-white);
-      margin: 0;
-
-      @media (--breakpoint-30) {
-        font-size: 42px;
-      }
-    }
-
-    & p {
-      font-family: var(--font-family-body);
-      color: var(--color-white);
-      font-size: 21px;
-      line-height: 1.35;
-      margin-left: 3px;
-      margin: var(--space-stack-20);
-
-      @media (--breakpoint-30) {
-        font-size: 25px;
-        margin: var(--space-stack-40);
-      }
-    }
-  }
-
-  .c-carousel__image {
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: background-position 3s ease-in-out;
   }
