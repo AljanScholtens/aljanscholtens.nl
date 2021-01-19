@@ -28,3 +28,5 @@ Redirect 301 /blind-broodje /blog/blind-broodje
 Redirect 301 /blind-samenvatting /blog/blind-samenvatting
 Redirect 301 /photography /gallery
 Redirect 301 /now /
+Redirect 301 /design /
+Redirect 301 /about /
