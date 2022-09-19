@@ -1,53 +1,68 @@
-{% extends 'layout/layout.base.html' %}
+{% extends 'layout/layout.base.html' %} {% from
+'components/components.wrapper.html' import wrapper %} {% set page_title =
+'Designer' | safe %} {% set page_subtitle = 'of <em>digital</em> products' |
+safe %}
+<!-- Not required -->
+{% set page_description = 'Op zoek naar een designer die de waarom-vraag stelt,
+technisch meedenkt en prachtige producten maakt? Ik kan je helpen.' %}
+<!-- Not required -->
+{% set page_photo = '/assets/images/header-10.jpg' %} {% set page_socialimage =
+"https://aljanscholtens.nl/assets/images/header-10.jpg" %} {% set page_thumbnail
+= '' %} {% set navigation_selected = 'home' %} {% set header = true %}
+<!-- true is a large header, false is no header -->
+{% set header_studio = true %} {% set header_title_gradient = false %} {% block
+content %} {% if header == true %} {% include
+'components/components.header.html' %} {% endif %}
 
-{% from 'components/components.wrapper.html' import wrapper %}
-
-{% set page_title = 'Designer' | safe %}
-{% set page_subtitle = 'of <em>digital</em> products' | safe %} <!-- Not required -->
-{% set page_description = 'Op zoek naar een designer die de waarom-vraag stelt, technisch meedenkt en prachtige producten maakt? Ik kan je helpen.' %} <!-- Not required -->
-{% set page_photo = '/assets/images/header-10.jpg' %}
-{% set page_socialimage = "https://aljanscholtens.nl/assets/images/header-10.jpg" %}
-{% set page_thumbnail = '' %}
-{% set navigation_selected = 'home' %}
-
-{% set header = true %} <!-- true is a large header, false is no header -->
-{% set header_studio = true %}
-{% set header_title_gradient = false %}
-
-{% block content %}
-
-  {% if header == true %}
-    {% include 'components/components.header.html' %}
-  {% endif %}
-
-<div class="l-wrapper ">
-
+<div class="l-wrapper">
   <div class="l-container">
-
     <div class="l-single u-content">
-
-      {% if header == false %}
-        {% include 'components/components.header.html' %}
+      {% if header == false %} {% include 'components/components.header.html' %}
       {% endif %}
 
       <!-- <p class="c-paragraph c-paragraph--lead">I might be a designer of digital products.</p> -->
 
       <h2 class="c-heading c-heading--30">What am I doing?</h2>
       <ul class="c-list">
-        <li>Raising my one year old son!</li>
-        <li>Creating <a href="https://maps.studiowolf.com/amsterdam-op6qvzn">Studio Wolf Maps</a>. A tool to create beautiful shareable maps. <a href="/contact">Contact me</a> if you need a map like this.</li>
-        <li>Building <a href="https://studiowolf.com/">Studio Wolf v2</a> remote with <a href="https://www.linkedin.com/in/timsluis/">Tim Sluis</a>. We're creating map based web apps. Currently working for <a href="https://esri.com/">Esri</a>, <a href="https://theimagineers.com/">The Imagineers</a> and <a href="https://www.dacom.nl/">Dacom</a>.</li>
-        <li>Just moved from Groningen to a small village in Drenthe.</li>
-        <li>Organizing a very cool meetup called <a href="http://meetup.com/refresh-groningen">Refresh</a> together with <a href="https://twitter.com/ronvandegraaf">Ron van de Graaf</a>, it's for designers and front-end developers. Because of the circumstances no meetups at the moment.</li>
-        <li>Working on a book with my best <a href="/gallery">landscape photos</a>. I expect to finish it in the winter of 2022.</li>
-        <li>Every now and then I post landscape photos to <a href="https://instagram.com/aljan">Instagram</a>.</li>
-        <li>Posting photos of our <a href="http://www.instagram.com/munsterlandernikki/">Small Münsterländer Nikki</a> on Instagram, she is sweet, stubborn and enthusiastic!</li>
+        <li>Raising my two year old son!</li>
+        <li>
+          Creating <a href="https://www.wolfmaps.nl/">Wolf Maps</a>. A tool to
+          create beautiful shareable maps. <a href="/contact">Contact me</a> if
+          you want to know more.
+        </li>
+        <li>
+          Organizing a very cool meetup called
+          <a href="http://meetup.com/refresh-groningen">Refresh</a> together
+          with <a href="https://twitter.com/ronvandegraaf">Ron van de Graaf</a>,
+          it's for designers and front-end developers.
+        </li>
+        <li>
+          Working on a book with my best
+          <a href="/gallery">landscape photos</a>. I expect to finish it in the
+          winter of 2022/2023.
+        </li>
+        <li>
+          Every now and then I post landscape photos to
+          <a href="https://instagram.com/aljan">Instagram</a>.
+        </li>
+        <li>
+          Posting photos of our
+          <a href="http://www.instagram.com/munsterlandernikki/"
+            >Small Münsterländer Nikki</a
+          >
+          on Instagram, she is sweet, stubborn and enthusiastic!
+        </li>
         <!-- <li>Psst, I created the most hidden podcast in the world, only mentioned on this page. It's called <a href="https://anchor.fm/veerenfictie">Veer & Fictie</a>, and I tell in Dutch my fiction drafts. -->
       </ul>
 
-      <p class="c-paragraph c-paragraph--soft">Last update on 7 September 2021. The now page is inspired by <a href="http://nownownow.com/">Nownownow</a>.</p>
+      <p class="c-paragraph c-paragraph--soft">
+        Last update on 19 September 2022. The now page is inspired by
+        <a href="http://nownownow.com/">Nownownow</a>.
+      </p>
 
-      <h2 class="c-heading c-heading--30">I’m currently interested in writing and speaking about</h2>
+      <h2 class="c-heading c-heading--30">
+        I’m currently interested in writing and speaking about
+      </h2>
       <ul class="c-list">
         <li>Map Design</li>
         <li>Design Systems</li>
@@ -55,12 +70,11 @@
         <li>The Calm Life &amp; Company</li>
       </ul>
 
-      <p class="c-paragraph">Want to know more? <a href="/contact">Contact me</a>.</p>
-
+      <p class="c-paragraph">
+        Want to know more? <a href="/contact">Contact me</a>.
+      </p>
     </div>
-
   </div>
-
 </div>
 
 {% endblock %}
