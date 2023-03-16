@@ -1,0 +1,49 @@
+{% extends 'layout/layout.article.html' %}
+
+{% set page_title = 'Donjon from Age of Empires 2 in Lego' %}
+{% set page_subtitle = 'My first attempt to create a Lego MOC' %} <!-- Not required -->
+{% set page_description = 'My first attempt to build a Lego MOC, the Donjon from Age of Empires 2.' %} <!-- Not required -->
+{% set page_photo = '/media/donjon/donjon-3.jpg' %} <!-- Not required -->
+{% set page_thumbnail = '' %} <!-- Not required -->
+{% set navigation_selected = 'blog' %}
+
+{% set header = true %} <!-- true is a large header, false is no header -->
+{% set header_studio = false %} <!-- Not required -->
+{% set header_title_gradient = false %} <!-- Not required -->
+
+{% set blog_date = '16 March 2023' %}
+{% set blog_related = '' %} <!-- Not required -->
+{% set blog_related_url = '' %} <!-- Not required -->
+{% set blog_author = 'aljan' %} <!-- Not required -->
+
+{% block content %}
+
+  <p class="c-paragraph c-paragraph--lead">My friends are organizing an annual Age of Empires 2 online tournament, <a href="www.ageofgamers.nl">Age of Gamers</a>, which was started during the pandemic. During this year's tournament, they introduced a mini competition: build something in Lego related to the strategy game Age of Empires 2. That's when I got excited.</p>
+
+  <p>I was hesitant about what to build, but eventually decided to dismantle my biggest set, <a href="https://www.lego.com/en-us/product/lion-knights-castle-10305">The Lion Knights Castle</a> (10305). Perfect for a Donjon in Lego. I didn't use an online tool, so it was really about looking at the picture and building the Donjon brick by brick.</p>
+
+  <p>Initially, I started at the top, because I was afraid I wouldn't end up with the tower right, which is quite tricky. If you end up with 5 or 7 studs in a row, you're in trouble. I also wanted to make the Donjon foldable, like the Lion Knights Castle, but given my limited technical expertise and the limited time of the mini competition, I quickly abandoned this idea. Maybe next time.</p>
+
+  <p>It was fun to recreate something that (as far as I know) has not been made in Lego before. It was also the first time I built a MOC in Lego. It's certainly not perfect, but it's close enough for me. See below for some more pictures of the Donjon.</p>
+
+</div>
+
+  <!-- Gallery -->
+  {# {% set gallery_gutter = 'large' %} #}
+  {% set galleryGrid = [
+    [
+      {img: '/media/donjon/donjon-1.jpg', caption: '', cols: 100},
+      {img: '/media/donjon/donjon-2.jpg', caption: '', cols: 100},
+      {img: '/media/donjon/donjon-3.jpg', caption: '', cols: 100},
+      {img: '/media/donjon/donjon-4.jpg', caption: '', cols: 100},
+      {img: '/media/donjon/donjon-5.jpg', caption: '', cols: 100},
+      {img: '/media/donjon/donjon-comparison.jpg', caption: '', cols: 100}
+    ]
+  ] %}
+  {% set galleryGrid_footnote = '' %}
+  {% include 'components/components.gallery-grid.html' %}
+  <!-- End Gallery -->
+
+  <div class="l-single">
+
+{% endblock %}
