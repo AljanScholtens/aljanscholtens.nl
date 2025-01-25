@@ -1,6 +1,9 @@
 module.exports = {
   plugins: [
-    require("postcss-nested"), // voor CSS-nesten
-    require("autoprefixer"), // voor automatische prefixen
+    require("postcss-import")({
+      path: ["assets/css"], // Hier zoekt postcss-import naar bestanden
+    }),
+    require("postcss-nested"),
+    require("autoprefixer"),
   ],
 };

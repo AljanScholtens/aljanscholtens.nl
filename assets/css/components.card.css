@@ -1,0 +1,163 @@
+/*------------------------------------*\
+  #COMPONENTS-CARDS
+\*------------------------------------*/
+
+.c-card-grid {
+
+}
+
+
+
+
+
+.c-card {
+  background: transparent;
+  padding: 0;
+  font-weight: inherit;
+  display: block;
+  overflow: hidden;
+  margin-bottom: 16px;
+  width: 100%;
+
+
+  &:hover {
+
+    & .c-card__inner {
+
+      @media (--breakpoint-30) {
+        background-color: color-mod(var(--color-neutral-30) alpha(40%));
+        transform: scale(0.99);
+      }
+    }
+  }
+}
+
+.t-dark .c-card {
+
+  &:hover {
+
+    & .c-card__inner {
+
+      @media (--breakpoint-30) {
+        background-color: color-mod(var(--color-white) alpha(10%));
+      }
+    }
+  }
+}
+
+
+.c-card__inner {
+  display: flex;
+  flex-flow: row nowrap;
+
+  @media (--breakpoint-20) {
+    padding: 16px;
+    backface-visibility: hidden;
+    transition: transform 150ms var(--bezier-a), background-color 150ms var(--bezier-a);
+  }
+}
+
+
+
+.c-card__content {
+
+
+  & .c-paragraph--soft {
+    margin-bottom: 0;
+  }
+
+  & h2,
+  & h2.c-heading {
+    margin-bottom: 8px;
+  }
+}
+
+
+
+.c-card__image {
+  position: relative;
+  overflow: hidden;
+  margin-right: 16px;
+  flex: 0 0 64px;
+  height: 64px;
+
+  @media (--breakpoint-20) {
+    margin-right: 32px;
+    flex: 0 0 200px;
+    height: 200px;
+  }
+
+  & img {
+    object-fit: cover;
+    display: block;
+    width: 64px;
+    height: 64px;
+
+    @media (--breakpoint-20) {
+      width: 200px;
+      height: 200px;
+    }
+  }
+
+  & figcaption {
+    display: none;
+    position: absolute;
+    z-index: var(--layer-10);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    line-height: 1.5em;
+    padding: 0.5rem 0.75rem;
+    padding-top: 4.5rem;
+    font-weight: 400;
+    font-family: var(--font-family-body);
+    color: color-mod(var(--color-white) alpha(0.75));
+    font-size: var(--font-size-20);
+
+    @media (--breakpoint-20) {
+      display: block;
+    }
+
+    &:after {
+      content: " ";
+      position: absolute;
+      z-index: -1;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background-image: linear-gradient(180deg, transparent, color-mod(var(--color-primary-90) alpha(0.8)));
+    }
+  }
+}
+
+
+
+
+
+.c-card__meta {
+  display: flex;
+  align-items: center;
+
+  & div {
+    line-height: 1.35em;
+  }
+
+  & figure {
+    height: 3rem;
+    width: 3rem;
+    display: block;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    margin-right: var(--space-30);
+  }
+
+  & a {
+    color: var(--color-neutral-70);
+    text-decoration: none;
+    background-color: transparent;
+    padding: 0;
+  }
+}

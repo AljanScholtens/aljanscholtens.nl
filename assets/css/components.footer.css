@@ -1,0 +1,14 @@
+/*------------------------------------*\
+  #COMPONENTS-FOOTER
+\*------------------------------------*/
+
+.c-footer {
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-neutral-30);
+  margin: var(--space-stack-default);
+}
+
+.t-dark .c-footer {
+  background-color: color-mod(var(--color-white) alpha(10%));
+}

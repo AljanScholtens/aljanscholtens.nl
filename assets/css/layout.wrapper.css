@@ -1,0 +1,66 @@
+/*------------------------------------*\
+  #LAYOUT-WRAPPERS
+\*------------------------------------*/
+
+
+/* All items with dark theme gets a white color */
+.t-dark {
+  color: var(--color-white);
+}
+
+
+/*
+ * Get full width backgrounds around your content
+ */
+.l-wrapper {
+  clear: both;
+  position: relative;
+
+  &:first-of-type {
+    padding-top: 76px;
+  }
+
+  &:last-of-type {
+    padding-bottom: 3.5rem;
+
+    @media (--breakpoint-20) {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.t-dark .l-wrapper {
+  background: var(--color-primary-90);
+}
+
+
+/*
+ * Options to change the layout of the wrapper
+ */
+.l-wrapper--full-height {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  min-height: 80vmin;
+}
+
+
+/*
+ * Set up different backgrounds
+ */
+.l-wrapper--neutral-10 {
+  background: var(--color-neutral-10);
+}
+
+.l-wrapper--neutral-10-gradient {
+  background-image: linear-gradient(140deg, var(--color-neutral-10), var(--color-white));
+}
+
+.l-wrapper--neutral-70 {
+  background: var(--color-neutral-90);
+  color: var(--color-neutral-10);
+
+  & a {
+    color: var(--color-primary-30);
+  }
+}

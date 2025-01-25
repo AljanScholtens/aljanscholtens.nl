@@ -1,0 +1,36 @@
+/*------------------------------------*\
+  #COMPONENTS-AUTHOR
+\*------------------------------------*/
+
+.c-author {
+  margin-bottom: var(--space-stack-40);
+  padding-top: var(--space-40);
+
+  & a {
+    color: var(--color-neutral-70);
+    text-decoration: none;
+    background-color: transparent;
+    padding: 0;
+  }
+
+  & figure {
+    height: 4.5rem;
+    width: 4.5rem;
+    display: block;
+    margin: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    margin: var(--space-stack-20);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.l-wrapper--neutral-70 .c-author {
+
+  & a {
+    color: var(--color-neutral-10);
+  }
+}
