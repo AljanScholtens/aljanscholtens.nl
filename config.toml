@@ -1,0 +1,7 @@
+baseURL = "https://example.com/"
+title = "Mijn Hugo Site"
+languageCode = "nl"
+paginate = 3
+
+[params]
+author = "Aljan"

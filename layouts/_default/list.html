@@ -1,0 +1,30 @@
+{{ define "main" }}
+
+<h1>{{ .Title }}</h1>
+
+<ul>
+  {{ range .Paginator.Pages }}
+  <li>
+    <a href="{{ .Permalink }}">{{ .Title }}</a>
+    <small>Geplaatst op {{ .Date.Format "02-01-2006" }}</small>
+    <p>{{ .Summary }}</p>
+  </li>
+  {{ end }}
+</ul>
+
+<!-- Paginatie links -->
+<nav>
+  {{ if .Paginator.HasPrev }}
+  <a href="{{ .Paginator.Prev.URL }}">← Vorige</a>
+  {{ end }}
+
+  <span
+    >Pagina {{ .Paginator.PageNumber }} van {{ .Paginator.TotalPages }}</span
+  >
+
+  {{ if .Paginator.HasNext }}
+  <a href="{{ .Paginator.Next.URL }}">Volgende →</a>
+  {{ end }}
+</nav>
+
+{{ end }}
