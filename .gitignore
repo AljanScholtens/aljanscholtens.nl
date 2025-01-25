@@ -1,0 +1,17 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Hugo build output
+public/
+resources/_gen/
+
+# macOS-specifiek
+.DS_Store
+
+# (Optioneel) lockfiles
+# Als je 100% reproduceerbare builds wilt, commit dan juist je package-lock.json / yarn.lock.
+# Anders kun je ze hier negeren.
+#package-lock.json
+#yarn.lock
