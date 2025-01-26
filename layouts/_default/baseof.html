@@ -31,32 +31,50 @@
     </nav>
 
     {{ if .Params.header }}
-  <div class="c-header {{ if .Params.header_studio }}c-header--studio{{ end }}">
-    <div class="c-header__content">
-      <div class="c-header__body">
-        <h1 class="c-header__title {{ if .Params.header_title_gradient }}c-header__title--gradient{{ end }}">
-          {{ .Title }}
-        </h1>
-        {{ with .Params.subtitle }}
-          <p class="c-header__subtitle">{{ . }}</p>
-        {{ end }}
+      <div class="c-header {{ if .Params.header_studio }}c-header--studio{{ end }}">
+        <div class="c-header__content">
+          <div class="c-header__body">
+            <h1 class="c-header__title {{ if .Params.header_title_gradient }}c-header__title--gradient{{ end }}">
+              {{ .Title }}
+            </h1>
+            {{ with .Params.subtitle }}
+              <p class="c-header__subtitle">{{ . }}</p>
+            {{ end }}
+          </div>
+        </div>
+        <div class="c-header__image" style="background-image: url('{{ .Params.photo }}')"></div>
       </div>
-    </div>
-    <div class="c-header__image" style="background-image: url('{{ .Params.photo }}')"></div>
-  </div>
-{{ else }}
-  <h1 class="c-heading c-heading--50">{{ .Params.title }}</h1>
-{{ end }}
+    {{ else }}
+      <h1 class="c-heading c-heading--50">{{ .Params.title }}</h1>
+    {{ end }}
 
+    {{ block "main" . }}{{ end }}
     
     <div class="l-wrapper">
       <div class="l-container">
-        <div class="l-single u-content">
-
-          {{ block "main" . }}{{ end }}
-
+        <div class="l-single">
+          <div class="c-footer"></div>
         </div>
       </div>
     </div>
+
+    <div class="c-navigation-mobile__wrapper">
+      <ul class="c-navigation-mobile">
+        <li class="c-navigation-mobile__item"><a href="/">Home</a></li>
+        <li class="c-navigation-mobile__item"><a href="/blog">Blog</a></li>
+        <li class="c-navigation-mobile__item"><a href="/now">Now</a></li>
+        <li class="c-navigation-mobile__item"><a href="/contact">Contact</a></li>
+        <!-- <li class="c-navigation-mobile__item"><a href=""><svg><use xlink:href="#icon-more"></use></svg></a></li> -->
+      </ul>
+    </div>
+    
+
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <script src="/scripts/lazyload.min.js"></script>
+    <script src="/scripts/fitie.js"></script>
+    <script src="/scripts/jquery.fancybox.min.js"></script>
+    <script src="/scripts/flickity.pkgd.min.js"></script>
+    <script src="/scripts/scripts.js"></script>
+   -->
   </body>
 </html>

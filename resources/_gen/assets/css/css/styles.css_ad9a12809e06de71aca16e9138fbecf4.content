@@ -179,6 +179,7 @@
   --color-neutral-70: #3c3b38;
   --color-neutral-90: #201e1c;
   --color-neutral-100: #000;
+  --color-neutral-100a80: #00000080;
 
   /*
    * Other
@@ -715,7 +716,7 @@ https://flickity.metafizzy.co
   .u-content .c-button:focus,
   .c-button:active,
   .c-button:focus {
-    box-shadow: inset 0 1px 3px color-mod(var(--color-neutral-100) alpha(80%));
+    box-shadow: inset 0 1px 3px var(--color-neutral-100a80);
   }
 
 .c-button--small {
@@ -741,7 +742,7 @@ https://flickity.metafizzy.co
 
 .c-button--neutral:active,
   .c-button--neutral:focus {
-    box-shadow: inset 0 1px 3px color-mod(var(--color-neutral-100) alpha(80%));
+    box-shadow: inset 0 1px 3px var(--color-neutral-100a80);
   }
 
 .c-button--success {
@@ -756,7 +757,7 @@ https://flickity.metafizzy.co
 
 .c-button--success:active,
   .c-button--success:focus {
-    box-shadow: inset 0 1px 3px color-mod(var(--color-neutral-100) alpha(80%));
+    box-shadow: inset 0 1px 3px var(--color-neutral-100a80);
   }
 
 .c-button--alert {
@@ -771,7 +772,7 @@ https://flickity.metafizzy.co
 
 .c-button--alert:active,
   .c-button--alert:focus {
-    box-shadow: inset 0 1px 3px color-mod(var(--color-neutral-100) alpha(80%));
+    box-shadow: inset 0 1px 3px var(--color-neutral-100a80);
   }
 
 .c-button--disabled {
@@ -2488,7 +2489,8 @@ body.compensate-for-scrollbar {
   #COMPONENTS-LIST
 \*------------------------------------*/
 
-.c-list {
+.c-list,
+.u-content ul {
   list-style: none;
   font-size: var(--font-size-40);
   color: var(--color-neutral-90);
@@ -2496,19 +2498,19 @@ body.compensate-for-scrollbar {
   margin: var(--space-stack-30);
 }
 
-.c-list li {
+.c-list li, .u-content ul li {
     padding-left: 2rem;
     position: relative;
   }
 
 @media (min-width: 750px) {
 
-.c-list li {
+.c-list li, .u-content ul li {
       padding-left: 3rem
   }
     }
 
-.c-list li:before {
+.c-list li:before, .u-content ul li:before {
       position: absolute;
       left: 0.5rem;
       content: " ";
@@ -2516,7 +2518,7 @@ body.compensate-for-scrollbar {
 
 @media (min-width: 750px) {
 
-.c-list li:before {
+.c-list li:before, .u-content ul li:before {
         left: 1.5rem
     }
       }
@@ -2525,7 +2527,7 @@ body.compensate-for-scrollbar {
   color: var(--color-neutral-0);
 }
 
-ul.c-list li:before {
+ul.c-list li:before, .u-content ul li:before {
     top: 0.8rem;
     height: 6px;
     width: 6px;
@@ -2538,11 +2540,11 @@ ul.c-list li:before {
   background: var(--color-primary-30);
 }
 
-ol.c-list li {
+ol.c-list li, .u-content ol li {
     counter-increment: list__counter;
   }
 
-ol.c-list li:before {
+ol.c-list li:before, .u-content ol li:before {
       content: counter(list__counter) ".";
     }
 

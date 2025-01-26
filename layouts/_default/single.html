@@ -1,7 +1,51 @@
 {{ define "main" }}
-<article>
-  <h1>{{ .Title }}</h1>
-  <div>{{ .Content }}</div>
-  <small>Geschreven door {{ .Params.author }}</small>
-</article>
+<div class="l-wrapper">
+  <article class="l-container u-content">
+    <div class="l-single">
+      <!-- Content -->
+      <div>{{ .Content }}</div>
+
+      <!-- Comments -->
+      <div class="c-comment">
+        <div class="c-comment__inner">
+          <!-- <p><a href="https://twitter.com/share?url=<script>window.location.href</script>&text=@aljanscholtens ">Reageer op twitter</a></p> -->
+          <p class="c-paragraph c-paragraph--soft">
+            Reageren? Leuk! Mag via
+            <a
+              target="_blank"
+              href="https://twitter.com/intent/tweet?text=@aljanscholtens"
+              >Twitter</a
+            >
+            of stuur me een
+            <a href="mailto:aljan@scholtens.me" target="_blank">mailtje</a>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Meta -->
+      <div class="c-author u-text-align-center">
+        <figure
+          style="background-image: url('/images/aljanscholtens.jpg')"
+        ></figure>
+
+        <p class="c-paragraph c-paragraph--soft">
+          Geschreven door
+          <a href="https://twitter.com/aljanscholtens" target="_blank"
+            ><span>Aljan Scholtens</span></a
+          ><br />
+          <time>{{ .Date.Format "02 January 2006" }}</time>
+        </p>
+      </div>
+
+      <!-- Related -->
+      {{ if .Params.related }}
+      <p class="u-text-align-center">
+        <strong>Related</strong>:
+        <a href="{{ .Params.related_url }}">{{ .Params.related }}</a>
+      </p>
+      {{ end }}
+    </div>
+  </article>
+</div>
+
 {{ end }}

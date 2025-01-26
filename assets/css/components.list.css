@@ -2,7 +2,8 @@
   #COMPONENTS-LIST
 \*------------------------------------*/
 
-.c-list {
+.c-list,
+.u-content ul {
   list-style: none;
   font-size: var(--font-size-40);
   color: var(--color-neutral-90);
@@ -33,7 +34,8 @@
   color: var(--color-neutral-0);
 }
 
-ul.c-list {
+ul.c-list,
+.u-content ul {
   & li:before {
     top: 0.8rem;
     height: 6px;
@@ -48,7 +50,8 @@ ul.c-list {
   background: var(--color-primary-30);
 }
 
-ol.c-list {
+ol.c-list,
+.u-content ol {
   & li {
     counter-increment: list__counter;
 
