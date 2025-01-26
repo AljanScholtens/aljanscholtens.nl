@@ -2,20 +2,17 @@
   #STYLES
 \*------------------------------------*/
 
-
 /*
  * #TOKENS
  */
 @import "fonts.css";
 @import "tokens.css";
 
-
 /**
  * #BASE
  */
 @import "base.page.css";
 @import "base.type.css";
-
 
 /**
  * #LAYOUT
@@ -24,12 +21,10 @@
 @import "layout.container.css";
 @import "layout.grid.css";
 
-
 /**
  * #PLUGINS
  */
 @import "plugin.flickity.css";
-
 
 /**
  * #COMPONENTS
@@ -62,7 +57,6 @@
 @import "components.navigation.css";
 @import "components.paragraph.css";
 @import "components.quote.css";
-
 
 /**
  * #UTILITIES

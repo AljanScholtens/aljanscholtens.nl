@@ -7,7 +7,7 @@
   width: 24px;
   display: inline-block;
   fill: var(--color-neutral-70);
-  vertical-align:top;
+  vertical-align: top;
 }
 
 .c-icon--inline {
@@ -17,5 +17,5 @@
 }
 
 .c-icon--white {
-  fill: var(--color-white);
+  fill: var(--color-neutral-0);
 }

@@ -2,7 +2,6 @@
   #BASE-QUOTE
 \*------------------------------------*/
 
-
 .c-blockquote {
   margin: var(--space-stack-default);
   padding-left: 1rem;
@@ -24,11 +23,13 @@
     font-size: var(--font-size-20);
     font-style: normal;
 
-    &:before { content: "\2014 \0020"; }
+    &:before {
+      content: "\2014 \0020";
+    }
   }
 }
 
 .t-dark blockquote,
 .l-wrapper--neutral-70 blockquote {
-  border-left-color: color-mod(var(--color-white) alpha(10%));
+  border-left-color: color-mod(var(--color-neutral-0) alpha(10%));
 }

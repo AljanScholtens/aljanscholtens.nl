@@ -3,12 +3,7 @@
 \*------------------------------------*/
 
 .c-card-grid {
-
 }
-
-
-
-
 
 .c-card {
   background: transparent;
@@ -19,11 +14,8 @@
   margin-bottom: 16px;
   width: 100%;
 
-
   &:hover {
-
     & .c-card__inner {
-
       @media (--breakpoint-30) {
         background-color: color-mod(var(--color-neutral-30) alpha(40%));
         transform: scale(0.99);
@@ -33,18 +25,14 @@
 }
 
 .t-dark .c-card {
-
   &:hover {
-
     & .c-card__inner {
-
       @media (--breakpoint-30) {
-        background-color: color-mod(var(--color-white) alpha(10%));
+        background-color: color-mod(var(--color-neutral-0) alpha(10%));
       }
     }
   }
 }
-
 
 .c-card__inner {
   display: flex;
@@ -53,15 +41,12 @@
   @media (--breakpoint-20) {
     padding: 16px;
     backface-visibility: hidden;
-    transition: transform 150ms var(--bezier-a), background-color 150ms var(--bezier-a);
+    transition: transform 150ms var(--bezier-a),
+      background-color 150ms var(--bezier-a);
   }
 }
 
-
-
 .c-card__content {
-
-
   & .c-paragraph--soft {
     margin-bottom: 0;
   }
@@ -71,8 +56,6 @@
     margin-bottom: 8px;
   }
 }
-
-
 
 .c-card__image {
   position: relative;
@@ -111,7 +94,7 @@
     padding-top: 4.5rem;
     font-weight: 400;
     font-family: var(--font-family-body);
-    color: color-mod(var(--color-white) alpha(0.75));
+    color: color-mod(var(--color-neutral-0) alpha(0.75));
     font-size: var(--font-size-20);
 
     @media (--breakpoint-20) {
@@ -126,14 +109,14 @@
       left: 0;
       right: 0;
       height: 50%;
-      background-image: linear-gradient(180deg, transparent, color-mod(var(--color-primary-90) alpha(0.8)));
+      background-image: linear-gradient(
+        180deg,
+        transparent,
+        color-mod(var(--color-primary-90) alpha(0.8))
+      );
     }
   }
 }
-
-
-
-
 
 .c-card__meta {
   display: flex;

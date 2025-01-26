@@ -2,29 +2,45 @@
 
 <h1>{{ .Title }}</h1>
 
-<ul>
-  {{ range .Paginator.Pages }}
-  <li>
-    <a href="{{ .Permalink }}">{{ .Title }}</a>
-    <small>Geplaatst op {{ .Date.Format "02-01-2006" }}</small>
-    <p>{{ .Summary }}</p>
-  </li>
-  {{ end }}
-</ul>
+<div class="l-single-wide">
+  <div class="c-card-grid">
+    {{ range .Paginator.Pages }}
 
-<!-- Paginatie links -->
-<nav>
-  {{ if .Paginator.HasPrev }}
-  <a href="{{ .Paginator.Prev.URL }}">← Vorige</a>
-  {{ end }}
+    <a href="{{ .Permalink }}" class="c-card">
+      <div class="c-card__inner">
+        <!-- if has image -->
+        <div class="c-card__image">
+          <img class="js-lazy" data-original="" />
+          {% if card.caption %}
+          <figcaption>Test</figcaption>
+        </div>
+        <!-- End -->
+        <div class="c-card__content">
+          <p class="c-paragraph c-paragraph--soft">
+            {{ .Date.Format "02-01-2006" }}
+          </p>
+          <h2 class="c-heading c-heading--30">{{ .Title }}</h2>
+          <p>{{ .Summary }}</p>
+        </div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
 
-  <span
-    >Pagina {{ .Paginator.PageNumber }} van {{ .Paginator.TotalPages }}</span
-  >
+  <!-- Paginatie links -->
+  <nav>
+    {{ if .Paginator.HasPrev }}
+    <a href="{{ .Paginator.Prev.URL }}">← Vorige</a>
+    {{ end }}
 
-  {{ if .Paginator.HasNext }}
-  <a href="{{ .Paginator.Next.URL }}">Volgende →</a>
-  {{ end }}
-</nav>
+    <span
+      >Pagina {{ .Paginator.PageNumber }} van {{ .Paginator.TotalPages }}</span
+    >
+
+    {{ if .Paginator.HasNext }}
+    <a href="{{ .Paginator.Next.URL }}">Volgende →</a>
+    {{ end }}
+  </nav>
+</div>
 
 {{ end }}

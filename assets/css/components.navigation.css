@@ -3,7 +3,6 @@
 \*------------------------------------*/
 
 @keyframes c-navigation {
-
   0% {
     opacity: 0;
     transform: translateY(-10px);
@@ -13,10 +12,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-html.home .c-navigation {
-  position: fixed;
 }
 
 .c-navigation {
@@ -37,15 +32,10 @@ html.home .c-navigation {
 }
 
 .t-dark .c-navigation {
-
   & .c-navigation__item.c-navigation__item--selected a {
-    color: var(--color-white);
+    color: var(--color-neutral-0);
   }
 }
-
-
-
-
 
 /*
  * Logo
@@ -71,16 +61,12 @@ html.home .c-navigation {
 }
 
 .t-dark .c-navigation__logo {
-  color: var(--color-white);
+  color: var(--color-neutral-0);
 
   &:hover {
-    color: color-mod(var(--color-white) alpha(80%));
+    color: color-mod(var(--color-neutral-0) alpha(80%));
   }
 }
-
-
-
-
 
 /*
  * Navigation items
@@ -97,9 +83,7 @@ html.home .c-navigation {
   }
 }
 
-
 .c-navigation__item {
-
   @media (--breakpoint-20) {
     opacity: 0;
     animation: c-navigation 300ms cubic-bezier(0, 0, 0, 1) forwards;
@@ -150,21 +134,16 @@ html.home .c-navigation {
 }
 
 .t-dark .c-navigation__item.c-navigation__item--selected a {
-  color: var(--color-white);
+  color: var(--color-neutral-0);
 }
 
 .t-dark .c-navigation__item a {
-  color: color-mod(var(--color-white) alpha(60%));
+  color: color-mod(var(--color-neutral-0) alpha(60%));
 
   &:hover {
-    color: color-mod(var(--color-white) alpha(40%));
+    color: color-mod(var(--color-neutral-0) alpha(40%));
   }
 }
-
-
-
-
-
 
 /*
  * Link like social media
@@ -182,7 +161,6 @@ html.home .c-navigation {
 }
 
 .c-navigation__links-item {
-
   & a {
     padding: 0.25rem;
     display: block;
@@ -201,12 +179,11 @@ html.home .c-navigation {
 }
 
 .t-dark .c-navigation__links-item {
-
   & a:hover svg {
-    fill: color-mod(var(--color-white) alpha(20%));
+    fill: color-mod(var(--color-neutral-0) alpha(20%));
   }
 
   & svg {
-    fill: color-mod(var(--color-white) alpha(40%));
+    fill: color-mod(var(--color-neutral-0) alpha(40%));
   }
 }

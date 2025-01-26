@@ -30,11 +30,10 @@
 }
 
 .t-dark .c-list {
-  color: var(--color-white);
+  color: var(--color-neutral-0);
 }
 
 ul.c-list {
-
   & li:before {
     top: 0.8rem;
     height: 6px;
@@ -50,12 +49,11 @@ ul.c-list {
 }
 
 ol.c-list {
-
   & li {
     counter-increment: list__counter;
 
     &:before {
-      content: counter(list__counter)".";
+      content: counter(list__counter) ".";
     }
   }
 }

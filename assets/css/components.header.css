@@ -22,21 +22,22 @@
     top: 0;
     right: 0;
     height: 200px;
-    background-image: linear-gradient(180deg, color-mod(var(--color-primary-90) alpha(80%)), transparent);
+    background: linear-gradient(
+      180deg,
+      var(--color-primary-90a80),
+      transparent
+    );
     mix-blend-mode: multiply;
     z-index: 2;
   }
 }
 
-
 .c-header--studio {
-
   &:before {
     display: none;
   }
 
   & .c-header__image {
-
     @media (--breakpoint-40) {
       background-size: 1300px auto;
       background-position: center bottom;
@@ -45,18 +46,17 @@
   }
 }
 
-
-
-
-
-
 .c-header__content {
   position: relative;
   z-index: 2;
   padding-bottom: 3rem;
   padding-top: 20rem;
   width: 100%;
-  background-image: linear-gradient(180deg, transparent 40%, var(--color-primary-90) 100%);
+  background-image: linear-gradient(
+    180deg,
+    transparent 40%,
+    var(--color-primary-90) 100%
+  );
 }
 
 .c-header__body {
@@ -64,9 +64,7 @@
   margin: auto;
 }
 
-
 @keyframes c-header__title {
-
   0% {
     opacity: 0;
     transform: translateY(10px);
@@ -86,7 +84,7 @@
   font-weight: 400;
   font-size: 50px;
   margin: var(--space-stack-30);
-  background: linear-gradient(180deg, #FFF2DC, #FFDCA2);
+  background: linear-gradient(180deg, #fff2dc, #ffdca2);
 
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -100,14 +98,12 @@
 }
 
 .c-header__title--gradient {
-  background: linear-gradient(180deg, #FFDCA2 -20%, transparent 90%);
+  background: linear-gradient(180deg, #ffdca2 -20%, transparent 90%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-
 @keyframes c-header__subtitle {
-
   0% {
     opacity: 0;
     transform: translateY(10px);
@@ -120,7 +116,7 @@
 }
 
 .c-header__subtitle {
-  color: var(--color-white);
+  color: var(--color-neutral-0);
   text-align: center;
   font-size: 30px;
   line-height: 1.3em;
@@ -142,10 +138,7 @@
   }
 }
 
-
-
 @keyframes c-header-image-a {
-
   0% {
     filter: grayscale(1);
   }
@@ -156,7 +149,6 @@
 }
 
 @keyframes c-header-image-b {
-
   0% {
     opacity: 0;
   }
@@ -184,6 +176,7 @@
   @media (--breakpoint-20) {
     filter: grayscale(1);
     opacity: 0;
-    animation: c-header-image-a 2s linear forwards 500ms, c-header-image-b 500ms forwards ease-out;
+    animation: c-header-image-a 2s linear forwards 500ms,
+      c-header-image-b 500ms forwards ease-out;
   }
 }

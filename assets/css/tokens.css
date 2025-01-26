@@ -7,29 +7,20 @@
  * So --variable-10 is small or light and --variable-100 is big or dark.
  */
 
-
 :root {
-
-
-
-
-
   /*
    * Typography
    */
 
-
   /* Fonts */
-  --font-family-a: Sofia Pro, 'Helvetica Neue', sans-serif;
+  --font-family-a: Sofia Pro, "Helvetica Neue", sans-serif;
   --font-family-b: Lora, Georgia, serif;
   --font-family-c: Nanum Pen, Lucida Handwriting;
-  --font-family-d: Aqua, 'Helvetica Neue', sans-serif;
-
+  --font-family-d: Aqua, "Helvetica Neue", sans-serif;
 
   /* Legacy */
   --font-family-heading: var(--font-family-a);
   --font-family-body: var(--font-family-a);
-
 
   /* Set your font size */
   --font-size-base: 16px;
@@ -44,18 +35,15 @@
   --font-size-65: 40px; /* Heading */
   --font-size-70: 5vw; /* Heading */
 
-
   /* Line-height */
   --line-height-default: var(--line-height-10);
   --line-height-10: 1;
   --line-height-20: 1.35em;
   --line-height-30: 1.65em;
 
-
   /* Letter spacing */
   --letter-spacing-default: var(--letter-spacing-10);
   --letter-spacing-10: 2px;
-
 
   /* Font weight */
   --font-weight-default: var(--font-weight-20);
@@ -63,14 +51,9 @@
   --font-weight-20: 400;
   --font-weight-30: 500;
 
-
-
-
-
   /*
    * Spacing
    */
-
 
   /* Spacing system */
   --spacing: var(--space-default); /* Legacy */
@@ -102,74 +85,56 @@
   --space-squish-25: 12px 24px; /* Not default */
   --space-squish-30: 16px 32px;
 
-
   /* Grid gutter */
   --gutter: 25px;
 
-
   /* Maximum width of the website */
   --max-width: 1240px;
-
-
-
-
 
   /*
    * Colors
    */
 
-
   /* Primary colors */
-  --color-primary-10: #F2F2F7;
-  --color-primary-30: #9C9AF4;
-  --color-primary-50: #523EF8;
-  --color-primary-70: #3330A6;
+  --color-primary-10: #f2f2f7;
+  --color-primary-30: #9c9af4;
+  --color-primary-50: #523ef8;
+  --color-primary-70: #3330a6;
   --color-primary-90: #121138;
-
+  --color-primary-90a80: #12113880;
 
   /* Secondary colors */
-  --color-secondary-10: #FEECF2;
-  --color-secondary-30: #FF6B99;
-  --color-secondary-50: #FF3473;
-  --color-secondary-70: #D31E56;
-
+  --color-secondary-10: #feecf2;
+  --color-secondary-30: #ff6b99;
+  --color-secondary-30a20: #ff6b9920
+  --color-secondary-50: #ff3473;
+  --color-secondary-70: #d31e56;
 
   /* Tertiary colors */
-  --color-tertiary-10: #FFF4EA;
-  --color-tertiary-30: #FFD3A6;
-
+  --color-tertiary-10: #fff4ea;
+  --color-tertiary-30: #ffd3a6;
 
   /* Success and positive colors */
-  --color-success-50: #41D57D;
-  --color-success-70: #21AB59;
-
+  --color-success-50: #41d57d;
+  --color-success-70: #21ab59;
 
   /* Alert en negative colors */
   --color-alert-50: var(--color-secondary-50);
   --color-alert-70: var(--color-secondary-70);
 
-
   /* Neutral colors */
-  --color-neutral-10: #FEF9F2;
-  --color-neutral-30: #D5D3CE;
-  --color-neutral-50: #8F8D87;
-  --color-neutral-60: #615F5B;
-  --color-neutral-70: #3C3B38;
-  --color-neutral-90: #201E1C;
-
-
-  /* Black and white */
-  --color-black: #000;
-  --color-white: #fff;
-
-
-
-
+  --color-neutral-0: #fff;
+  --color-neutral-10: #fef9f2;
+  --color-neutral-30: #d5d3ce;
+  --color-neutral-50: #8f8d87;
+  --color-neutral-60: #615f5b;
+  --color-neutral-70: #3c3b38;
+  --color-neutral-90: #201e1c;
+  --color-neutral-100: #000;
 
   /*
    * Other
    */
-
 
   /* Rounded borders */
   --border-radius-default: var(--border-radius-10);
@@ -177,25 +142,20 @@
   --border-radius-20: 4px;
   --border-radius-50: 10rem;
 
-
   /* Shadows */
   --box-shadow-default: var(--box-shadow-10);
-  --box-shadow-10: 0px 2px 10px color-mod(var(--color-black) alpha(10%));
-  --box-shadow-30: 0px 10px 50px color-mod(var(--color-black) alpha(10%));
-
+  --box-shadow-10: 0px 2px 10px color-mod(var(--color-neutral-100) alpha(10%));
+  --box-shadow-30: 0px 10px 50px color-mod(var(--color-neutral-100) alpha(10%));
 
   /* Animation beziers */
   --bezier-default: var(--bezier-a);
   --bezier-a: cubic-bezier(0.86, 0, 0.07, 1);
-
 
   /* Layers */
   --layer-10: 10;
   --layer-20: 20;
   --layer-30: 30;
 }
-
-
 
 /* Breakpoints */
 @custom-media --breakpoint-10 (min-width: 600px);

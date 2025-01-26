@@ -8,6 +8,55 @@
     <title>{{ .Title }}</title>
   </head>
   <body>
-    {{ block "main" . }}{{ end }}
+    {{ partial "sprite.html" . }}
+
+    <nav class="c-navigation {{ if .Params.header }}t-dark{{ end }}">
+
+      <a class="c-navigation__logo" href="/">aljan</a>
+
+      <ul class="c-navigation__items">
+        {{ range .Site.Menus.main }}
+          <li class="c-navigation__item">
+            <a href="{{ .URL }}">{{ .Name }}</a>
+          </li>
+        {{ end }}
+      </ul>
+    
+      <ul class="c-navigation__links">
+        <!-- <li class="c-navigation__links-item"><a href="https://twitter.com/aljanscholtens"><svg class="c-icon"><use xlink:href="#icon-twitter"></svg></a></li> -->
+        <li class="c-navigation__links-item"><a href="https://instagram.com/aljan"><svg class="c-icon"><use xlink:href="#icon-instagram"></svg></a></li>
+        <li class="c-navigation__links-item"><a href="https://www.linkedin.com/in/aljanscholtens/"><svg class="c-icon"><use xlink:href="#icon-linkedin"></svg></a></li>
+      </ul>
+
+    </nav>
+
+    {{ if .Params.header }}
+  <div class="c-header {{ if .Params.header_studio }}c-header--studio{{ end }}">
+    <div class="c-header__content">
+      <div class="c-header__body">
+        <h1 class="c-header__title {{ if .Params.header_title_gradient }}c-header__title--gradient{{ end }}">
+          {{ .Title }}
+        </h1>
+        {{ with .Params.subtitle }}
+          <p class="c-header__subtitle">{{ . }}</p>
+        {{ end }}
+      </div>
+    </div>
+    <div class="c-header__image" style="background-image: url('{{ .Params.photo }}')"></div>
+  </div>
+{{ else }}
+  <h1 class="c-heading c-heading--50">{{ .Params.title }}</h1>
+{{ end }}
+
+    
+    <div class="l-wrapper">
+      <div class="l-container">
+        <div class="l-single u-content">
+
+          {{ block "main" . }}{{ end }}
+
+        </div>
+      </div>
+    </div>
   </body>
 </html>

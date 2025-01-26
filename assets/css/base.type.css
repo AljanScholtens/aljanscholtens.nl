@@ -5,19 +5,22 @@
 /*
  * Headings
  */
-h1, h2, legend, h3, h4, h5, h6 {
+h1,
+h2,
+legend,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-family-heading);
   font-weight: 600;
   font-size: var(--font-size-50);
   margin: 0;
 }
 
-
 /*
  * Paragraphs has been moved entirely to the paragraph component
  */
-
-
 
 /*
  * Links
@@ -28,7 +31,9 @@ a {
   font-weight: 500;
   cursor: pointer;
 
-  &:hover { color: var(--color-neutral-90); }
+  &:hover {
+    color: var(--color-neutral-90);
+  }
 }
 
 .u-content a {
@@ -38,10 +43,10 @@ a {
 
 .t-dark .u-content a {
   color: var(--color-secondary-30);
-  background-color: color-mod(var(--color-secondary-30) alpha(20%));
+  background-color: var(--color-secondary-30a20);
 
   &:hover {
-    color: var(--color-white);
+    color: var(--color-neutral-0);
   }
 }
 
@@ -62,8 +67,9 @@ strong {
   font-weight: 700;
 }
 
-code, pre {
-  font-family: 'courier new', monospace;
+code,
+pre {
+  font-family: "courier new", monospace;
 }
 
 pre {
@@ -77,10 +83,6 @@ abbr {
 
 del {
   text-decoration: line-through;
-}
-
-mark {
-  background: color-mod(yellow alpha(-50%));
 }
 
 figure {

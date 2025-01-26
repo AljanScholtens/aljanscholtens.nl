@@ -57,19 +57,20 @@
   text-align: center;
   /* font-size: var(--font-size-20); */
 
-
   @media (--breakpoint-10) {
     font-size: var(--font-size-30);
   }
 
   & a {
-    color: var(--color-white);
+    color: var(--color-neutral-0);
     text-decoration: none;
     display: block;
     font-weight: 400;
     padding: 1rem 1rem;
 
-    &:hover { color: var(--color-white); }
+    &:hover {
+      color: var(--color-neutral-0);
+    }
   }
 
   & svg {
@@ -77,6 +78,6 @@
     height: 1rem;
     position: relative;
     top: 3px;
-    fill: var(--color-white);
+    fill: var(--color-neutral-0);
   }
 }
