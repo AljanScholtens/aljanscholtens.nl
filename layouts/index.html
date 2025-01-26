@@ -1,9 +1,9 @@
 {{ define "main" }}
-<h1>Welkom op mijn site!</h1>
 
-<article>
-  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-  <p>{{ .Summary }}</p>
-</article>
+<div class="l-wrapper">
+  <article class="l-container u-content">
+    <div class="l-single">{{ .Content }}</div>
+  </article>
+</div>
 
 {{ end }}
