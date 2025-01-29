@@ -17,7 +17,13 @@
       <ul class="c-navigation__items">
         {{ range .Site.Menus.main }}
           <li class="c-navigation__item">
-            <a href="{{ .URL }}">{{ .Name }}</a>
+            <a href="{{ .URL }}">
+              {{ with .Page.Params.menuTitle }}
+                {{ . }}
+              {{ else }}
+                {{ .Page.Title }}
+              {{ end }}
+            </a>
           </li>
         {{ end }}
       </ul>
@@ -37,15 +43,13 @@
             <h1 class="c-header__title {{ if .Params.header_title_gradient }}c-header__title--gradient{{ end }}">
               {{ .Title }}
             </h1>
-            {{ with .Params.subtitle }}
-              <p class="c-header__subtitle">{{ . }}</p>
+            {{ if .Params.subtitle }}
+              <p class="c-header__subtitle">{{ .Params.subtitle | safeHTML }}</p>
             {{ end }}
           </div>
         </div>
         <div class="c-header__image" style="background-image: url('{{ .Params.photo }}')"></div>
       </div>
-    {{ else }}
-      <h1 class="c-heading c-heading--50">{{ .Params.title }}</h1>
     {{ end }}
 
     {{ block "main" . }}{{ end }}
@@ -69,12 +73,12 @@
     </div>
     
 
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
     <script src="/scripts/lazyload.min.js"></script>
     <script src="/scripts/fitie.js"></script>
     <script src="/scripts/jquery.fancybox.min.js"></script>
     <script src="/scripts/flickity.pkgd.min.js"></script>
     <script src="/scripts/scripts.js"></script>
-   -->
+   
   </body>
 </html>

@@ -1,14 +1,12 @@
 ---
-title: "Home"
-menu: "main"
-weight: 1
-subtitle: "" # Not required
+title: "Designer"
+subtitle: "of <em>digital</em> products"
 description: "Op zoek naar een designer die de waarom-vraag stelt, technisch meedenkt en prachtige producten maakt? Ik kan je helpen." # Not required
-photo: "" # Not required
+photo: "header.jpg" # Not required
 thumbnail: "" # Not required
 
 header: true # true is a large header, false is no header
-header_studio: false # Not required
+header_studio: true # Not required
 header_title_gradient: false # Not required
 ---
 

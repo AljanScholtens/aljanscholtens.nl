@@ -1,0 +1,25 @@
+
+</div>
+<div class="c-gallery-grid-wrapper">
+  <ul class="c-gallery-grid">
+    {{ range .Page.Params.gallery }}
+    <li class="c-gallery-grid__item c-gallery-grid__item--{{ .cols }}">
+      <a data-fancybox="gallery" href="{{ .img }}">
+        <img class="js-lazy" data-original="{{ .img }}" alt="{{ .caption }}" />
+        {{ with .caption }}
+        <figcaption class="c-gallery-grid__figcaption">{{ . }}</figcaption>
+        {{ end }}
+      </a>
+    </li>
+    {{ end }}
+  </ul>
+
+  {{ with .Page.Params.gallery_footnote }}
+  <div class="l-single c-gallery-grid__footnote">
+    <p>
+      <small><strong>Footnote</strong>: {{ . }}</small>
+    </p>
+  </div>
+  {{ end }}
+</div>
+<div class="l-single">
