@@ -29,3 +29,5 @@ _Last update on 22 October 2024. The now page is inspired by [Nownownow](http://
 - Backpacking & hiking
 
 Want to know more? [Contact me](/contact).
+
+{{<video url="https://www.loom.com/embed/9f0ef8fcaa0d4da1946f9974c1e38171?sid=67c6950a-13d1-469c-8cd3-de945b5b2ede">}}

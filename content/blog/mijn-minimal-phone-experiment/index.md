@@ -18,7 +18,7 @@ header_studio: false # Not required
 header_title_gradient: false # Not required
 ---
 
-Al jaren beschouw ik mijn telefoon als een vervelende afleiding. Tien jaar geleden schreef ik hier al kort over in '<a href="https://aljanscholtens.nl/blog/afleiding-maakt-dom">Afleiding maakt dom</a>'. Hoewel een telefoon je <a href="https://www.sciencedaily.com/releases/2021/07/210702154317.htm">niet dommer</a> maakt, erkennen we dat het gebruik ervan problemen kan veroorzaken bij het focussen en tot rust komen. Dit stuk gaat niet diep in op onderzoeken, maar is een verslag van mijn zoveelste experiment om meer rust en vrede te vinden in het dagelijkse leven.
+Al jaren beschouw ik mijn telefoon als een vervelende afleiding. Tien jaar geleden schreef ik hier al kort over in '[Afleiding maakt dom](https://aljanscholtens.nl/blog/afleiding-maakt-dom)'. Hoewel een telefoon je [niet dommer](https://www.sciencedaily.com/releases/2021/07/210702154317.htm) maakt, erkennen we dat het gebruik ervan problemen kan veroorzaken bij het focussen en tot rust komen. Dit stuk gaat niet diep in op onderzoeken, maar is een verslag van mijn zoveelste experiment om meer rust en vrede te vinden in het dagelijkse leven.
 
 ## Dumb Phone
 

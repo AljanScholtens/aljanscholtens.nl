@@ -2,17 +2,19 @@
 
 <div class="l-single-wide">
   <div class="c-card-grid">
-    {{ range .Paginator.Pages }}
-
+    {{ range .Pages }}
     <a href="{{ .Permalink }}" class="c-card">
       <div class="c-card__inner">
-        <!-- if has image -->
+        {{ if .Params.photo }} {{ $img := .Resources.GetMatch .Params.photo }}
+        {{ if $img }}
         <div class="c-card__image">
-          <img class="js-lazy" data-original="" />
-          {% if card.caption %}
-          <figcaption>Test</figcaption>
+          <img
+            class="js-lazy"
+            data-original="{{ $img.RelPermalink }}"
+            alt="{{ .Title }}"
+          />
         </div>
-        <!-- End -->
+        {{ end }} {{ end }}
         <div class="c-card__content">
           <p class="c-paragraph c-paragraph--soft">
             {{ .Date.Format "02-01-2006" }}
