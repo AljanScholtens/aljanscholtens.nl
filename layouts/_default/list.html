@@ -1,46 +1,50 @@
 {{ define "main" }}
 
-<div class="l-single-wide">
-  <div class="c-card-grid">
-    {{ range .Pages }}
-    <a href="{{ .Permalink }}" class="c-card">
-      <div class="c-card__inner">
-        {{ if .Params.photo }} {{ $img := .Resources.GetMatch .Params.photo }}
-        {{ if $img }}
-        <div class="c-card__image">
-          <img
-            class="js-lazy"
-            data-original="{{ $img.RelPermalink }}"
-            alt="{{ .Title }}"
-          />
-        </div>
-        {{ end }} {{ end }}
-        <div class="c-card__content">
-          <p class="c-paragraph c-paragraph--soft">
-            {{ .Date.Format "02-01-2006" }}
-          </p>
-          <h2 class="c-heading c-heading--30">{{ .Title }}</h2>
-          <p>{{ .Summary }}</p>
-        </div>
+<div class="l-wrapper">
+  <article class="l-container">
+    <div class="l-single-wide">
+      <div class="c-card-grid">
+        {{ range .Pages }}
+        <a href="{{ .Permalink }}" class="c-card">
+          <div class="c-card__inner">
+            {{ if .Params.photo }} {{ $img := .Resources.GetMatch .Params.photo }}
+            {{ if $img }}
+            <div class="c-card__image">
+              <img
+                class="js-lazy"
+                data-original="{{ $img.RelPermalink }}"
+                alt="{{ .Title }}"
+              />
+            </div>
+            {{ end }} {{ end }}
+            <div class="c-card__content">
+              <p class="c-paragraph c-paragraph--soft">
+                {{ .Date.Format "02-01-2006" }}
+              </p>
+              <h2 class="c-heading c-heading--30">{{ .Title }}</h2>
+              <p>{{ .Summary }}</p>
+            </div>
+          </div>
+        </a>
+        {{ end }}
       </div>
-    </a>
-    {{ end }}
+
+      <!-- Paginatie links -->
+      <nav>
+        {{ if .Paginator.HasPrev }}
+        <a href="{{ .Paginator.Prev.URL }}">← Vorige</a>
+        {{ end }}
+
+        <span
+          >Pagina {{ .Paginator.PageNumber }} van {{ .Paginator.TotalPages }}</span
+        >
+
+        {{ if .Paginator.HasNext }}
+        <a href="{{ .Paginator.Next.URL }}">Volgende →</a>
+        {{ end }}
+      </nav>
+    </div>
   </div>
-
-  <!-- Paginatie links -->
-  <nav>
-    {{ if .Paginator.HasPrev }}
-    <a href="{{ .Paginator.Prev.URL }}">← Vorige</a>
-    {{ end }}
-
-    <span
-      >Pagina {{ .Paginator.PageNumber }} van {{ .Paginator.TotalPages }}</span
-    >
-
-    {{ if .Paginator.HasNext }}
-    <a href="{{ .Paginator.Next.URL }}">Volgende →</a>
-    {{ end }}
-  </nav>
 </div>
 
 {{ end }}

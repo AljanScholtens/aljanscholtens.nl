@@ -2,7 +2,7 @@
 title: "Designer"
 subtitle: "of <em>digital</em> products"
 description: "Op zoek naar een designer die de waarom-vraag stelt, technisch meedenkt en prachtige producten maakt? Ik kan je helpen." # Not required
-photo: "header.jpg" # Not required
+photo: "/images/header.jpg" # Not required
 thumbnail: "" # Not required
 
 header: true # true is a large header, false is no header
