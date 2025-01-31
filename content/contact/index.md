@@ -2,6 +2,7 @@
 title: "Contact"
 layout: "default"
 menu: "main"
+weight: "3"
 subtitle: "" # Not required
 description: "Op zoek naar een designer die de waarom-vraag stelt, technisch meedenkt en prachtige producten maakt? Ik kan je helpen." # Not required
 photo: "header-06.jpg" # Not required

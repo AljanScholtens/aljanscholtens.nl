@@ -1,6 +1,7 @@
 ---
 title: "Blog"
 menu: "main"
+weight: "2"
 subtitle: "" # Not required
 description: "" # Not required
 photo: "/images/header-03.jpg" # Not required
