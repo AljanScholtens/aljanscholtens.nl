@@ -64,7 +64,7 @@
   color: var(--color-neutral-0);
 
   &:hover {
-    color: color-mod(var(--color-neutral-0) alpha(80%));
+    color: var(--color-neutral-0a75);
   }
 }
 
@@ -138,10 +138,10 @@
 }
 
 .t-dark .c-navigation__item a {
-  color: color-mod(var(--color-neutral-0) alpha(60%));
+  color: var(--color-neutral-0a60);
 
   &:hover {
-    color: color-mod(var(--color-neutral-0) alpha(40%));
+    color: var(--color-neutral-0a40);
   }
 }
 
@@ -180,10 +180,10 @@
 
 .t-dark .c-navigation__links-item {
   & a:hover svg {
-    fill: color-mod(var(--color-neutral-0) alpha(20%));
+    fill: var(--color-neutral-0a20);
   }
 
   & svg {
-    fill: color-mod(var(--color-neutral-0) alpha(40%));
+    fill: var(--color-neutral-0a40);
   }
 }

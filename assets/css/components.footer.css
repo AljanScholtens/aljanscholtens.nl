@@ -10,5 +10,5 @@
 }
 
 .t-dark .c-footer {
-  background-color: color-mod(var(--color-neutral-0) alpha(10%));
+  background-color: var(--color-neutral-0a10);
 }
