@@ -3,7 +3,7 @@
   <article class="l-container u-content">
     <div class="l-single">
       {{ if not .Params.header }}
-      <h1 class="c-heading c-heading--50">{{ .Params.title }}</h1>
+      <h1 class="c-heading c-heading--50">{{ .Params.title | safeHTML }}</h1>
       {{ end }} {{ .Content }}
     </div>
   </article>

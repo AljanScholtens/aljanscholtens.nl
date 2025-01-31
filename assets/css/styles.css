@@ -44,8 +44,6 @@
 @import "components.form-select.css";
 @import "components.form-textarea.css"; */
 
-@import "components.gallery-grid.css";
-@import "components.gallery.css";
 @import "components.header.css";
 @import "components.heading.css";
 @import "components.highlight.css";
@@ -56,6 +54,7 @@
 @import "components.navigation-mobile.css";
 @import "components.navigation.css";
 @import "components.paragraph.css";
+@import "components.photos.css";
 @import "components.quote.css";
 
 /**

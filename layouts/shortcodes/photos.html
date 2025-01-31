@@ -6,32 +6,18 @@
       {{- $lineClean := trim $line " \t\r\n" -}}
       {{- if ne $lineClean "" -}}
         {{- $parts := split $lineClean "|" -}}
-
-        {{- /* Standaard-waardes toekennen */ -}}
-        {{- $img := "" -}}
+        
+        {{- $img := trim (index $parts 0) " " -}}
         {{- $caption := "" -}}
-        {{- $cols := "100" -}}
-
-        {{- /* Haal de eerste waarde (img) op, trim whitespace */ -}}
-        {{- if ge (len $parts) 1 -}}
-          {{- $img = trim (index $parts 0) " \t\r\n" -}}
-        {{- end -}}
-
-        {{- /* Als er een caption is, pak die */ -}}
         {{- if ge (len $parts) 2 -}}
-          {{- $caption = trim (index $parts 1) " \t\r\n" -}}
+          {{- $caption = trim (index $parts 1) " " -}}
         {{- end -}}
 
-        {{- /* Als er een kolombreedte is, pak die */ -}}
-        {{- if ge (len $parts) 3 -}}
-          {{- $cols = trim (index $parts 2) " \t\r\n" -}}
-        {{- end -}}
-
-        <li class="c-photos__item c-photos__item--{{ $cols }}">
-          <a data-fancybox="photos-{{ $index }}" href="{{ $img }}">
+        <li class="c-photos__item">
+          <a data-fancybox="gallery" href="{{ $img }}">
             <img class="js-lazy" data-original="{{ $img }}" alt="{{ $caption }}" />
-            {{ with $caption }}
-              <figcaption class="c-photos__figcaption">{{ . }}</figcaption>
+            {{ if $caption }}
+              <small class="c-photos__caption">{{ $caption }}</small>
             {{ end }}
           </a>
         </li>

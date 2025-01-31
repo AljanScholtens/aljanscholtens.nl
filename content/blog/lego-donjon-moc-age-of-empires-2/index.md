@@ -16,20 +16,6 @@ thumbnail: "" # Not required
 header: true # true is a large header, false is no header
 header_studio: false # Not required
 header_title_gradient: false # Not required
-
-gallery:
-  - img: "donjon-1.jpg"
-    caption: "Attack on the Donjon"
-  - img: "donjon-2.jpg"
-    caption: ""
-  - img: "donjon-3.jpg"
-    caption: ""
-  - img: "donjon-4.jpg"
-    caption: ""
-  - img: "donjon-5.jpg"
-    caption: ""
-  - img: "donjon-comparison.jpg"
-    caption: "Comparison with the real AoE2 Donjon"
 ---
 
 My friends are organizing an annual Age of Empires 2 (AoE2) online tournament, [Age of Gamers](https://www.ageofgamers.nl), which was started during the pandemic. During this year's tournament, they introduced a mini competition: build something in Lego related to the strategy game Age of Empires 2. That's when I got excited.
@@ -40,4 +26,11 @@ Initially, I started at the top, because I was afraid I wouldn't end up with the
 
 It was fun to recreate something that (as far as I know) has not been made in Lego before. It was also the first time I built a MOC in Lego. It's certainly not perfect, but it's close enough for me. See below for some more pictures of the Donjon.
 
-{{< gallery >}}
+{{< photos footnote="" >}}
+donjon-1.jpg | Attack on the Donjon
+donjon-2.jpg | 
+donjon-3.jpg | 
+donjon-4.jpg | 
+donjon-5.jpg | 
+donjon-comparison.jpg | Comparison with the real AoE2 Donjon
+{{< /photos >}}

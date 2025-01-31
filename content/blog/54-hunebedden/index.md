@@ -16,35 +16,6 @@ thumbnail: "" # Niet verplicht
 header: true # Grote header
 header_studio: false # Niet verplicht
 header_title_gradient: false # Niet verplicht
-
-gallery:
-  - img: "54-hunebedden-1.jpg"
-    caption: "D1 Steenbergen"
-    cols: 40
-  - img: "54-hunebedden-7.jpg"
-    caption: "D53 Havelte"
-    cols: 60
-  - img: "54-hunebedden-3.jpg"
-    caption: "D40 Emmen"
-    cols: 50
-  - img: "54-hunebedden-4.jpg"
-    caption: "D17 Rolde"
-    cols: 50
-  - img: "54-hunebedden-5.jpg"
-    caption: "D15 Loon"
-    cols: 60
-  - img: "54-hunebedden-6.jpg"
-    caption: "D26 Drouwen"
-    cols: 40
-  - img: "54-hunebedden-2.jpg"
-    caption: "D45 Emmen"
-    cols: 50
-  - img: "54-hunebedden-8.jpg"
-    caption: "D54 Havelte"
-    cols: 50
-  - img: "54-hunebedden-9.jpg"
-    caption: "D50 Sleen"
-    cols: 100
 ---
 
 54 hunebedden fotograferen voor een boek dat geschreven wordt. Best veel werk en plannen, maar met de juiste voorbereiding is het gelukt.
@@ -53,4 +24,14 @@ Eerst heb ik vrijwel bij alle hunebedden aantekeningen gemaakt over positie, lic
 
 Hieronder een kleine selectie van de foto's die ik gemaakt heb.
 
-{{< gallery >}}
+{{< photos footnote="" >}}
+54-hunebedden-1.jpg | D1 Steenbergen
+54-hunebedden-7.jpg | D53 Havelte
+54-hunebedden-3.jpg | D40 Emmen
+54-hunebedden-4.jpg | D17 Rolde
+54-hunebedden-5.jpg | D15 Loon
+54-hunebedden-6.jpg | D26 Drouwen
+54-hunebedden-2.jpg | D45 Emmen
+54-hunebedden-8.jpg | D54 Havelte
+54-hunebedden-9.jpg | D50 Sleen
+{{< /photos >}}

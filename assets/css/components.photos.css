@@ -1,12 +1,10 @@
 /*------------------------------------*\
-  #COMPONENTS-GALLERY
+  #COMPONENTS-PHOTOS
 \*------------------------------------*/
 
-.c-gallery-grid-wrapper {
+.c-photos-wrapper {
   clear: both;
   margin: var(--space-stack-default);
-  padding-left: 6px;
-  padding-right: 6px;
 
   @media (--breakpoint-30) {
     margin: var(--space-stack-50);
@@ -14,11 +12,10 @@
   }
 }
 
-.c-gallery-grid {
+.c-photos {
   list-style: none;
+  padding: 0;
   margin: 0;
-  margin-left: -16px;
-  margin-right: -16px;
   display: grid;
   grid-gap: 6px;
 
@@ -36,16 +33,14 @@
   }
 }
 
-.c-gallery-grid__item {
+
+
+.c-photos__item {
   background-color: var(--color-neutral-90);
   position: relative;
   width: 100%;
   height: 0;
   padding-bottom: 100%;
-
-  @media (--breakpoint-30) {
-    max-height: 40rem;
-  }
 
   & a {
     position: absolute;
@@ -74,21 +69,16 @@
   }
 
   & img {
-    pointer-events: none;
-    object-fit: cover;
+    transition: transform 0.3s ease;
     width: 100%;
     height: 100%;
+    object-fit: cover;
     display: block;
-    opacity: 1;
-  }
-
-  & img[data-src] {
-    opacity: 0;
-    transition: opacity 5s;
   }
 }
 
-.c-gallery-grid__figcaption {
+/* Caption styling */
+.c-photos__caption {
   position: absolute;
   z-index: var(--layer-10);
   bottom: 0;
@@ -116,51 +106,6 @@
       color-mod(var(--color-neutral-100) alpha(0.4))
     );
   }
-}
-
-.c-gallery__footnote {
-  padding-top: var(--spacing);
-
-  & p {
-    margin: 0;
-  }
-}
-
-/* Photos grid basisstijlen */
-.c-photos-wrapper {
-  margin: 2rem 0;
-}
-
-.c-photos {
-  display: grid;
-  grid-auto-flow: dense;
-  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
-  /* grid-auto-rows: fit-content;*/
-  gap: 6px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.c-photos__item img {
-  /* width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 8px; */
-  transition: transform 0.3s ease;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Caption styling */
-.c-photos__figcaption {
-  font-size: 0.9rem;
-  color: #666;
-  margin-top: 0.5rem;
-  text-align: center;
-  display: none;
 }
 
 /* Footnote styling */

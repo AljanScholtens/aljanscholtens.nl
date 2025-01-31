@@ -1,0 +1,6 @@
+<figure class="c-media">
+    <img class="c-media__image js-lazy" data-original="{{ .Get "src" }}" alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" }}{{ end }}" loading="lazy">
+    {{ with .Get "caption" }}
+        <figcaption class="c-media__caption">{{ . }}</figcaption>
+    {{ end }}
+</figure>
