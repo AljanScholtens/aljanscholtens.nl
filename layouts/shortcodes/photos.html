@@ -1,0 +1,50 @@
+{{ $footnote := .Get "footnote" }}
+</div>
+<div class="c-photos-wrapper">
+  <ul class="c-photos">
+    {{- range $index, $line := split .Inner "\n" -}}
+      {{- $lineClean := trim $line " \t\r\n" -}}
+      {{- if ne $lineClean "" -}}
+        {{- $parts := split $lineClean "|" -}}
+
+        {{- /* Standaard-waardes toekennen */ -}}
+        {{- $img := "" -}}
+        {{- $caption := "" -}}
+        {{- $cols := "100" -}}
+
+        {{- /* Haal de eerste waarde (img) op, trim whitespace */ -}}
+        {{- if ge (len $parts) 1 -}}
+          {{- $img = trim (index $parts 0) " \t\r\n" -}}
+        {{- end -}}
+
+        {{- /* Als er een caption is, pak die */ -}}
+        {{- if ge (len $parts) 2 -}}
+          {{- $caption = trim (index $parts 1) " \t\r\n" -}}
+        {{- end -}}
+
+        {{- /* Als er een kolombreedte is, pak die */ -}}
+        {{- if ge (len $parts) 3 -}}
+          {{- $cols = trim (index $parts 2) " \t\r\n" -}}
+        {{- end -}}
+
+        <li class="c-photos__item c-photos__item--{{ $cols }}">
+          <a data-fancybox="photos-{{ $index }}" href="{{ $img }}">
+            <img class="js-lazy" data-original="{{ $img }}" alt="{{ $caption }}" />
+            {{ with $caption }}
+              <figcaption class="c-photos__figcaption">{{ . }}</figcaption>
+            {{ end }}
+          </a>
+        </li>
+      {{- end -}}
+    {{- end -}}
+  </ul>
+
+  {{ with $footnote }}
+    <div class="l-single c-photos__footnote">
+      <p>
+        <small><strong>Notitie</strong>: {{ . }}</small>
+      </p>
+    </div>
+  {{ end }}
+</div>
+<div class="l-single u-content">

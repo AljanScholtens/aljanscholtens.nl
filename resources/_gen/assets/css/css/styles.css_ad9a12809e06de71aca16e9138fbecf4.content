@@ -1960,6 +1960,56 @@ body.compensate-for-scrollbar {
     margin: 0;
   }
 
+/* Photos grid basisstijlen */
+
+.c-photos-wrapper {
+  margin: 2rem 0;
+}
+
+.c-photos {
+  display: grid;
+  grid-auto-flow: dense;
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+  /* grid-auto-rows: fit-content;*/
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.c-photos__item img {
+  /* width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px; */
+  transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
+}
+
+/* Caption styling */
+
+.c-photos__figcaption {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+  text-align: center;
+  display: none;
+}
+
+/* Footnote styling */
+
+.c-photos__footnote {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #888;
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+}
+
 /*------------------------------------*\
   #COMPONENTS-GALLERY
 \*------------------------------------*/

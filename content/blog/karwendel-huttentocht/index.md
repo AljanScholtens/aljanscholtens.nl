@@ -41,6 +41,35 @@ In vijf dagen lopen we vanaf Vomp, vlakbij Innsbruck, in een rondje terug naar h
 
 {{< gallery >}}
 
+{{< photos footnote="Alle foto's gemaakt met Sony A7IV" >}}
+1.jpg | Zonsopkomst boven de bergen | 50
+2.jpg | Meerreflectie in de avond | 50
+3.jpg | Panorama van de vallei | 100
+{{< /photos >}}
+
+test test 
+
+{{< photos footnote="blablal" >}}
+4.jpg | Close-up van alpine bloemen | 30
+{{< /photos >}}
+
+test test 
+
+{{< photos footnote="Alle foto's gemaakt met Sony A7IV" >}}
+pepijn.jpg | Zonsopkomst boven de bergen | 50
+2.jpg | Meerreflectie in de avond | 50
+donjon-1.jpg | Panorama van de vallei | 100
+2.jpg | Meerreflectie in de avond | 50
+3.jpg | Panorama van de vallei | 100
+{{< /photos >}}
+
+test test 
+
+{{< photos footnote="Alle foto's gemaakt met Sony A7IV" >}}
+1.jpg | Zonsopkomst boven de bergen | 50
+pepijn.jpg | Meerreflectie in de avond | 50
+{{< /photos >}}
+
 Een kleine fotografietip voor als je in de bergen, of waar dan ook in de natuur loopt. Kijk af en toe achterom, daar zijn vaak de mooiste plekjes te vinden, omdat het licht totaal anders kan zijn. Dit geldt dan vooral in de ochtend als de zon op komt of in de avond als de zon onder gaat. Onderstaande foto heb ik op deze manier op de vierde dag gemaakt.
 
 {{< gallery >}}
