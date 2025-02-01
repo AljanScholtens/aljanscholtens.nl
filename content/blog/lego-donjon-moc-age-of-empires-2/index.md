@@ -26,11 +26,11 @@ Initially, I started at the top, because I was afraid I wouldn't end up with the
 
 It was fun to recreate something that (as far as I know) has not been made in Lego before. It was also the first time I built a MOC in Lego. It's certainly not perfect, but it's close enough for me. See below for some more pictures of the Donjon.
 
-{{< photos footnote="" >}}
-donjon-1.jpg | Attack on the Donjon
-donjon-2.jpg | 
-donjon-3.jpg | 
-donjon-4.jpg | 
-donjon-5.jpg | 
-donjon-comparison.jpg | Comparison with the real AoE2 Donjon
-{{< /photos >}}
+{{<photos footnote="" >}}
+donjon-1.jpg | Attack on the Donjon | 33
+donjon-2.jpg | | 33
+donjon-3.jpg | | 33
+donjon-4.jpg | | 33
+donjon-5.jpg | | 33
+donjon-comparison.jpg | Comparison with the real AoE2 Donjon | 33
+{{</photos>}}

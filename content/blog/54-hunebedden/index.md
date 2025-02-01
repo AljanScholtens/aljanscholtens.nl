@@ -24,7 +24,7 @@ Eerst heb ik vrijwel bij alle hunebedden aantekeningen gemaakt over positie, lic
 
 Hieronder een kleine selectie van de foto's die ik gemaakt heb.
 
-{{< photos footnote="" >}}
+{{<photos footnote="" >}}
 54-hunebedden-1.jpg | D1 Steenbergen
 54-hunebedden-7.jpg | D53 Havelte
 54-hunebedden-3.jpg | D40 Emmen
@@ -34,4 +34,4 @@ Hieronder een kleine selectie van de foto's die ik gemaakt heb.
 54-hunebedden-2.jpg | D45 Emmen
 54-hunebedden-8.jpg | D54 Havelte
 54-hunebedden-9.jpg | D50 Sleen
-{{< /photos >}}
+{{</photos>}}

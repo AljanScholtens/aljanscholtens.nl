@@ -21,8 +21,8 @@ header_title_gradient: false
 Inmiddels is Nikki 8 weken bij ons. Ondeugend, enthousiast, maar ontzettend lief.
 
 <!-- Gallery -->
-{{< photos footnote="" >}}
-2.jpg | 
-3.jpg | 
-4.jpg | 
-{{< /photos >}}
+{{<photos footnote="" >}}
+2.jpg | | 33
+3.jpg | | 33
+4.jpg | | 33
+{{</photos>}}

@@ -1,36 +1,82 @@
-{{ $footnote := .Get "footnote" }}
 </div>
 <div class="c-photos-wrapper">
-  <ul class="c-photos">
-    {{- range $index, $line := split .Inner "\n" -}}
-      {{- $lineClean := trim $line " \t\r\n" -}}
-      {{- if ne $lineClean "" -}}
-        {{- $parts := split $lineClean "|" -}}
-        
-        {{- $img := trim (index $parts 0) " " -}}
-        {{- $caption := "" -}}
-        {{- if ge (len $parts) 2 -}}
-          {{- $caption = trim (index $parts 1) " " -}}
-        {{- end -}}
+  {{ $footnote := .Get "footnote" }}
+  {{ $ordinal := .Ordinal }}
 
-        <li class="c-photos__item">
-          <a data-fancybox="gallery" href="{{ $img }}">
+  {{/* ### FASE 1: Tel het TOTALE aantal foto's ### */}}
+  {{ $lines := split .Inner "\n" }}
+  {{ $photoCount := 0 }}
+  {{ range $line := $lines }}
+    {{ $lineClean := trim $line " \t\r\n" }}
+    {{ if $lineClean }}{{ $photoCount = add $photoCount 1 }}{{ end }}
+  {{ end }}
+  
+  {{/* Bepaal standaard breedte: 33 cols als er 4+ foto's zijn */}}
+  {{ $defaultCols := cond (ge $photoCount 4) "33" "100" }}
+  
+  {{/* ### FASE 2: Tel hoeveel foto's daadwerkelijk 33 cols hebben ### */}}
+  {{ $count33 := 0 }}
+  {{ range $line := $lines }}
+    {{ $lineClean := trim $line " \t\r\n" }}
+    {{ if $lineClean }}
+      {{ $parts := split $lineClean "|" }}
+      
+      {{/* Gebruik expliciet opgegeven cols OF standaard waarde */}}
+      {{ $cols := $defaultCols }}
+      {{ if ge (len $parts) 3 }}
+        {{ $cols = trim (index $parts 2) " " }}
+      {{ end }}
+  
+      {{ if eq $cols "33" }}{{ $count33 = add $count33 1 }}{{ end }}
+    {{ end }}
+  {{ end }}
+  
+  {{/* Voeg square class alleen toe als ALLE foto's 33 cols hebben */}}
+  {{ $allAre33 := eq $photoCount $count33 }}
+  
+  <ul class="c-photos {{ if $allAre33 }}c-photos--square{{ end }}">
+    {{/* ### FASE 3: Bouw de daadwerkelijke HTML op ### */}}
+    {{ range $line := $lines }}
+      {{ $lineClean := trim $line " \t\r\n" }}
+      {{ if $lineClean }}
+        {{ $parts := split $lineClean "|" }}
+        
+        {{/* Basiswaarden extraheren */}}
+        {{ $img := trim (index $parts 0) " " }}
+        {{ $caption := trim (index $parts 1) " " }}
+        {{ $cols := $defaultCols }}
+        {{ $orientation := "" }}
+  
+        {{/* Overschrijf cols als expliciet opgegeven */}}
+        {{ if ge (len $parts) 3 }}
+          {{ $cols = trim (index $parts 2) " " }}
+        {{ end }}
+  
+        {{/* Optionele portrait orientation */}}
+        {{ if ge (len $parts) 4 }}
+          {{ $orientation = trim (index $parts 3) " " }}
+        {{ end }}
+  
+        <li class="c-photos__item c-photos__item--{{ $cols }} {{ if eq $orientation "portrait" }}c-photos__item--portrait{{ end }}">
+          <a data-fancybox="gallery-{{ $ordinal }}" href="{{ $img }}">
             <img class="js-lazy" data-original="{{ $img }}" />
             {{ if $caption }}
               <small class="c-photos__caption">{{ $caption }}</small>
             {{ end }}
           </a>
         </li>
-      {{- end -}}
-    {{- end -}}
+      {{ end }}
+    {{ end }}
   </ul>
-
+  
   {{ with $footnote }}
-    <div class="l-single c-photos__footnote">
-      <p>
-        <small><strong>Notitie</strong>: {{ . }}</small>
-      </p>
-    </div>
+  <div class="c-photos__footnote">
+    <p>
+      <small><strong>Notitie</strong>: {{ . }}</small>
+    </p>
+  </div>
   {{ end }}
+
 </div>
+
 <div class="l-single u-content">

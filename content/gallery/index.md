@@ -16,7 +16,7 @@ header_title_gradient: false # Not required
 
 These photos are what it's all about. I love simplicity in nature, so often I'm searching for isolated subjects.
 
-{{< photos footnote="" >}}
+{{<photos footnote="" >}}
 aljanscholtens-23.jpg | Harz, Germany
 aljanscholtens-27.jpg | Drenthe, Netherlands
 aljanscholtens-21.jpg | Groningen, Netherlands
@@ -38,4 +38,4 @@ aljanscholtens-10.jpg | Madeira, Portugal
 aljanscholtens-5.jpg | Drenthe, Netherlands
 aljanscholtens-6.jpg | South Africa
 aljanscholtens-3.jpg | Alps, Italy
-{{< /photos >}}
+{{</photos>}}
