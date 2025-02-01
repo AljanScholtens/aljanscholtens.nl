@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {{ $css := resources.Get "css/styles.css" | postCSS }}
     <link rel="stylesheet" href="{{ $css.RelPermalink }}" />
-    <title>{{ .Title }}</title>
+
+    <title>{{ .Title | safeHTML }} - Aljan Scholtens</title>
+    <meta name="description" content="{{ .Params.description | default "Designer and photographer Aljan Scholtens" }}">
+    <meta property="og:title" content="{{ .Title | safeHTML }}">
+    <meta property="og:description" content="{{ .Params.description | default "Designer and photographer Aljan Scholtens" }}">
+    <meta property="og:image" content="{{ if .Resources.GetMatch .Params.photo }}{{ (.Resources.GetMatch .Params.photo).RelPermalink }}{{ else }}{{ .Params.photo | absURL }}{{ end }}">
   </head>
   <body>
     {{ partial "sprite.html" . }}

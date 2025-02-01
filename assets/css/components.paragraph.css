@@ -22,7 +22,8 @@ p,
 }
 
 .c-paragraph--lead,
-.u-content .c-paragraph--lead {
+.u-content .c-paragraph--lead,
+.u-content-lead p:first-of-type {
   color: var(--color-primary-50);
   font-size: 22px;
   font-family: var(--font-family-b);
@@ -34,7 +35,8 @@ p,
 }
 
 .t-dark .c-paragraph--lead,
-.t-dark .u-content .c-paragraph--lead {
+.t-dark .u-content .c-paragraph--lead,
+.t-dark .u-content-lead p:first-of-type {
   color: var(--color-primary-30);
 }
 

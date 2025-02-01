@@ -12,6 +12,7 @@
             <div class="c-card__image">
               <img
                 class="js-lazy"
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
                 data-original="{{ $img.RelPermalink }}"
                 alt="{{ .Title }}"
               />
@@ -19,7 +20,7 @@
             {{ end }} {{ end }}
             <div class="c-card__content">
               <p class="c-paragraph c-paragraph--soft">
-                {{ .Date.Format "02-01-2006" }}
+                {{ .Date.Format "02 January 2006" }}
               </p>
               <h2 class="c-heading c-heading--30">{{ .Title }}</h2>
               <p>{{ .Summary }}</p>

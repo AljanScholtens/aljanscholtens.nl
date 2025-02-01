@@ -1,10 +1,11 @@
 {{ define "main" }}
 <div class="l-wrapper">
-  <article class="l-container u-content">
-    <div class="l-single">
+  <article class="l-container">
+    <div class="l-single u-content u-content-lead">
       {{ if not .Params.header }}
       <h1 class="c-heading c-heading--50">{{ .Params.title | safeHTML }}</h1>
-      {{ end }} {{ .Content }}
+      {{ end }} 
+      {{ .Content }}
     </div>
   </article>
 </div>

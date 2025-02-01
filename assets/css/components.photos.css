@@ -12,7 +12,7 @@
   }
 }
 
-.c-photos {
+ul.c-photos {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -41,6 +41,10 @@
   width: 100%;
   height: 0;
   padding-bottom: 100%;
+
+  &:before {
+    display: none;
+  }
 
   & a {
     position: absolute;
