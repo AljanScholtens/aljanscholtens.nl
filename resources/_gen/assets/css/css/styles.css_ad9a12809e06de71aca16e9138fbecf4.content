@@ -155,7 +155,7 @@
   /* Secondary colors */
   --color-secondary-10: #feecf2;
   --color-secondary-30: #ff6b99;
-  --color-secondary-30a20: #ff6b9920
+  --color-secondary-30a20: #ff6b9920;
   --color-secondary-50: #ff3473;
   --color-secondary-70: #d31e56;
 
@@ -2516,11 +2516,11 @@ ol.c-list li:before, .u-content ol li:before {
 }
 
 .t-dark .c-navigation__item a {
-  color: var(--color-neutral-0a60);
+  color: var(--color-neutral-0a75);
 }
 
 .t-dark .c-navigation__item a:hover {
-    color: var(--color-neutral-0a40);
+    color: var(--color-neutral-0a60);
   }
 
 /*
@@ -2559,11 +2559,11 @@ ol.c-list li:before, .u-content ol li:before {
   }
 
 .t-dark .c-navigation__links-item a:hover svg {
-    fill: var(--color-neutral-0a20);
+    fill: var(--color-neutral-0a60);
   }
 
 .t-dark .c-navigation__links-item svg {
-    fill: var(--color-neutral-0a40);
+    fill: var(--color-neutral-0a75);
   }
 
 /*------------------------------------*\

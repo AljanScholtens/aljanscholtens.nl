@@ -138,10 +138,10 @@
 }
 
 .t-dark .c-navigation__item a {
-  color: var(--color-neutral-0a60);
+  color: var(--color-neutral-0a75);
 
   &:hover {
-    color: var(--color-neutral-0a40);
+    color: var(--color-neutral-0a60);
   }
 }
 
@@ -180,10 +180,10 @@
 
 .t-dark .c-navigation__links-item {
   & a:hover svg {
-    fill: var(--color-neutral-0a20);
+    fill: var(--color-neutral-0a60);
   }
 
   & svg {
-    fill: var(--color-neutral-0a40);
+    fill: var(--color-neutral-0a75);
   }
 }
