@@ -317,10 +317,16 @@ a:hover {
  * Other
  */
 
-small {
-  font-family: var(--font-family-heading);
+small,
+.u-content em {
   color: var(--color-neutral-50);
-  font-size: var(--font-size-20);
+  font-size: var(--font-size-default);
+  line-height: 1.5em;
+  font-style: normal;
+}
+
+.t-dark .u-content em {
+  color: var(--color-neutral-0a50);
 }
 
 em {
@@ -2352,6 +2358,7 @@ ol.c-list li:before, .u-content ol li:before {
     display: block;
     font-weight: 400;
     padding: 1rem 1rem;
+    text-transform: lowercase;
   }
 
 .c-navigation-mobile__item a:hover {
@@ -2505,6 +2512,7 @@ ol.c-list li:before, .u-content ol li:before {
     padding: 0.75rem 0.75rem 0.8rem 0.75rem;
     text-decoration: none;
     font-weight: 400;
+    text-transform: lowercase;
   }
 
 .c-navigation__item a:hover {

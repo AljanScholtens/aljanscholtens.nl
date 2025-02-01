@@ -53,10 +53,16 @@ a {
 /*
  * Other
  */
-small {
-  font-family: var(--font-family-heading);
+small,
+.u-content em {
   color: var(--color-neutral-50);
-  font-size: var(--font-size-20);
+  font-size: var(--font-size-default);
+  line-height: 1.5em;
+  font-style: normal;
+}
+
+.t-dark .u-content em {
+  color: var(--color-neutral-0a50);
 }
 
 em {
