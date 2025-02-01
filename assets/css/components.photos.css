@@ -5,9 +5,18 @@
 .c-photos-wrapper {
   clear: both;
   margin: var(--space-stack-default);
+  margin-left: -10px;
+  margin-right: -10px;
+  
+  @media (--breakpoint-20) {
+    margin-left: -26px;
+    margin-right: -26px;
+  }
 
   @media (--breakpoint-30) {
     margin: var(--space-stack-50);
+    margin-left: -58px;
+    margin-right: -58px;
     padding-top: var(--space-40);
   }
 }
@@ -38,37 +47,77 @@
 
 /* Dynamische breedtes */
 .c-photos__item--33 {
-  grid-column: span 4; /* 4/12 = 33% */
+  grid-column: span 12;
+  @media (--breakpoint-20) {
+    grid-column: span 6;
+  }
+
+  @media (--breakpoint-30) {
+      grid-column: span 4; /* 4/12 = 33% */
+  }
 }
 
 .c-photos__item--40 {
-  grid-column: span 5; /* 5/12 ≈ 40% */
+  grid-column: span 12;
+  @media (--breakpoint-20) {
+    grid-column: span 6;
+  }
+  @media (--breakpoint-30) {
+    grid-column: span 5; /* 5/12 ≈ 40% */
+  }
 }
 
 .c-photos__item--50 {
-  grid-column: span 6; /* 6/12 = 50% */
+  grid-column: span 12;
+  @media (--breakpoint-20) {
+    grid-column: span 6;
+  }
+  @media (--breakpoint-30) {
+    grid-column: span 6; /* 6/12 = 50% */
+  }
 }
 
 .c-photos__item--60 {
-  grid-column: span 7; /* 7/12 ≈ 60% */
+  grid-column: span 12;
+  @media (--breakpoint-20) {
+    grid-column: span 6;
+  }
+  @media (--breakpoint-30) {
+    grid-column: span 7; /* 7/12 ≈ 60% */
+  }
 }
 
 .c-photos__item--66 {
-  grid-column: span 8; /* 8/12 ≈ 66% */
+  grid-column: span 12;
+  @media (--breakpoint-20) {
+    grid-column: span 6;
+  }
+  @media (--breakpoint-30) {
+    grid-column: span 8; /* 8/12 ≈ 66% */
+  }
 }
 
 .c-photos__item--100 {
-  grid-column: span 12; /* Volledige breedte */
+  grid-column: span 12;
+  @media (--breakpoint-20) {
+    grid-column: span 12;
+  }
+  @media (--breakpoint-30) {
+    grid-column: span 12; /* Volledige breedte */
+  }
 }
 
 .c-photos__item--portrait {
-  grid-row: span 2;
+  @media (--breakpoint-30) {
+    grid-row: span 2;
+  }
 }
 
 
 .c-photos__item {
   background-color: var(--color-neutral-90);
   position: relative;
+  /* grid-column: span 12; */
 
   &:before {
     display: none;
@@ -105,6 +154,7 @@
 }
 
 .c-photos--square .c-photos__item  {
+
   & img {
     aspect-ratio: 1/1;
   }
@@ -121,7 +171,7 @@
   right: 0;
   line-height: 1.5em;
   padding: 0.5rem 0.75rem;
-  padding-top: calc(var(--spacing) * 3);
+  padding-top: calc(var(--space-default) * 3);
   font-weight: 400;
   font-family: var(--font-family-body);
   color: var(--color-neutral-0a75);

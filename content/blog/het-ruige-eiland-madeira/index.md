@@ -24,7 +24,7 @@ Een uurtje later rijden we op weg naar onze eerste overnachting, een Quinta in h
 
 <!-- Gallery #1 -->
 {{<photos footnote="" >}}
-2.jpg | | 
+2.jpg | | 100
 3.jpg | | 50
 4.jpg | | 50
 5.jpg | | 50

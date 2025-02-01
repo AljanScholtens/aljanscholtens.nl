@@ -56,7 +56,6 @@
    */
 
   /* Spacing system */
-  --spacing: var(--space-default); /* Legacy */
 
   --space-default: var(--space-30);
   --space-10: 4px;

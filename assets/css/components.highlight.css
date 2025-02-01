@@ -12,6 +12,6 @@
 
   @media (--breakpoint-20) {
     font-size: var(--font-size-50);
-    margin: var(--spacing) 0 calc(var(--spacing) * 2) 0;
+    margin: var(--space-default) 0 calc(var(--space-default) * 2) 0;
   }
 }

@@ -65,7 +65,7 @@
   right: 0;
   line-height: 1.5em;
   padding: 0.5rem 0.75rem;
-  padding-top: calc(var(--spacing) * 3);
+  padding-top: calc(var(--space-default) * 3);
   font-weight: 400;
   font-family: var(--font-family-body);
   color: var(--color-neutral-0a75);
