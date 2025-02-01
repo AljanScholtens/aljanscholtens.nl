@@ -10,7 +10,7 @@
     <meta name="description" content="{{ .Params.description | default "Designer and photographer Aljan Scholtens" }}">
     <meta property="og:title" content="{{ .Title | safeHTML }}">
     <meta property="og:description" content="{{ .Params.description | default "Designer and photographer Aljan Scholtens" }}">
-    <meta property="og:image" content="{{ if .Resources.GetMatch .Params.photo }}{{ (.Resources.GetMatch .Params.photo).RelPermalink }}{{ else }}{{ .Params.photo | absURL }}{{ end }}">
+    <meta property="og:image" content="{{ if .Resources.GetMatch .Params.photo }}{{ (.Resources.GetMatch .Params.photo).RelPermalink }}{{ else if .Params.photo }}{{ .Params.photo | absURL }}{{ else }}{{ "/images/header-01.jpg" | absURL }}{{ end }}">
   </head>
   <body>
     {{ partial "sprite.html" . }}
