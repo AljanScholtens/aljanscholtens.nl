@@ -1,6 +1,16 @@
-<figure class="c-media">
+{{ $size := .Get "size" }}
+
+{{ if eq $size "large" }}
+</div>
+{{ end }}
+
+<figure class="c-media {{ if eq $size "large" }}c-media--large{{ end }}">
     <img class="c-media__image js-lazy" data-original="{{ .Get "src" }}" alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" }}{{ end }}" loading="lazy">
     {{ with .Get "caption" }}
         <figcaption class="c-media__caption">{{ . }}</figcaption>
     {{ end }}
 </figure>
+
+{{ if eq $size "large" }}
+<div class="l-single u-content">
+{{ end }}

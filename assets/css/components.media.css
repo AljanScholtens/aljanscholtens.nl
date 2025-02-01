@@ -3,9 +3,14 @@
 \*------------------------------------*/
 
 .c-media {
-  margin: var(--space-stack-default);
+  margin-bottom: calc(var(--space-default) + 6px);
   position: relative;
   width: 100%;
+
+  & + .c-media {
+    margin-top: calc(-1 * var(--space-default));
+    padding-top: 0 !important;
+  }
 }
 
   .c-media__image {
@@ -14,10 +19,12 @@
   }
 
   .c-media__caption {
+    /* display: none; */
     color: var(--color-neutral-50);
     font-size: var(--font-size-20);
+    padding-top: var(--space-20);
+    margin-bottom: var(--space-40);
   }
-
 
 .c-media--video {
   height: 0;

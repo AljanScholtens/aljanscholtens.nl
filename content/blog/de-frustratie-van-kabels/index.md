@@ -39,7 +39,7 @@ Wat nou als ik een goede Thunderbolt-3 USB-C kabel zou kopen met piepkleine adap
 
 Eén nadeel is dat ik niet meerdere apparaten tegelijk kan gebruiken of opladen, maar heel eerlijk, dat doe ik vrijwel nooit, dus voor mij niet zo'n probleem.
 
-{{<image src="kabeltjes.jpg" caption="Kabelfrustratie" >}}
+{{<image src="kabeltjes.jpg" caption="Kabelfrustratie">}}
 
 Hierbij mijn nieuwe setup:
 
