@@ -52,6 +52,7 @@ ul.c-list,
 
 ol.c-list,
 .u-content ol {
+  outline: 1px solid red;
   & li {
     counter-increment: list__counter;
 
