@@ -89,7 +89,7 @@
   padding-top: calc(var(--spacing) * 3);
   font-weight: 400;
   font-family: var(--font-family-body);
-  color: color-mod(var(--color-neutral-0) alpha(0.75));
+  color: var(--color-neutral-0a75);
   font-size: var(--font-size-30);
 
   &:after {
@@ -103,7 +103,7 @@
     background-image: linear-gradient(
       180deg,
       transparent,
-      color-mod(var(--color-neutral-100) alpha(0.4))
+      var(--color-neutral-100a40)
     );
   }
 }

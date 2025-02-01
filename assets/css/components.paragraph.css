@@ -48,7 +48,7 @@ p,
 
 .t-dark .c-paragraph--soft,
 .t-dark .u-content .c-paragraph--soft {
-  color: color-mod(var(--color-neutral-0) alpha(50%));
+  color: var(--color-neutral-0a50);
 }
 
 @keyframes c-paragraph--animation {

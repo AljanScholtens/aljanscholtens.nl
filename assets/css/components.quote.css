@@ -31,5 +31,5 @@
 
 .t-dark blockquote,
 .l-wrapper--neutral-70 blockquote {
-  border-left-color: color-mod(var(--color-neutral-0) alpha(10%));
+  border-left-color: var(--color-neutral-0a10);
 }
