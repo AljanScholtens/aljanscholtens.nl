@@ -1,5 +1,5 @@
-baseURL = "https://example.com/"
-title = "Mijn Hugo Site"
+baseURL = "https://www.aljanscholtens.nl/"
+title = "Aljan Scholtens"
 languageCode = "nl"
 paginate = 3
 
@@ -7,10 +7,21 @@ paginate = 3
 author = "Aljan"
 
 defaultContentLanguage = "nl"
+
 [languages]
 [languages.nl]
   languageName = "Nederlands"
+  weight = 1
   contentDir = "content"
+  lang = "nl"
+  languageDirection = "ltr"
+
 [languages.en]
   languageName = "English"
+  weight = 2
   contentDir = "content"
+  lang = "en"
+  languageDirection = "ltr"
+
+enableInlineShortcodes = true
+defaultContentLanguageInSubdir = false

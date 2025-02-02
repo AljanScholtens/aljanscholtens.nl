@@ -1,17 +1,18 @@
 ---
-title: "Designer"
-subtitle: "of <em>digital</em> products"
-slug: "home"
-description: "Op zoek naar een designer die de waarom-vraag stelt, technisch meedenkt en prachtige producten maakt? Ik kan je helpen." # Not required
-photo: "/images/header.jpg" # Not required
-thumbnail: "" # Not required
-
-header: true # true is a large header, false is no header
-header_studio: true # Not required
-header_title_gradient: false # Not required
+title: Designer
+subtitle: or <em>digital</em> products
+slug: designer
+description: Looking for a designer who asks the why question, thinks technically
+  and creates beautiful products? I can help.
+photo: /images/header.jpg
+thumbnail: ''
+header: true
+header_studio: true
+header_title_gradient: false
+source_hash: 008459866e1b498256ac0307d0174364
 ---
 
-## NEDERLANDS What am I doing?
+## NETHERLANDS What am I doing?
 
 - Raising my four year old son and baby daughter!
 - Full focus on creating [Wolf Maps](https://www.wolfmaps.nl/). A tool to create beautiful shareable maps. [Contact me](/contact) if you want to know more.
@@ -21,9 +22,9 @@ header_title_gradient: false # Not required
 - Every now and then I post landscape photos to [Instagram](https://instagram.com/aljan).
 - Posting photos of our [Small Münsterländer Nikki](http://www.instagram.com/munsterlandernikki/) on Instagram, she is sweet, stubborn and enthusiastic!
 
-_Last update on 22 October 2024. The now page is inspired by [Nownownow](http://nownownow.com/)._
+_Last update on October 22, 2024. The now page is inspired by [Nownownow](http://nownownow.com/)._
 
-## I’m currently interested in writing and speaking about
+## I'm currently interested in writing and speaking about
 
 - Wolf Maps and interactive maps
 - Landscape Photography

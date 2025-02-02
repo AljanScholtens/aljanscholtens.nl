@@ -2,6 +2,7 @@
 title: "Blog"
 menu: "main"
 slug: "blog"
+language: nl
 weight: "2"
 subtitle: "" # Not required
 description: "" # Not required

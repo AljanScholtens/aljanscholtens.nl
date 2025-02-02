@@ -1,0 +1,16 @@
+<div class="lang-switch">
+    {{ $page := . }}
+    {{ $siteLanguages := .Site.Languages }}
+    {{ $pageTranslations := .AllTranslations }}
+    
+    {{ range $siteLanguages }}
+      {{ $translation := where $pageTranslations "Lang" .Lang | first 1 }}
+      {{ if eq .Lang $page.Lang }}
+        <span class="active">{{ .LanguageName }}</span>
+      {{ else if $translation }}
+        <a href="{{ (index $translation 0).Permalink }}">{{ .LanguageName }}</a>
+      {{ else }}
+        <a href="{{ .Lang | absLangURL }}">{{ .LanguageName }}</a>
+      {{ end }}
+    {{ end }}
+  </div>

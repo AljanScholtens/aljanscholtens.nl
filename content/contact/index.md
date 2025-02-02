@@ -14,7 +14,7 @@ header_studio: false # Not required
 header_title_gradient: false # Not required
 ---
 
-Want to drink a coffee? Meet via a videocall? Let me know!
+NL Want to drink a coffee? Meet via a videocall? Let me know!
 
 Send me an e-mail at [aljan@scholtens.me](mailto:aljan@scholtens.me).
 
