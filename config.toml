@@ -5,3 +5,12 @@ paginate = 3
 
 [params]
 author = "Aljan"
+
+defaultContentLanguage = "nl"
+[languages]
+[languages.nl]
+  languageName = "Nederlands"
+  contentDir = "content"
+[languages.en]
+  languageName = "English"
+  contentDir = "content"

@@ -1,6 +1,7 @@
 ---
 title: "Contact"
 layout: "default"
+slug: "contact"
 menu: "main"
 weight: "3"
 subtitle: "" # Not required

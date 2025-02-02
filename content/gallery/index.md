@@ -1,6 +1,7 @@
 ---
 title: "Landschaps&shy;fotografie"
 menuTitle: "Gallerij"
+slug: "gallerij"
 layout: "default"
 menu: "main"
 weight: "1"
