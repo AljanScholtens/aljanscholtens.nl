@@ -1,6 +1,7 @@
 ---
 title: "Kabelfrustratie"
 date: 2020-09-14
+slug: "de-frustratie-van-kabels"
 draft: false
 author: "Aljan"
 

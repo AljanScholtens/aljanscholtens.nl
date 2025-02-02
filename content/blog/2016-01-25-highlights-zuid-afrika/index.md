@@ -1,6 +1,7 @@
 ---
 title: "Highlights Zuid Afrika"
 date: 2016-01-25
+slug: "highlights-zuid-afrika"
 draft: false
 author: "aljan"
 

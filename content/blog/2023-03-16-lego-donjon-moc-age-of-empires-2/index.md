@@ -1,6 +1,7 @@
 ---
 title: "Donjon from Age of Empires 2 in Lego"
 date: 2023-03-16
+slug: "lego-donjon-moc-age-empires-2"
 draft: false
 author: "aljan"
 

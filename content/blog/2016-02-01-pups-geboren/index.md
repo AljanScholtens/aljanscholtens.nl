@@ -1,6 +1,7 @@
 ---
 title: "Pups geboren"
 date: 2016-02-01
+slug: "pups-geboren"
 draft: false
 author: "aljan"
 

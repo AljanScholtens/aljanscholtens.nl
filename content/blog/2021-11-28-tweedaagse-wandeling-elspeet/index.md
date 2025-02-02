@@ -1,6 +1,7 @@
 ---
 title: "Tweedaagse wandeling Elspeet"
 date: 2021-11-28
+slug: "tweedaagse-wandeling-elspeet"
 draft: false
 author: "aljan"
 

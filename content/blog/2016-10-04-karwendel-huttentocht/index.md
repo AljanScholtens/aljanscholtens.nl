@@ -1,6 +1,7 @@
 ---
 title: "Karwendel Huttentocht"
 date: 2016-10-04
+slug: "karwendel-huttentocht"
 draft: false
 author: "aljan"
 

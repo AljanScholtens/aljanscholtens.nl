@@ -1,6 +1,7 @@
 ---
 title: "Een paar seconden echte rust"
 date: 2020-09-16
+slug: "een-paar-seconden-echte-rust"
 draft: false
 author: "Aljan"
 

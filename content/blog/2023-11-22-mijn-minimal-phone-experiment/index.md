@@ -1,6 +1,7 @@
 ---
 title: "Mijn minimal phone experiment"
 date: 2023-11-22
+slug: "mijn-minimal-phone-experiment"
 draft: false
 author: "Aljan"
 

@@ -1,6 +1,7 @@
 ---
 title: "The Inner Critic in Landscape Photography"
 date: 2019-01-28
+slug: "inner-critic-landschape-photography"
 draft: false
 author: "aljan"
 

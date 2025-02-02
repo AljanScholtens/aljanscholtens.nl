@@ -1,6 +1,7 @@
 ---
 title: "54 Hunebedden"
 date: 2017-04-28
+slug: "54-hunebedden"
 draft: false
 author: "aljan"
 

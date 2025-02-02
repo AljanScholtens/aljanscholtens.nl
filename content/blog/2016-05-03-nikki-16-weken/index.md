@@ -1,6 +1,7 @@
 ---
 title: "Nikki 16 weken"
 date: 2016-05-03
+slug: "nikki-16-weken"
 draft: false
 author: "aljan"
 
