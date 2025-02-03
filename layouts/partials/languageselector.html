@@ -2,6 +2,16 @@
   {{ if eq .Lang $.Page.Lang }}
     <span class="current">{{ .LanguageName }}</span>
   {{ else }}
-    <a href="/{{ .Lang }}/">{{ .LanguageName }}</a>
+    {{ $targetLang := .Lang }}
+    {{ if $.Page.IsPage }}
+      {{ $translatedPage := where $.Page.Translations "Lang" $targetLang | first 1 }}
+      {{ if $translatedPage }}
+        <a href="{{ (index $translatedPage 0).RelPermalink }}">{{ .LanguageName }}</a>
+      {{ else }}
+        <a href="/{{ .Lang }}/">{{ .LanguageName }}</a>
+      {{ end }}
+    {{ else }}
+      <a href="/{{ .Lang }}/">{{ .LanguageName }}</a>
+    {{ end }}
   {{ end }}
 {{ end }}

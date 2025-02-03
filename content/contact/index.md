@@ -1,7 +1,7 @@
 ---
 title: "Contact"
 layout: "default"
-lang: nl
+slug: "contact"
 menu: "main"
 weight: "3"
 subtitle: "" # Not required

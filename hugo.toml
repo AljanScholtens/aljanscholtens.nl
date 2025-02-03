@@ -3,7 +3,9 @@ title = "Aljan Scholtens"
 languageCode = "nl"
 defaultContentLanguage = "nl"
 defaultContentLanguageInSubdir = false
-paginate = 3
+
+[pagination]
+  pagerSize = 10
 
 [params]
   author = "Aljan"

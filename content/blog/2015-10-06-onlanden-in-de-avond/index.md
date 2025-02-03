@@ -2,7 +2,6 @@
 title: "Onlanden in de avond"
 date: 2015-10-06
 slug: "onlanden-in-de-avond"
-language: nl
 draft: false
 author: "aljan"
 
@@ -20,7 +19,7 @@ header_studio: false
 header_title_gradient: false
 ---
 
-De vorige keer kon ik de [zonsondergang in de Onlanden]({{< ref "/blog/het-goud-van-de-onlanden/index.md" >}}) niet goed vastleggen vanwege het gebrek aan wolken. Deze keer lukte dat een stuk beter, hoewel ik continu regenbuien over me heen kreeg.
+De vorige keer kon ik de [zonsondergang in de Onlanden]({{<ref "/blog/het-goud-van-de-onlanden/">}}) niet goed vastleggen vanwege het gebrek aan wolken. Deze keer lukte dat een stuk beter, hoewel ik continu regenbuien over me heen kreeg.
 
 {{<photos>}}
 2.jpg |  | 50

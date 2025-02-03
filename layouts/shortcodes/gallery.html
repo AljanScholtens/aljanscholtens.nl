@@ -1,25 +1,36 @@
-
 </div>
 <div class="c-gallery-grid-wrapper">
   <ul class="c-gallery-grid">
     {{ range .Page.Params.gallery }}
-    <li class="c-gallery-grid__item c-gallery-grid__item--{{ .cols }}">
-      <a data-fancybox="gallery" href="{{ .img }}">
-        <img class="js-lazy" data-original="{{ .img }}" alt="{{ .caption }}" />
-        {{ with .caption }}
-        <figcaption class="c-gallery-grid__figcaption">{{ . }}</figcaption>
+      {{/* Zoek het image resource in de page bundle op basis van de bestandsnaam */}}
+      {{ $imgRes := .Page.Resources.GetMatch (printf "*%s" .img) }}
+      <li class="c-gallery-grid__item c-gallery-grid__item--{{ .cols }}">
+        {{ if $imgRes }}
+          <a data-fancybox="gallery" href="{{ $imgRes.RelPermalink }}">
+            <img class="js-lazy" data-original="{{ $imgRes.RelPermalink }}" alt="{{ .caption }}" />
+            {{ with .caption }}
+              <figcaption class="c-gallery-grid__figcaption">{{ . }}</figcaption>
+            {{ end }}
+          </a>
+        {{ else }}
+          {{/* Fallback: gebruik de waarde uit .img als de resource niet gevonden is */}}
+          <a data-fancybox="gallery" href="{{ .img }}">
+            <img class="js-lazy" data-original="{{ .img }}" alt="{{ .caption }}" />
+            {{ with .caption }}
+              <figcaption class="c-gallery-grid__figcaption">{{ . }}</figcaption>
+            {{ end }}
+          </a>
         {{ end }}
-      </a>
-    </li>
+      </li>
     {{ end }}
   </ul>
 
   {{ with .Page.Params.gallery_footnote }}
-  <div class="l-single c-gallery-grid__footnote">
-    <p>
-      <small><strong>Footnote</strong>: {{ . }}</small>
-    </p>
-  </div>
+    <div class="l-single c-gallery-grid__footnote">
+      <p>
+        <small><strong>Footnote</strong>: {{ . }}</small>
+      </p>
+    </div>
   {{ end }}
 </div>
 <div class="l-single">

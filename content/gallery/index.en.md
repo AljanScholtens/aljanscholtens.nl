@@ -1,6 +1,6 @@
 ---
-title: Landscape&shy;photography
-menuTitle: Gallerij
+title: Landscape Photography
+menuTitle: Gallery
 slug: landscape-photography
 layout: default
 menu: main
@@ -13,10 +13,10 @@ thumbnail: ''
 header: false
 header_studio: false
 header_title_gradient: false
-source_hash: 865acc84325f2f2b7733048f45487e45
+source_hash: 9946334686a1a08b084b9313c4e70b7d
 ---
 
-These photos are what it's all about. I love simplicity in nature, so often I'm searching for isolated subjects.
+DUUTCH These photos are what it's all about. I love simplicity in nature, so often I'm searching for isolated subjects.
 
 {{<photos footnote="">}}
 aljanscholtens-23.jpg | Harz, Germany
@@ -31,13 +31,13 @@ aljanscholtens-18.jpg | Glencoe, Scotland
 aljanscholtens-16.jpg | Iceland
 aljanscholtens-14.jpg | Drenthe, Netherlands
 aljanscholtens-24.jpg | Friesland, Netherlands
-aljanscholtens-19.jpg Glencoe, Scotland
+aljanscholtens-19.jpg | Glencoe, Scotland
 aljanscholtens-15.jpg | Friesland, Netherlands
 aljanscholtens-13.jpg | Dolmen
 aljanscholtens-9.jpg | Groningen, Netherlands
 aljanscholtens-11.jpg | Karwendel, Austria
 aljanscholtens-10.jpg | Madeira, Portugal
 aljanscholtens-5.jpg | Drenthe, Netherlands
-aljanscholtens-6.jpg South Africa
-aljanscholtens-3.jpg Alps, Italy
+aljanscholtens-6.jpg | South Africa
+aljanscholtens-3.jpg | Alps, Italy
 {{</photos>}}

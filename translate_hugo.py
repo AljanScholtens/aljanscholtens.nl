@@ -9,85 +9,71 @@ from dotenv import load_dotenv
 from slugify import slugify
 
 ##############################################################################
-# 1) .env laden (DEEPL_API_KEY en DEEPL_API_URL)
+# 1) Laad environment variables (.env met DEEPL_API_KEY en DEEPL_API_URL)
 ##############################################################################
 load_dotenv()
 DEEPL_API_KEY = os.getenv("DEEPL_API_KEY")
 DEEPL_API_URL = os.getenv("DEEPL_API_URL", "https://api-free.deepl.com/v2/translate")
 
 if not DEEPL_API_KEY:
-    raise RuntimeError("Geen DEEPL_API_KEY gevonden. Zet deze in je .env of als environment variable.")
+    raise RuntimeError("Geen DEEPL_API_KEY gevonden in .env")
 
 ##############################################################################
-# 2) Regex voor shortcodes
-#    - Blokshortcodes: {{< ... >}} ... {{</ ... >}}
-#    - Single-tag shortcodes: {{< ... >}} of {% ... %}
+# 2) Regex voor shortcode extractie
 ##############################################################################
+# Deze regex vangt block-shortcodes zoals {{<photos>}} ... {{</photos>}}
 SHORTCODE_BLOCK_REGEX = re.compile(
-    r'(\{\{<[^}]+}}\}[\s\S]*?\{\{</[^}]+}}\})',  # Verbeterde matching voor content
-    re.DOTALL  # Zorgt dat newlines correct verwerkt worden
+    r'(\{\{<\s*photos\b[^>]*>\}\}[\s\S]*?\{\{</\s*photos\s*>\}\})',
+    re.IGNORECASE
 )
+# Deze regex vangt enkele shortcodes zoals ref, figure of gallery
 SINGLE_TAG_REGEX = re.compile(
-    r'(\{\{<[^}]+}}\}|\{%[^%]+%\})'  # Aangepast voor Hugo syntax
+    r'(\{\{<\s*(?:ref|figure|gallery)\s+[^>]+>\}\})',
+    re.IGNORECASE
 )
 
 ##############################################################################
-# 3) Extract & reinsert shortcodes
+# 3) Functies voor het extraheren en herinzetten van shortcodes
 ##############################################################################
 def extract_shortcodes(text: str):
     """
-    Vervangt blok- en single-tag shortcodes door placeholders.
-    Retourneert (nieuwe tekst, dict met {placeholder: originele_shortcode}).
+    Vervangt shortcodes door placeholders ingekapseld in <notranslate> tags.
+    Dit zorgt ervoor dat DeepL de inhoud tussen deze tags niet aanpast.
+    Retourneert een tuple: (aangepaste tekst, dict met {placeholder: originele_shortcode}).
     """
     shortcodes = {}
     placeholder_index = 0
 
-    def replace_block(m):
+    def replacer(match):
         nonlocal placeholder_index
-        sc_id = f"<<<SHORTCODE_{placeholder_index}>>>"
-        shortcodes[sc_id] = m.group(1)
+        token = f"SHORTCODE_{placeholder_index}"
+        # Kapsel de placeholder in <notranslate> zodat DeepL dit overslaat.
+        placeholder = f"<notranslate>{token}</notranslate>"
+        shortcodes[placeholder] = match.group(0)
         placeholder_index += 1
-        return sc_id
+        return placeholder
 
-    new_text = SHORTCODE_BLOCK_REGEX.sub(replace_block, text)
-    new_text = SINGLE_TAG_REGEX.sub(replace_block, new_text)
-    return new_text, shortcodes
+    # Eerst block-shortcodes vervangen
+    text = SHORTCODE_BLOCK_REGEX.sub(replacer, text)
+    # Daarna single-tag shortcodes
+    text = SINGLE_TAG_REGEX.sub(replacer, text)
+    return text, shortcodes
 
-def reinsert_shortcodes(text: str, shortcodes: dict):
+def reinsert_shortcodes(text: str, shortcodes: dict) -> str:
     """
-    Vervangt de placeholders in de tekst door de originele shortcode-strings.
-    We gebruiken hier een eenvoudige str.replace() zodat de exacte placeholder
-    weer vervangen wordt.
+    Vervangt de placeholders in de tekst door de originele shortcode-content.
     """
-    for placeholder, original_sc in shortcodes.items():
-        text = text.replace(placeholder, original_sc)
+    for placeholder, original in shortcodes.items():
+        text = text.replace(placeholder, original)
     return text
 
 ##############################################################################
-# 4) Footnote vertalen in shortcodes
-##############################################################################
-def translate_footnotes_in_shortcodes(shortcodes: dict, translator_func):
-    """
-    Zoek in elke shortcode-string naar footnote="..." en vertaal de inhoud tussen
-    de aanhalingstekens via translator_func.
-    """
-    footnote_pattern = re.compile(r'footnote="([^"]*)"')
-    updated = {}
-    for placeholder, code in shortcodes.items():
-        def replacer(m):
-            original_val = m.group(1)
-            translated_val = translator_func(original_val)
-            return f'footnote="{translated_val}"'
-        new_code = footnote_pattern.sub(replacer, code)
-        updated[placeholder] = new_code
-    return updated
-
-##############################################################################
-# 5) DeepL vertaal-functie
+# 4) DeepL integratie: functie om tekst te vertalen
 ##############################################################################
 def translate_text_deepl(text: str, source_lang="NL", target_lang="EN") -> str:
     """
-    Verstuur de tekst naar DeepL en retourneer de vertaling.
+    Verstuur de tekst naar de DeepL API en retourneer de vertaling.
+    De DeepL-aanroep krijgt instructies om de inhoud binnen <notranslate> tags over te slaan.
     """
     if not text.strip():
         return text
@@ -96,108 +82,78 @@ def translate_text_deepl(text: str, source_lang="NL", target_lang="EN") -> str:
         "auth_key": DEEPL_API_KEY,
         "text": text,
         "source_lang": source_lang,
-        "target_lang": target_lang
+        "target_lang": target_lang,
+        "preserve_formatting": "1",
+        "tag_handling": "xml",
+        "ignore_tags": "notranslate"
     }
+    
     try:
-        resp = requests.post(DEEPL_API_URL, data=params, timeout=15)
+        resp = requests.post(DEEPL_API_URL, data=params, timeout=30)
         resp.raise_for_status()
-        j = resp.json()
-        return j["translations"][0]["text"]
+        return resp.json()["translations"][0]["text"]
     except Exception as e:
-        print(f"[FOUT] Mislukt te vertalen: {e}")
+        print(f"[Fout] Vertaling mislukt: {e}")
         return text
 
 ##############################################################################
-# 6) MD5-hash van de bronfile
+# 5) Post verwerking: vertaal front matter en content, behoud shortcodes
 ##############################################################################
-def compute_hash_of_file(file_path: Path) -> str:
-    with open(file_path, "r", encoding="utf-8") as f:
-        content = f.read()
-    return hashlib.md5(content.encode("utf-8")).hexdigest()
+# Velden in de front matter die vertaald moeten worden
+FIELDS_TO_TRANSLATE = ["title", "subtitle", "description", "summary", "menuTitle"]
 
-##############################################################################
-# 7) Velden die actief vertaald moeten worden in de front matter
-##############################################################################
-FIELDS_TO_TRANSLATE = ["title", "subtitle", "description", "summary"]
-
-##############################################################################
-# 8) process_post(): vertaalt een NL-bestand naar een EN-variant (.en.md of _index.en.md)
-##############################################################################
 def process_post(post_path: Path, target_lang="en"):
-    # Lees de NL-post
+    # Lees het bronbestand (Nederlandse versie)
     with open(post_path, "r", encoding="utf-8") as f:
         nl_post = load(f)
 
     if "slug" not in nl_post.metadata:
-        print(f"[SKIP] {post_path} - geen 'slug' in front matter.")
+        print(f"[Sla over] {post_path} - geen slug gevonden")
         return
 
-    current_hash = compute_hash_of_file(post_path)
-    base_name = post_path.stem  # bv. "index" of "_index"
-    target_file = post_path.parent / f"{base_name}.{target_lang}.md"
+    # Bereken de hash van het bronbestand om te controleren op wijzigingen
+    current_hash = hashlib.md5(post_path.read_bytes()).hexdigest()
+    # Bepaal het doelbestand (bijvoorbeeld: index.en.md)
+    target_file = post_path.with_name(f"{post_path.stem}.{target_lang}.md")
+    
+    existing_post = load(target_file) if target_file.exists() else None
+    if existing_post and existing_post.metadata.get("source_hash") == current_hash:
+        print(f"[Sla over] {target_file} - ongewijzigd")
+        return
 
-    existing_post = None
-    if target_file.exists():
-        with open(target_file, "r", encoding="utf-8") as ef:
-            existing_post = load(ef)
-        old_hash = existing_post.metadata.get("source_hash")
-        if old_hash == current_hash:
-            print(f"[SKIP] {post_path} -> {target_file} (ongewijzigd)")
-            return
-        else:
-            print(f"[UPDATE] {post_path} -> {target_file} (bron is gewijzigd)")
-    else:
-        print(f"[NEW] {post_path} -> {target_file}")
-
-    # Neem alle metadata over zodat lege velden, booleans, etc. behouden blijven
+    # Vertaal de front matter-velden
     new_metadata = dict(nl_post.metadata)
-
-    # Vertaal specifieke front matter-velden
     for field in FIELDS_TO_TRANSLATE:
-        if field in nl_post.metadata and isinstance(nl_post.metadata[field], str):
-            original_val = nl_post.metadata[field]
-            translated_val = translate_text_deepl(original_val, source_lang="NL", target_lang=target_lang.upper())
-            new_metadata[field] = translated_val
+        if field in new_metadata and isinstance(new_metadata[field], str):
+            new_metadata[field] = translate_text_deepl(
+                new_metadata[field], 
+                target_lang=target_lang.upper()
+            )
 
-    # Slug: als er al een slug in de EN-versie bestaat, behouden; anders genereren
-    if existing_post and "slug" in existing_post.metadata:
-        new_metadata["slug"] = existing_post.metadata["slug"]
-    else:
-        if "title" in new_metadata:
-            new_metadata["slug"] = slugify(new_metadata["title"])
-
-    # Body: verwerk shortcodes en vertaal de kale tekst
-    nl_content = nl_post.content
-    content_no_sc, sc_map = extract_shortcodes(nl_content)
-    translated_no_sc = translate_text_deepl(content_no_sc, source_lang="NL", target_lang=target_lang.upper())
-    sc_map = translate_footnotes_in_shortcodes(
-        sc_map,
-        translator_func=lambda txt: translate_text_deepl(txt, "NL", target_lang.upper())
-    )
-    final_content = reinsert_shortcodes(translated_no_sc, sc_map)
-
-    # Zet de nieuwe source_hash
+    # Genereer de slug op basis van de vertaalde titel
+    if "title" in new_metadata:
+        new_metadata["slug"] = slugify(new_metadata["title"])
     new_metadata["source_hash"] = current_hash
 
-    # Schrijf de vertaalde post weg, behoud de front matter volgorde (sort_keys=False)
-    en_post = Post(content=final_content, **new_metadata)
-    en_output = dumps(en_post, sort_keys=False)
-    with open(target_file, "w", encoding="utf-8") as f:
-        f.write(en_output)
+    # Verwerk de content:
+    # 1. Vervang shortcodes door placeholders (houdt de originele inhoud inclusief alle pipes)
+    content, shortcodes = extract_shortcodes(nl_post.content)
+    # 2. Vertaal de overige content via DeepL
+    translated_content = translate_text_deepl(content, target_lang=target_lang.upper())
+    # 3. Zet de originele shortcodes weer terug
+    final_content = reinsert_shortcodes(translated_content, shortcodes)
 
-    print(f"   -> Opgeslagen: {target_file}")
+    # Schrijf de vertaalde post weg
+    target_file.write_text(dumps(Post(final_content, **new_metadata), sort_keys=False))
+    print(f"[Success] {target_file} opgeslagen")
 
 ##############################################################################
-# 9) main(): doorloopt de gehele content-map en zoekt naar *index.md (dus index.md en _index.md)
+# 6) Hoofdfunctie: doorloop de content-map en verwerk alle index.md bestanden
 ##############################################################################
 def main():
     content_dir = Path("content")
-    if not content_dir.is_dir():
-        print(f"Map '{content_dir}' bestaat niet.")
-        return
-
-    for path in content_dir.rglob("*index.md"):
-        process_post(path, target_lang="en")
+    for md_file in content_dir.rglob("*index.md"):
+        process_post(md_file)
 
 if __name__ == "__main__":
     main()

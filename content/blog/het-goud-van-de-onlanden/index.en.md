@@ -1,20 +1,19 @@
 ---
-author: aljan
+title: The Gold of the Onlands
 date: 2015-09-20
-description: ''
+slug: the-gold-of-the-uncountries
 draft: false
-language: en
+author: aljan
+subtitle: ''
+description: ''
+related: Onlanden in de avond
+related_url: /blog/onlanden-in-de-avond
+photo: 1.jpg
+thumbnail: ''
 header: true
 header_studio: false
 header_title_gradient: false
-photo: 1.jpg
-related: Onlanden in de avond
-related_url: /blog/onlanden-in-de-avond
-slug: the-gold-of-the-onlands
 source_hash: c0a7c8d8333659b43b4f960c41cd8680
-subtitle: ''
-thumbnail: ''
-title: The Gold of the Onlands
 ---
 
 Once again I run up the stairs; this time to grab my tripod. I am in a hurry. The sky looks beautiful and I need to make it to the Onlands. I attach my Canon 24mm F2.8 to the camera, throw my backpack over my shoulder and walk to the car.
@@ -27,4 +26,9 @@ The first one lands on my cheek, the second one flies with a speed right into my
 
 Unfortunately, the beautiful cloud cover soon disappears and I am left alone with the sun, thousands of mosquitoes and a clear blue sky that I can't do anything with. I decide to swap the wide-angle lens for the telephoto lens to up my bird photography game. While trying to photograph a bird the backlight through the reeds turns out to be really beautiful at 600mm. As a result, no landscape photos this evening, but nature photos with backlight from the late evening sun.
 
-<<<SHORTCODE_0>>
+{{<photos footnote="The photos were shot June 27 with the Canon 6D and the Tamron 150-600mm." >}}
+2.jpg | | 50
+3.jpg | | 50
+1.jpg | | 50
+4.jpg | | 50
+{{</photos>}}
