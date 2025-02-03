@@ -6,43 +6,6 @@
       <h1 class="c-heading c-heading--50">{{ .Params.title | safeHTML }}</h1>
       {{ end }} 
 
-      <p>Debug: Bestandsnaam: {{ .File.Path }} | Taal: {{ .Lang }}</p>
-
-
-      {{- if .IsTranslated -}}
-  <div class="language-switcher">
-    <!-- Debug-informatie: toon huidige taal en aantal vertalingen -->
-    <p style="font-size:0.9em;color:#888;">
-      Debug: Huidige taal: {{ .Lang }} – Aantal vertalingen: {{ len .Translations }}
-    </p>
-    <p style="font-size:0.9em;color:#888;">
-      Debug: Pagina Taal (.Lang): {{ .Lang }} | 
-      Site Default Taal (.Site.Language.Lang): {{ .Site.Language.Lang }} |
-      Pagina Bestandsnaam: {{ .File.Path }}
-    </p>
-    
-    <span>{{ i18n "translations" | default "Translations" }}: </span>
-    <ul class="i18n_list">
-      {{- range .Translations }}
-        <li>
-          <a href="{{ .Permalink }}">
-            {{- if (and site.Params.displayFullLangName (.Language.LanguageName)) }}
-              {{ .Language.LanguageName | emojify }}
-            {{- else }}
-              {{ .Lang | title }}
-            {{- end }}
-          </a>
-        </li>
-      {{- end }}
-    </ul>
-  </div>
-{{- else -}}
-  <div class="language-switcher">
-    <p style="font-size:0.9em;color:#888;">Debug: Geen vertalingen gevonden.</p>
-  </div>
-{{- end }}
-
-
 
       {{ .Content }}
     </div>

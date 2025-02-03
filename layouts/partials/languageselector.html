@@ -1,14 +1,7 @@
-<div class="lang-switch">
-  {{ range .Site.Languages }}
-    {{ if eq .Lang $.Lang }}
-      <span class="active">{{ .LanguageName }}</span>
-    {{ else }}
-      {{ $translated := $.Translations | where "Lang" .Lang | first }}
-      {{ if $translated }}
-        <a href="{{ $translated.Permalink }}">{{ .LanguageName }}</a>
-      {{ else }}
-        <a href="{{ .Lang | absLangURL }}">{{ .LanguageName }}</a>
-      {{ end }}
-    {{ end }}
+{{ range .Site.Languages }}
+  {{ if eq .Lang $.Page.Lang }}
+    <span class="current">{{ .LanguageName }}</span>
+  {{ else }}
+    <a href="/{{ .Lang }}/">{{ .LanguageName }}</a>
   {{ end }}
-</div>
+{{ end }}
