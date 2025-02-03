@@ -100,7 +100,7 @@ def translate_text_deepl(text: str, source_lang="NL", target_lang="EN") -> str:
 # 5) Post verwerking: vertaal front matter en content, behoud shortcodes
 ##############################################################################
 # Velden in de front matter die vertaald moeten worden
-FIELDS_TO_TRANSLATE = ["title", "subtitle", "description", "summary", "menuTitle"]
+FIELDS_TO_TRANSLATE = ["title", "subtitle", "description", "summary", "menuTitle", "slug"]
 
 def process_post(post_path: Path, target_lang="en"):
     # Lees het bronbestand (Nederlandse versie)
@@ -130,10 +130,6 @@ def process_post(post_path: Path, target_lang="en"):
                 target_lang=target_lang.upper()
             )
 
-    # Genereer de slug op basis van de vertaalde titel
-    if "title" in new_metadata:
-        new_metadata["slug"] = slugify(new_metadata["title"])
-    new_metadata["source_hash"] = current_hash
 
     # Verwerk de content:
     # 1. Vervang shortcodes door placeholders (houdt de originele inhoud inclusief alle pipes)

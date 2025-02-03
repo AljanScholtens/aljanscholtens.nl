@@ -1,7 +1,7 @@
 ---
 title: Landscape Photography
 menuTitle: Gallery
-slug: landscape-photography
+slug: gallery
 layout: default
 menu: main
 weight: '1'
@@ -13,7 +13,6 @@ thumbnail: ''
 header: false
 header_studio: false
 header_title_gradient: false
-source_hash: 9946334686a1a08b084b9313c4e70b7d
 ---
 
 DUUTCH These photos are what it's all about. I love simplicity in nature, so often I'm searching for isolated subjects.
