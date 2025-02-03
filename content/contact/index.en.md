@@ -1,7 +1,7 @@
 ---
 title: Contact
 layout: default
-slug: contact
+lang: en
 menu: main
 weight: '3'
 subtitle: ''

@@ -1,7 +1,7 @@
 ---
 title: "Contact"
 layout: "default"
-slug: "contact"
+lang: nl
 menu: "main"
 weight: "3"
 subtitle: "" # Not required
@@ -14,8 +14,8 @@ header_studio: false # Not required
 header_title_gradient: false # Not required
 ---
 
-NL Want to drink a coffee? Meet via a videocall? Let me know!
+Wil je een kop koffie drinken? Of even videobellen? Laat het me weten!
 
-Send me an e-mail at [aljan@scholtens.me](mailto:aljan@scholtens.me).
+Stuur me een e-mail op [aljan@scholtens.me](mailto:aljan@scholtens.me).
 
-You can also find me on [Instagram](https://instagram.com/aljan), [Youtube](https://www.youtube.com/aljanscholtens), [Twitter](https://twitter.com/aljanscholtens), [LinkedIn](https://linkedin.com/in/aljanscholtens/) and [Dribbble](http://dribbble.com/aljan).
+Je kunt me ook vinden op [Instagram](https://instagram.com/aljan), [YouTube](https://www.youtube.com/aljanscholtens), [Twitter](https://twitter.com/aljanscholtens), [LinkedIn](https://linkedin.com/in/aljanscholtens/) en [Dribbble](http://dribbble.com/aljan).

@@ -1,27 +1,27 @@
+
+
 baseURL = "https://www.aljanscholtens.nl/"
 title = "Aljan Scholtens"
 languageCode = "nl"
+defaultContentLanguage = "nl"
+defaultContentLanguageInSubdir = false
 paginate = 3
 
 [params]
-author = "Aljan"
-
-defaultContentLanguage = "nl"
+  author = "Aljan"
 
 [languages]
-[languages.nl]
-  languageName = "Nederlands"
-  weight = 1
-  contentDir = "content"
-  lang = "nl"
-  languageDirection = "ltr"
 
-[languages.en]
-  languageName = "English"
-  weight = 2
-  contentDir = "content"
-  lang = "en"
-  languageDirection = "ltr"
+  [languages.nl]
+    languageName = "Nederlands"
+    weight = 1
+    contentDir = "content"
+    lang = "nl"
 
-enableInlineShortcodes = true
-defaultContentLanguageInSubdir = false
+  [languages.en]
+    languageName = "English"
+    weight = 2
+    contentDir = "content"
+    lang = "en"
+
+  

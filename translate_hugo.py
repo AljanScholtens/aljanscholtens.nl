@@ -24,10 +24,11 @@ if not DEEPL_API_KEY:
 #    - Single-tag shortcodes: {{< ... >}} of {% ... %}
 ##############################################################################
 SHORTCODE_BLOCK_REGEX = re.compile(
-    r'(\{\{<[^>]+>\}\}[\s\S]*?\{\{</[^>]+>\}\})'
+    r'(\{\{<[^}]+}}\}[\s\S]*?\{\{</[^}]+}}\})',  # Verbeterde matching voor content
+    re.DOTALL  # Zorgt dat newlines correct verwerkt worden
 )
 SINGLE_TAG_REGEX = re.compile(
-    r'(\{\{<[^>]+>\}\}|\{%[^%]+%\})'
+    r'(\{\{<[^}]+}}\}|\{%[^%]+%\})'  # Aangepast voor Hugo syntax
 )
 
 ##############################################################################
