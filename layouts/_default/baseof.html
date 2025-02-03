@@ -57,15 +57,13 @@
       </div>
     {{ end }}
 
-    
-    TESTERIJ
-    {{ partial "languageselector.html" . }}
     {{ block "main" . }}{{ end }}
     
     <div class="l-wrapper">
       <div class="l-container">
         <div class="l-single">
           <div class="c-footer"></div>
+          {{ partial "languageselector.html" . }}
         </div>
       </div>
     </div>

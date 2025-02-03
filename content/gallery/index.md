@@ -15,7 +15,7 @@ header_studio: false # Not required
 header_title_gradient: false # Not required
 ---
 
-These photos are what it's all about. I love simplicity in nature, so often I'm searching for isolated subjects.
+DUUTCH These photos are what it's all about. I love simplicity in nature, so often I'm searching for isolated subjects.
 
 {{<photos footnote="">}}
 aljanscholtens-23.jpg | Harz, Germany
