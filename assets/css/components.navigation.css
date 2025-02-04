@@ -151,6 +151,7 @@
  */
 .c-navigation__links {
   display: flex;
+  align-items: center;
   gap: 8px;
   list-style: none;
 
@@ -165,6 +166,8 @@
   & a {
     padding: 0.25rem;
     display: block;
+    font-size: 13px;
+    color: var(--color-neutral-50);
 
     &:hover svg {
       fill: var(--color-neutral-90);
@@ -180,6 +183,13 @@
 }
 
 .t-dark .c-navigation__links-item {
+  & a {
+    color: var(--color-neutral-0a50);
+
+    &:hover {
+      color: var(--color-neutral-0a40);
+    }
+  }
   & a:hover svg {
     fill: var(--color-neutral-0a60);
   }

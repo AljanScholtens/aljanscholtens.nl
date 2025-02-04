@@ -35,6 +35,23 @@
     
       <ul class="c-navigation__links">
         <!-- <li class="c-navigation__links-item"><a href="https://twitter.com/aljanscholtens"><svg class="c-icon"><use xlink:href="#icon-twitter"></svg></a></li> -->
+          <li class="c-navigation__links-item">
+            {{ $currentLang := $.Page.Lang }}
+            {{ $otherLangs := where .Site.Languages "Lang" "!=" $currentLang }}
+            {{ if gt (len $otherLangs) 0 }}
+              {{ $other := index $otherLangs 0 }}
+              {{ if $.Page.IsPage }}
+                {{ $translatedPage := where $.Page.Translations "Lang" $other.Lang | first 1 }}
+                {{ if $translatedPage }}
+                  <a href="{{ (index $translatedPage 0).RelPermalink }}">{{ $other.LanguageName }}</a>
+                {{ else }}
+                  <a href="/{{ $other.Lang }}/">{{ $other.LanguageName }}</a>
+                {{ end }}
+              {{ else }}
+                <a href="/{{ $other.Lang }}/">{{ $other.LanguageName }}</a>
+              {{ end }}
+            {{ end }}
+          </li>
         <li class="c-navigation__links-item"><a href="https://instagram.com/aljan"><svg class="c-icon"><use xlink:href="#icon-instagram"></svg></a></li>
         <li class="c-navigation__links-item"><a href="https://www.linkedin.com/in/aljanscholtens/"><svg class="c-icon"><use xlink:href="#icon-linkedin"></svg></a></li>
       </ul>
@@ -69,7 +86,7 @@
       <div class="l-container">
         <div class="l-single">
           <div class="c-footer"></div>
-          {{ partial "languageselector.html" . }}
+          <!-- {{ partial "languageselector.html" . }} -->
         </div>
       </div>
     </div>
