@@ -13,7 +13,6 @@ thumbnail: ''
 header: true
 header_studio: false
 header_title_gradient: false
-source_hash: 60751f3d5a5ec08d22a00cf1ed0b5d89
 ---
 
 Last time I could not capture the [sunset in the Onlanden]({{<ref "/blog/2015-09-20-het-goud-van-de-onlanden/">}}) properly because of the lack of clouds. This time I succeeded a lot better, although I had continuous rain showers coming over me.

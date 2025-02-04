@@ -15,7 +15,7 @@ header_studio: false
 header_title_gradient: false
 ---
 
-photographing 54 dolmens for a book being written. Quite a lot of work and planning, but with the right preparation, it worked out.
+Photographing 54 dolmens for a book being written. Quite a lot of work and planning, but with the right preparation it worked out.
 
 First, I took notes on position, light and composition at almost all the dolmens. The most interesting hunebeds got a special note. There were also a number of hunebeds (especially in the Emmen area) that were simply too large to be photographed properly. At these dolmens I returned once more to photograph them with a drone.
 

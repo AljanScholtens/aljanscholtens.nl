@@ -18,7 +18,7 @@ header_title_gradient: false
 South Africa, a land of contrasts. In one country you will find desert, grand forests, poverty and wealth. Starting November 10, I traveled to South Africa with my father. For him the second time after 32 years, for me the first time. Herewith my highlights of the trip.
 
 ## Kruger Park game drive
-Our guide gets into the jeep and we are the first to drive into the Kruger Park. It is 5 o'clock in the morning and at a brisk pace he tells us that we are going to look for the big cats first. Water buffalo, zebras and rhinos we drive past until we come to a pride of lions. One by one the cubs and mothers walk by and they are close, very close.
+Our guide gets into the jeep and we are the first to drive into the Kruger Park. It is 5 o'clock in the morning and at a brisk speed he tells us that we are going to look for the big cats first. Water buffalo, zebras and rhinos we drive past until we come to a pride of lions. One by one the cubs and mothers walk by and they are close, very close.
 
 Water buffalo, lion, rhino and elephant. The Big Five is not complete until our guide gets a signal that a leopard has been spotted. At maximum speed, we cover a good distance through the extremely dry park, passing giraffes, elephants and kudus. In the distance is a group of jeeps and it becomes clear that the leopard must be there. As our jeep comes to a stop I can see the big cat very clearly. I have my camera at the ready and at that moment the leopard opens its mouth and I can shoot some good pictures.
 
@@ -58,7 +58,7 @@ In the distance, a large creature approaches, closer and closer, until it flies 
 {{< /photos >}}
 
 ## Township Port Elisabeth
-We drive into the township and immediately several children run to the bus. As I get off I am besieged by children who want to be photographed. When I look around me I see little huts made of corrugated metal sheets cobbled together. With double feelings, we as a group take a walk through the houses. People are smiling, friendly and open for a chat.
+We drive into the township and immediately several children run to the bus. As I get off I am besieged by children who want to be photographed. When I look around me I see huts cobbled together from corrugated sheets. With double feelings, we as a group take a walk through the houses. People are smiling, friendly and open for a chat.
 
 The sun is about to set and we eat at the township's most upscale restaurant. Although it looks more like a sparse soccer canteen; the food is really good. Meanwhile, I make another dance with the choir singing several songs for us.
 

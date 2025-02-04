@@ -19,7 +19,7 @@ header_studio: false # Niet verplicht
 header_title_gradient: false # Niet verplicht
 ---
 
-54 hunebedden fotograferen voor een boek dat geschreven wordt. Best veel werk en plannen, maar met de juiste voorbereiding is het gelukt.
+Het fotograferen van 54 hunebedden voor een boek dat geschreven wordt. Best veel werk en plannen, maar met de juiste voorbereiding is het gelukt.
 
 Eerst heb ik vrijwel bij alle hunebedden aantekeningen gemaakt over positie, licht en compositie. De meest interessante hunebedden kregen een speciale notitie. Ook zijn er een aantal hunebedden geweest (vooral in de omgeving Emmen), die simpelweg te groot waren om goed op de foto gezet te worden. Bij deze hunebedden ben ik nogmaals teruggekeerd om ze met een drone te fotograferen.
 
