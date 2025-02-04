@@ -2,6 +2,7 @@
 title: "Nikki de Heidewachtel 1 jaar"
 date: 2017-01-04
 draft: false
+slug: "nikki-de-heidewachtel-1-jaar"
 author: "aljan"
 
 subtitle: "" # Niet verplicht

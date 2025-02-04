@@ -1,22 +1,19 @@
 ---
-title: "Donjon from Age of Empires 2 in Lego"
+title: Donjon from Age of Empires 2 in Lego
 date: 2023-03-16
-slug: "lego-donjon-moc-age-empires-2"
+slug: lego-donjon-moc-age-empires-2
 draft: false
-author: "aljan"
-
-subtitle: "My first attempt to create a Lego MOC" # Not required
-description: "My first attempt to build a Lego MOC, the Donjon from Age of Empires 2." # Not required
-
-related: "" # Not required
-related_url: "" # Not required
-
-photo: "donjon-3.jpg" # Not required
-thumbnail: "" # Not required
-
-header: true # true is a large header, false is no header
-header_studio: false # Not required
-header_title_gradient: false # Not required
+author: aljan
+subtitle: My first attempt to create a Lego MOC
+description: My first attempt to build a Lego MOC, the Donjon from Age of Empires
+  2.
+related: ''
+related_url: ''
+photo: donjon-3.jpg
+thumbnail: ''
+header: true
+header_studio: false
+header_title_gradient: false
 ---
 
 My friends are organizing an annual Age of Empires 2 (AoE2) online tournament, [Age of Gamers](https://www.ageofgamers.nl), which was started during the pandemic. During this year's tournament, they introduced a mini competition: build something in Lego related to the strategy game Age of Empires 2. That's when I got excited.
@@ -27,7 +24,7 @@ Initially, I started at the top, because I was afraid I wouldn't end up with the
 
 It was fun to recreate something that (as far as I know) has not been made in Lego before. It was also the first time I built a MOC in Lego. It's certainly not perfect, but it's close enough for me. See below for some more pictures of the Donjon.
 
-{{<photos footnote="" >}}
+{{<photos>}}
 donjon-1.jpg | Attack on the Donjon | 33
 donjon-2.jpg | | 33
 donjon-3.jpg | | 33

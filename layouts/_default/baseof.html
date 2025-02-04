@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {{ $css := resources.Get "css/styles.css" | postCSS }}
-    <link rel="stylesheet" href="{{ $css.RelPermalink }}" />
+    {{ $styles := resources.Get "css/styles.css" | postCSS (dict "config" "postcss.config.js") | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
 
     <title>{{ .Title | safeHTML }} - Aljan Scholtens</title>
     <meta name="description" content="{{ .Params.description | default "Designer and photographer Aljan Scholtens" }}">

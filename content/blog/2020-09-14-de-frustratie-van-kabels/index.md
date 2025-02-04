@@ -17,11 +17,6 @@ thumbnail: "" # Not required
 header: false # true is a large header, false is no header
 header_studio: false # Not required
 header_title_gradient: false # Not required
-
-gallery:
-  - img: "kabeltjes.jpg"
-    caption: ""
-    cols: 100
 ---
 
 Al een flink aantal jaar heb ik een Macbook met enkel USB-C poorten, de standaard van de toekomst wat mij betreft. Vrij snel daarna bedacht ik dat ik vanaf dat moment alleen nog maar apparaten zou aanschaffen met USB-C aansluiting, maar dat ging toch iets anders dan verwacht.
