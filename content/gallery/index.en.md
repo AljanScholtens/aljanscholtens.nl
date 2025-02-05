@@ -15,8 +15,6 @@ header_studio: false
 header_title_gradient: false
 ---
 
-DUUTCH These photos are what it's all about. I love simplicity in nature, so often I'm searching for isolated subjects.
-
 {{<photos footnote="">}}
 aljanscholtens-23.jpg | Harz, Germany
 aljanscholtens-27.jpg | Drenthe, Netherlands

@@ -47,7 +47,7 @@ My next choice is not a dumb phone, but a **feature phone**. A phone with useful
 - **Deleting solar panels app.** Since we haven't had solar panels for long, I was constantly checking how they were performing.
 - **Deleting rainfall radar.** Whenever I go out by bike, I now bring rain gear by default. The weather won't stop me.
 - **Deleting Netflix and KPN iTV.**For streaming to the TV from my phone, I do look for other solutions.
-- **modify app icons.** Instead of turning my phone black and white, I've made all app icons gray with their corresponding function. For example, Spotify gets a gray icon labeled "Music.
+- **modify app icons.** Instead of turning my phone black and white, I've grayed out all app icons with the corresponding function. For example, Spotify gets a gray icon labeled "Music.
 
 Handy to know: I have blocked news sites on my MacBook; I don't need commotion. Really important news I do hear from the people around me.
 
@@ -58,7 +58,7 @@ I run this experiment for exactly two months and then evaluate it, making any ad
 After two months, there are some recurring irritations:
 
 1. Briefly installing WhatsApp once every two weeks turns out to be more irritating than expected because of synchronization issues. This effectively causes me to lose all my messages every two weeks, which, while not a major problem, is still irritating.
-2. I open my MacBook a little more often to see if I have received messages, which occasionally causes slight agitation at home.
+2. I open my MacBook a little more often to see if I have received messages, which occasionally causes slight anxiety at home.
 
 The big advantage is that I genuinely experience more peace when I'm on the go. While walking, there is no point in checking my phone; I am more engaged with my surroundings and thoughts.
 

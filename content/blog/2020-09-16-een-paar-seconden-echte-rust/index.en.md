@@ -17,7 +17,7 @@ header_studio: false
 header_title_gradient: false
 ---
 
-Usually when I walk I am lost in thought. I see my surroundings but do not perceive it. For a long time I did not consciously realize this. By dealing with this consciously, I can walk with more peace and appreciation from time to time.
+Usually when I walk I am lost in thought. I see my surroundings but do not perceive it. For a long time I did not consciously realize this. By consciously dealing with this, I can walk with more peace and appreciation from time to time.
 
 In the past I have often experienced busy periods, mostly thinking about work, private life, myself and much more. Then when I went for a walk, all kinds of thoughts would haunt my mind, thoughts that were of no use to me, but also thoughts over which I seemed to have little control. So I started to delve into the fact that I could well be addicted to thinking, which we all really are a bit. By reading several books on the subject, I actually almost automatically came up with the idea of consciously observing when I am walking it. In fact, it's a form of walking meditation, and yes, just with eyes open.
 

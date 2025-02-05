@@ -11,22 +11,22 @@ header_studio: true # Not required
 header_title_gradient: false # Not required
 ---
 
-## NEDERLANDS What am I doing?
+## Waar ben ik mee bezig?
 
-- Raising my four year old son and baby daughter!
-- Full focus on creating [Wolf Maps](https://www.wolfmaps.nl/). A tool to create beautiful shareable maps. [Contact me](/contact) if you want to know more.
-- I'm creating a multi-day hike in the area where I live, the progress is [viewable in Wolf Maps](https://wolfmaps.nl/kaart/route-du-drenthe-7b975eb).
-- Just [finished a video](https://www.youtube.com/watch?v=T2MwUVcXqPg) about walking the Hermannshöhen in Germany. Currently preparing the next hike.
-- Working on a book with my best [landscape photos](/gallery). I expect to finish it in the winter of 2024/2025. [Sneak peak](https://www.linkedin.com/posts/aljanscholtens_ken-je-dat-gevoel-dat-je-zo-veel-leuke-activity-7183480484998356992-aj4o?utm_source=share&utm_medium=member_desktop).
-- Every now and then I post landscape photos to [Instagram](https://instagram.com/aljan).
-- Posting photos of our [Small Münsterländer Nikki](http://www.instagram.com/munsterlandernikki/) on Instagram, she is sweet, stubborn and enthusiastic!
+- Mijn vijfjarige zoon en babydochter grootbrengen!
+- Volledige focus op het bouwen van [Wolf Maps](https://www.wolfmaps.nl/). Een tool om prachtige en deelbare kaarten te maken. [Neem contact op](/contact) als je meer wilt weten.
+- Ik ben bezig met het maken van een meerdaagse wandelroute in de omgeving waar ik woon. De voortgang is [te bekijken in Wolf Maps](https://wolfmaps.nl/kaart/route-du-drenthe-7b975eb).
+- Zojuist [een video afgerond](https://www.youtube.com/watch?v=T2MwUVcXqPg) over het lopen van de Hermannshöhen in Duitsland. Momenteel ben ik de volgende hike aan het voorbereiden.
+- Ik werk aan een boek met mijn beste [landschapsfoto’s](/gallery). Ik verwacht het in de winter van 2024/2025 af te ronden. [Sneak peek](https://www.linkedin.com/posts/aljanscholtens_ken-je-dat-gevoel-dat-je-zo-veel-leuke-activity-7183480484998356992-aj4o?utm_source=share&utm_medium=member_desktop).
+- Af en toe post ik landschapsfoto’s op [Instagram](https://instagram.com/aljan).
+- Ik plaats foto’s van onze [Kleine Münsterländer Nikki](http://www.instagram.com/munsterlandernikki/) op Instagram. Ze is lief, eigenwijs en enthousiast!
 
-_Last update on 22 October 2024. The now page is inspired by [Nownownow](http://nownownow.com/)._
+_Laatste update op 22 oktober 2024. De 'nu'-pagina is geïnspireerd door [Nownownow](http://nownownow.com/)._
 
-## I’m currently interested in writing and speaking about
+## Ik ben momenteel geïnteresseerd in schrijven en spreken over  
 
-- Wolf Maps and interactive maps
-- Landscape Photography
-- Backpacking & hiking
+- Wolf Maps en interactieve kaarten  
+- Landschapsfotografie  
+- Backpacken & hiken  
 
-Want to know more? [Contact me](/contact).
+Meer weten? [Neem contact op](/contact).  

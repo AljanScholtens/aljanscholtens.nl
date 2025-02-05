@@ -2,6 +2,7 @@
 title: "Het ruige eiland Madeira"
 date: 2016-09-22
 draft: false
+slug: "het-ruige-eiland-madeira"
 author: "aljan"
 
 subtitle: ""

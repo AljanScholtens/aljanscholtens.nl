@@ -22,7 +22,7 @@ For example, there turned out to be no e-reader with this connection, but since 
 
 ## Difference in cables
 
-In addition, USB-C cables can [differ greatly from each other](https://www.howtogeek.com/353410/3-problems-with-usb-c-you-need-to-know/). Some charge, others you can only use for data. Some have a Thunderbolt interface in them, others don't. Some can do fast charging, some can't. Hugely confusing, I also feel that this slows down the process of going to a new standard because it can seem frustrating. In addition, a USB-C connection is a lot more expensive for manufacturers than, say, a Micro-USB connection.
+In addition, USB-C cables can [differ greatly from one another](https://www.howtogeek.com/353410/3-problems-with-usb-c-you-need-to-know/). Some charge, others you can only use for data. Some have a Thunderbolt interface in them, others don't. Some can do fast charging, some can't. Hugely confusing, I also feel that this slows down the process of going to a new standard because it can seem frustrating. In addition, a USB-C connection is a lot more expensive for manufacturers than, say, a Micro-USB connection.
 
 Anyway, my problem only got worse, because I now had to have a USB-C cable, a Micro-USB cable and a Lightning cable in my bag by default. And besides, many adapters are made to be used with your current cables. So you keep all your current cables and you put a USB-C adapter on that, for example. I thought, that can be simpler, we'll turn it around.
 
@@ -37,6 +37,6 @@ One drawback is that I can't use or charge multiple devices at the same time, bu
 Herewith my new setup:
 
 - [Apple 18W USB-C plug](https://www.apple.com/nl/shop/product/MU7V2ZM/A/usb%E2%80%91c-lichtnetadapter-van-18-w)
-- [Apple Thunderbolt-3 USB-C 0.8m cable](https://www.apple.com/nl/shop/product/MQ4H2ZM/A/thunderbolt-3-kabel-van-08-m-usb-c) (there are also plenty of cheaper cables that work just fine)
+- [Apple Thunderbolt-3 USB-C 0.8m cable](https://www.apple.com/nl/shop/product/MQ4H2ZM/A/thunderbolt-3-kabel-van-08-m-usb-c) (there are also plenty of cheaper cables that will do just fine)
 - [Belker USB-C to Lightning adapter](https://eu.belkertech.com/products/usb-c-to-lightning-adapter) (Note, only does fast charge, no data, you have these by the way)
 - [Arktek USB-C to Micro-USB adapter](https://www.amazon.nl/gp/product/B071W8WQBD/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&amp;psc=1)
