@@ -79,8 +79,13 @@ pre {
 }
 
 pre {
-  margin: 0;
+  margin: var(--space-stack-default);
+  color: var(--color-neutral-70);
+  background-color: var(--color-neutral-20);
+  border-radius: var(--border-radius-20);
   overflow-x: auto;
+  font-weight: 600;
+  padding: var(--space-default);
 }
 
 abbr {

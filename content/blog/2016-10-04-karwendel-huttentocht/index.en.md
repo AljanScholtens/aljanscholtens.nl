@@ -59,4 +59,4 @@ Michiel and I filmed a lot while walking, ~~the video will be on Youtube soon. I
 
 Thanks for the great run we got to do together Michiel, Erwin, Patrick and Sebastian!
 
-{{< video url="https://www.youtube.com/embed/ClCqE5C6A34" >}}
+{{<video url="https://www.youtube.com/embed/ClCqE5C6A34">}}

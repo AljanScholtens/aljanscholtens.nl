@@ -19,7 +19,7 @@ header_studio: false
 header_title_gradient: false
 ---
 
-Afgelopen 8 januari zijn de pups geboren van Venna. Een prachtige Heidewachtel van <a href="http://www.westpolderjagers.nl/site/hoofdindex.php?Sid=9&Gid=5">de Westpolderjagers</a>. 8 pups, waarvan 5 teefjes en 3 reutjes. Wij mogen in maart een teefje mee naar huis brengen.
+Afgelopen 8 januari zijn de pups geboren van Venna. Een prachtige Heidewachtel van [de Westpolderjagers](http://www.westpolderjagers.nl/). 8 pups, waarvan 5 teefjes en 3 reutjes. Wij mogen in maart een teefje mee naar huis brengen.
 
 Een week geleden zijn we wezen kijken bij de kleine pups.
 
