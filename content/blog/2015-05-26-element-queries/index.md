@@ -4,12 +4,16 @@ date: 2015-05-26
 slug: "element-queries"
 draft: false
 author: "aljan"
+
 subtitle: ""
 description: ""
+
 related: ""
 related_url: ""
-photo: ""
+
+photo: "element-queries.jpg"
 thumbnail: ""
+
 header: false
 header_studio: false
 header_title_gradient: false

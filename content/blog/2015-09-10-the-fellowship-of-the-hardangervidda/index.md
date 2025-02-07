@@ -4,12 +4,16 @@ date: 2015-09-10
 slug: "the-fellowship-of-the-hardangervidda"
 draft: false
 author: "aljan"
+
 subtitle: "Zes vrienden op trektocht door Noorwegen"
 description: ""
+
 related: "Karwendel Huttentocht"
 related_url: "/blog/karwendel-huttentocht"
+
 photo: "1.jpg"
 thumbnail: ""
+
 header: true
 header_studio: false
 header_title_gradient: false
