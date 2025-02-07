@@ -35,4 +35,4 @@ refresh-the-meetup-for-designers-and-front-end-developers-1.jpeg |  | 100
 
 Refresh is at the moment a closed meet-up, but that might change soon. Sign up via [meetup.com/refresh-groningen](http://meetup.com/refresh-groningen) or [meetup.com/refresh-amsterdam](http://meetup.com/refresh-amsterdam) and we'll let you in when we're ready. Nice to know: Refresh also has a Slack group to share experiences, knowledge and fun stuff.
 
-- This post was originally written on the Studio Wolf blog.
+— This post was originally written on the Studio Wolf blog.
