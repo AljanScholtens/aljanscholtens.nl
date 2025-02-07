@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {{ $styles := resources.Get "css/styles.css" | postCSS (dict "config" "postcss.config.js") | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+    <link rel="shortcut icon" href="/images/favicon.svg">
 
     <title>{{ .Title | safeHTML }} - Aljan Scholtens</title>
     <meta name="description" content="{{ .Params.description | default "Designer and photographer Aljan Scholtens" }}">
