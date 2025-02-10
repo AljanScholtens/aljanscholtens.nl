@@ -24,7 +24,7 @@ Afgelopen 8 januari zijn de pups geboren van Venna. Een prachtige Heidewachtel v
 Een week geleden zijn we wezen kijken bij de kleine pups.
 
 <!-- Gallery -->
-{{<photos footnote="" >}}
+{{<photos footnote="">}}
 2.jpg | | 40
 3.jpg | | 60
 4.jpg | | 60

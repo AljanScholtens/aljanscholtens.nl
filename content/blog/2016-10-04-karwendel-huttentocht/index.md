@@ -17,23 +17,6 @@ thumbnail: "" # Niet verplicht
 header: true # Grote header
 header_studio: false # Niet verplicht
 header_title_gradient: false # Niet verplicht
-
-gallery:
-  - img: "2.jpg"
-    caption: ""
-    cols: 50
-  - img: "3.jpg"
-    caption: ""
-    cols: 50
-  - img: "4.jpg"
-    caption: ""
-    cols: 100
-  - img: "5.jpg"
-    caption: ""
-    cols: 50
-  - img: "6.jpg"
-    caption: ""
-    cols: 50
 ---
 
 We gooien de autodeuren dicht, strikken de veters van onze bergschoenen, gooien onze rugzak op de rug en vertrekken richting het westen. De huttentocht van 2016 is van start, we wandelen het Karwendelgebergte van Oostenrijk binnen.

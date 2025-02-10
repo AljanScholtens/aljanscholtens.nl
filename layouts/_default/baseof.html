@@ -12,6 +12,8 @@
     <meta property="og:title" content="{{ .Title | safeHTML }}">
     <meta property="og:description" content="{{ .Params.description | default "Designer and photographer Aljan Scholtens" }}">
     <meta property="og:image" content="{{ if .Resources.GetMatch .Params.photo }}{{ (.Resources.GetMatch .Params.photo).RelPermalink }}{{ else if .Params.photo }}{{ .Params.photo | absURL }}{{ else }}{{ "/images/header-01.jpg" | absURL }}{{ end }}">
+    
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="dee73cd2-27f7-482f-a5e1-6eae9df645db"></script>
   </head>
   <body>
     {{ partial "sprite.html" . }}

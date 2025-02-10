@@ -15,12 +15,12 @@ header_studio: false
 header_title_gradient: false
 ---
 
-Last January 8, the puppies were born from Venna. A beautiful Heidewachtel van <a href="http://www.westpolderjagers.nl/site/hoofdindex.php?Sid=9&Gid=5">de Westpolderjagers</a>. 8 puppies, of which 5 females and 3 males. We may bring home a female in March.
+Last January 8, the puppies were born from Venna. A beautiful Heidewachtel van [de Westpolderjagers](http://www.westpolderjagers.nl/site/hoofdindex.php?Sid=9&Gid=5). 8 puppies, of which 5 females and 3 males. We may bring home a female in March.
 
 A week ago we went to see the little puppies.
 
 <!-- Gallery -->
-{{<photos footnote="" >}}
+{{<photos footnote="">}}
 2.jpg | | 40
 3.jpg | | 60
 4.jpg | | 60
