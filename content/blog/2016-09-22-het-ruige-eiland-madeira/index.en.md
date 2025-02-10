@@ -5,7 +5,7 @@ draft: false
 slug: the-rugged-island-madeira
 author: aljan
 subtitle: ''
-description: ''
+description: 'Our trip to rugged Madeira started at night. The island offers surprising diversity, from dry plains to jungle-like interiors and hidden waterfalls. A perfect place to recharge.'
 related: ''
 related_url: ''
 photo: 1.jpg

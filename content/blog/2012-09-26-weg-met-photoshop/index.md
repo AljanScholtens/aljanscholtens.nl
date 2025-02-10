@@ -5,7 +5,7 @@ slug: "weg-met-photoshop"
 draft: false
 author: "aljan"
 subtitle: ""
-description: ""
+description: "De Smashing Conference benadrukte het verminderen van Photoshopgebruik bij webdesign. Focus ligt op HTML/CSS voor efficiëntie, terwijl Photoshop goed blijft voor sfeer en details die moeilijk in code te vangen zijn."
 related: ""
 related_url: ""
 photo: "weg-met-photoshop.jpg"

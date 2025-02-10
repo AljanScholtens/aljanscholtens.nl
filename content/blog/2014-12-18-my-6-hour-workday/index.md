@@ -1,15 +1,15 @@
 ---
-title: "My 6 hour workday"
+title: "Mijn 6 urige werkdag"
 date: 2014-12-18
-slug: "my-6-hour-workday"
+slug: "mijn-6-urige-werkdag"
 draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Een persoonlijk experiment met 6-urige werkdagen leverde voordelen op, zoals betere prioritering en meer rust, maar ook nadelen, zoals een gebrek aan tijd voor design en persoonlijke activiteiten. Uiteindelijk voelen 8-urige werkdagen beter beheersbaar aan."
 
-related: "Blind: Samenvatting"
-related_url: "/blog/blind-samenvatting"
+related: ""
+related_url: ""
 
 photo: "my-6-hour-workday.jpg"
 thumbnail: ""
@@ -19,32 +19,32 @@ header_studio: false
 header_title_gradient: false
 ---
 
-For about two years now I’ve been wandering around with the idea of working 6 hour days. 4 weeks ago the time felt right to try this experiment. From the 17th of November until the 12th of December I worked 6 hours a day, no more. Okay, to be honest, one day we had a deadline and launch party of the new Voys website, but all the other days were around 6 hours.
+Al ongeveer twee jaar liep ik met het idee rond om 6-urige werkdagen te proberen. Vier weken geleden voelde het moment precies goed om dit experiment te starten. Van 17 november tot en met 12 december werkte ik 6 uur per dag, niet meer. Oké, eerlijk gezegd, op één dag hadden we een deadline en een lancering van de nieuwe Voys-website, maar alle andere dagen waren rond de 6 uur.
 
-## Why?
+## Waarom?
 
-I wanted to know if I could do the same amount of work in those 6 hours instead of my normal 9 hours. The reasoning was: if you have less time, you will probably work harder and get the same things done. The idea is that people who do less physical work (psychologists, writers, et cetera) can only effectively work 6 hours a day, the other hours will be needed to rest, reload and get new insights. These insights will increase motivation and stimulate innovation. Rest will give you the energy to work more effectively next day.
+Ik wilde weten of ik in die 6 uur evenveel werk kon verzetten als in mijn gebruikelijke 9 uur. De gedachte was: als je minder tijd hebt, werk je waarschijnlijk harder en krijg je toch hetzelfde voor elkaar. Het idee is dat mensen die minder fysiek werk verrichten (zoals psychologen, schrijvers, enzovoorts) slechts effectief 6 uur per dag kunnen werken, terwijl de overige uren nodig zijn om te rusten, op te laden en nieuwe inzichten op te doen. Deze inzichten verhogen de motivatie en stimuleren innovatie. Rust geeft je de energie om de volgende dag effectiever te werken.
 
-As it turns out, there’s even a petition for the 6 hour day. They state that despite improvements in technology, machinery, and efficiency workdays didn’t get shorter in the last 94 years.
+Het blijkt zelfs dat er een petitie is voor de 6-urige werkdag. Er wordt gesteld dat, ondanks verbeteringen in technologie, machines en efficiëntie, de werkdagen in de afgelopen 94 jaar niet korter zijn geworden.
 
-## Preparation
+## Voorbereiding
 
-I did not really prepare myself for this experiment. The only thing I felt necessary was to prepare the next day. I did this by making a list with everything I wanted to get done that day. The other thing I did was to make sure I started at exactly 8am and stopped working 6.5 hours later (2.30pm). The half an hour extra is lunch.
+Ik heb me eigenlijk niet echt voorbereid op dit experiment. Het enige wat ik noodzakelijk achtte, was om de volgende dag voor te bereiden. Dat deed ik door een lijst te maken met alles wat ik die dag wilde afwerken. Verder zorgde ik ervoor dat ik precies om 8 uur begon en 6,5 uur later stopte met werken (om 14.30 uur). Het extra halfuur is voor de lunch.
 
-## Pros
+## Voordelen
 
-- I had more time to rest and drink tea at home. It felt good.
-- It made me prioritise better. I felt like I needed to get everything on my list checked at the end of the day and most of the time I did. There were also no problems with collaborating with team members and clients.
+- Ik had meer tijd om te rusten en thuis thee te drinken. Het voelde goed.
+- Het zorgde ervoor dat ik beter prioriteiten stelde. Ik had het gevoel dat ik aan het einde van de dag alles op mijn lijstje had moeten afvinken, en dat lukte me in de meeste gevallen. Bovendien waren er geen problemen met de samenwerking met teamleden en klanten.
 
-## Cons
+## Nadelen
 
-- I thought I would be doing loads of other stuff with my extra free time, but actually, I didn’t. I expected to walk in the woods more, go drawing, take photos and do other stuff. I just didn’t do that. What I did was rest a lot by reading books and articles.
-- I expected to get the same designs done, but I didn’t have the time to really sit and design. Most of the time I helped team members, communicated with clients, managed things in the office, and eventually ended up missing my design hours.
-- Sometimes I acted a bit annoyed when a colleague wanted something from me, because I felt I didn’t have the time for “extra” things. And that’s not good at all.
-- And to be honest, it can be nice to slack for 15 minutes, just to have some fun with your colleagues or enjoy what you’ve made. When I worked 6 hours a day, I didn’t allow myself to do that.
+- Ik dacht dat ik met mijn extra vrije tijd allerlei andere dingen zou doen, maar dat deed ik eigenlijk niet. Ik had verwacht meer in het bos te wandelen, te gaan tekenen, foto's te maken en andere activiteiten te ondernemen. Wat ik wel deed, was veel rusten door boeken en artikelen te lezen.
+- Ik had verwacht evenveel ontwerpen te kunnen maken, maar ik had niet de tijd om echt te gaan ontwerpen. Meestal hielp ik teamleden, communiceerde ik met klanten, regelde ik zaken op kantoor en miste ik uiteindelijk mijn ontwerptijd.
+- Soms reageerde ik een beetje geïrriteerd wanneer een collega iets van me wilde, omdat ik het gevoel had dat ik geen tijd had voor "extra" zaken. En dat is helemaal niet goed.
+- En eerlijk gezegd, het kan fijn zijn om 15 minuten te ontspannen, gewoon om wat plezier te maken met je collega's of te genieten van wat je hebt gemaakt. Toen ik 6 uur per dag werkte, stond ik mezelf dat niet toe.
 
-## Conclusion
+## Conclusie
 
-I feel like I almost did the same amount of work in 6 hours. But being both a designer and co-owner, my days were crammed with tasks and stuff to finish. Even though I tried to plan everything, you always end up having unexpected tasks during a workday. It’s hard to manage a team, work with clients, design with focus and still be innovative in 3 hours less than a regular day.
+Ik heb het gevoel dat ik in 6 uur bijna evenveel werk heb verzet als op een normale werkdag. Maar omdat ik zowel ontwerper als mede-eigenaar ben, zaten mijn dagen vol met taken en dingen die af moesten. Ook al probeerde ik alles te plannen, er kwamen altijd onverwachte taken tussendoor. Het is lastig om een team te managen, met klanten te werken, geconcentreerd te ontwerpen en toch innovatief te blijven in 3 uur minder dan een gewone werkdag.
 
-Besides this major downside, I really liked the experiment. I’ll probably go back to working 8 hours a day instead of the old 9, and when my physical presence isn’t that much needed at the end of the afternoon, I might go home early to regain some energy.
+Naast dit grote nadeel vond ik het experiment erg leuk. Waarschijnlijk ga ik terug naar een werkdag van 8 uur in plaats van de oude 9, en wanneer mijn fysieke aanwezigheid aan het einde van de middag minder nodig is, ga ik misschien eerder naar huis om weer wat energie op te doen.

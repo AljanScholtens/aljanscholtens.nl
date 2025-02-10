@@ -5,7 +5,7 @@ slug: "sass-placeholders"
 draft: false
 author: "aljan"
 subtitle: ""
-description: ""
+description: "Sass Placeholders helpen bij het verminderen van herhalingen in CSS door gebruik te maken van %selector. Via @extend kunnen we gemeenschappelijke stijlen toepassen zonder duplicatie in de output."
 related: ""
 related_url: ""
 photo: "sass-placeholders.jpg"

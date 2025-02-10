@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Verwachtingsmanagement is de sleutel voor een succesvolle samenwerking met opdrachtgevers. Betrek ze vroegtijdig en voorkom misverstanden voor een ontwerp dat écht aansluit bij hun visie."
 
 related: ""
 related_url: ""

@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Op 8 januari zijn de pups van Venna, een Heidewachtel, geboren. Wij mogen in maart een teefje mee naar huis nemen. Kijk hier naar de eerste foto’s!"
 
 related: "Nikki 16 weken"
 related_url: "/blog/nikki-16-weken"

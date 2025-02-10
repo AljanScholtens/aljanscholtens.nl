@@ -5,7 +5,7 @@ slug: 54-hunebeds
 draft: false
 author: aljan
 subtitle: ''
-description: ''
+description: 'Photographing 54 dolmens for a book was a big challenge, but with proper preparation and drone shots of the largest ones, it was a success.'
 related: ''
 related_url: ''
 photo: 54-hunebedden-1.jpg

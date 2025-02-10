@@ -5,7 +5,7 @@ slug: highlights-south-africa
 draft: false
 author: aljan
 subtitle: ''
-description: ''
+description: 'A trip through South Africa offers unique experiences: from a game drive in Kruger Park to the impressive Tsitsikamma forests and meeting local communities. An unforgettable experience filled with contrasts between nature and culture.'
 related: ''
 related_url: ''
 photo: 1.jpg

@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "De Onlanden is een prachtige plek, maar soms is de natuur niet zo meewerkend. Wat begon als een zoektocht naar een mooi landschap, werd een onverwachte vogelavontuur."
 
 related: "Onlanden in de avond"
 related_url: "/blog/onlanden-in-de-avond"

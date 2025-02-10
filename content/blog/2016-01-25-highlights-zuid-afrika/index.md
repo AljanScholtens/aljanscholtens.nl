@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Een reis door Zuid-Afrika biedt unieke ervaringen: van een gamedrive in Kruger Park tot de indrukwekkende Tsitsikamma-wouden en de ontmoeting met lokale gemeenschappen. Een onvergetelijke ervaring vol contrasten tussen natuur en cultuur."
 
 related: ""
 related_url: ""

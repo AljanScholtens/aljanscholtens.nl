@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "In de trein is iedereen een verhaal. Van de man met zijn koffie tot de vrouw aan de telefoon. Het is een bron van inspiratie, waar je de levens van anderen in je gedachten kunt creëren."
 
 related: ""
 related_url: ""

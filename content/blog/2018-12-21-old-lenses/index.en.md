@@ -5,7 +5,7 @@ draft: false
 slug: old-lenses
 author: aljan
 subtitle: ''
-description: ''
+description: 'Using old lenses as a backup can surprisingly work well, even in landscape photography. They’re not a replacement for your main lenses but won’t disappoint in case of failure.'
 related: ''
 related_url: ''
 photo: old-lenses.jpg

@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Een uitdagende hike op bijna 3000 meter, omgeven door rotsen en adembenemende uitzichten, leidt tot een gevoel van volledige ontkoppeling van de wereld—alleen het huidige moment en de natuur blijven over."
 
 related: "The Fellowship of the Hardangervidda"
 related_url: "/blog/the-fellowship-of-the-hardangervidda"

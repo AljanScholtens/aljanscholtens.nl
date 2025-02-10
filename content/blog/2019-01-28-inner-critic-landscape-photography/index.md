@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: "" # Niet verplicht
-description: "" # Niet verplicht
+description: "The inner critic often tells you you’re not good enough, but it’s crucial to be aware of this voice. Recognizing the critic can help you pursue your dreams without holding yourself back." # Niet verplicht
 
 related: "" # Niet verplicht
 related_url: "" # Niet verplicht

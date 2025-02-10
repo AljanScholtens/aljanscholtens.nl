@@ -5,7 +5,7 @@ slug: "kleuren-met-sass"
 draft: false
 author: "aljan"
 subtitle: ""
-description: ""
+description: "Met Sass maak je werken met transparantie en kleuren eenvoudig. De rgba()-functie werkt met hex-codes, en met functies als lighten() en darken() pas je kleuren snel aan zonder handmatig te rekenen."
 related: ""
 related_url: ""
 photo: ""

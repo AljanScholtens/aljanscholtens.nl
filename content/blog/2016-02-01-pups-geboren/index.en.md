@@ -5,7 +5,7 @@ slug: puppies-born
 draft: false
 author: aljan
 subtitle: ''
-description: ''
+description: 'On January 8th, Venna, a Small Munsterlander, gave birth to 8 puppies. We’re bringing a female home in March. Here’s a glimpse of the first photos!'
 related: Nikki 16 weken
 related_url: /blog/nikki-16-weken
 photo: 1.jpg

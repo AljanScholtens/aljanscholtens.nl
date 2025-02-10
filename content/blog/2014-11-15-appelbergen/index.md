@@ -5,7 +5,7 @@ slug: "appelbergen"
 draft: false
 author: "aljan"
 subtitle: ""
-description: ""
+description: "Om mijn Canon 6D te testen op videokwaliteit en mogelijkheden heb ik een kleine video gemaakt in de Appelbergen. Het was vroeg in de ochtend en de zon scheen werkelijk prachtig."
 related: ""
 related_url: ""
 photo: ""

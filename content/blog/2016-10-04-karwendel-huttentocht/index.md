@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: "" # Niet verplicht
-description: "" # Niet verplicht
+description: "De Karwendel Huttentocht in 2016 was een avontuurlijke vijfdaagse wandeltocht door het Oostenrijkse gebergte. We sliepen in berghutten en ontdekten prachtige foto-plekken. Een zware, maar schitterende ervaring!" # Niet verplicht
 
 related: "The Fellowship of the Hardangervidda" # Gerelateerde post titel
 related_url: "/blog/the-fellowship-of-the-hardangervidda" # URL van gerelateerde post

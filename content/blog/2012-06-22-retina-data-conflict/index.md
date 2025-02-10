@@ -5,7 +5,7 @@ slug: "retina-data-conflict"
 draft: false
 author: "aljan"
 subtitle: ""
-description: ""
+description: "Retina-schermen bieden schitterende resolutie, maar vergroten bestandsgroottes en belasten mobiele data. Oplossingen zoals responsive images en media queries helpen, maar er is nog geen ideale oplossing voor dataverbruik."
 related: ""
 related_url: ""
 photo: "retina-data-conflict.jpg"

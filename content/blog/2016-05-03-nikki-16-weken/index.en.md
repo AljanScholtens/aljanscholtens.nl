@@ -5,7 +5,7 @@ slug: nikki-16-weeks
 draft: false
 author: aljan
 subtitle: ''
-description: ''
+description: 'By now Nikki has been with us for 8 weeks. Naughty, enthusiastic, but incredibly sweet.'
 related: Pups geboren
 related_url: /blog/pups-geboren
 photo: 1.jpg

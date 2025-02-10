@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Inmiddels is Nikki 8 weken bij ons. Ondeugend, enthousiast, maar ontzettend lief."
 
 related: "Pups geboren"
 related_url: "/blog/pups-geboren"

@@ -5,7 +5,7 @@ slug: "collaboration-tools"
 draft: false
 author: "aljan"
 subtitle: ""
-description: ""
+description: "In Studio Wolf gebruiken we tools zoals Dropbox, Flow en Hipchat om efficiëntie te verbeteren. Dropbox biedt centrale bestandopslag, Flow helpt bij taakbeheer, en Hipchat voorkomt afleiding in communicatie."
 related: ""
 related_url: ""
 photo: "collaboration-tools.jpg"

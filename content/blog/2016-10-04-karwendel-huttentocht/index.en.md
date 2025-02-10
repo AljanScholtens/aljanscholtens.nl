@@ -5,7 +5,7 @@ slug: karwendel hut tour
 draft: false
 author: aljan
 subtitle: ''
-description: ''
+description: 'The 2016 Karwendel Hut Trek was an adventurous five-day hike through the Austrian mountains. We stayed in mountain huts and discovered beautiful photo spots. A tough but rewarding experience!'
 related: The Fellowship of the Hardangervidda
 related_url: /blog/the-fellowship-of-the-hardangervidda
 photo: 1.jpg

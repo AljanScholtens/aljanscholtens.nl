@@ -5,7 +5,7 @@ slug: "afleiding-maakt-dom"
 draft: false
 author: "aljan"
 subtitle: ""
-description: ""
+description: "Afleiding maakt het moeilijk om te concentreren. Door digitale prikkels te beperken en momenten van rust in te bouwen, kun je productiever zijn en betere beslissingen nemen."
 related: ""
 related_url: ""
 photo: "afleiding-maakt-dom.jpg"

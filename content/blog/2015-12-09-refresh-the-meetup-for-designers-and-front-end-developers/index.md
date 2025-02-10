@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Refresh brings designers and front-end developers together to inspire and grow. Regular meet-ups with talks, discussions, and fun in Groningen and Amsterdam."
 
 related: ""
 related_url: ""

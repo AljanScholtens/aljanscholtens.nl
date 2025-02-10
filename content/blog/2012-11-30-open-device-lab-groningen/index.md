@@ -5,7 +5,7 @@ slug: "open-device-lab-groningen"
 draft: false
 author: "aljan"
 subtitle: ""
-description: ""
+description: "In Groningen ontbreekt een Open Device Lab. Er worden ideeën gedeeld voor een hybride model of online community om devices voor testen te delen. Geïnteresseerd? Mail je devices naar aljan@studiowolf.nl."
 related: ""
 related_url: ""
 photo: "open-device-lab-groningen.jpg"

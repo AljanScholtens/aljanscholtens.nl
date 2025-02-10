@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "De Onlanden in de avond zijn een magische plek, maar soms moet je door regenbuien heen om de juiste sfeer vast te leggen. ND-filters helpen om de rust van het water te vangen."
 
 related: "Het Goud van de Omlanden"
 related_url: "/blog/het-goud-van-de-onlanden"

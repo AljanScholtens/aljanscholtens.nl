@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: "Zes vrienden op trektocht door Noorwegen"
-description: ""
+description: "Zes vrienden trotseren de regen en wind tijdens een epische trektocht door de Hardangervidda in Noorwegen. Samen overwinnen ze uitdagingen en genieten van de adembenemende natuur."
 
 related: "Karwendel Huttentocht"
 related_url: "/blog/karwendel-huttentocht"

@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Voor mijn trektocht in Noorwegen ben ik gaan letten op het gewicht van mijn uitrusting. Lichter is beter, maar een statief van 1,6 kg blijft mee! Volgende week oefenen in Drenthe."
 
 related: ""
 related_url: ""

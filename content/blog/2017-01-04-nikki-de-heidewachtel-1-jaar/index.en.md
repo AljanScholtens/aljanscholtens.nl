@@ -5,7 +5,7 @@ draft: false
 slug: nikki-the-heidewachtel-1-year
 author: aljan
 subtitle: ''
-description: ''
+description: 'Nikki the Heidewachtel is now 1 year old, and in this article, I look back on her first year. From the challenging start to the stability she has reached now, it has been a learning year for both Nikki and me as her owner.'
 related: ''
 related_url: ''
 photo: nikki-de-heidewachtel-1-jaar.jpg

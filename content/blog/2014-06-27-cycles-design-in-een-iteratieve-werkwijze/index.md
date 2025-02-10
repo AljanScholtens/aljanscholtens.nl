@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Cycles is een flexibele, iteratieve ontwerpaanpak die het werk in korte sprints verdeelt, waardoor constante betrokkenheid van de klant en continue verbetering van het product mogelijk is."
 
 related: ""
 related_url: ""

@@ -5,7 +5,7 @@ slug: refresh-the-meetup-for-designers-and-front-end-developers
 draft: false
 author: aljan
 subtitle: ''
-description: ''
+description: 'Refresh brings designers and front-end developers together to inspire and grow. Regular meet-ups with talks, discussions, and fun in Groningen and Amsterdam.'
 related: ''
 related_url: ''
 photo: refresh-the-meetup-for-designers-and-front-end-developers-1.jpeg

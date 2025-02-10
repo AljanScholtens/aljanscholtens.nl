@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: "" # Niet verplicht
-description: "" # Niet verplicht
+description: "Het fotograferen van 54 hunebedden voor een boek was een grote uitdaging, maar met de juiste voorbereiding en dronefoto’s van de grootste exemplaren is het gelukt." # Niet verplicht
 
 related: "" # Niet verplicht
 related_url: "" # Niet verplicht

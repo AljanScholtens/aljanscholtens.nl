@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Lacey, Nikki en Bas leerden me belangrijke lessen over honden, van jagen tot respect en vriendschap, wat de basis vormt voor mijn huidige relatie met honden."
 
 related: "Kies een vriend"
 related_url: "/blog/kies-een-vriend"

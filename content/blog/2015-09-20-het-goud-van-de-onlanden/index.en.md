@@ -5,7 +5,7 @@ slug: the-gold-of-the-uncountries
 draft: false
 author: aljan
 subtitle: ''
-description: ''
+description: 'The Onlanden is stunning, but nature doesn’t always cooperate. What started as a search for a beautiful landscape turned into an unexpected bird photography adventure.'
 related: Onlanden in de avond
 related_url: /blog/onlanden-in-de-avond
 photo: 1.jpg

@@ -5,7 +5,7 @@ slug: onlands-in-the-evening
 draft: false
 author: aljan
 subtitle: ''
-description: ''
+description: 'The Onlanden in the evening is magical, but sometimes you have to weather rain showers to capture the right mood. ND filters help capture the calmness of the water.'
 related: Het Goud van de Omlanden
 related_url: /blog/het-goud-van-de-onlanden
 photo: 1.jpg

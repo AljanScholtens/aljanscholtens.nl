@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Een systematische benadering voor Sass-variabelen, waarbij je werkt met een versienummer-systeem voor consistentie, zorgt voor meer flexibiliteit en structuur zonder dat je afwijkt van de basisprincipes."
 
 related: ""
 related_url: ""

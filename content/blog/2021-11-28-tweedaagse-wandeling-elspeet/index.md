@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: "" # Not required
-description: "" # Not required
+description: "Twee dagen wandelen in de Veluwe van Nunspeet naar Elspeet, langs bossen, heide en kastelen." # Not required
 
 related: "" # Not required
 related_url: "" # Not required

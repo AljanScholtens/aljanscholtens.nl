@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Het proces om een hond uit te zoeken was een avontuur op zich. Van rassen vergelijken tot kennels bezoeken, en uiteindelijk viel de keuze op de Heidewachtel. Spannende tijden!"
 
 related: "Lacey, Nikki en Bas"
 related_url: "/blog/lacey-nikki-en-bas"

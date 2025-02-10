@@ -5,7 +5,7 @@ slug: two-day-hike-elspeet
 draft: false
 author: aljan
 subtitle: ''
-description: ''
+description: 'Two-day hike through the Veluwe from Nunspeet to Elspeet, passing forests, heathlands, and castles.'
 related: ''
 related_url: ''
 photo: elspeet-14.jpg

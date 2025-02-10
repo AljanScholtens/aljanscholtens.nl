@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Learn how to set up an inline SVG sprite for scalable, adjustable icons. This guide covers everything from creating SVG symbols to implementing them on your web page with CSS styling."
 
 related: ""
 related_url: ""

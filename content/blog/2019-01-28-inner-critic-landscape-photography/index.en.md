@@ -5,7 +5,7 @@ slug: inner-critic-landschape-photography
 draft: false
 author: aljan
 subtitle: ''
-description: ''
+description: 'The inner critic often tells you you’re not good enough, but it’s crucial to be aware of this voice. Recognizing the critic can help you pursue your dreams without holding yourself back.'
 related: ''
 related_url: ''
 photo: inner-critic.jpg

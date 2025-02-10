@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Element queries allow adjusting module content based on its own width rather than the viewport, making responsive design more flexible. They complement media queries for better layout control."
 
 related: ""
 related_url: ""

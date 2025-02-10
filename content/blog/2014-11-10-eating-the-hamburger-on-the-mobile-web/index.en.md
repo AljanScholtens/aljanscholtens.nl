@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Exploring alternatives to the hamburger icon for mobile navigation, highlighting issues with iOS Safari and proposing bottom navigation for easier access and visibility of website elements on mobile."
 
 related: ""
 related_url: ""

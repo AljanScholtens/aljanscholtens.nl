@@ -5,7 +5,7 @@ slug: "community-en-miscommunicaties"
 draft: false
 author: "aljan"
 subtitle: ""
-description: ""
+description: "Het creëren van een positieve online community, zoals Focussion, vereist strategieën tegen miscommunicatie en negativiteit. Principes zoals minder regels, duidelijkheid en geduld helpen om de sfeer gemoedelijk te houden."
 related: ""
 related_url: ""
 photo: "community-en-miscommunicaties.jpg"

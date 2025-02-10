@@ -5,7 +5,7 @@ slug: "2012-een-spectaculair-jaar"
 draft: false
 author: "aljan"
 subtitle: ""
-description: ""
+description: "In 2012 groeide Studio Wolf: Kris werd onze eerste werknemer, een nieuwe identiteit werd gelanceerd en projecten als Taiga en adaptive content kwamen tot leven. We kijken uit naar 2013."
 related: ""
 related_url: ""
 photo: "2012-een-spectaculair-jaar.jpg"

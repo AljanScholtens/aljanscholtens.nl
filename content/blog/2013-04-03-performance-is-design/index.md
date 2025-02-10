@@ -5,7 +5,7 @@ slug: "performance-is-design"
 draft: false
 author: "aljan"
 subtitle: ""
-description: ""
+description: "Goede performance is essentieel voor goed design. Het verkleinen van pagina’s, optimaliseren van afbeeldingen en minimaliseren van code verbetert de snelheid, wat de gebruikerservaring en het design zelf ten goede komt."
 related: ""
 related_url: ""
 photo: "performance-is-design.jpg"

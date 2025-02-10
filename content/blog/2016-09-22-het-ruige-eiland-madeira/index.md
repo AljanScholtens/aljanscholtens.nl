@@ -6,7 +6,7 @@ slug: "het-ruige-eiland-madeira"
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "Onze reis naar het ruige Madeira begon in de nacht. Het eiland biedt een verrassende diversiteit: van droge vlaktes tot jungle-achtige binnenlanden en verborgen watervallen. Een perfecte plek om op te laden"
 
 related: ""
 related_url: ""

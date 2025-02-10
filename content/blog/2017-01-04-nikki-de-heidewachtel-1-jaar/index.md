@@ -6,7 +6,7 @@ slug: "nikki-de-heidewachtel-1-jaar"
 author: "aljan"
 
 subtitle: "" # Niet verplicht
-description: "" # Niet verplicht
+description: "Nikki de Heidewachtel is inmiddels 1 jaar oud, en in dit artikel blikken we terug op haar eerste jaar. Van de pittige beginperiode tot de stabiliteit die ze nu heeft bereikt, het was een leerzaam jaar voor zowel Nikki als voor mij als eigenaar." # Niet verplicht
 
 related: "" # Niet verplicht
 related_url: "" # Niet verplicht

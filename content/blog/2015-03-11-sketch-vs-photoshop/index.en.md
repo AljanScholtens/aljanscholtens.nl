@@ -6,7 +6,7 @@ draft: false
 author: "aljan"
 
 subtitle: ""
-description: ""
+description: "The article compares Sketch and Photoshop, highlighting Sketch’s speed, flexibility with artboards, vector-based design, small file sizes, and easy export, while noting some usability issues with layer selection."
 
 related: ""
 related_url: ""
