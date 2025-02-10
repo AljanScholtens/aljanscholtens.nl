@@ -22,7 +22,7 @@
               <p class="c-paragraph c-paragraph--soft">
                 {{ .Date.Format "02 January 2006" }}
               </p>
-              <h2 class="c-heading c-heading--30">{{ .Title }}</h2>
+              <h2 class="c-heading c-heading--30">{{ .Title |safeHTML }}</h2>
               <p>{{ .Params.description }}</p>
             </div>
           </div>
