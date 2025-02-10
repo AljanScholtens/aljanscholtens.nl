@@ -13,7 +13,8 @@ thumbnail: ''
 header: true
 header_studio: false
 header_title_gradient: false
-gallery: []
+aliases:
+  - /blog/old-lenses/
 ---
 
 Recently I've been using a very old manual lens on my Sony A7iii, and to be honest, I shot some of my best images from the last few months with this lens.

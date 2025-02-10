@@ -17,6 +17,8 @@ thumbnail: ""
 header: true
 header_studio: false
 header_title_gradient: false
+aliases:
+  - /blog/how-to-set-up-an-inline-svg-sprite/
 ---
 
 Years ago I worked with large PNG sprites with tons of icons, logo’s and other layout supporting images. Simply because it was the most efficient way to load images with the smallest amount of connections. Today SVG is supported by all major browsers. In this article I'll explain how to set up an inline SVG sprite.

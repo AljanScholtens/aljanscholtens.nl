@@ -17,6 +17,8 @@ thumbnail: ""
 header: false
 header_studio: false
 header_title_gradient: false
+aliases:
+  - /blog/element-queries/
 ---
 
 {{< photos >}}

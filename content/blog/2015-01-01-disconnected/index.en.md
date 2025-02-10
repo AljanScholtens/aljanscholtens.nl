@@ -9,7 +9,7 @@ subtitle: ""
 description: "A challenging hike at nearly 3000 meters, surrounded by rocks and breathtaking views, leads to a feeling of complete disconnection from the world—only the present moment and nature remain."
 
 related: "The Fellowship of the Hardangervidda"
-related_url: "/blog/the-fellowship-of-the-hardangervidda"
+related_url: "/en/blog/the-fellowship-of-the-hardangervidda"
 
 photo: "disconnected.jpg"
 thumbnail: ""

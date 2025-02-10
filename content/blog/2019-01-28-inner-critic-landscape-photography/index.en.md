@@ -13,7 +13,8 @@ thumbnail: ''
 header: true
 header_studio: false
 header_title_gradient: false
-gallery: []
+aliases:
+  - /blog/inner-critic-landschape-photography/
 ---
 
 My mind plays with me. It tells me I'm not good enough, I'm not good enough in photography or to start a business. Landscapes are too difficult for me or my compositions are not strong enough.

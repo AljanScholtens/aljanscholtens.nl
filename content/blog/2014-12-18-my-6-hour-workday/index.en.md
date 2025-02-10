@@ -17,6 +17,8 @@ thumbnail: ""
 header: true
 header_studio: false
 header_title_gradient: false
+aliases:
+  - /blog/my-6-hour-workday/
 ---
 
 For about two years now I’ve been wandering around with the idea of working 6 hour days. 4 weeks ago the time felt right to try this experiment. From the 17th of November until the 12th of December I worked 6 hours a day, no more. Okay, to be honest, one day we had a deadline and launch party of the new Voys website, but all the other days were around 6 hours.

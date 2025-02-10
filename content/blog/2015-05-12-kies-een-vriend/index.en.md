@@ -8,7 +8,7 @@ author: "aljan"
 subtitle: ""
 description: "The process of choosing a dog was an adventure in itself. From comparing breeds to visiting kennels, and eventually the choice fell on the Heidewachtel. Exciting times!"
 related: "Lacey, Nikki en Bas"
-related_url: "/blog/lacey-nikki-en-bas"
+related_url: "/en/blog/lacey-nikki-and-bas"
 
 photo: "kies-een-vriend-2.jpg"
 thumbnail: ""

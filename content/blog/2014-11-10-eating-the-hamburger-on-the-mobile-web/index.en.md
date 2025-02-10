@@ -17,6 +17,8 @@ thumbnail: ""
 header: true
 header_studio: false
 header_title_gradient: false
+aliases:
+  - /blog/eating-the-hamburger-on-the-mobile-web/
 ---
 
 People have been using the hamburger-icon on websites since [at least the 1990’s](http://blog.placeit.net/history-of-the-hamburger-icon/). Since responsive websites and mobile apps have grown in popularity, usage of the hamburger-icon has exploded. We’re searching for a better mobile navigation for the web and would like to share our ideas and the issues we’re encountering. Today’s issue is iOS Safari.

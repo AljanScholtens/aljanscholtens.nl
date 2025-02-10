@@ -13,6 +13,8 @@ thumbnail: ''
 header: false
 header_studio: false
 header_title_gradient: false
+aliases:
+  - /blog/refresh-the-meetup-for-designers-and-front-end-developers/
 ---
 
 {{<photos>}}

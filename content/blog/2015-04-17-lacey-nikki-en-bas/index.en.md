@@ -1,14 +1,14 @@
 ---
 title: "Lacey, Nikki and Bas"
 date: 2015-04-17
-slug: "lacey-nikki-en-bas"
+slug: "lacey-nikki-and-bas"
 draft: false
 author: "aljan"
 
 subtitle: ""
 description: "Lacey, Nikki and Bas taught me important lessons about dogs, from hunting to respect and friendship, which form the foundation for my current relationship with dogs."
 related: "Choose a Friend"
-related_url: "/blog/kies-een-vriend"
+related_url: "/en/blog/choose-a-friend"
 
 photo: "lacey-nikki-en-bas.jpg"
 thumbnail: ""
