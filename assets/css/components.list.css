@@ -3,7 +3,8 @@
 \*------------------------------------*/
 
 .c-list,
-.u-content ul {
+.u-content ul,
+.u-content ol {
   list-style: none;
   font-size: var(--font-size-40);
   color: var(--color-neutral-90);
@@ -52,12 +53,13 @@ ul.c-list,
 
 ol.c-list,
 .u-content ol {
-  outline: 1px solid red;
   & li {
     counter-increment: list__counter;
-
+  
     &:before {
       content: counter(list__counter) ".";
+      color: var(--color-primary-50);
+      font-weight: 600;
     }
   }
 }
