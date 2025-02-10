@@ -31,7 +31,9 @@
   }
 }
 
-.t-dark .c-list {
+.t-dark .c-list,
+.t-dark ul,
+.t-dark ol {
   color: var(--color-neutral-0);
 }
 

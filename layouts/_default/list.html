@@ -5,7 +5,7 @@
     <div class="l-single-wide">
       <div class="c-card-grid">
         {{ range .Pages }}
-        <a href="{{ .Permalink }}" class="c-card">
+        <a href="{{ .Permalink | absURL }}" class="c-card">
           <div class="c-card__inner">
             {{ if .Params.photo }} {{ $img := .Resources.GetMatch .Params.photo }}
             {{ if $img }}
