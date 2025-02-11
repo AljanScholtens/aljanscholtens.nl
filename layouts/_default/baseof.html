@@ -43,10 +43,12 @@
             {{ $otherLangs := where .Site.Languages "Lang" "!=" $currentLang }}
             {{ if gt (len $otherLangs) 0 }}
               {{ $other := index $otherLangs 0 }}
-              {{ if $.Page.IsPage }}
+              {{ if or $.Page.IsPage (eq $.Page.Kind "section") }}
                 {{ $translatedPage := where $.Page.Translations "Lang" $other.Lang | first 1 }}
                 {{ if $translatedPage }}
                   <a href="{{ (index $translatedPage 0).RelPermalink }}">{{ $other.LanguageName }}</a>
+                {{ else if eq $.Page.Kind "section" }}
+                  <a href="/{{ $other.Lang }}/{{ $.Page.Section }}/">{{ $other.LanguageName }}</a>
                 {{ else }}
                   <a href="/{{ $other.Lang }}/">{{ $other.LanguageName }}</a>
                 {{ end }}
@@ -54,6 +56,7 @@
                 <a href="/{{ $other.Lang }}/">{{ $other.LanguageName }}</a>
               {{ end }}
             {{ end }}
+
           </li>
         <li class="c-navigation__links-item"><a href="https://instagram.com/aljan"><svg class="c-icon"><use xlink:href="#icon-instagram"></svg></a></li>
         <li class="c-navigation__links-item"><a href="https://www.linkedin.com/in/aljanscholtens/"><svg class="c-icon"><use xlink:href="#icon-linkedin"></svg></a></li>
