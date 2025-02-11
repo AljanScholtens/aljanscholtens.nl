@@ -23,7 +23,7 @@ header_title_gradient: false
 
 Als designers hebben we te maken met verwachtingen van opdrachtgevers. Voordat ze bij je komen hebben ze al een idee hoe het eindproduct moet worden, ook al denken ze dit niet te weten. Dit is menselijk en zit in ons onderbewustzijn.
 
-Deze verwachtingen zijn voor ons als designers niet altijd even gunstig. Een voorbeeld: je spreekt met de opdrachtgever af om het project door te spreken. Een paar weken later presenteer je het Photoshop ontwerp ([of browser-ontwerp](http://www.studiowolf.nl/notes/weg-met-photoshop/ "Weg met Photoshop?")). De opdrachtgever reageert met dat hij het vreselijk vindt. Dus kun je opnieuw aan de ‘ontwerptafel’.
+Deze verwachtingen zijn voor ons als designers niet altijd even gunstig. Een voorbeeld: je spreekt met de opdrachtgever af om het project door te spreken. Een paar weken later presenteer je het Photoshop ontwerp. De opdrachtgever reageert met dat hij het vreselijk vindt. Dus kun je opnieuw aan de ‘ontwerptafel’.
 
 Dat de opdrachtgever het vreselijk vindt, is **onze fout**. Het is onze taak om de opdrachtgever mee te nemen in de wereld van het web. Wij weten wat de beste manieren zijn om om te gaan met flows, indeling en merk. Daarom is het meenemen van de opdrachtgever in een degelijk proces van belang. Hiermee creëren we de verwachting.
 

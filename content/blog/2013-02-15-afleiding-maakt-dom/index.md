@@ -21,15 +21,15 @@ Het was eens een doodgewone zaterdag en ik wilde verder lezen in de [biografie v
 
 Ik kruip terug op de bank met het boek en begin verder te lezen op pagina 35. Daar lees ik dat Steve inkt op zijn boeken laat kletteren. Ik krijg een grijns op mijn gezicht. Ik pak mijn iPad om het te delen met mijn vrienden. Afgeleid.
 
-Op sommige dagen kan het erg lastig zijn om in alle rust een boek te lezen. Overal om ons heen vinden we prikkels en willen we in [contact blijven met de buitenwereld](http://www.ted.com/talks/sherry_turkle_alone_together.html).
+Op sommige dagen kan het erg lastig zijn om in alle rust een boek te lezen. Overal om ons heen vinden we prikkels en willen we in [contact blijven met de buitenwereld](https://www.ted.com/talks/sherry_turkle_connected_but_alone).
 
-Om onze oercreativiteit te bevorderen is het van belang dat we in een soort [flow](http://www.ted.com/talks/mihaly_csikszentmihalyi_on_flow.html) komen. Dat kan niet als we continu afgeleid worden.
+Om onze oercreativiteit te bevorderen is het van belang dat we in een soort [flow](https://www.ted.com/talks/mihaly_csikszentmihalyi_flow_the_secret_to_happiness) komen. Dat kan niet als we continu afgeleid worden.
 
 Uiteindelijk zit je jezelf in de weg. **Alleen jij kan iets doen aan de afleiding die jij zelf creëert** door open te staan voor teveel prikkels.
 
 ## Waarom zijn we afgeleid?
 
-Ik denk dat afleiding tot op zekere hoogte goed is. Als mens zijn we **altijd nieuwsgierig geweest** naar de gebeurtenissen die om ons heen gebeuren. Dat is wat ons [groot heeft gemaakt](http://joekraus.com/were-creating-a-culture-of-distraction). Daarom hebben we vuur en het wiel uitgevonden (cliché ;-). Het probleem is alleen dat als je snel afgeleid bent, je steeds sneller afgeleid raakt. Als een neerwaartse spiraal, omdat we steeds meer willen. Dat is wat er gebeurt met smartphones, tablets, etc.
+Ik denk dat afleiding tot op zekere hoogte goed is. Als mens zijn we **altijd nieuwsgierig geweest** naar de gebeurtenissen die om ons heen gebeuren. Dat is wat ons groot heeft gemaakt. Daarom hebben we vuur en het wiel uitgevonden (cliché ;-). Het probleem is alleen dat als je snel afgeleid bent, je steeds sneller afgeleid raakt. Als een neerwaartse spiraal, omdat we steeds meer willen. Dat is wat er gebeurt met smartphones, tablets, etc.
 
 Deze nieuwsgierigheid is ook de reden waarom we continu in connectie willen blijven met vrienden en onze dagelijkse portie nieuws. We willen niet achterblijven, maar juist vooruitgaan. Het probleem is dat dat vooruitgaan op een gegeven moment juist in de weg gaat staan.
 

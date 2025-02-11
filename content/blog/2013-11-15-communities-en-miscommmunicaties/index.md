@@ -17,9 +17,9 @@ header_title_gradient: false
 
 {{<image src="community-en-miscommunicaties.jpg">}}
 
-Mensen online bij elkaar brengen is altijd een wens van me geweest. Gezien mijn affiniteit met [fotografie](http://aljanscholtens.nl/photography) zou het helemaal gaaf zijn om het online samenbrengen van mensen te combineren met fotografie. Een community waarbij mensen discussiëren over allerlei facetten; hoe kan een foto beter worden qua licht en compositie? Welke lens kan ik het beste aanschaffen? Zal ik professioneel worden of niet?
+Mensen online bij elkaar brengen is altijd een wens van me geweest. Gezien mijn affiniteit met [fotografie](http://aljanscholtens.nl/gallery) zou het helemaal gaaf zijn om het online samenbrengen van mensen te combineren met fotografie. Een community waarbij mensen discussiëren over allerlei facetten; hoe kan een foto beter worden qua licht en compositie? Welke lens kan ik het beste aanschaffen? Zal ik professioneel worden of niet?
 
-Persoonlijk ben ik altijd geïntrigeerd geweest door opbouwende kritiek, oftewel feedback. Op een positieve manier vertellen hoe iemand zijn of haar foto kan verbeteren. Zowel iets opbouwends melden als iets goeds. Dat was hetgeen wat ik nergens online kon krijgen. Daaruit is een paar jaar geleden het idee van [Focussion](http://focussion.com/) ontstaan.
+Persoonlijk ben ik altijd geïntrigeerd geweest door opbouwende kritiek, oftewel feedback. Op een positieve manier vertellen hoe iemand zijn of haar foto kan verbeteren. Zowel iets opbouwends melden als iets goeds. Dat was hetgeen wat ik nergens online kon krijgen. Daaruit is een paar jaar geleden het idee van ~~Focussion~~ ontstaan.
 
 Het nadeel van feedback is dat het snel leidt tot **miscommunicatie** wat weer leidt tot negativiteit. Vooral als een community groeit waarbij de gebruiker alles van iedereen kan zien, ontstaat er sneller negativiteit. Negatief over de sociale capaciteiten van anderen, negatief over fotografie, negatief over het platform, meestal met het doel om aandacht te krijgen. Zo’n persoon wordt ook wel een ‘trol’ genoemd. De beste oplossing is om andere gebruikers daar niet op te laten reageren, maar helaas gebeurd dat wel.
 

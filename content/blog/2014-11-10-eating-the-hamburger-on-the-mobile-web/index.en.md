@@ -25,7 +25,7 @@ People have been using the hamburger-icon on websites since [at least the 1990�
 
 ## Navigating in Apps
 
-Lately there’s been a lot of [discussion about the icon](http://mor10.com/hamburger-bad/). A short while ago [Apple also wrote a piece](http://blog.manbolo.com/2014/06/30/apple-on-hamburger-menus) on the usage of the hamburger as a way of navigating.
+Lately there’s been a lot of [discussion about the icon](http://mor10.com/hamburger-bad/). A short while ago ~~Apple also wrote a piece~~ on the usage of the hamburger as a way of navigating.
 
 According to Apple the icon is abstract and does not trigger users enough. Luke Wroblewski also wrote a blog about the hamburger on [large mobile screens](http://www.lukew.com/ff/entry.asp?1927).
 

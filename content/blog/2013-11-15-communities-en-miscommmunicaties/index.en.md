@@ -17,9 +17,9 @@ header_title_gradient: false
 
 {{<image src="community-en-miscommunicaties.jpg">}}
 
-Bringing people together online has always been a passion of mine. Given my affinity for [photography](http://aljanscholtens.nl/photography), it would be amazing to combine the online gathering of people with photography. A community where people discuss various aspects; how can a photo be improved in terms of lighting and composition? Which lens should I buy? Should I go professional or not?
+Bringing people together online has always been a passion of mine. Given my affinity for [photography](http://aljanscholtens.nl/gallery), it would be amazing to combine the online gathering of people with photography. A community where people discuss various aspects; how can a photo be improved in terms of lighting and composition? Which lens should I buy? Should I go professional or not?
 
-I have always been intrigued by constructive criticism, or in other words, feedback. Telling someone in a positive way how they can improve their photo—both offering constructive advice and highlighting what works well—is something I could never find online. A few years ago, that’s when the idea of [Focussion](http://focussion.com/) was born.
+I have always been intrigued by constructive criticism, or in other words, feedback. Telling someone in a positive way how they can improve their photo—both offering constructive advice and highlighting what works well—is something I could never find online. A few years ago, that’s when the idea of ~~Focussion~~ was born.
 
 The downside of feedback is that it quickly leads to **miscommunication**, which in turn fosters negativity. Especially in a growing community where users can see everything about everyone, negativity tends to arise more easily—negativity about others’ social skills, about photography, about the platform—usually with the aim of attracting attention. Such a person is often called a "troll." The best solution is to avoid engaging with them, but unfortunately, that often happens.
 

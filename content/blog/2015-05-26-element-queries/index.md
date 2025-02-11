@@ -85,6 +85,6 @@ Ik hoop dat element queries binnen enkele jaren in native CSS zullen werken. Er 
 
 - [http://www.xanthir.com/b4VG0](http://www.xanthir.com/b4VG0)
 - [http://www.filamentgroup.com/lab/element-query-workarounds.html](http://www.filamentgroup.com/lab/element-query-workarounds.html)
-- [https://responsiveimagescg.github.io/eq-usecases/](https://responsiveimagescg.github.io/eq-usecases/)
+- ~~responsiveimagescg.github.io/eq-usecases/~~
 
 — Dit bericht is oorspronkelijk geschreven op de Studio Wolf blog.

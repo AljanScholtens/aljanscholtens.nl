@@ -46,8 +46,8 @@ To make the web stronger, pure Photoshop designers really need to start working 
 ## More about the Smashing Conference
 
 - [Smashing Conference website](http://smashingconf.com/)
-- Live blog [day 1](http://www.smashingmagazine.com/2012/09/17/smashing-conference-liveblog-reporting-day-1/)
-- Live blog [day 2](http://www.smashingmagazine.com/2012/09/18/smashing-conference-liveblog-day-2/)
+- ~~Live blog day 1~~
+- ~~Live blog day 2~~
 - Videos of all talks will be available soon
 
 — This post was originally written on the Studio Wolf blog.

@@ -39,17 +39,17 @@ Het fijne van Flow is dat je snel taken kunt aanmaken; binnen projecten, op datu
 
 Flow is onmisbaar geworden, vooral omdat we tegenwoordig zoveel taken hebben dat je ze moeilijk allemaal kunt onthouden. Vergeten iemand terug te bellen is erg zonde en vervelend. Discipline en tijd inschatten (voor zover mensen dat kunnen) zijn wel vereiste eigenschappen.
 
-Flow heeft ook een [iPhone](http://www.getflow.com/tour/flow-for-ios/), [iPad](http://www.getflow.com/tour/flow-for-ios/), en [Mac](http://www.getflow.com/tour/flow-for-mac/) app (geen Android of Windows Phone, maar dat maakt in ons geval niet uit). Middels deze apps gebruik ik Flow ook privé, omdat ik nog wel eens vergeet te stofzuigen. ;-)
+Flow heeft ook een [iPhone](http://www.getflow.com/tour/flow-for-ios/), [iPad](http://www.getflow.com/tour/flow-for-ios/), en Mac app (geen Android of Windows Phone, maar dat maakt in ons geval niet uit). Middels deze apps gebruik ik Flow ook privé, omdat ik nog wel eens vergeet te stofzuigen. ;-)
 
-Een [nieuwe versie](http://www.getflow.com/future/) van Flow zit er aan te komen waar ik erg naar uit kijk.
+Een nieuwe versie van Flow zit er aan te komen waar ik erg naar uit kijk.
 
 ## Hipchat
 
 Deze applicatie gebruiken we sinds Tom bij het team is gekomen. Van tevoren wisten we dat je met meer mensen in een ruimte sneller afgeleid wordt.
 
-Met [Hipchat](https://www.hipchat.com/) voorkomen we dat iedereen mee gaat doen aan conversaties en kan iedereen in zijn flow blijven. Dus alleen chatterij met diegene die je nodig hebt voor vragen.
+Met Hipchat voorkomen we dat iedereen mee gaat doen aan conversaties en kan iedereen in zijn flow blijven. Dus alleen chatterij met diegene die je nodig hebt voor vragen.
 
-Hipchat heeft een erg goede [Mac App](https://www.hipchat.com/mac) (beta) en is tot 5 personen gratis. Bedankt [@Tomdev](https://twitter.com/tomdev) voor de suggestie. ;-)
+Hipchat heeft een erg goede Mac App (beta) en is tot 5 personen gratis. Bedankt [@Tomdev](https://twitter.com/tomdev) voor de suggestie. ;-)
 
 ## Meer
 

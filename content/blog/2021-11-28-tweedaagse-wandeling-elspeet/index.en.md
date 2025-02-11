@@ -21,9 +21,6 @@ The beauty of Nunspeet is that you can get off the train and walk into the Veluw
 
 I put the route together in advance and we walked the route on the weekend of November 20, 2021.
 
-[Download GPX file of day 1](spetery-day-1.gpx)  
-[Download GPX file of day 2](spetery-day-2.gpx)
-
 {{<photos>}}
 elspeet-01.jpg
 elspeet-02.jpg

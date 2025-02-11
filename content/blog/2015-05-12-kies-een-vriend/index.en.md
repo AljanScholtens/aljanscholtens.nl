@@ -1,7 +1,7 @@
 ---
 title: "Choose a Friend"
 date: 2015-05-12
-slug: "kies-een-vriend"
+slug: "choose-a-friend"
 draft: false
 author: "aljan"
 

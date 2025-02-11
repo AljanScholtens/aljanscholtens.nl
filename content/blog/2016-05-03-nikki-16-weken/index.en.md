@@ -7,7 +7,7 @@ author: aljan
 subtitle: ''
 description: 'By now Nikki has been with us for 8 weeks. Naughty, enthusiastic, but incredibly sweet.'
 related: Puppies born
-related_url: /blog/puppies-born
+related_url: /en/blog/puppies-born
 photo: 1.jpg
 thumbnail: ''
 header: true

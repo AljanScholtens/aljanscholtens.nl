@@ -21,15 +21,15 @@ Once upon an ordinary Saturday, I wanted to continue reading the [biography of S
 
 I curled back up on the couch with the book and resumed reading on page 35. There, I read that Steve lets ink splatter on his books. A grin spread across my face. I grabbed my iPad to share it with my friends. Distracted.
 
-On some days, it can be very difficult to read a book in peace. Everywhere around us, we are bombarded with stimuli and we want to [stay connected with the outside world](http://www.ted.com/talks/sherry_turkle_alone_together.html).
+On some days, it can be very difficult to read a book in peace. Everywhere around us, we are bombarded with stimuli and we want to [stay connected with the outside world](https://www.ted.com/talks/sherry_turkle_connected_but_alone).
 
-To foster our primal creativity, it is important that we enter a state of [flow](http://www.ted.com/talks/mihaly_csikszentmihalyi_on_flow.html). That is simply not possible if we are constantly distracted.
+To foster our primal creativity, it is important that we enter a state of [flow](https://www.ted.com/talks/mihaly_csikszentmihalyi_flow_the_secret_to_happiness). That is simply not possible if we are constantly distracted.
 
 In the end, you are standing in your own way. **Only you can do something about the distraction that you create for yourself** by subjecting yourself to too many stimuli.
 
 ## Why Are We Distracted?
 
-I think that distraction is, to a certain extent, beneficial. As human beings, we have **always been curious** about the events happening around us. That curiosity is what has made us [great](http://joekraus.com/were-creating-a-culture-of-distraction). That’s why we invented fire and the wheel (cliché ;-). The only problem is that if you are easily distracted, you become even more so. It’s like a downward spiral, because we always want more. That’s what happens with smartphones, tablets, etc.
+I think that distraction is, to a certain extent, beneficial. As human beings, we have **always been curious** about the events happening around us. That curiosity is what has made us great. That’s why we invented fire and the wheel (cliché ;-). The only problem is that if you are easily distracted, you become even more so. It’s like a downward spiral, because we always want more. That’s what happens with smartphones, tablets, etc.
 
 ## What Is the Solution?
 

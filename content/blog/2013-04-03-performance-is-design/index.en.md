@@ -35,9 +35,9 @@ Design is about ensuring that the user can achieve their goal as simply as possi
 ## Further Reading
 
 - Tutsplus: [Best practices for increasing website performance](http://webdesign.tutsplus.com/tutorials/workflow-tutorials/best-practices-for-increasing-web-site-performance/)
-- Brad Frost: [Performance as design](http://bradfrostweb.com/blog/post/performance-as-design/)
-- CSS Wizardry: [Front-end performance for web designers and frond-end developers](http://csswizardry.com/2013/01/front-end-performance-for-web-designers-and-frond-end-developers/)
-- Clearleft: [Responsive design on a budget](http://clearleft.com/thinks/responsivedesignonabudget/)
+- Brad Frost: [Performance as design](https://bradfrost.com/blog/post/performance-as-design/)
+- CSS Wizardry: [Front-end performance for web designers and frond-end developers](https://csswizardry.com/2013/01/front-end-performance-for-web-designers-and-front-end-developers/)
+- Clearleft: [Responsive design on a budget](https://clearleft.com/thinking/responsive-design-on-a-budget)
 - Smashing Magazine: [How to make your websites faster on mobile devices](http://mobile.smashingmagazine.com/2013/04/03/build-fast-loading-mobile-website/)
 
 — This post was originally written on the Studio Wolf blog.

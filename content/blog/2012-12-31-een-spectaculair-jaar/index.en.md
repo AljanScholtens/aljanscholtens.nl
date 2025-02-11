@@ -33,7 +33,7 @@ The beauty of responsive interface design is that it’s not just about aestheti
 
 From that philosophy, Taiga was born. Taiga is an environment with a grid that lays the responsive foundation for a website or web application. Taiga is open source and free for everyone to use.
 
-In addition to Taiga, we are working on ways to apply the principle of adaptive content to the websites we deliver (still in its infancy). We recommend you watch this [video by Karen McGrane](https://karenmcgrane.com/2012/09/04/adapting-ourselves-to-adaptive-content-video-slides-and-transcript-oh-my/) if you want to know exactly what it is. Essentially, it’s all about content first, and then design and implementation.
+In addition to Taiga, we are working on ways to apply the principle of adaptive content to the websites we deliver (still in its infancy). We recommend you watch this [video by Karen McGrane](https://karenmcgrane.com/talks/adapting-ourselves-to-adaptive-content/) if you want to know exactly what it is. Essentially, it’s all about content first, and then design and implementation.
 
 ## Responsive Workflow
 
@@ -54,9 +54,9 @@ Equally important, or rather, most important: our clients. It has been a wonderf
 - Dirk-Jan Huizingh, Aimée Otte, and Joshua Peper from [Peperzaken](http://www.peperzaken.nl/);
 - Koos Onderwater from KPN;
 - Andrea Kolrusch from the [KNSB](http://live.schaatsen.nl/);
-- Johan Stokking from [Emando](http://www.emando.nl/);
+- Johan Stokking from ~~Emando~~;
 - Marco van der Niet from [Topicus Onderwijs](http://www.topicus.nl);
-- And finally, Erik Rutkens from [Insite Advies](http://www.insitegroep.nl/).
+- And finally, Erik Rutkens from ~~Insite Advies~~.
 
 ## 2013
 

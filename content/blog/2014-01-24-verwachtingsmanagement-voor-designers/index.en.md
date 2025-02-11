@@ -19,7 +19,7 @@ header_title_gradient: false
 
 As designers, we have to deal with clients’ expectations. Even before they approach you, they already have an idea of what the final product should be, even if they don’t realize it. This is human nature and is embedded in our subconscious.
 
-These expectations are not always in our favor as designers. For example, you agree with the client to discuss the project. A few weeks later, you present the Photoshop design (or [browser design](http://www.studiowolf.nl/notes/weg-met-photoshop/ "Down with Photoshop?")). The client responds by saying that he finds it terrible. So, you end up back at the drawing board.
+These expectations are not always in our favor as designers. For example, you agree with the client to discuss the project. A few weeks later, you present the Photoshop design. The client responds by saying that he finds it terrible. So, you end up back at the drawing board.
 
 The fact that the client thinks it’s terrible is **our fault**. It is our job to introduce the client to the world of the web. We know the best ways to handle flows, layout, and branding. That’s why involving the client in a solid process is crucial—it sets the proper expectations.
 
