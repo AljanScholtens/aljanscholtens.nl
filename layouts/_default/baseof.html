@@ -82,23 +82,21 @@
       </div>
     {{ end }}
 
-
     {{ block "main" . }}{{ end }}
     
-    <div class="l-wrapper">
-      <div class="l-container">
-        <div class="l-single">
-          <div class="c-footer"></div>
-          <!-- {{ partial "languageselector.html" . }} -->
-        </div>
-      </div>
-    </div>
-
     <div class="c-navigation-mobile__wrapper">
       <ul class="c-navigation-mobile">
-        <li class="c-navigation-mobile__item"><a href="/">Home</a></li>
-        <li class="c-navigation-mobile__item"><a href="/blog">Blog</a></li>
-        <li class="c-navigation-mobile__item"><a href="/contact">Contact</a></li>
+        {{ range .Site.Menus.main }}
+          <li class="c-navigation-mobile__item">
+            <a href="{{ .URL }}">
+              {{ with .Page.Params.menuTitle }}
+                {{ . }}
+              {{ else }}
+                {{ .Page.Title }}
+              {{ end }}
+            </a>
+          </li>
+        {{ end }}
         <!-- <li class="c-navigation-mobile__item"><a href=""><svg><use xlink:href="#icon-more"></use></svg></a></li> -->
       </ul>
     </div>
