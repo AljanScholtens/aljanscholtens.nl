@@ -1,0 +1,26 @@
+/*------------------------------------*\
+  #COMPONENTS-LOGO_GRID
+\*------------------------------------*/
+
+.c-logo-grid {
+  list-style: none;
+  margin: var(--space-stack-default);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.c-logo-grid__item {
+  padding: var(--space-default);
+  display: flex;
+
+  & img {
+    margin: auto;
+    max-width: 100%;
+    mix-blend-mode: darken;
+  }
+}
+
+.t-dark .c-logo-grid__item img {
+  filter: invert(100%) grayscale(100%);
+  mix-blend-mode: screen;
+}

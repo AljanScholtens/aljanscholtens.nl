@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {{ $styles := resources.Get "css/styles.css" | postCSS (dict "config" "postcss.config.js") | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+    <link rel="shortcut icon" href="/images/favicon.svg">
+
+    <title>{{ .Title | safeHTML }} - Aljan Scholtens</title>
+    <meta name="description" content="{{ .Params.description | default "Designer and photographer Aljan Scholtens" }}">
+    <meta property="og:title" content="{{ .Title | safeHTML }}">
+    <meta property="og:description" content="{{ .Params.description | default "Designer and photographer Aljan Scholtens" }}">
+    <meta property="og:image" content="{{ if .Resources.GetMatch .Params.photo }}{{ (.Resources.GetMatch .Params.photo).RelPermalink }}{{ else if .Params.photo }}{{ .Params.photo | absURL }}{{ else }}{{ "/images/header-01.jpg" | absURL }}{{ end }}">
+    
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="dee73cd2-27f7-482f-a5e1-6eae9df645db"></script>
+  </head>
+  <body>
+    {{ partial "sprite.html" . }}
+
+    <nav class="c-navigation {{ if .Params.header }}t-dark{{ end }}">
+
+      <a class="c-navigation__logo" href="/">aljan</a>
+
+      <ul class="c-navigation__items">
+        {{ range .Site.Menus.main }}
+          <li class="c-navigation__item">
+            <a href="{{ .URL }}">
+              {{ with .Page.Params.menuTitle }}
+                {{ . }}
+              {{ else }}
+                {{ .Page.Title }}
+              {{ end }}
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+    
+      <ul class="c-navigation__links">
+        <!-- <li class="c-navigation__links-item"><a href="https://twitter.com/aljanscholtens"><svg class="c-icon"><use xlink:href="#icon-twitter"></svg></a></li> -->
+          <li class="c-navigation__links-item">
+            {{ $currentLang := $.Page.Lang }}
+            {{ $otherLangs := where .Site.Languages "Lang" "!=" $currentLang }}
+            {{ if gt (len $otherLangs) 0 }}
+              {{ $other := index $otherLangs 0 }}
+              {{ if or $.Page.IsPage (eq $.Page.Kind "section") }}
+                {{ $translatedPage := where $.Page.Translations "Lang" $other.Lang | first 1 }}
+                {{ if $translatedPage }}
+                  <a href="{{ (index $translatedPage 0).RelPermalink }}">{{ $other.LanguageName }}</a>
+                {{ else if eq $.Page.Kind "section" }}
+                  <a href="/{{ $other.Lang }}/{{ $.Page.Section }}/">{{ $other.LanguageName }}</a>
+                {{ else }}
+                  <a href="/{{ $other.Lang }}/">{{ $other.LanguageName }}</a>
+                {{ end }}
+              {{ else }}
+                <a href="/{{ $other.Lang }}/">{{ $other.LanguageName }}</a>
+              {{ end }}
+            {{ end }}
+
+          </li>
+        <li class="c-navigation__links-item"><a href="https://instagram.com/aljan"><svg class="c-icon"><use xlink:href="#icon-instagram"></svg></a></li>
+        <li class="c-navigation__links-item"><a href="https://www.linkedin.com/in/aljanscholtens/"><svg class="c-icon"><use xlink:href="#icon-linkedin"></svg></a></li>
+      </ul>
+
+    </nav>
+
+    {{ if .Params.header }}
+      <div class="c-header {{ if .Params.header_studio }}c-header--studio{{ end }}">
+        <div class="c-header__content">
+          <div class="c-header__body">
+            <h1 class="c-header__title {{ if .Params.header_title_gradient }}c-header__title--gradient{{ end }}">
+              {{ .Title }}
+            </h1>
+            {{ if .Params.subtitle }}
+              <p class="c-header__subtitle">{{ .Params.subtitle | safeHTML }}</p>
+            {{ end }}
+          </div>
+        </div>
+        {{ $photo := .Params.photo }}
+        {{ with .Resources.GetMatch (printf "*%s" $photo) }}
+          <div class="c-header__image" style="background-image: url('{{ .RelPermalink }}')"></div>
+        {{ else }}
+          <div class="c-header__image" style="background-image: url('{{ $photo }}')"></div>
+        {{ end }}
+      </div>
+    {{ end }}
+
+    {{ block "main" . }}{{ end }}
+
+    <div class="l-wrapper">
+      <div class="l-container">
+        <div class="l-single">
+          <div class="c-footer"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="c-navigation-mobile__wrapper">
+      <ul class="c-navigation-mobile">
+        {{ range .Site.Menus.main }}
+          <li class="c-navigation-mobile__item">
+            <a href="{{ .URL }}">
+              {{ with .Page.Params.menuTitle }}
+                {{ . }}
+              {{ else }}
+                {{ .Page.Title }}
+              {{ end }}
+            </a>
+          </li>
+        {{ end }}
+        <!-- <li class="c-navigation-mobile__item"><a href=""><svg><use xlink:href="#icon-more"></use></svg></a></li> -->
+      </ul>
+    </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <script src="/scripts/lazyload.min.js"></script>
+    <script src="/scripts/fitie.js"></script>
+    <script src="/scripts/jquery.fancybox.min.js"></script>
+    <script src="/scripts/flickity.pkgd.min.js"></script>
+    <script src="/scripts/scripts.js"></script>
+   
+  </body>
+</html>

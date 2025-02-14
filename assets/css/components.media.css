@@ -1,0 +1,56 @@
+/*------------------------------------*\
+  #COMPONENTS-MEDIA
+\*------------------------------------*/
+
+.c-media {
+  margin-bottom: calc(var(--space-default) + 6px);
+  position: relative;
+  width: 100%;
+
+  & + .c-media {
+    margin-top: calc(-1 * var(--space-default));
+    padding-top: 0 !important;
+  }
+}
+
+  .c-media__image {
+    display: block;
+    max-width: 100%;
+  }
+
+  .c-media__caption {
+    /* display: none; */
+    color: var(--color-neutral-50);
+    font-size: var(--font-size-20);
+    padding-top: var(--space-20);
+    margin-bottom: var(--space-40);
+  }
+
+.c-media--video {
+  aspect-ratio: 16/10;
+  width: auto;
+  margin: var(--space-stack-default);
+  margin-left: -10px;
+  margin-right: -10px;
+  
+  @media (--breakpoint-20) {
+    margin-left: -26px;
+    margin-right: -26px;
+  }
+
+  @media (--breakpoint-30) {
+    margin: var(--space-stack-50);
+    margin-left: -58px;
+    margin-right: -58px;
+    margin-top: var(--space-50);
+  }
+
+  & iframe {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+

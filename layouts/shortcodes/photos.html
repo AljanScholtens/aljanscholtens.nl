@@ -1,0 +1,89 @@
+</div>
+<div class="c-photos-wrapper">
+  {{ $footnote := .Get "footnote" }}
+  {{ $ordinal := .Ordinal }}
+  {{ $page := .Page }}  {{/* <-- Hier slaan we de originele pagina-context op */}}
+
+  {{/* FASE 1: Tel het TOTALE aantal foto's */}}
+  {{ $lines := split .Inner "\n" }}
+  {{ $photoCount := 0 }}
+  {{ range $line := $lines }}
+    {{ $lineClean := trim $line " \t\r\n" }}
+    {{ if $lineClean }}{{ $photoCount = add $photoCount 1 }}{{ end }}
+  {{ end }}
+  
+  {{/* Bepaal standaard breedte: 33 cols als er 4+ foto's zijn */}}
+  {{ $defaultCols := cond (ge $photoCount 4) "33" "100" }}
+  
+  {{/* FASE 2: Tel hoeveel foto's daadwerkelijk 33 cols hebben */}}
+  {{ $count33 := 0 }}
+  {{ range $line := $lines }}
+    {{ $lineClean := trim $line " \t\r\n" }}
+    {{ if $lineClean }}
+      {{ $parts := split $lineClean "|" }}
+      {{ $cols := $defaultCols }}
+      {{ if ge (len $parts) 3 }}
+        {{ $cols = trim (index $parts 2) " " }}
+      {{ end }}
+      {{ if eq $cols "33" }}{{ $count33 = add $count33 1 }}{{ end }}
+    {{ end }}
+  {{ end }}
+  
+  {{ $allAre33 := eq $photoCount $count33 }}
+  
+  <ul class="c-photos {{ if $allAre33 }}c-photos--square{{ end }}">
+    {{/* FASE 3: Bouw de daadwerkelijke HTML op */}}
+    {{ range $line := $lines }}
+      {{ $lineClean := trim $line " \t\r\n" }}
+      {{ if $lineClean }}
+        {{ $parts := split $lineClean "|" }}
+        
+        {{/* Basiswaarden extraheren */}}
+        {{ $img := trim (index $parts 0) " " }}
+        {{ $caption := trim (index $parts 1) " " }}
+        {{ $cols := $defaultCols }}
+        {{ $orientation := "" }}
+  
+        {{/* Overschrijf cols als expliciet opgegeven */}}
+        {{ if ge (len $parts) 3 }}
+          {{ $cols = trim (index $parts 2) " " }}
+        {{ end }}
+  
+        {{/* Optionele portrait orientation */}}
+        {{ if ge (len $parts) 4 }}
+          {{ $orientation = trim (index $parts 3) " " }}
+        {{ end }}
+  
+        <li class="c-photos__item c-photos__item--{{ $cols }} {{ if eq $orientation "portrait" }}c-photos__item--portrait{{ end }}">
+          {{/* Gebruik $page om de resource op te halen */}}
+          {{ $imgRes := $page.Resources.GetMatch (printf "*%s" $img) }}
+          {{ if $imgRes }}
+            <a data-fancybox="gallery-{{ $ordinal }}" href="{{ $imgRes.RelPermalink }}">
+              <img class="js-lazy" data-original="{{ $imgRes.RelPermalink }}" alt="{{ $caption }}" />
+              {{ if $caption }}
+                <small class="c-photos__caption">{{ $caption }}</small>
+              {{ end }}
+            </a>
+          {{ else }}
+            <a data-fancybox="gallery-{{ $ordinal }}" href="{{ $img }}">
+              <img class="js-lazy" data-original="{{ $img }}" alt="{{ $caption }}" />
+              {{ if $caption }}
+                <small class="c-photos__caption">{{ $caption }}</small>
+              {{ end }}
+            </a>
+          {{ end }}
+        </li>
+      {{ end }}
+    {{ end }}
+  </ul>
+  
+  {{ with $footnote }}
+    <div class="c-photos__footnote">
+      <p>
+        <small><strong>Notitie</strong>: {{ . }}</small>
+      </p>
+    </div>
+  {{ end }}
+</div>
+
+<div class="l-single u-content">

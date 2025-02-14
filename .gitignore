@@ -1,0 +1,24 @@
+# Hugo gegenereerde bestanden
+/public/
+/resources/
+/hugo_stats.json
+/_gen/
+
+# Node modules
+node_modules/
+
+# NPM en Yarn logbestanden
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Omgevingsvariabelen
+.env
+
+# OS-specifieke bestanden
+.DS_Store
+Thumbs.db
+
+# Editor-specifieke mappen
+.vscode/
+.idea/

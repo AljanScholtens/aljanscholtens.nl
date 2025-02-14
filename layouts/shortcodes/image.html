@@ -1,0 +1,27 @@
+{{ $size := .Get "size" }}
+
+{{/* Haal de bron voor de afbeelding op: gebruik de src-parameter als deze is meegegeven, anders de front matter (photo) */}}
+{{ $srcParam := .Get "src" | default $.Page.Params.photo }}
+{{ $src := $srcParam }}
+{{ with $.Page.Resources.GetMatch (printf "*%s" $srcParam) }}
+  {{ $src = .RelPermalink }}
+{{ end }}
+
+{{/* Bepaal ook de alt-tekst: als er geen alt is meegegeven, gebruik dan een fallback uit de front matter */}}
+{{ $alt := .Get "alt" | default $.Page.Params.alt | default $.Page.Params.caption }}
+{{ $caption := .Get "caption" | default $.Page.Params.caption }}
+
+{{ if eq $size "large" }}
+  </div>
+{{ end }}
+
+<figure class="c-media {{ if eq $size "large" }}c-media--large{{ end }}">
+    <img class="c-media__image js-lazy" data-original="{{ $src }}" alt="{{ $alt }}" loading="lazy">
+    {{ with $caption }}
+      <figcaption class="c-media__caption">{{ . }}</figcaption>
+    {{ end }}
+</figure>
+
+{{ if eq $size "large" }}
+  <div class="l-single u-content">
+{{ end }}

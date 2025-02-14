@@ -1,0 +1,27 @@
+baseURL = "https://www.aljanscholtens.nl/"
+title = "Aljan Scholtens"
+languageCode = "nl"
+defaultContentLanguage = "nl"
+defaultContentLanguageInSubdir = false
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  author = "Aljan"
+
+[languages]
+
+  [languages.nl]
+    languageName = "Nederlands"
+    weight = 1
+    contentDir = "content"
+    lang = "nl"
+
+  [languages.en]
+    languageName = "English"
+    weight = 2
+    contentDir = "content"
+    lang = "en"
+
+  

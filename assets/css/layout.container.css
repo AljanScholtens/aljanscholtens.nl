@@ -1,0 +1,30 @@
+/*------------------------------------*\
+  #LAYOUT-CONTAINERS
+\*------------------------------------*/
+
+/*
+ * Build up your container to get your website centered
+ */
+.l-container {
+  margin: auto;
+  width: 100%;
+  max-width: var(--max-width);
+  padding: var(--space-default) var(--space-default) 0.1px var(--space-default);
+  position: relative;
+
+  @media (--breakpoint-20) {
+    padding: 32px;
+    padding-bottom: var(--space-default);
+  }
+
+  @media (--breakpoint-20) {
+    padding: 64px;
+    padding-bottom: calc(var(--space-default) * 3);
+  }
+}
+
+
+.l-container--full-width {
+  max-width: none;
+  margin: 0;
+}
