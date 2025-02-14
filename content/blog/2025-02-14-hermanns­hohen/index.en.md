@@ -1,7 +1,7 @@
 ---
-title: "A Piece of Hermanshöhen"
+title: "A part of Hermanshöhen"
 date: 2025-02-14
-slug: "piece-of-hermanshohen"
+slug: "part-of-hermanshohen"
 draft: false
 author: "Aljan"
 
