@@ -6,7 +6,7 @@ translationKey: blog
 weight: '2'
 subtitle: ''
 description: ''
-photo: /images/header-03.jpg
+photo: /images/header-06.jpg
 thumbnail: ''
 header: true
 header_studio: false
