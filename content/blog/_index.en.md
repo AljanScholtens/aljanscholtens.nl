@@ -10,5 +10,5 @@ photo: /images/header-03.jpg
 thumbnail: ''
 header: true
 header_studio: false
-header_title_gradient: false
+header_title_gradient: true
 ---
