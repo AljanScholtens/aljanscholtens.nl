@@ -78,9 +78,9 @@
         </div>
         {{ $photo := .Params.photo }}
         {{ with .Resources.GetMatch (printf "*%s" $photo) }}
-          <div class="c-header__image" style="background-image: url('{{ .RelPermalink }}')"></div>
+          <div class="c-header__image {{ if .Params.photoPosition }}c-header__image--position{{ end }}" style="background-image: url('{{ .RelPermalink }}')"></div>
         {{ else }}
-          <div class="c-header__image" style="background-image: url('{{ $photo }}')"></div>
+          <div class="c-header__image {{ if .Params.photoPosition }}c-header__image--position{{ end }}" style="background-image: url('{{ $photo }}')"></div>
         {{ end }}
       </div>
     {{ end }}

@@ -7,3 +7,4 @@ python3 translate.py
 
 # Run
 hugo server
+hugo server --disableFastRender

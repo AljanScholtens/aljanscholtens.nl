@@ -4,7 +4,8 @@ subtitle: of <em>digital</em> products
 slug: home
 description: Looking for a designer who asks the why question, thinks technically
   and creates beautiful products? I can help.
-photo: /images/header.jpg
+photo: /images/header-12.jpg
+photoPosition: "change"
 thumbnail: ''
 header: true
 header_studio: true

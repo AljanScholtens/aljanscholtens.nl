@@ -169,14 +169,19 @@
   background-repeat: no-repeat;
   background-position: center;
   mix-blend-mode: lighten;
-  /* background-color: var(--color-primary-90);
-  background-blend-mode: lighten; */
-  /* opacity: 0.8; */
 
   @media (--breakpoint-20) {
     filter: grayscale(1);
     opacity: 0;
     animation: c-header-image-a 2s linear forwards 500ms,
       c-header-image-b 500ms forwards ease-out;
+  }
+}
+
+.c-header__image--position {
+  background-position: 80% 0;
+
+  @media (--breakpoint-20) {
+    background-position: center;
   }
 }

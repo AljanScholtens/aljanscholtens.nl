@@ -7,7 +7,7 @@ weight: '3'
 subtitle: ''
 description: Looking for a designer who asks the why question, thinks technically
   and creates beautiful products? I can help.
-photo: header-06.jpg
+photo: header-10.jpg
 thumbnail: ''
 header: true
 header_studio: false
