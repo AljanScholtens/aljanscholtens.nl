@@ -27,9 +27,23 @@
   }
 
 .c-media--video {
-  height: 0;
-  padding-bottom: 56.25%;
-  width: 100%;
+  aspect-ratio: 16/10;
+  width: auto;
+  margin: var(--space-stack-default);
+  margin-left: -10px;
+  margin-right: -10px;
+  
+  @media (--breakpoint-20) {
+    margin-left: -26px;
+    margin-right: -26px;
+  }
+
+  @media (--breakpoint-30) {
+    margin: var(--space-stack-50);
+    margin-left: -58px;
+    margin-right: -58px;
+    margin-top: var(--space-50);
+  }
 
   & iframe {
     position: absolute;
@@ -39,3 +53,4 @@
     height: 100%;
   }
 }
+
