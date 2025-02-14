@@ -1,2 +1,9 @@
+# Translate files
 python3 translate-all.py
 python3 translate.py
+
+# Deploy
+./deploy.sh
+
+# Run
+hugo server
