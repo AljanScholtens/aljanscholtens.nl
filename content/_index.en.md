@@ -8,7 +8,7 @@ photo: /images/header-12.jpg
 photoPosition: "change"
 thumbnail: ''
 header: true
-header_studio: true
+header_studio: false
 header_title_gradient: false
 ---
 

@@ -8,7 +8,7 @@ photoPosition: "change"
 thumbnail: "" # Not required
 
 header: true # true is a large header, false is no header
-header_studio: true # Not required
+header_studio: false # Not required
 header_title_gradient: false # Not required
 ---
 

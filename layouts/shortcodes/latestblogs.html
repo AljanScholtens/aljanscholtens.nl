@@ -1,32 +1,32 @@
 </div>
-<div class="l-single-wide">
-<div class="c-card-grid">
-  {{ range first 2 (sort $.Site.RegularPages "Date" "desc") }}
-    <a href="{{ .Permalink | absURL }}" class="c-card">
-      <div class="c-card__inner">
-        {{ if .Params.photo }}
-          {{ $img := .Resources.GetMatch .Params.photo }}
-          {{ if $img }}
-            <div class="c-card__image">
-              <img
-                class="js-lazy"
-                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                data-original="{{ $img.RelPermalink }}"
-                alt="{{ .Title }}"
-              />
-            </div>
+<div class="l-single">
+  <div class="c-card-grid c-card-grid--small">
+    {{ range first 2 (sort $.Site.RegularPages "Date" "desc") }}
+      <a href="{{ .Permalink | absURL }}" class="c-card">
+        <div class="c-card__inner">
+          {{ if .Params.photo }}
+            {{ $img := .Resources.GetMatch .Params.photo }}
+            {{ if $img }}
+              <div class="c-card__image">
+                <img
+                  class="js-lazy"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                  data-original="{{ $img.RelPermalink }}"
+                  alt="{{ .Title }}"
+                />
+              </div>
+            {{ end }}
           {{ end }}
-        {{ end }}
-        <div class="c-card__content">
-          <p class="c-paragraph c-paragraph--soft">
-            {{ .Date.Format "02 January 2006" }}
-          </p>
-          <h2 class="c-heading c-heading--30">{{ .Title | safeHTML }}</h2>
-          <p>{{ .Params.description }}</p>
+          <div class="c-card__content">
+            <!-- <p class="c-paragraph c-paragraph--soft">
+              {{ .Date.Format "02 January 2006" }}
+            </p> -->
+            <h2 class="c-heading c-heading--30">{{ .Title | safeHTML }}</h2>
+            <p>{{ .Params.description }}</p>
+          </div>
         </div>
-      </div>
-    </a>
-  {{ end }}
-</div>
+      </a>
+    {{ end }}
+  </div>
 </div>
 <div class="l-single u-content">

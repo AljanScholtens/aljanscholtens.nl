@@ -16,6 +16,7 @@ header_title_gradient: false
 ---
 
 {{<photos footnote="">}}
+AJS-20250119-0127-2.jpg | Schipborg, Drenthe
 aljanscholtens-23.jpg | Harz, Germany
 aljanscholtens-27.jpg | Drenthe, Netherlands
 aljanscholtens-21.jpg | Groningen, Netherlands

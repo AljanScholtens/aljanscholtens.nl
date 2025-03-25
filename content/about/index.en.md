@@ -2,7 +2,7 @@
 title: "About me"
 subtitle: ""
 slug: "about"
-draft: true
+draft: false
 layout: "default"
 description: ""
 photo: "header-08.jpg"
@@ -34,8 +34,6 @@ Within two years, I bought my own Canon EOS 350D and began taking photos of shop
 
 I spent the last ten years as the co-owner of a design agency, creating digital products. Alongside this business, my enthusiasm for landscape photography grew, and I decided to become a landscape photographer. We live in a world where you can try different things when the time is right.
 
-### Gallery
-
 {{<image src="about-03.jpg">}}
 
 Nowadays I travel a lot for landscape photography to destinations such as Scotland, Iceland, Norway, Austria, Italy, New Zealand, and of course The Netherlands. For me, there is nothing better than being outside and capturing captivating photos. A nice morning outside without taking photos is still a nice morning outside. Nature never abandons us, as long as we're open to it.
@@ -45,8 +43,6 @@ The most important aspect in my search for great landscape photography is purity
 ## Gear
 
 Last year I switched from Canon to Sony, so below is my new gear. I also have a small museum at home with very old analogue cameras. Sometimes I even use my old Pentax lenses on my Sony camera.
-
-### Gallery
 
 {{<image src="about-04.jpg">}}
 

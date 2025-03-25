@@ -5,6 +5,27 @@
 .c-card-grid {
 }
 
+.c-card-grid--small {
+  .c-card__image {
+    position: relative;
+    overflow: hidden;
+    margin-right: 16px;
+    flex: 0 0 64px;
+    height: 64px;
+  
+    @media (--breakpoint-20) {
+    }
+  }
+
+  & h2 {
+    font-size: 18px;
+  }
+
+  & .c-paragraph--soft {
+    font-size: 12px;
+  }
+}
+
 .c-card {
   background: transparent;
   padding: 0;
