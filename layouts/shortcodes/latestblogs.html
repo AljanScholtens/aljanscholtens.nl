@@ -1,6 +1,6 @@
 </div>
 <div class="l-single">
-  <div class="c-card-grid c-card-grid--small">
+  <div class="c-card-grid">
     {{ range first 2 (sort $.Site.RegularPages "Date" "desc") }}
       <a href="{{ .Permalink | absURL }}" class="c-card">
         <div class="c-card__inner">
