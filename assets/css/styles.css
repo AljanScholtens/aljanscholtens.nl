@@ -37,12 +37,12 @@
 @import "components.fancybox.css";
 @import "components.footer.css";
 
-/* @import "components.form-checkbox.css";
+@import "components.form-checkbox.css";
 @import "components.form-field.css";
 @import "components.form-input.css";
 @import "components.form-radiobutton.css";
 @import "components.form-select.css";
-@import "components.form-textarea.css"; */
+@import "components.form-textarea.css";
 
 @import "components.header.css";
 @import "components.heading.css";

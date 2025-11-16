@@ -16,13 +16,15 @@ input[type=url] {
   font-family: var(--font-family-body);
   font-size: var(--font-size-30);
   margin: 0;
-  padding: var(--space-20);
+  padding: 14px;
   vertical-align: baseline;
   width: 100%;
 
   &:focus {
-    border: 1px solid var(--color-neutral-50);
+    border: 1px solid var(--color-primary-50);
+    box-shadow: 0px 0px 0px 3px var(--color-neutral-20);
     outline: 0;
+    color: var(--color-neutral-90);
   }
 }
 
