@@ -6,12 +6,12 @@ draft: false
 author: "Aljan"
 
 subtitle: "" # Not required
-description: "Elke zes maanden een wandeltocht, maar deze keer trokken we net over de grens naar de Hermanshöhen. Prachtig Teutoburgerwald, een jaar geleden alweer—en nu eindelijk de video!"
+description: "Mijn landschapsfotografieboek ‘Waar Licht Ontstaat’ is bijna klaar! Je kunt nu het boek aanvragen."
 
 related: "" # Not required
 related_url: "" # Not required
 
-photo: "/images/header-06.jpg" # Not required
+photo: "header-06.jpg" # Not required
 thumbnail: "" # Not required
 
 header: true # true is a large header, false is no header
