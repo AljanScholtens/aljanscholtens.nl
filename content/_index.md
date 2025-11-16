@@ -25,7 +25,7 @@ Mijn fotoboek 'Waar Licht Onstaat' is bijna klaar. [Hebben](/blog/waar-licht-ont
 - Af en toe post ik landschapsfoto’s op [Instagram](https://instagram.com/aljan).
 - Ik plaats foto’s van onze [Kleine Münsterländer Nikki](http://www.instagram.com/munsterlandernikki/) op Instagram. Ze is lief, eigenwijs en enthousiast!
 
-_Laatste update op 14 februari 2025. De Now'-pagina is geïnspireerd door [Nownownow](http://nownownow.com/)._
+_Laatste update op 16 november 2025. De Now'-pagina is geïnspireerd door [Nownownow](http://nownownow.com/)._
 
 ## Laatste blogartikelen
 
