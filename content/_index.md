@@ -12,8 +12,7 @@ header_studio: false # Not required
 header_title_gradient: false # Not required
 ---
 
-## Psst, mijn boek is uit
-Mijn fotoboek 'Waar Licht Onstaat' is bijna klaar. [Hebben](/blog/waar-licht-ontstaat)?
+**Psst** - Mijn fotoboek 'Waar Licht Ontstaat' gaat binnenkort naar de drukker. [Meer weten of alvast aanvragen](/blog/waar-licht-ontstaat)?
 
 ## Waar ben ik mee bezig?
 
