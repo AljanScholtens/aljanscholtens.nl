@@ -19,17 +19,17 @@ header_studio: false # Not required
 header_title_gradient: false # Not required
 ---
 
-Mijn landschapsfotografieboek ‘Waar Licht Ontstaat’ is bijna klaar! Het verzamelt mijn werk van de afgelopen twaalf jaar, inclusief korte verhalen in 124 pagina's. ik ga het drukken in een kleine oplage op hoogwaardig papier, garen gebonden met een harde cover.
+Mijn landschapsfotografieboek Waar Licht Ontstaat is bijna klaar. Het bevat mijn werk van de afgelopen twaalf jaar met korte begeleidende verhalen, verspreid over 124 pagina’s. Het wordt gedrukt in een kleine oplage op hoogwaardig papier, garen gebonden met harde cover.
 
-Wil je een exemplaar ontvangen? Vul hieronder je gegevens in en ik houd je op de hoogte. Zodra het boek er is, breng ik het persoonlijk langs. Lukt dat niet, dan stuur ik het op.
+Wil je een exemplaar? Vul hieronder je gegevens in en ik houd je op de hoogte. Zodra het boek klaar is, breng ik het bij je langs. Als dat niet lukt, stuur ik het op.
 
-De prijs maak ik bekend zodra alles rond is. Tot die tijd kun je je aanvraag altijd nog annuleren, dus je zit nergens aan vast.
+Je betaalt alleen de inkoopprijs, waarschijnlijk tussen de 30 en 40 euro. Tot die tijd kun je je aanvraag zonder probleem annuleren.
 
-Heb je vragen? Stuur gerust een [mailtje](mailto:aljan@scholtens.me).
+Vragen? Stuur een [mailtje](mailto:aljan@scholtens.me).
 
 {{<waarlichtontstaat>}}
 
-## Hoe ziet het boek eruit?
+<!-- ## Hoe ziet het boek eruit?
 
 Hieronder een paar beelden die je kunt verwachten in het boek.
 
@@ -37,4 +37,4 @@ Hieronder een paar beelden die je kunt verwachten in het boek.
 donjon-2.jpg | | 33
 donjon-3.jpg | | 33
 donjon-4.jpg | | 33
-{{</photos>}}
+{{</photos>}} -->
