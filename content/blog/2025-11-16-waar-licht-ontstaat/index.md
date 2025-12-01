@@ -1,6 +1,6 @@
 ---
 title: "Mijn fotoboek: Waar Licht Ontstaat"
-date: 2025-11-16
+date: 2025-12-01
 slug: "waar-licht-ontstaat"
 draft: false
 author: "Aljan"
