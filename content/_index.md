@@ -1,6 +1,6 @@
 ---
 title: "Wildscapes"
-subtitle: "Fotograaf <em>&</em> Digitaal Designer"
+subtitle: "Fotograaf <em>&</em> Digital Designer"
 slug: "home"
 description: "Landschapsfotografie & Digital Design. Ontdek hoe ik de wilde natuur vastleg en digitale ervaringen creëer waarin vrijheid en ontdekken centraal staan." # Not required
 photo: "/images/header-12.jpg" # Not required
