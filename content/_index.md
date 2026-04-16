@@ -14,8 +14,6 @@ header_title_gradient: false # Not required
 
 Ik ben Aljan Scholtens. Als landschapsfotograaf leg ik de wilde natuur vast, waar de wereld even vertraagt en alles helder lijkt. Als maker van Wolf Maps bouw ik de tool waarmee anderen de buitenwereld in kaart brengen en verkennen. Twee werelden die voor mij samenkomen in creëren, vrijheid en ontdekken.
 
-{{<latestblogs>}}
-
 ## Waar ben ik mee bezig?
 
 - Mijn fotoboek 'Waar Licht Ontstaat' gaat binnenkort naar de drukker. [Meer weten of alvast aanvragen](/blog/waar-licht-ontstaat)? Een kleine [sneak peek](https://www.linkedin.com/posts/aljanscholtens_ken-je-dat-gevoel-dat-je-zo-veel-leuke-activity-7183480484998356992-aj4o?utm_source=share&utm_medium=member_desktop).
@@ -26,3 +24,7 @@ Ik ben Aljan Scholtens. Als landschapsfotograaf leg ik de wilde natuur vast, waa
 - Ik plaats foto’s van onze [Kleine Münsterländer Nikki](http://www.instagram.com/munsterlandernikki/) op Instagram. Ze is lief, eigenwijs en enthousiast!
 
 _Laatste update op 14 januari 2026. De Now'-pagina is geïnspireerd door [Nownownow](http://nownownow.com/)._
+
+## Laatste blogartikelen
+
+{{<latestblogs>}}
