@@ -19,7 +19,7 @@ if not DEEPL_API_KEY:
 SHORTCODE_BLOCK_REGEX = re.compile(
     r'(\{\{<\s*photos\b[^>]*>\}\}[\s\S]*?\{\{</\s*photos\s*>\}\})', re.IGNORECASE
 )
-SINGLE_TAG_REGEX = re.compile(r'(\{\{<\s*(?:ref|figure|gallery)\s+[^>]+>\}\})', re.IGNORECASE)
+SINGLE_TAG_REGEX = re.compile(r'(\{\{<\s*(?!/)[a-z0-9_-]+\b[^>]*>\}\})', re.IGNORECASE)
 
 def extract_shortcodes(text: str):
     shortcodes = {}

@@ -26,9 +26,9 @@ SHORTCODE_BLOCK_REGEX = re.compile(
     r'(\{\{<\s*photos\b[^>]*>\}\}[\s\S]*?\{\{</\s*photos\s*>\}\})',
     re.IGNORECASE
 )
-# Deze regex vangt enkele shortcodes zoals ref, figure of gallery
+# Deze regex vangt enkele shortcodes zoals video, wolfmap, ref, figure of gallery
 SINGLE_TAG_REGEX = re.compile(
-    r'(\{\{<\s*(?:ref|figure|gallery)\s+[^>]+>\}\})',
+    r'(\{\{<\s*(?!/)[a-z0-9_-]+\b[^>]*>\}\})',
     re.IGNORECASE
 )
 

@@ -67,7 +67,7 @@
     {{ if .Params.header }}
       <div class="c-header {{ if .Params.header_studio }}c-header--studio{{ end }}">
         <div class="c-header__content">
-          <div class="c-header__body">
+          <div class="c-header__body"{{ with .Params.header_body_width }} style="--c-header-body-width: {{ . }};"{{ end }}>
             <h1 class="c-header__title {{ if .Params.header_title_gradient }}c-header__title--gradient{{ end }}">
               {{ .Title }}
             </h1>

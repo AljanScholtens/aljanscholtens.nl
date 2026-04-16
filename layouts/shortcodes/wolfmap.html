@@ -1,0 +1,27 @@
+</div>
+
+{{ $src := .Get "src" }}
+{{ $hash := .Get "hash" | default (.Get "id") }}
+{{ $zoom := .Get "zoom" | default "1" }}
+{{ $title := .Get "title" | default "Wolf Maps kaart" }}
+
+{{ if and (not $src) $hash }}
+  {{ $src = printf "https://wolfmaps.com/embed/%s?zoom=%s" $hash $zoom }}
+{{ end }}
+
+{{ if not $src }}
+  {{ errorf "wolfmap shortcode requires either 'hash'/'id' or 'src': %s" .Position }}
+{{ end }}
+
+<figure class="c-media c-media--video">
+    <iframe
+    src="{{ $src }}"
+    title="{{ $title }}"
+    allow="geolocation *"
+    frameborder="0"
+    loading="lazy"
+    >
+    </iframe>
+</figure>
+
+<div class="l-single u-content">

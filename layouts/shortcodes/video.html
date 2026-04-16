@@ -1,14 +1,32 @@
 </div>
 
-    <figure class="c-media c-media--video">
-        <iframe
-        src="{{ .Get "url" }}"
-        title="Wolf Maps video"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        >
-        </iframe>
-    </figure>
+{{ $url := .Get "url" }}
+{{ $id := .Get "id" }}
+{{ $title := .Get "title" | default "YouTube video" }}
+
+{{ if and (not $url) $id }}
+  {{ $url = printf "https://www.youtube.com/embed/%s" $id }}
+{{ end }}
+
+{{ if and $url (not (in $url "/embed/")) }}
+  {{ $url = replaceRE `^https?://(?:www\.)?youtube\.com/watch\?v=([^&]+).*$` "https://www.youtube.com/embed/$1" $url }}
+  {{ $url = replaceRE `^https?://youtu\.be/([^?&]+).*$` "https://www.youtube.com/embed/$1" $url }}
+{{ end }}
+
+{{ if not $url }}
+  {{ errorf "video shortcode requires either 'url' or 'id': %s" .Position }}
+{{ end }}
+
+<figure class="c-media c-media--video">
+    <iframe
+    src="{{ $url }}"
+    title="{{ $title }}"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+    loading="lazy"
+    >
+    </iframe>
+</figure>
 
 <div class="l-single u-content">

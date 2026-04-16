@@ -60,7 +60,7 @@
 }
 
 .c-header__body {
-  max-width: 700px;
+  max-width: var(--c-header-body-width, 700px);
   margin: auto;
 }
 
@@ -81,6 +81,7 @@
   padding-bottom: 16px;
   font-family: var(--font-family-b);
   line-height: 1em;
+  text-wrap: balance;
   font-weight: 400;
   font-size: 50px;
   margin: var(--space-stack-30);
