@@ -5,7 +5,7 @@ slug: "waar-licht-ontstaat"
 draft: false
 author: "Aljan"
 
-subtitle: "" # Not required
+subtitle: "Fotoboek" # Not required
 description: "Mijn landschapsfotografieboek ‘Waar Licht Ontstaat’ is bijna klaar! Je kunt nu het boek aanvragen."
 
 related: "" # Not required
