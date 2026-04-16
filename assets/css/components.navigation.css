@@ -5,12 +5,10 @@
 @keyframes c-navigation {
   0% {
     opacity: 0;
-    transform: translateY(-10px);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -79,6 +77,7 @@
 
   @media (--breakpoint-20) {
     display: flex;
+    align-items: center;
     gap: 16px;
   }
 }
@@ -121,12 +120,13 @@
     color: var(--color-neutral-50);
     font-family: var(--font-family-heading);
     font-size: var(--font-size-40);
-    display: flex;
+    display: block;
     line-height: 1;
-    padding: 0.75rem 0.75rem 0.8rem 0.75rem;
+    padding: 0.8rem 0.75rem;
     text-decoration: none;
     font-weight: 400;
     text-transform: lowercase;
+    white-space: nowrap;
 
     &:hover {
       color: var(--color-neutral-90);
