@@ -3,37 +3,38 @@
   method="POST"
   class="c-form"
 >
+  {{ $isEnglish := eq .Page.Lang "en" }}
   <div class="c-form-field">
     <label>
-      <div class="c-form-field__label">Aantal</div>
+      <div class="c-form-field__label">{{ if $isEnglish }}Number{{ else }}Aantal{{ end }}</div>
       <div class="c-form-field__input"><input type="number" name="aantal"></div>
     </label>
   </div>
 
   <div class="c-form-field">
     <label>
-      <div class="c-form-field__label">Naam</div>
+      <div class="c-form-field__label">{{ if $isEnglish }}Name{{ else }}Naam{{ end }}</div>
       <div class="c-form-field__input"><input type="text" name="naam"></div>
     </label>
   </div>
 
   <div class="c-form-field">
     <label>
-      <div class="c-form-field__label">E-mail</div>
+      <div class="c-form-field__label">{{ if $isEnglish }}Email{{ else }}E-mail{{ end }}</div>
       <div class="c-form-field__input"><input type="email" name="email"></div>
     </label>
   </div>
 
   <div class="c-form-field">
     <label>
-      <div class="c-form-field__label">Straat &amp; huisnummer</div>
+      <div class="c-form-field__label">{{ if $isEnglish }}Street &amp; house number{{ else }}Straat &amp; huisnummer{{ end }}</div>
       <div class="c-form-field__input"><input type="text" name="straat"></div>
     </label>
   </div>
 
   <div class="c-form-field">
     <label>
-      <div class="c-form-field__label">Postcode &amp; plaats</div>
+      <div class="c-form-field__label">{{ if $isEnglish }}Postcode &amp; city{{ else }}Postcode &amp; plaats{{ end }}</div>
       <div class="c-form-field__input"><input type="text" name="postcode"></div>
     </label>
   </div>
@@ -44,5 +45,5 @@
       <div class="c-form-field__input"><textarea name="message"></textarea></div>
     </label>
   </div> -->
-  <button class="c-button" type="submit">Boek aanvragen</button>
+  <button class="c-button" type="submit">{{ if $isEnglish }}Request book{{ else }}Boek aanvragen{{ end }}</button>
 </form>

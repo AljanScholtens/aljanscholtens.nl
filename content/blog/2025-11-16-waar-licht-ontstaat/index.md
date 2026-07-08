@@ -6,7 +6,7 @@ draft: false
 author: "Aljan"
 
 subtitle: "" # Not required
-description: "Mijn landschapsfotografieboek ‘Waar Licht Ontstaat’ is bijna klaar! Je kunt nu het boek aanvragen."
+description: "Mijn landschapsfotografieboek ‘Waar Licht Ontstaat’ is er! Je kunt nu het boek aanvragen."
 
 related: "" # Not required
 related_url: "" # Not required
@@ -19,13 +19,19 @@ header_studio: false # Not required
 header_title_gradient: false # Not required
 ---
 
-Mijn landschapsfotografieboek Waar Licht Ontstaat is bijna klaar. Het bevat mijn werk van de afgelopen twaalf jaar met korte begeleidende verhalen, verspreid over 124 pagina’s. Het wordt gedrukt in een kleine oplage op hoogwaardig papier, garen gebonden met harde cover.
+Mijn landschapsfotografieboek Waar Licht Ontstaat is er. Het bevat mijn werk van de afgelopen twaalf jaar met korte begeleidende verhalen, verspreid over 124 pagina’s. Het is gedrukt in een kleine oplage op hoogwaardig papier, garen gebonden met harde cover.
 
-Wil je een exemplaar? Vul hieronder je gegevens in en ik houd je op de hoogte. Zodra het boek klaar is, breng ik het bij je langs. Als dat niet lukt, stuur ik het op.
+Wil je een exemplaar? Vul hieronder je gegevens in, dan breng ik het boek bij je langs. Als dat niet lukt, stuur ik het op.
 
-Je betaalt alleen de inkoopprijs, waarschijnlijk tussen de 30 en 40 euro. Tot die tijd kun je je aanvraag zonder probleem annuleren.
+Het boek kost 35 euro inclusief btw.
 
 Vragen? Stuur een [mailtje](mailto:aljan@scholtens.me).
+
+{{<photos>}}
+AJS-20260331-1783.jpg | | 33
+AJS-20260331-1786.jpg | | 33
+AJS-20260331-1795.jpg | | 33
+{{</photos>}}
 
 {{<waarlichtontstaat>}}
 
