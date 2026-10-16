@@ -22,7 +22,8 @@ if (!is_string($suppliedKey) || !hash_equals($config['cron_key'], $suppliedKey))
 
 $zone = new DateTimeZone('Europe/Amsterdam');
 $now = new DateTimeImmutable('now', $zone);
-if ((int) $now->format('G') !== 20 && ($_GET['check'] ?? '') !== 'now') {
+$preview = ($_GET['preview'] ?? '') === '1';
+if (!$preview && (int) $now->format('G') !== 20 && ($_GET['check'] ?? '') !== 'now') {
     exit("Outside evening check window\n");
 }
 
@@ -77,89 +78,225 @@ try {
 
     $tomorrow = $now->modify('+1 day')->format('Y-m-d');
     $sentPath = $privateDir . '/fog-alert-last-sent.txt';
-    if (is_file($sentPath) && trim((string) file_get_contents($sentPath)) === $tomorrow) {
+    if (!$preview && is_file($sentPath)
+        && trim((string) file_get_contents($sentPath)) === $tomorrow) {
         exit("Alert already sent for tomorrow\n");
     }
 
-    $url = 'https://ensemble-api.open-meteo.com/v1/ensemble?latitude=53.07165252'
-        . '&longitude=6.57674584&hourly=visibility,weather_code&models=gfs025'
-        . '&forecast_days=2&timezone=Europe%2FAmsterdam';
-    [$status, $response] = request($url);
-    if ($status !== 200) {
-        throw new RuntimeException('Forecast returned HTTP ' . $status);
-    }
-    $forecast = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
-    $hourly = $forecast['hourly'] ?? null;
-    if (!is_array($hourly) || !isset($hourly['time']) || !is_array($hourly['time'])) {
-        throw new RuntimeException('Forecast has no hourly data');
-    }
+    try {
+        // Use the local sunrise so the photo window follows the seasons.
+        $utcNoon = new DateTimeImmutable($tomorrow . ' 12:00', new DateTimeZone('UTC'));
+        $sun = date_sun_info($utcNoon->getTimestamp(), 53.07165252, 6.57674584);
+        if (!is_array($sun) || !is_int($sun['sunrise'] ?? null)) {
+            throw new RuntimeException('Could not calculate sunrise');
+        }
+        $sunrise = (new DateTimeImmutable('@' . $sun['sunrise']))->setTimezone($zone);
+        if ($sunrise->format('Y-m-d') !== $tomorrow) {
+            throw new RuntimeException('Sunrise date does not match tomorrow');
+        }
+        $sunriseHour = (int) $sunrise->format('G');
+        $hours = range(max(0, $sunriseHour - 2), min(23, $sunriseHour + 2));
 
-    $indices = [];
-    foreach (range(6, 10) as $hour) {
-        $time = $tomorrow . 'T' . sprintf('%02d', $hour) . ':00';
-        $index = array_search($time, $hourly['time'], true);
-        if ($index === false) {
-            throw new RuntimeException('Forecast is missing ' . $time);
+        $url = 'https://ensemble-api.open-meteo.com/v1/ensemble?latitude=53.07165252'
+            . '&longitude=6.57674584'
+            . '&hourly=visibility,weather_code,cloud_cover,relative_humidity_2m,wind_speed_10m,temperature_2m'
+            . '&models=gfs025&forecast_days=2&timezone=Europe%2FAmsterdam';
+        [$status, $response] = request($url);
+        if ($status !== 200) {
+            throw new RuntimeException('Forecast returned HTTP ' . $status);
         }
-        $indices[] = $index;
-    }
+        $forecast = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+        $hourly = $forecast['hourly'] ?? null;
+        if (!is_array($hourly) || !isset($hourly['time']) || !is_array($hourly['time'])) {
+            throw new RuntimeException('Forecast has no hourly data');
+        }
 
-    $suffixes = [''];
-    foreach (array_keys($hourly) as $key) {
-        if (preg_match('/^visibility(_member\d+)$/', $key, $match)) {
-            $suffixes[] = $match[1];
+        $indices = [];
+        foreach ($hours as $hour) {
+            $time = $tomorrow . 'T' . sprintf('%02d', $hour) . ':00';
+            $index = array_search($time, $hourly['time'], true);
+            if ($index === false) {
+                throw new RuntimeException('Forecast is missing ' . $time);
+            }
+            $indices[$hour] = $index;
         }
-    }
-    $complete = 0;
-    $fog = 0;
-    foreach ($suffixes as $suffix) {
-        $visibility = $hourly['visibility' . $suffix] ?? null;
-        $codes = $hourly['weather_code' . $suffix] ?? null;
-        if (!is_array($visibility) || !is_array($codes)) {
-            continue;
-        }
-        foreach ($indices as $index) {
-            if (!isset($visibility[$index], $codes[$index])
-                || !is_numeric($visibility[$index]) || !is_numeric($codes[$index])) {
-                continue 2;
+
+        $suffixes = [''];
+        foreach (array_keys($hourly) as $key) {
+            if (preg_match('/^visibility(_member\d+)$/', $key, $match)) {
+                $suffixes[] = $match[1];
             }
         }
-        $complete++;
-        foreach ($indices as $index) {
-            if ((float) $visibility[$index] < 200.0
-                && in_array((int) $codes[$index], [45, 48], true)) {
-                $fog++;
-                break;
+        $variables = [
+            'visibility', 'weather_code', 'cloud_cover',
+            'relative_humidity_2m', 'wind_speed_10m', 'temperature_2m',
+        ];
+        $complete = 0;
+        $mist = 0;
+        $dense = 0;
+        $freezingMist = 0;
+        $forestMistSignal = 0;
+        $liftingMist = 0;
+        $openSky = 0;
+        $windSum = 0.0;
+        $mistByHour = array_fill_keys($hours, 0);
+        foreach ($suffixes as $suffix) {
+            $series = [];
+            foreach ($variables as $variable) {
+                $series[$variable] = $hourly[$variable . $suffix] ?? null;
+                if (!is_array($series[$variable])) {
+                    continue 2;
+                }
+            }
+            foreach ($indices as $index) {
+                foreach ($variables as $variable) {
+                    if (!isset($series[$variable][$index])
+                        || !is_numeric($series[$variable][$index])) {
+                        continue 3;
+                    }
+                }
+            }
+
+            $complete++;
+            $memberMist = false;
+            $memberDense = false;
+            $memberFreezing = false;
+            $fogAtHour = [];
+            foreach ($indices as $hour => $index) {
+                $fog = (float) $series['visibility'][$index] < 1000.0
+                    && in_array((int) $series['weather_code'][$index], [45, 48], true);
+                $fogAtHour[$hour] = $fog;
+                if ($fog) {
+                    $memberMist = true;
+                    $mistByHour[$hour]++;
+                    if ((float) $series['visibility'][$index] < 200.0) {
+                        $memberDense = true;
+                    }
+                    if ((float) $series['temperature_2m'][$index] <= 0.0) {
+                        $memberFreezing = true;
+                    }
+                }
+            }
+            $mist += (int) $memberMist;
+            $dense += (int) $memberDense;
+            $freezingMist += (int) $memberFreezing;
+
+            $beforeHour = max(0, $sunriseHour - 1);
+            $beforeIndex = $indices[$beforeHour];
+            // An indirect cue for local fog in sheltered woodland, not a fog probability.
+            if ((float) $series['relative_humidity_2m'][$beforeIndex] >= 95.0
+                && (float) $series['wind_speed_10m'][$beforeIndex] <= 10.0
+                && (float) $series['cloud_cover'][$beforeIndex] <= 60.0) {
+                $forestMistSignal++;
+            }
+            $windSum += (float) $series['wind_speed_10m'][$indices[$sunriseHour]];
+            $laterHour = min(23, $sunriseHour + 2);
+            $laterIndex = $indices[$laterHour];
+            if (($fogAtHour[$beforeHour] || $fogAtHour[$sunriseHour])
+                && !$fogAtHour[$laterHour]
+                && (float) $series['visibility'][$laterIndex] >= 1500.0) {
+                $liftingMist++;
+            }
+            foreach ([$sunriseHour + 1, $sunriseHour + 2] as $hour) {
+                if (isset($indices[$hour])
+                    && (float) $series['cloud_cover'][$indices[$hour]] <= 50.0) {
+                    $openSky++;
+                    break;
+                }
             }
         }
+        if ($complete < 25) {
+            throw new RuntimeException('Too few usable ensemble members: ' . $complete);
+        }
+
+        $mistChance = $mist / $complete;
+        $denseChance = $dense / $complete;
+        $openSkyChance = $openSky / $complete;
+        $forestSignalShare = $forestMistSignal / $complete;
+        $liftingChance = $liftingMist / $complete;
+        $bestHour = null;
+        $bestCount = 0;
+        foreach ($mistByHour as $hour => $count) {
+            if ($count > $bestCount) {
+                $bestHour = $hour;
+                $bestCount = $count;
+            }
+        }
+
+        $title = $denseChance >= 0.8
+            ? 'Dichte mist verwacht bij Vries'
+            : 'Fotoweer morgenochtend bij Vries';
+        $priority = $denseChance >= 0.8 ? 4 : 3;
+        $lines = [
+            sprintf('Morgen %s · zon op %s.', $sunrise->format('d-m-Y'), $sunrise->format('H:i')),
+            sprintf(
+                'Mist (<1 km): %d%% · dichte mist (<200 m): %d%% (%d modelscenario’s).',
+                (int) round($mistChance * 100),
+                (int) round($denseChance * 100),
+                $complete
+            ),
+        ];
+        if ($bestHour !== null) {
+            $lines[] = sprintf('Grootste mistkans rond %02d:00.', $bestHour);
+        }
+        $lines[] = sprintf(
+            'Ruimte voor zon na zonsopkomst: %d%% · wind rond %d km/u.',
+            (int) round($openSkyChance * 100),
+            (int) round($windSum / $complete)
+        );
+        $lines[] = sprintf(
+            'Bosmist-signaal: %d/%d scenario’s met zeer vochtige, rustige nacht.',
+            $forestMistSignal,
+            $complete
+        );
+        if ($denseChance >= 0.5) {
+            $lines[] = 'Dichte mist is kansrijk; ook in het bos.';
+        } elseif ($mistChance >= 0.4 && $liftingChance >= 0.25
+            && $openSkyChance >= 0.25) {
+            $lines[] = 'Mist kan optrekken met ruimte voor ochtendlicht.';
+        } elseif ($mistChance >= 0.4) {
+            $lines[] = 'Kansrijk voor mist rond zonsopkomst.';
+        } elseif ($forestSignalShare >= 0.4) {
+            $lines[] = 'Condities voor lokale bosmist; dichtheid onzeker.';
+        } else {
+            $lines[] = 'Weinig aanwijzingen voor mist.';
+        }
+        if ($freezingMist / $complete >= 0.2) {
+            $lines[] = 'Mist bij vorst is mogelijk.';
+        }
+        $lines[] = 'Bosmist blijft lokaal lastig te voorspellen, ook zonder modelsignaal.';
+        $message = implode("\n", $lines);
+
+        $checkStatus = sprintf(
+            "%s; morgen=%s; zon=%s; mist=%.1f%%; dicht=%.1f%%; bosmist-signaal=%.1f%%; scenario's=%d\n",
+            $now->format('Y-m-d H:i:sP'),
+            $tomorrow,
+            $sunrise->format('H:i'),
+            $mistChance * 100,
+            $denseChance * 100,
+            $forestSignalShare * 100,
+            $complete
+        );
+    } catch (Throwable $forecastError) {
+        error_log('Fog forecast: ' . $forecastError->getMessage());
+        $title = 'Fotoweer Vries: gegevens ontbreken';
+        $priority = 3;
+        $message = 'De fotoweerverwachting voor morgen kon vanavond niet worden berekend. Er is geen betrouwbare mistinschatting.';
+        $checkStatus = $now->format('Y-m-d H:i:sP') . '; morgen=' . $tomorrow
+            . '; fout=' . $forecastError->getMessage() . "\n";
     }
-    if ($complete < 25) {
-        throw new RuntimeException('Too few usable ensemble members: ' . $complete);
-    }
-    $chance = $fog / $complete;
-    $checkStatus = sprintf(
-        "%s; morgen=%s; kans=%.1f%%; scenario's=%d\n",
-        $now->format('Y-m-d H:i:sP'),
-        $tomorrow,
-        $chance * 100,
-        $complete
-    );
-    if (@file_put_contents($privateDir . '/fog-alert-last-check.txt', $checkStatus, LOCK_EX) === false) {
+    if (!$preview && @file_put_contents($privateDir . '/fog-alert-last-check.txt', $checkStatus, LOCK_EX) === false) {
         error_log('Fog alert: could not save last check status');
     }
-    if ($chance < 0.8) {
-        exit(sprintf("No alert: %.1f%% of %d model runs\n", $chance * 100, $complete));
+    if ($preview) {
+        header('Content-Type: text/plain; charset=utf-8');
+        echo $title . "\n" . $message . "\n";
+        exit;
     }
-
-    $message = sprintf(
-        'Morgen %s van 06:00–10:00 uur kans op dichte mist in Vries: %.0f%% volgens weerscenario’s (modelschatting).',
-        $now->modify('+1 day')->format('d-m-Y'),
-        $chance * 100
-    );
     [$notifyStatus] = request(
         'https://ntfy.sh/' . rawurlencode($config['ntfy_topic']),
         $message,
-        ['Title: Dichte mist verwacht in Vries', 'Priority: 4', 'Content-Type: text/plain; charset=utf-8']
+        ['Title: ' . $title, 'Priority: ' . $priority, 'Content-Type: text/plain; charset=utf-8']
     );
     if ($notifyStatus < 200 || $notifyStatus >= 300) {
         throw new RuntimeException('Notification returned HTTP ' . $notifyStatus);
