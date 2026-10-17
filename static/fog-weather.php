@@ -44,13 +44,83 @@ function fogRequest(string $url, ?string $body = null, array $headers = []): arr
     return [(int) ($match[1] ?? 0), $response];
 }
 
-function fogBuildForecast(DateTimeImmutable $now, DateTimeZone $zone): array
+function fogDefaultPlace(): array
 {
+    return ['name' => 'Vries', 'latitude' => 53.07165252, 'longitude' => 6.57674584];
+}
+
+function fogFindDutchPlace(string $query): array
+{
+    $url = 'https://geocoding-api.open-meteo.com/v1/search?'
+        . http_build_query([
+            'name' => $query,
+            'count' => 20,
+            'language' => 'nl',
+            'countryCode' => 'NL',
+            'format' => 'json',
+        ], '', '&', PHP_QUERY_RFC3986);
+    [$status, $response] = fogRequest($url);
+    if ($status !== 200) {
+        throw new RuntimeException('Place search returned HTTP ' . $status);
+    }
+    $data = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+    if (!is_array($data)) {
+        throw new RuntimeException('Place search returned invalid data');
+    }
+    $results = $data['results'] ?? [];
+    if (!is_array($results)) {
+        throw new RuntimeException('Place search has no result list');
+    }
+
+    $name = trim(explode(',', $query, 2)[0]);
+    $fold = static function (string $value): string {
+        return function_exists('mb_strtolower')
+            ? mb_strtolower($value, 'UTF-8')
+            : strtolower($value);
+    };
+    $matches = [];
+    $suggestions = [];
+    foreach ($results as $candidate) {
+        if (!is_array($candidate) || !is_string($candidate['name'] ?? null)
+            || !is_numeric($candidate['latitude'] ?? null)
+            || !is_numeric($candidate['longitude'] ?? null)) {
+            continue;
+        }
+        $place = [
+            'name' => $candidate['name'],
+            'latitude' => (float) $candidate['latitude'],
+            'longitude' => (float) $candidate['longitude'],
+            'province' => is_string($candidate['admin1'] ?? null)
+                ? $candidate['admin1'] : '',
+        ];
+        $suggestions[] = $place;
+        if ($fold($place['name']) === $fold($name)) {
+            $matches[] = $place;
+        }
+    }
+    if (count($matches) === 1) {
+        if (strpos($query, ',') !== false && $matches[0]['province'] !== '') {
+            $matches[0]['name'] .= ', ' . $matches[0]['province'];
+        }
+        return ['status' => 'ok', 'place' => $matches[0]];
+    }
+    if (count($matches) > 1) {
+        return ['status' => 'ambiguous', 'places' => $matches];
+    }
+    return ['status' => 'not_found', 'suggestions' => array_slice($suggestions, 0, 3)];
+}
+
+function fogBuildForecast(DateTimeImmutable $now, DateTimeZone $zone, ?array $place = null): array
+{
+    $place = $place ?? fogDefaultPlace();
+    $placeName = $place['name'];
+    $latitude = (float) $place['latitude'];
+    $longitude = (float) $place['longitude'];
     $tomorrow = $now->modify('+1 day')->format('Y-m-d');
     try {
         // Use the local sunrise so the photo window follows the seasons.
         $utcNoon = new DateTimeImmutable($tomorrow . ' 12:00', new DateTimeZone('UTC'));
-        $sun = date_sun_info($utcNoon->getTimestamp(), 53.07165252, 6.57674584);
+        $sun = date_sun_info($utcNoon->getTimestamp(), $latitude, $longitude);
         if (!is_array($sun) || !is_int($sun['sunrise'] ?? null)) {
             throw new RuntimeException('Could not calculate sunrise');
         }
@@ -61,8 +131,8 @@ function fogBuildForecast(DateTimeImmutable $now, DateTimeZone $zone): array
         $sunriseHour = (int) $sunrise->format('G');
         $hours = range(max(0, $sunriseHour - 2), min(23, $sunriseHour + 2));
 
-        $url = 'https://ensemble-api.open-meteo.com/v1/ensemble?latitude=53.07165252'
-            . '&longitude=6.57674584'
+        $url = 'https://ensemble-api.open-meteo.com/v1/ensemble?latitude=' . rawurlencode((string) $latitude)
+            . '&longitude=' . rawurlencode((string) $longitude)
             . '&hourly=visibility,weather_code,cloud_cover,relative_humidity_2m,wind_speed_10m,temperature_2m'
             . '&models=gfs025&forecast_days=2&timezone=Europe%2FAmsterdam';
         [$status, $response] = fogRequest($url);
@@ -188,8 +258,8 @@ function fogBuildForecast(DateTimeImmutable $now, DateTimeZone $zone): array
         }
 
         $title = $denseChance >= 0.8
-            ? 'Dichte mist verwacht bij Vries'
-            : 'Fotoweer morgenochtend bij Vries';
+            ? 'Dichte mist verwacht bij ' . $placeName
+            : 'Fotoweer morgenochtend bij ' . $placeName;
         $priority = $denseChance >= 0.8 ? 4 : 3;
         $lines = [
             sprintf('Morgen %s · zon op %s.', $sunrise->format('d-m-Y'), $sunrise->format('H:i')),
@@ -243,7 +313,7 @@ function fogBuildForecast(DateTimeImmutable $now, DateTimeZone $zone): array
         );
     } catch (Throwable $forecastError) {
         error_log('Fog forecast: ' . $forecastError->getMessage());
-        $title = 'Fotoweer Vries: gegevens ontbreken';
+        $title = 'Fotoweer ' . $placeName . ': gegevens ontbreken';
         $priority = 3;
         $message = 'De fotoweerverwachting voor morgen kan nu niet worden berekend. Er is geen betrouwbare mistinschatting.';
         $checkStatus = $now->format('Y-m-d H:i:sP') . '; morgen=' . $tomorrow

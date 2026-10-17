@@ -50,7 +50,7 @@ if (!is_array($message) || ($message['chat']['type'] ?? null) !== 'private'
 }
 $text = $message['text'] ?? null;
 if (!is_string($text)
-    || !preg_match('/^\/(weer|start|help)(?:@LPW_bot)?$/iD', trim($text), $match)) {
+    || !preg_match('/^\/(weer|start|help)(?:@LPW_bot)?(?:[ \t]+(.+))?$/iD', trim($text), $match)) {
     http_response_code(200);
     exit;
 }
@@ -76,11 +76,42 @@ try {
     if (strtolower($match[1]) === 'weer') {
         $zone = new DateTimeZone('Europe/Amsterdam');
         $now = new DateTimeImmutable('now', $zone);
-        $forecast = fogBuildForecast($now, $zone);
-        $reply = $forecast['title'] . "\n\n" . $forecast['message']
-            . "\n\nOpgevraagd om " . $now->format('H:i') . '.';
+        $placeQuery = trim($match[2] ?? '');
+        $place = null;
+        $reply = null;
+        if (strlen($placeQuery) > 80
+            || ($placeQuery !== '' && preg_match('/[\x00-\x1F\x7F]/', $placeQuery))) {
+            $reply = 'Gebruik /weer of /weer gevolgd door een Nederlandse plaatsnaam, bijvoorbeeld /weer Assen.';
+        } elseif ($placeQuery !== '') {
+            try {
+                $search = fogFindDutchPlace($placeQuery);
+                if ($search['status'] === 'ok') {
+                    $place = $search['place'];
+                } elseif ($search['status'] === 'ambiguous') {
+                    $choices = [];
+                    foreach (array_slice($search['places'], 0, 5) as $candidate) {
+                        $choices[] = $candidate['name'] . ', ' . $candidate['province'];
+                    }
+                    $reply = 'Meerdere plaatsen gevonden: ' . implode('; ', $choices)
+                        . '. Voeg de provincie toe, bijvoorbeeld /weer ' . $choices[0] . '.';
+                } else {
+                    $reply = 'Plaats niet gevonden: ' . $placeQuery . '. Gebruik een volledige Nederlandse plaatsnaam.';
+                    if (!empty($search['suggestions'])) {
+                        $reply .= ' Bedoelde je /weer ' . $search['suggestions'][0]['name'] . '?';
+                    }
+                }
+            } catch (Throwable $placeError) {
+                error_log('Fog bot place search: ' . $placeError->getMessage());
+                $reply = 'Plaatsen zoeken lukt nu niet. Probeer /weer met een plaatsnaam later opnieuw.';
+            }
+        }
+        if ($reply === null) {
+            $forecast = fogBuildForecast($now, $zone, $place);
+            $reply = $forecast['title'] . "\n\n" . $forecast['message']
+                . "\n\nOpgevraagd om " . $now->format('H:i') . '.';
+        }
     } else {
-        $reply = 'Stuur /weer voor een actuele voorspelling voor morgenochtend bij Vries. Je ontvangt ook iedere avond automatisch een bericht.';
+        $reply = 'Stuur /weer voor Vries of bijvoorbeeld /weer Assen voor een andere Nederlandse plaats. Je ontvangt ook iedere avond automatisch een bericht voor Vries.';
     }
     fogSendTelegram($config, (string) $config['telegram_chat_id'], $reply);
 
