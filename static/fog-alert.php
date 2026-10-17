@@ -9,7 +9,9 @@ if (!is_file($configPath)) {
     exit("Configuration missing\n");
 }
 $config = require $configPath;
-if (!is_array($config) || !isset($config['cron_key'], $config['ntfy_topic'])) {
+if (!is_array($config) || !isset($config['cron_key'])
+    || (!isset($config['ntfy_topic'])
+        && !isset($config['telegram_bot_token'], $config['telegram_chat_id']))) {
     http_response_code(503);
     exit("Invalid configuration\n");
 }
@@ -293,13 +295,30 @@ try {
         echo $title . "\n" . $message . "\n";
         exit;
     }
-    [$notifyStatus] = request(
-        'https://ntfy.sh/' . rawurlencode($config['ntfy_topic']),
-        $message,
-        ['Title: ' . $title, 'Priority: ' . $priority, 'Content-Type: text/plain; charset=utf-8']
-    );
-    if ($notifyStatus < 200 || $notifyStatus >= 300) {
-        throw new RuntimeException('Notification returned HTTP ' . $notifyStatus);
+    if (!empty($config['telegram_bot_token']) && !empty($config['telegram_chat_id'])) {
+        $telegramBody = http_build_query([
+            'chat_id' => $config['telegram_chat_id'],
+            'text' => $title . "\n\n" . $message,
+        ], '', '&', PHP_QUERY_RFC3986);
+        [$notifyStatus, $notifyResponse] = request(
+            'https://api.telegram.org/bot' . $config['telegram_bot_token'] . '/sendMessage',
+            $telegramBody,
+            ['Content-Type: application/x-www-form-urlencoded']
+        );
+        $telegramResult = json_decode($notifyResponse, true);
+        if ($notifyStatus !== 200 || !is_array($telegramResult)
+            || ($telegramResult['ok'] ?? null) !== true) {
+            throw new RuntimeException('Telegram notification returned HTTP ' . $notifyStatus);
+        }
+    } else {
+        [$notifyStatus] = request(
+            'https://ntfy.sh/' . rawurlencode($config['ntfy_topic']),
+            $message,
+            ['Title: ' . $title, 'Priority: ' . $priority, 'Content-Type: text/plain; charset=utf-8']
+        );
+        if ($notifyStatus < 200 || $notifyStatus >= 300) {
+            throw new RuntimeException('Notification returned HTTP ' . $notifyStatus);
+        }
     }
     if (file_put_contents($sentPath, $tomorrow . "\n", LOCK_EX) === false) {
         throw new RuntimeException('Notification sent, but delivery state could not be saved');
