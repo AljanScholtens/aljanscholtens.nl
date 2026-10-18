@@ -30,6 +30,7 @@ if (!$preview && (int) $now->format('G') !== 20 && ($_GET['check'] ?? '') !== 'n
 }
 
 require_once __DIR__ . '/fog-weather.php';
+require_once __DIR__ . '/fog-feedback.php';
 
 try {
     $lockPath = $privateDir . '/fog-alert.lock';
@@ -58,11 +59,27 @@ try {
         echo $forecast['title'] . "\n" . $forecast['message'] . "\n";
         exit;
     }
+    $telegramText = $forecast['title'] . "\n\n" . $forecast['message'];
+    $feedbackReady = $forecast['metrics'] !== null
+        && !empty($config['telegram_bot_token'])
+        && !empty($config['telegram_chat_id']);
+    if ($feedbackReady) {
+        $telegramText .= "\n\nNa je ochtend: tik wat je zelf zag.";
+    }
+    try {
+        fogSaveForecastArchive($privateDir, $forecast, $now, null, $telegramText);
+    } catch (Throwable $archiveError) {
+        error_log('Fog alert archive: ' . $archiveError->getMessage());
+        $feedbackReady = false;
+        $telegramText = $forecast['title'] . "\n\n" . $forecast['message'];
+    }
+    $messageId = null;
     if (!empty($config['telegram_bot_token']) && !empty($config['telegram_chat_id'])) {
-        fogSendTelegram(
+        $messageId = fogSendTelegram(
             $config,
             (string) $config['telegram_chat_id'],
-            $forecast['title'] . "\n\n" . $forecast['message']
+            $telegramText,
+            $feedbackReady ? fogFeedbackKeyboard($forecast['date']) : null
         );
     } else {
         [$notifyStatus] = fogRequest(
@@ -77,6 +94,11 @@ try {
         if ($notifyStatus < 200 || $notifyStatus >= 300) {
             throw new RuntimeException('Notification returned HTTP ' . $notifyStatus);
         }
+    }
+    try {
+        fogSaveForecastArchive($privateDir, $forecast, $now, $messageId, $telegramText);
+    } catch (Throwable $archiveError) {
+        error_log('Fog alert archive after delivery: ' . $archiveError->getMessage());
     }
     if (file_put_contents($sentPath, $tomorrow . "\n", LOCK_EX) === false) {
         throw new RuntimeException('Notification sent, but delivery state could not be saved');

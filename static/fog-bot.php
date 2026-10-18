@@ -41,21 +41,39 @@ if (!is_array($update) || !is_int($update['update_id'] ?? null)) {
     http_response_code(200);
     exit;
 }
-$message = $update['message'] ?? null;
-if (!is_array($message) || ($message['chat']['type'] ?? null) !== 'private'
-    || !is_scalar($message['chat']['id'] ?? null)
-    || (string) $message['chat']['id'] !== (string) $config['telegram_chat_id']) {
-    http_response_code(200);
-    exit;
-}
-$text = $message['text'] ?? null;
-if (!is_string($text)
-    || !preg_match('/^\/(weer|start|help)(?:@LPW_bot)?(?:[ \t]+(.+))?$/iD', trim($text), $match)) {
-    http_response_code(200);
-    exit;
+$callback = $update['callback_query'] ?? null;
+if (is_array($callback)) {
+    $callbackMessage = $callback['message'] ?? null;
+    if (!is_array($callbackMessage)
+        || ($callbackMessage['chat']['type'] ?? null) !== 'private'
+        || !is_scalar($callbackMessage['chat']['id'] ?? null)
+        || (string) $callbackMessage['chat']['id'] !== (string) $config['telegram_chat_id']
+        || !is_scalar($callback['from']['id'] ?? null)
+        || (string) $callback['from']['id'] !== (string) $config['telegram_chat_id']
+        || !is_int($callbackMessage['message_id'] ?? null)
+        || !is_string($callback['id'] ?? null)
+        || !is_string($callback['data'] ?? null)) {
+        http_response_code(200);
+        exit;
+    }
+} else {
+    $message = $update['message'] ?? null;
+    if (!is_array($message) || ($message['chat']['type'] ?? null) !== 'private'
+        || !is_scalar($message['chat']['id'] ?? null)
+        || (string) $message['chat']['id'] !== (string) $config['telegram_chat_id']) {
+        http_response_code(200);
+        exit;
+    }
+    $text = $message['text'] ?? null;
+    if (!is_string($text)
+        || !preg_match('/^\/(weer|start|help)(?:@LPW_bot)?(?:[ \t]+(.+))?$/iD', trim($text), $match)) {
+        http_response_code(200);
+        exit;
+    }
 }
 
 require_once __DIR__ . '/fog-weather.php';
+require_once __DIR__ . '/fog-feedback.php';
 
 try {
     // Keep a small history because Telegram can retry the same update.
@@ -73,7 +91,28 @@ try {
         exit;
     }
 
-    if (strtolower($match[1]) === 'weer') {
+    if (is_array($callback)) {
+        $callbackData = $callback['data'];
+        if (preg_match('/^fb:(\d{8}):(mist|photo):([a-z_]+)$/D', $callbackData, $feedbackMatch)) {
+            $stamp = $feedbackMatch[1];
+            $date = substr($stamp, 0, 4) . '-' . substr($stamp, 4, 2) . '-' . substr($stamp, 6, 2);
+            try {
+                $answer = fogRecordFeedback(
+                    $privateDir,
+                    $date,
+                    $callbackMessage['message_id'],
+                    $feedbackMatch[2],
+                    $feedbackMatch[3],
+                    new DateTimeImmutable('now', new DateTimeZone('Europe/Amsterdam'))
+                );
+            } catch (InvalidArgumentException $feedbackError) {
+                $answer = 'Deze keuze herken ik niet.';
+            }
+        } else {
+            $answer = 'Deze keuze herken ik niet.';
+        }
+        fogAnswerCallback($config, $callback['id'], $answer);
+    } elseif (strtolower($match[1]) === 'weer') {
         $zone = new DateTimeZone('Europe/Amsterdam');
         $now = new DateTimeImmutable('now', $zone);
         $placeQuery = trim($match[2] ?? '');
@@ -107,13 +146,14 @@ try {
         }
         if ($reply === null) {
             $forecast = fogBuildForecast($now, $zone, $place);
-            $reply = $forecast['title'] . "\n\n" . $forecast['message']
-                . "\n\nOpgevraagd om " . $now->format('H:i') . '.';
+            $reply = $forecast['title'] . "\n\n" . $forecast['message'];
         }
     } else {
-        $reply = 'Stuur /weer voor Vries of bijvoorbeeld /weer Assen voor een andere Nederlandse plaats. Je ontvangt ook iedere avond automatisch een bericht voor Vries.';
+        $reply = 'Stuur /weer voor Vries of bijvoorbeeld /weer Assen voor een andere Nederlandse plaats. Je ontvangt ook iedere avond automatisch een bericht voor Vries. Onder de avondmelding kun je achteraf aangeven wat je zelf hebt gezien.';
     }
-    fogSendTelegram($config, (string) $config['telegram_chat_id'], $reply);
+    if (!is_array($callback)) {
+        fogSendTelegram($config, (string) $config['telegram_chat_id'], $reply);
+    }
 
     $recentIds[] = $updateId;
     $encoded = json_encode(array_slice($recentIds, -100), JSON_THROW_ON_ERROR);
