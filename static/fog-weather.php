@@ -125,6 +125,33 @@ function fogPhotoScore(
     )));
 }
 
+function fogGroundMistConditions(array $series, array $indices, int $sunriseHour): bool
+{
+    $earlier = $indices[max(0, $sunriseHour - 2)] ?? null;
+    $before = $indices[max(0, $sunriseHour - 1)] ?? null;
+    $atSunrise = $indices[$sunriseHour] ?? null;
+    if ($earlier === null || $before === null || $atSunrise === null) {
+        return false;
+    }
+
+    // A cautious cue for shallow mist below eye level, not a fog probability.
+    // Clear, moist, calm conditions must persist while eye-level visibility stays good.
+    return (float) $series['relative_humidity_2m'][$before] >= 95.0
+        && (float) $series['wind_speed_10m'][$before] <= 8.0
+        && (float) $series['cloud_cover'][$earlier] <= 50.0
+        && (float) $series['cloud_cover'][$before] <= 40.0
+        && (float) $series['precipitation'][$before] < 0.1
+        && (float) $series['visibility'][$before] >= 1000.0
+        && (float) $series['visibility'][$atSunrise] >= 1000.0
+        && !in_array((int) $series['weather_code'][$before], [45, 48], true)
+        && !in_array((int) $series['weather_code'][$atSunrise], [45, 48], true);
+}
+
+function fogGroundMistFavorable(float $share, ?array $harmonie): bool
+{
+    return $share >= 0.6 && ($harmonie === null || !($harmonie['fog'] ?? false));
+}
+
 function fogHarmonieCheck(float $latitude, float $longitude, string $date, array $hours, int $sunriseHour): ?array
 {
     try {
@@ -215,12 +242,17 @@ function fogBuildForecast(
         // Use the local sunrise so the photo window follows the seasons.
         $utcNoon = new DateTimeImmutable($forecastDate . ' 12:00', new DateTimeZone('UTC'));
         $sun = date_sun_info($utcNoon->getTimestamp(), $latitude, $longitude);
-        if (!is_array($sun) || !is_int($sun['sunrise'] ?? null)) {
-            throw new RuntimeException('Could not calculate sunrise');
+        if (!is_array($sun) || !is_int($sun['sunrise'] ?? null)
+            || !is_int($sun['sunset'] ?? null)) {
+            throw new RuntimeException('Could not calculate sun times');
         }
         $sunrise = (new DateTimeImmutable('@' . $sun['sunrise']))->setTimezone($zone);
+        $sunset = (new DateTimeImmutable('@' . $sun['sunset']))->setTimezone($zone);
         if ($sunrise->format('Y-m-d') !== $forecastDate) {
             throw new RuntimeException('Sunrise date does not match forecast date');
+        }
+        if ($sunset->format('Y-m-d') !== $forecastDate) {
+            throw new RuntimeException('Sunset date does not match forecast date');
         }
         $sunriseHour = (int) $sunrise->format('G');
         $hours = range(max(0, $sunriseHour - 2), min(23, $sunriseHour + 2));
@@ -265,6 +297,7 @@ function fogBuildForecast(
         $freezingMist = 0;
         $forestMistSignal = 0;
         $forestOutlook = 0;
+        $groundMistConditions = 0;
         $liftingMist = 0;
         $openSky = 0;
         $wetWeather = 0;
@@ -343,6 +376,9 @@ function fogBuildForecast(
             if ($memberDense || $forestConditions) {
                 $forestOutlook++;
             }
+            $groundMistConditions += (int) fogGroundMistConditions(
+                $series, $indices, $sunriseHour
+            );
             $laterHour = min(23, $sunriseHour + 2);
             $laterIndex = $indices[$laterHour];
             if (($fogAtHour[$beforeHour] || $fogAtHour[$sunriseHour])
@@ -352,7 +388,9 @@ function fogBuildForecast(
             }
             foreach ([$sunriseHour + 1, $sunriseHour + 2] as $hour) {
                 if (isset($indices[$hour])
-                    && (float) $series['cloud_cover'][$indices[$hour]] <= 50.0) {
+                    && (float) $series['cloud_cover'][$indices[$hour]] <= 50.0
+                    && (float) $series['visibility'][$indices[$hour]] >= 1500.0
+                    && (float) $series['precipitation'][$indices[$hour]] < 0.1) {
                     $openSky++;
                     break;
                 }
@@ -367,6 +405,7 @@ function fogBuildForecast(
         $openSkyChance = $openSky / $complete;
         $forestSignalShare = $forestMistSignal / $complete;
         $forestOutlookShare = $forestOutlook / $complete;
+        $groundMistConditionsShare = $groundMistConditions / $complete;
         $liftingChance = $liftingMist / $complete;
         $ensembleScore = fogPhotoScore(
             $mistChance,
@@ -446,65 +485,59 @@ function fogBuildForecast(
                 $reason
             ),
             '',
-            sprintf('• Zonsopkomst: %s', $sunrise->format('H:i')),
-            sprintf('• Mist (zicht <1 km): %d%%', (int) round($mistChance * 100)),
-            sprintf('• Dichte mist (zicht <200 m): %d%%', (int) round($denseChance * 100)),
-            sprintf(
-                '• Bosmist-signaal: %d%%',
-                (int) round($forestOutlookShare * 100)
-            ),
+            sprintf('☀️↑ %s · ☀️↓ %s', $sunrise->format('H:i'), $sunset->format('H:i')),
+            sprintf('🌁 Mist: %d%% (zicht <1 km)', (int) round($mistChance * 100)),
+            sprintf('↳ Dichte mist: %d%% (zicht <200 m)', (int) round($denseChance * 100)),
         ];
+        if (fogGroundMistFavorable($groundMistConditionsShare, $harmonie)) {
+            $lines[] = '↳ Grondmist: omstandigheden gunstig';
+        }
+        if ($forestOutlookShare >= 0.5 && !$modelsDisagree) {
+            $lines[] = '↳ Bosmist: omstandigheden gunstig';
+        }
         if ($bestHour !== null && $bestCount / $complete >= 0.2) {
             $lines[] = sprintf(
-                '• Hoogste mistkans: %d%% rond %02d:00',
-                (int) round($bestCount / $complete * 100),
+                '⏱️ Grootste mistkans: rond %02d:00',
                 $bestHour
             );
         }
-        if ($liftingChance >= 0.2) {
-            $lines[] = sprintf(
-                '• Mist die binnen 2 uur optrekt: %d%%',
-                (int) round($liftingChance * 100)
-            );
-        }
-        if ($freezingMist / $complete >= 0.2) {
-            $lines[] = sprintf(
-                '• Mist bij vorst: %d%%',
-                (int) round($freezingMist / $complete * 100)
-            );
-        }
-        if ($harmonie !== null) {
-            $localLabel = $harmonie['dense'] ? 'dichte mist'
-                : ($harmonie['fog'] ? 'mist'
-                    : ($harmonie['low_visibility'] ? 'laag zicht' : 'geen mist'));
-            if ($harmonie['forest_conditions'] && !$harmonie['fog']) {
-                $localLabel .= ', gunstige boscondities';
+        if ($modelsDisagree && $harmonie !== null) {
+            if ($forestModelsDisagree && !$fogModelsDisagree) {
+                $localLabel = $harmonie['forest_conditions']
+                    ? 'gunstige boscondities' : 'geen gunstige boscondities';
+            } else {
+                $localLabel = $harmonie['dense'] ? 'dichte mist'
+                    : ($harmonie['fog'] ? 'mist'
+                        : ($harmonie['low_visibility'] ? 'laag zicht' : 'geen mist'));
             }
-            $lines[] = '• KNMI-model (2 km): ' . $localLabel;
-        } else {
-            $lines[] = '• KNMI-model (2 km): nu niet beschikbaar';
+            $lines[] = '⚠️ KNMI-model: ' . $localLabel;
         }
-        $lines[] = sprintf('• Ruimte voor ochtendzon: %d%%', (int) round($openSkyChance * 100));
+        $lines[] = sprintf('🌤️ Kans op ochtendzon: %d%%', (int) round($openSkyChance * 100));
         $wetShare = $wetWeather / $complete;
         if ($wetShare >= 0.25) {
             $weatherType = $snowyWeather > $wetWeather / 2 ? 'sneeuw'
                 : ($showeryWeather > $wetWeather / 2 ? 'buien' : 'regen');
             $weatherSummary = ($wetShare >= 0.65 ? 'Grote kans op ' : 'Kans op ') . $weatherType;
+            $weatherIcon = $weatherType === 'sneeuw' ? '❄️'
+                : ($weatherType === 'buien' ? '🌦️' : '🌧️');
         } else {
             $weatherSummary = $wetShare >= 0.1 ? 'Overwegend droog' : 'Droog';
+            $weatherIcon = '⛅';
             $cloudCover = $cloudCoverTotal / $complete;
             if ($cloudCover >= 75.0) {
                 $weatherSummary .= ' en bewolkt';
+                $weatherIcon = '☁️';
             } elseif ($cloudCover <= 30.0 && $mistChance < 0.2
                 && $forestSignalShare < 0.2
                 && ($harmonie === null || (!$harmonie['low_visibility']
                     && !$harmonie['forest_conditions']))) {
                 $weatherSummary .= ' en vrij helder';
+                $weatherIcon = '☀️';
             } elseif ($cloudCover > 30.0 && $cloudCover < 75.0) {
                 $weatherSummary .= ' en halfbewolkt';
             }
         }
-        $lines[] = '• ' . $weatherSummary;
+        $lines[] = $weatherIcon . ' ' . $weatherSummary;
         $message = implode("\n", $lines);
 
         $metrics = [
@@ -513,6 +546,7 @@ function fogBuildForecast(
             'dense_share' => $denseChance,
             'forest_conditions_share' => $forestSignalShare,
             'forest_outlook_share' => $forestOutlookShare,
+            'ground_conditions_share' => $groundMistConditionsShare,
             'sun_share' => $openSkyChance,
             'wet_share' => $wetShare,
             'weather_summary' => $weatherSummary,

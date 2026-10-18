@@ -15,13 +15,20 @@ De publieke botbestanden staan in `static/`; de ochtendtaak staat in
 `ops/fog-morning-cron.php` en draait op de hosting vanuit `~/private`.
 De privéconfiguratie en de geplande taken blijven op de hosting.
 
+Het bericht toont dichte mist als onderdeel van de algemene mistkans.
+Bosmist en grondmist verschijnen alleen bij gunstige modelomstandigheden,
+zonder percentage: dit zijn aanwijzingen en geen gemeten kansen. Het
+grondmistsignaal vraagt ook om goed zicht op ooghoogte. De kans op
+ochtendzon gebruikt bewolking, zicht en droog weer na zonsopkomst.
+
 Controleer een botwijziging eerst zonder live bestanden of Telegram-berichten
 te wijzigen: `./deploy-fog.sh --check`. Dit zet een kopie in
 `~/private/fog-bot-stage`, controleert PHP en rekent een voorbeeldverwachting
 en de ochtendbeslisregels door. Publiceer daarna met `./deploy-fog.sh`.
 Het script vervangt alleen de vier publieke botbestanden en de private
 ochtendtaak, zonder bestanden te verwijderen. De vorige versie wordt bewaard
-in `~/private/fog-bot-previous`.
+in `~/private/fog-bot-previous`. `./deploy-fog.sh --verify` vergelijkt de
+live bestanden met de geteste kopie zonder de vorige versie te overschrijven.
 
 `./deploy.sh` blijft voor de hele website. Dat script bouwt de site opnieuw,
 controleert of alle vier de botbestanden in de bouwmap staan en synchroniseert

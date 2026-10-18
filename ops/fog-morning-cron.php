@@ -62,6 +62,19 @@ function fogMorningDecision(?array $evening, array $morning): array
         && max((float) $new['forest_outlook_share'], (float) $old['forest_outlook_share']) >= 0.5) {
         $reasons[] = 'forest fog outlook changed substantially';
     }
+    if (is_numeric($old['ground_conditions_share'] ?? null)
+        && is_numeric($new['ground_conditions_share'] ?? null)
+        && abs((float) $new['ground_conditions_share']
+            - (float) $old['ground_conditions_share']) >= 0.3
+        && fogGroundMistFavorable(
+            (float) $old['ground_conditions_share'],
+            is_array($old['knmi'] ?? null) ? $old['knmi'] : null
+        ) !== fogGroundMistFavorable(
+            (float) $new['ground_conditions_share'],
+            is_array($new['knmi'] ?? null) ? $new['knmi'] : null
+        )) {
+        $reasons[] = 'ground fog conditions changed substantially';
+    }
     $oldKnmi = $old['knmi'] ?? null;
     $newKnmi = $new['knmi'] ?? null;
     if (is_array($oldKnmi) && is_array($newKnmi)
@@ -83,21 +96,52 @@ function fogMorningMessage(array $evening, array $morning): string
         'Sinds gisteravond:',
     ];
     if (abs((float) $new['mist_share'] - (float) $old['mist_share']) >= 0.1) {
-        $lines[] = sprintf('• Mist: %d%% → %d%%',
+        $lines[] = sprintf('🌁 Mist: %d%% → %d%%',
             (int) round((float) $old['mist_share'] * 100),
             (int) round((float) $new['mist_share'] * 100));
     }
     if (abs((float) $new['dense_share'] - (float) $old['dense_share']) >= 0.1) {
-        $lines[] = sprintf('• Dichte mist: %d%% → %d%%',
+        $lines[] = sprintf('↳ Dichte mist: %d%% → %d%%',
             (int) round((float) $old['dense_share'] * 100),
             (int) round((float) $new['dense_share'] * 100));
     }
     if (is_numeric($old['forest_outlook_share'] ?? null)
         && is_numeric($new['forest_outlook_share'] ?? null)
-        && abs((float) $new['forest_outlook_share'] - (float) $old['forest_outlook_share']) >= 0.2) {
-        $lines[] = sprintf('• Bosmist-signaal: %d%% → %d%%',
-            (int) round((float) $old['forest_outlook_share'] * 100),
-            (int) round((float) $new['forest_outlook_share'] * 100));
+        && abs((float) $new['forest_outlook_share'] - (float) $old['forest_outlook_share']) >= 0.2
+        && max((float) $new['forest_outlook_share'],
+            (float) $old['forest_outlook_share']) >= 0.5) {
+        $oldForest = (float) $old['forest_outlook_share'];
+        $newForest = (float) $new['forest_outlook_share'];
+        $oldFavorable = $oldForest >= 0.5 && !($old['models_disagree'] ?? false);
+        $newFavorable = $newForest >= 0.5 && !($new['models_disagree'] ?? false);
+        if ($newFavorable) {
+            $lines[] = '↳ Bosmist: ' . (!$oldFavorable
+                ? 'omstandigheden nu gunstig'
+                : ($newForest > $oldForest ? 'signaal sterker' : 'signaal zwakker'));
+        } elseif ($oldFavorable) {
+            $lines[] = '↳ Bosmist: gunstig signaal verdwenen';
+        } else {
+            $lines[] = ($new['models_disagree'] ?? false)
+                ? '↳ Bosmist: modellen verschillen'
+                : '↳ Bosmist: geen duidelijk gunstig signaal';
+        }
+    }
+    if (is_numeric($old['ground_conditions_share'] ?? null)
+        && is_numeric($new['ground_conditions_share'] ?? null)
+        && abs((float) $new['ground_conditions_share']
+            - (float) $old['ground_conditions_share']) >= 0.3) {
+        $oldGround = fogGroundMistFavorable(
+            (float) $old['ground_conditions_share'],
+            is_array($old['knmi'] ?? null) ? $old['knmi'] : null
+        );
+        $newGround = fogGroundMistFavorable(
+            (float) $new['ground_conditions_share'],
+            is_array($new['knmi'] ?? null) ? $new['knmi'] : null
+        );
+        if ($oldGround !== $newGround) {
+            $lines[] = '↳ Grondmist: ' . ($newGround
+                ? 'omstandigheden nu gunstig' : 'gunstig signaal verdwenen');
+        }
     }
     $oldKnmi = $old['knmi'] ?? null;
     $newKnmi = $new['knmi'] ?? null;
@@ -116,7 +160,7 @@ function fogMorningMessage(array $evening, array $morning): string
         }
     }
     $sunrise = fogMorningSunrise($morning['date'], new DateTimeZone('Europe/Amsterdam'));
-    $lines[] = '• Zonsopkomst: ' . $sunrise->format('H:i');
+    $lines[] = '☀️↑ ' . $sunrise->format('H:i');
     if (is_string($new['weather_summary'] ?? null)) {
         $lines[] = '• ' . $new['weather_summary'];
     }

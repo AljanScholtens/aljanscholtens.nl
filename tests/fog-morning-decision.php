@@ -53,6 +53,29 @@ if (fogMorningDecision($legacy, snapshot(6, 0.2, 0.0, 0.8))['send']) {
     fwrite(STDERR, "Legacy forest metric incorrectly triggered a message\n");
     exit(1);
 }
+$groundEvening = evening(snapshot(6, 0.2, 0.0, 0.1));
+$groundMorning = snapshot(6, 0.2, 0.0, 0.1);
+$groundEvening['forecast']['metrics']['ground_conditions_share'] = 0.2;
+$groundMorning['metrics']['ground_conditions_share'] = 0.8;
+if (!fogMorningDecision($groundEvening, $groundMorning)['send']
+    || strpos(fogMorningMessage($groundEvening, $groundMorning),
+        '↳ Grondmist: omstandigheden nu gunstig') === false) {
+    fwrite(STDERR, "Ground mist change was not reported\n");
+    exit(1);
+}
+if (fogMorningDecision(evening(snapshot(6, 0.2, 0.0, 0.1)), $groundMorning)['send']) {
+    fwrite(STDERR, "Legacy ground mist metric incorrectly triggered a message\n");
+    exit(1);
+}
+$forestEvening = evening(snapshot(6, 0.2, 0.0, 0.1, false, 0.1));
+$forestMorning = snapshot(6, 0.2, 0.0, 0.6, false, 0.6);
+$forestMessage = fogMorningMessage($forestEvening, $forestMorning);
+if (!fogMorningDecision($forestEvening, $forestMorning)['send']
+    || strpos($forestMessage, '↳ Bosmist: omstandigheden nu gunstig') === false
+    || strpos($forestMessage, 'Bosmist-signaal:') !== false) {
+    fwrite(STDERR, "Forest mist change was not reported clearly\n");
+    exit(1);
+}
 $sample = snapshot(6, 0.6, 0.3, 0.2, true);
 $sample['metrics']['weather_summary'] = 'Droog en bewolkt';
 $message = fogMorningMessage(

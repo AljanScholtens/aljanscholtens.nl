@@ -2,8 +2,8 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-if [ "$#" -gt 1 ] || { [ "$#" -eq 1 ] && [ "$1" != '--check' ]; }; then
-    echo 'Gebruik: ./deploy-fog.sh [--check]' >&2
+if [ "$#" -gt 1 ] || { [ "$#" -eq 1 ] && [ "$1" != '--check' ] && [ "$1" != '--verify' ]; }; then
+    echo 'Gebruik: ./deploy-fog.sh [--check|--verify]' >&2
     exit 2
 fi
 
@@ -19,8 +19,23 @@ ssh -o BatchMode=yes "$host" "php -l $stage/www/fog-weather.php && php -l $stage
 ssh -o BatchMode=yes "$host" "FOG_BOT_ROOT=\$HOME/$stage php" < tests/fog-morning-decision.php
 ssh -o BatchMode=yes "$host" "FOG_BOT_ROOT=\$HOME/$stage php" < tests/fog-forecast-smoke.php
 
+verify_live() {
+    ssh -o BatchMode=yes "$host" '
+        set -e
+        for file in fog-weather.php fog-feedback.php fog-alert.php fog-bot.php; do
+            php -r "exit(is_file(\$argv[1]) && is_file(\$argv[2]) && hash_file(\"sha256\", \$argv[1]) === hash_file(\"sha256\", \$argv[2]) ? 0 : 1);" "private/fog-bot-stage/www/$file" "www/$file"
+        done
+        php -r "exit(is_file(\$argv[1]) && is_file(\$argv[2]) && hash_file(\"sha256\", \$argv[1]) === hash_file(\"sha256\", \$argv[2]) ? 0 : 1);" private/fog-bot-stage/private/fog-morning-cron.php private/fog-morning-cron.php
+    '
+}
+
 if [ "${1:-}" = '--check' ]; then
     echo 'Bot gecontroleerd; de live bestanden zijn niet gewijzigd.'
+    exit
+fi
+if [ "${1:-}" = '--verify' ]; then
+    verify_live
+    echo 'Live botbestanden komen exact overeen met de geteste versie.'
     exit
 fi
 
@@ -32,10 +47,6 @@ ssh -o BatchMode=yes "$host" '
     cp private/fog-bot-stage/www/fog-weather.php private/fog-bot-stage/www/fog-feedback.php private/fog-bot-stage/www/fog-alert.php private/fog-bot-stage/www/fog-bot.php www/
     cp private/fog-bot-stage/private/fog-morning-cron.php private/fog-morning-cron.php
     chmod 600 private/fog-morning-cron.php
-    cmp private/fog-bot-stage/www/fog-weather.php www/fog-weather.php
-    cmp private/fog-bot-stage/www/fog-feedback.php www/fog-feedback.php
-    cmp private/fog-bot-stage/www/fog-alert.php www/fog-alert.php
-    cmp private/fog-bot-stage/www/fog-bot.php www/fog-bot.php
-    cmp private/fog-bot-stage/private/fog-morning-cron.php private/fog-morning-cron.php
 '
+verify_live
 echo 'Botbestanden bijgewerkt; planning en privéconfiguratie zijn niet gewijzigd.'
