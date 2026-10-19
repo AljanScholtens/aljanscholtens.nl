@@ -152,6 +152,143 @@ function fogGroundMistFavorable(float $share, ?array $harmonie): bool
     return $share >= 0.6 && ($harmonie === null || !($harmonie['fog'] ?? false));
 }
 
+function fogSunTimes(string $date, float $latitude, float $longitude, DateTimeZone $zone): array
+{
+    $utcNoon = new DateTimeImmutable($date . ' 12:00', new DateTimeZone('UTC'));
+    $sun = date_sun_info($utcNoon->getTimestamp(), $latitude, $longitude);
+    if (!is_array($sun) || !is_int($sun['sunrise'] ?? null)
+        || !is_int($sun['sunset'] ?? null)) {
+        throw new RuntimeException('Could not calculate sun times');
+    }
+    $sunrise = (new DateTimeImmutable('@' . $sun['sunrise']))->setTimezone($zone);
+    $sunset = (new DateTimeImmutable('@' . $sun['sunset']))->setTimezone($zone);
+    if ($sunrise->format('Y-m-d') !== $date || $sunset->format('Y-m-d') !== $date) {
+        throw new RuntimeException('Sun date does not match forecast date');
+    }
+    return [$sunrise, $sunset];
+}
+
+function fogMemberPhotoSignals(array $series, array $indices, int $sunriseHour): array
+{
+    $memberMist = false;
+    $memberDense = false;
+    $memberFreezing = false;
+    $fogAtHour = [];
+    foreach ($indices as $hour => $index) {
+        $fog = (float) $series['visibility'][$index] < 1000.0
+            && in_array((int) $series['weather_code'][$index], [45, 48], true);
+        $fogAtHour[$hour] = $fog;
+        if ($fog) {
+            $memberMist = true;
+            if ((float) $series['visibility'][$index] < 200.0) {
+                $memberDense = true;
+            }
+            if ((float) $series['temperature_2m'][$index] <= 0.0) {
+                $memberFreezing = true;
+            }
+        }
+    }
+    $beforeHour = max(0, $sunriseHour - 1);
+    $beforeIndex = $indices[$beforeHour];
+    $forestConditions = (float) $series['relative_humidity_2m'][$beforeIndex] >= 95.0
+        && (float) $series['wind_speed_10m'][$beforeIndex] <= 10.0
+        && (float) $series['cloud_cover'][$beforeIndex] <= 60.0;
+    $laterHour = min(23, $sunriseHour + 2);
+    $laterIndex = $indices[$laterHour];
+    $lifting = ($fogAtHour[$beforeHour] || $fogAtHour[$sunriseHour])
+        && !$fogAtHour[$laterHour]
+        && (float) $series['visibility'][$laterIndex] >= 1500.0;
+    $openSky = false;
+    foreach ([$sunriseHour + 1, $sunriseHour + 2] as $hour) {
+        if (isset($indices[$hour])
+            && (float) $series['cloud_cover'][$indices[$hour]] <= 50.0
+            && (float) $series['visibility'][$indices[$hour]] >= 1500.0
+            && (float) $series['precipitation'][$indices[$hour]] < 0.1) {
+            $openSky = true;
+            break;
+        }
+    }
+    return [
+        'mist' => $memberMist,
+        'dense' => $memberDense,
+        'freezing' => $memberFreezing,
+        'forest_conditions' => $forestConditions,
+        'ground_conditions' => fogGroundMistConditions($series, $indices, $sunriseHour),
+        'lifting' => $lifting,
+        'open_sky' => $openSky,
+        'fog_by_hour' => $fogAtHour,
+    ];
+}
+
+function fogOutlookScores(
+    array $hourly,
+    array $suffixes,
+    array $variables,
+    string $forecastDate,
+    float $latitude,
+    float $longitude,
+    DateTimeZone $zone
+): array {
+    $scores = [];
+    $baseDate = new DateTimeImmutable($forecastDate . ' 12:00', $zone);
+    foreach ([1, 2] as $daysAhead) {
+        $date = $baseDate->modify('+' . $daysAhead . ' days')->format('Y-m-d');
+        [$sunrise] = fogSunTimes($date, $latitude, $longitude, $zone);
+        $sunriseHour = (int) $sunrise->format('G');
+        $hours = range(max(0, $sunriseHour - 2), min(23, $sunriseHour + 2));
+        $indices = [];
+        foreach ($hours as $hour) {
+            $time = $date . 'T' . sprintf('%02d', $hour) . ':00';
+            $index = array_search($time, $hourly['time'], true);
+            if ($index === false) {
+                throw new RuntimeException('Outlook is missing ' . $time);
+            }
+            $indices[$hour] = $index;
+        }
+        $complete = 0;
+        $mist = 0;
+        $dense = 0;
+        $forest = 0;
+        $openSky = 0;
+        $lifting = 0;
+        foreach ($suffixes as $suffix) {
+            $series = [];
+            foreach ($variables as $variable) {
+                $series[$variable] = $hourly[$variable . $suffix] ?? null;
+                if (!is_array($series[$variable])) {
+                    continue 2;
+                }
+            }
+            foreach ($indices as $index) {
+                foreach ($variables as $variable) {
+                    if (!isset($series[$variable][$index])
+                        || !is_numeric($series[$variable][$index])) {
+                        continue 3;
+                    }
+                }
+            }
+            $signals = fogMemberPhotoSignals($series, $indices, $sunriseHour);
+            $complete++;
+            $mist += (int) $signals['mist'];
+            $dense += (int) $signals['dense'];
+            $forest += (int) $signals['forest_conditions'];
+            $openSky += (int) $signals['open_sky'];
+            $lifting += (int) $signals['lifting'];
+        }
+        if ($complete < 25) {
+            throw new RuntimeException('Too few usable outlook members: ' . $complete);
+        }
+        $scores[$date] = fogPhotoScore(
+            $mist / $complete,
+            $dense / $complete,
+            $forest / $complete,
+            $openSky / $complete,
+            $lifting / $complete
+        );
+    }
+    return $scores;
+}
+
 function fogHarmonieCheck(float $latitude, float $longitude, string $date, array $hours, int $sunriseHour): ?array
 {
     try {
@@ -240,35 +377,34 @@ function fogBuildForecast(
     $metrics = null;
     try {
         // Use the local sunrise so the photo window follows the seasons.
-        $utcNoon = new DateTimeImmutable($forecastDate . ' 12:00', new DateTimeZone('UTC'));
-        $sun = date_sun_info($utcNoon->getTimestamp(), $latitude, $longitude);
-        if (!is_array($sun) || !is_int($sun['sunrise'] ?? null)
-            || !is_int($sun['sunset'] ?? null)) {
-            throw new RuntimeException('Could not calculate sun times');
-        }
-        $sunrise = (new DateTimeImmutable('@' . $sun['sunrise']))->setTimezone($zone);
-        $sunset = (new DateTimeImmutable('@' . $sun['sunset']))->setTimezone($zone);
-        if ($sunrise->format('Y-m-d') !== $forecastDate) {
-            throw new RuntimeException('Sunrise date does not match forecast date');
-        }
-        if ($sunset->format('Y-m-d') !== $forecastDate) {
-            throw new RuntimeException('Sunset date does not match forecast date');
-        }
+        [$sunrise, $sunset] = fogSunTimes($forecastDate, $latitude, $longitude, $zone);
         $sunriseHour = (int) $sunrise->format('G');
         $hours = range(max(0, $sunriseHour - 2), min(23, $sunriseHour + 2));
 
-        $url = 'https://ensemble-api.open-meteo.com/v1/ensemble?latitude=' . rawurlencode((string) $latitude)
-            . '&longitude=' . rawurlencode((string) $longitude)
-            . '&hourly=visibility,weather_code,cloud_cover,precipitation,relative_humidity_2m,wind_speed_10m,temperature_2m'
-            . '&models=gfs025&forecast_days=2&timezone=Europe%2FAmsterdam';
-        [$status, $response] = fogRequest($url);
-        if ($status !== 200) {
-            throw new RuntimeException('Forecast returned HTTP ' . $status);
-        }
-        $forecast = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
-        $hourly = $forecast['hourly'] ?? null;
-        if (!is_array($hourly) || !isset($hourly['time']) || !is_array($hourly['time'])) {
-            throw new RuntimeException('Forecast has no hourly data');
+        // Ask for two extra mornings in one call. If the extended request fails,
+        // keep the main forecast available with the original two-day request.
+        foreach ([4, 2] as $forecastDays) {
+            try {
+                $url = 'https://ensemble-api.open-meteo.com/v1/ensemble?latitude=' . rawurlencode((string) $latitude)
+                    . '&longitude=' . rawurlencode((string) $longitude)
+                    . '&hourly=visibility,weather_code,cloud_cover,precipitation,relative_humidity_2m,wind_speed_10m,temperature_2m'
+                    . '&models=gfs025&forecast_days=' . $forecastDays . '&timezone=Europe%2FAmsterdam';
+                [$status, $response] = fogRequest($url);
+                if ($status !== 200) {
+                    throw new RuntimeException('Forecast returned HTTP ' . $status);
+                }
+                $forecast = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+                $hourly = $forecast['hourly'] ?? null;
+                if (!is_array($hourly) || !is_array($hourly['time'] ?? null)) {
+                    throw new RuntimeException('Forecast has no hourly data');
+                }
+                break;
+            } catch (Throwable $extendedError) {
+                if ($forecastDays === 2) {
+                    throw $extendedError;
+                }
+                error_log('Fog extended forecast: ' . $extendedError->getMessage());
+            }
         }
 
         $indices = [];
@@ -324,28 +460,15 @@ function fogBuildForecast(
             }
 
             $complete++;
-            $memberMist = false;
-            $memberDense = false;
-            $memberFreezing = false;
-            $fogAtHour = [];
-            foreach ($indices as $hour => $index) {
-                $fog = (float) $series['visibility'][$index] < 1000.0
-                    && in_array((int) $series['weather_code'][$index], [45, 48], true);
-                $fogAtHour[$hour] = $fog;
+            $signals = fogMemberPhotoSignals($series, $indices, $sunriseHour);
+            foreach ($signals['fog_by_hour'] as $hour => $fog) {
                 if ($fog) {
-                    $memberMist = true;
                     $mistByHour[$hour]++;
-                    if ((float) $series['visibility'][$index] < 200.0) {
-                        $memberDense = true;
-                    }
-                    if ((float) $series['temperature_2m'][$index] <= 0.0) {
-                        $memberFreezing = true;
-                    }
                 }
             }
-            $mist += (int) $memberMist;
-            $dense += (int) $memberDense;
-            $freezingMist += (int) $memberFreezing;
+            $mist += (int) $signals['mist'];
+            $dense += (int) $signals['dense'];
+            $freezingMist += (int) $signals['freezing'];
 
             $memberWet = false;
             $memberShowery = false;
@@ -362,39 +485,14 @@ function fogBuildForecast(
             $showeryWeather += (int) ($memberWet && $memberShowery);
             $snowyWeather += (int) ($memberWet && $memberSnowy);
 
-            $beforeHour = max(0, $sunriseHour - 1);
-            $beforeIndex = $indices[$beforeHour];
             // An indirect cue for local fog in sheltered woodland, not a fog probability.
-            $forestConditions = (float) $series['relative_humidity_2m'][$beforeIndex] >= 95.0
-                && (float) $series['wind_speed_10m'][$beforeIndex] <= 10.0
-                && (float) $series['cloud_cover'][$beforeIndex] <= 60.0;
-            if ($forestConditions) {
-                $forestMistSignal++;
-            }
+            $forestMistSignal += (int) $signals['forest_conditions'];
             // Modeled dense fog also makes mist in the woods plausible.
             // Count each member once even when both signals are present.
-            if ($memberDense || $forestConditions) {
-                $forestOutlook++;
-            }
-            $groundMistConditions += (int) fogGroundMistConditions(
-                $series, $indices, $sunriseHour
-            );
-            $laterHour = min(23, $sunriseHour + 2);
-            $laterIndex = $indices[$laterHour];
-            if (($fogAtHour[$beforeHour] || $fogAtHour[$sunriseHour])
-                && !$fogAtHour[$laterHour]
-                && (float) $series['visibility'][$laterIndex] >= 1500.0) {
-                $liftingMist++;
-            }
-            foreach ([$sunriseHour + 1, $sunriseHour + 2] as $hour) {
-                if (isset($indices[$hour])
-                    && (float) $series['cloud_cover'][$indices[$hour]] <= 50.0
-                    && (float) $series['visibility'][$indices[$hour]] >= 1500.0
-                    && (float) $series['precipitation'][$indices[$hour]] < 0.1) {
-                    $openSky++;
-                    break;
-                }
-            }
+            $forestOutlook += (int) ($signals['dense'] || $signals['forest_conditions']);
+            $groundMistConditions += (int) $signals['ground_conditions'];
+            $liftingMist += (int) $signals['lifting'];
+            $openSky += (int) $signals['open_sky'];
         }
         if ($complete < 25) {
             throw new RuntimeException('Too few usable ensemble members: ' . $complete);
@@ -538,6 +636,26 @@ function fogBuildForecast(
             }
         }
         $lines[] = $weatherIcon . ' ' . $weatherSummary;
+        $outlookScores = [];
+        if ($forecastDays === 4) {
+            try {
+                $outlookScores = fogOutlookScores(
+                    $hourly, $suffixes, $variables, $forecastDate,
+                    $latitude, $longitude, $zone
+                );
+                $weekdays = ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za'];
+                $outlookLabels = [];
+                foreach ($outlookScores as $date => $score) {
+                    $weekday = (int) (new DateTimeImmutable($date . ' 12:00', $zone))->format('w');
+                    $outlookLabels[] = $weekdays[$weekday] . ' ' . $score;
+                }
+                $lines[] = '';
+                $lines[] = 'Vooruitblik: ' . implode(' · ', $outlookLabels);
+            } catch (Throwable $outlookError) {
+                error_log('Fog outlook: ' . $outlookError->getMessage());
+                $outlookScores = [];
+            }
+        }
         $message = implode("\n", $lines);
 
         $metrics = [
@@ -553,6 +671,7 @@ function fogBuildForecast(
             'lifting_share' => $liftingChance,
             'ensemble_score' => $ensembleScore,
             'score' => $photoScore,
+            'outlook_scores' => $outlookScores,
             'knmi' => $harmonie,
             'fog_models_disagree' => $fogModelsDisagree,
             'forest_models_disagree' => $forestModelsDisagree,

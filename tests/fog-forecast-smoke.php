@@ -42,6 +42,20 @@ if (!fogGroundMistFavorable(0.6, null)
 $zone = new DateTimeZone('Europe/Amsterdam');
 $forecast = fogBuildForecast(new DateTimeImmutable('now', $zone), $zone);
 $metrics = $forecast['metrics'] ?? null;
+$outlook = $metrics['outlook_scores'] ?? null;
+$forecastDate = new DateTimeImmutable($forecast['date'] . ' 12:00', $zone);
+$expectedDates = [
+    $forecastDate->modify('+1 day')->format('Y-m-d'),
+    $forecastDate->modify('+2 days')->format('Y-m-d'),
+];
+$weekdays = ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za'];
+$outlookLabels = [];
+if (is_array($outlook)) {
+    foreach ($outlook as $date => $score) {
+        $weekday = (int) (new DateTimeImmutable($date . ' 12:00', $zone))->format('w');
+        $outlookLabels[] = $weekdays[$weekday] . ' ' . $score;
+    }
+}
 if (!is_array($metrics)
     || !is_numeric($metrics['forest_outlook_share'] ?? null)
     || !is_numeric($metrics['ground_conditions_share'] ?? null)
@@ -55,7 +69,13 @@ if (!is_array($metrics)
     || strpos($forecast['message'], '🌁 Mist: ') === false
     || strpos($forecast['message'], '↳ Dichte mist: ') === false
     || strpos($forecast['message'], '🌤️ Kans op ochtendzon: ') === false
-    || strpos($forecast['message'], $metrics['weather_summary']) === false) {
+    || strpos($forecast['message'], $metrics['weather_summary']) === false
+    || !is_array($outlook)
+    || array_keys($outlook) !== $expectedDates
+    || count(array_filter($outlook, static function ($score): bool {
+        return is_int($score) && $score >= 1 && $score <= 10;
+    })) !== 2
+    || strpos($forecast['message'], "\n\nVooruitblik: " . implode(' · ', $outlookLabels)) === false) {
     fwrite(STDERR, "Forecast smoke check failed\n");
     exit(1);
 }
