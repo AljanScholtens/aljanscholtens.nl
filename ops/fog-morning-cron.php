@@ -230,7 +230,7 @@ try {
         $morning = $record['forecast'];
         $decision = $record['decision'];
     } else {
-        $morning = fogBuildForecast($now, $zone, null, $date);
+        $morning = fogBuildForecast($now, $zone, null, $date, false);
         if (!is_array($morning['metrics'] ?? null)) {
             throw new RuntimeException('Morning forecast has no usable metrics');
         }

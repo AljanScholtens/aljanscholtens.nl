@@ -365,7 +365,8 @@ function fogBuildForecast(
     DateTimeImmutable $now,
     DateTimeZone $zone,
     ?array $place = null,
-    ?string $targetDate = null
+    ?string $targetDate = null,
+    bool $includeOutlook = true
 ): array
 {
     $place = $place ?? fogDefaultPlace();
@@ -383,7 +384,7 @@ function fogBuildForecast(
 
         // Ask for two extra mornings in one call. If the extended request fails,
         // keep the main forecast available with the original two-day request.
-        foreach ([4, 2] as $forecastDays) {
+        foreach ($includeOutlook ? [4, 2] : [2] as $forecastDays) {
             try {
                 $url = 'https://ensemble-api.open-meteo.com/v1/ensemble?latitude=' . rawurlencode((string) $latitude)
                     . '&longitude=' . rawurlencode((string) $longitude)
@@ -637,7 +638,7 @@ function fogBuildForecast(
         }
         $lines[] = $weatherIcon . ' ' . $weatherSummary;
         $outlookScores = [];
-        if ($forecastDays === 4) {
+        if ($includeOutlook && $forecastDays === 4) {
             try {
                 $outlookScores = fogOutlookScores(
                     $hourly, $suffixes, $variables, $forecastDate,
@@ -691,6 +692,10 @@ function fogBuildForecast(
         );
     } catch (Throwable $forecastError) {
         error_log('Fog forecast: ' . $forecastError->getMessage());
+        if ($includeOutlook && isset($forecastDays) && $forecastDays === 4) {
+            // An incomplete extended response must not break tomorrow's forecast.
+            return fogBuildForecast($now, $zone, $place, $targetDate, false);
+        }
         $title = 'Fotoweer ' . $placeName . ': gegevens ontbreken';
         $priority = 3;
         $message = 'De fotoweerverwachting voor ' . $dayLabel
