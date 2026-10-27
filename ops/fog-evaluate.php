@@ -51,6 +51,10 @@ function fogEvaluateRows(string $privateDir): array
             'mist_label' => is_string($mist) ? $mist : '-',
             'photo_worthy' => is_bool($feedback['photo_worthy'] ?? null)
                 ? $feedback['photo_worthy'] : null,
+            // Rime and dew exclude each other per scenario, so their shares add up.
+            'frost_share' => is_numeric($metrics['rime_share'] ?? null)
+                ? (float) $metrics['rime_share'] + (float) ($metrics['dew_share'] ?? 0) : null,
+            'frost_seen' => is_bool($feedback['frost'] ?? null) ? $feedback['frost'] : null,
         ];
     }
     usort($rows, static function (array $a, array $b): int {
@@ -144,6 +148,24 @@ function fogEvaluateReport(array $rows, bool $listDays): string
             }));
             $out[] = sprintf('KNMI-model mist ja/nee klopte: %s van %d dagen',
                 fogEvaluatePercent($agree, count($knmi)), count($knmi));
+        }
+    }
+
+    // Was rime or dew there when the forecast expected it?
+    $frostRows = array_filter($rows, static function (array $row): bool {
+        return $row['frost_share'] !== null && $row['frost_seen'] !== null;
+    });
+    if ($frostRows) {
+        $out[] = '';
+        $out[] = 'Rijp/dauw   dagen  gezien';
+        foreach (['verwacht' => true, 'niet' => false] as $label => $expected) {
+            $group = array_filter($frostRows, static function (array $row) use ($expected): bool {
+                return ($row['frost_share'] >= 0.3) === $expected;
+            });
+            $out[] = sprintf('%-10s  %5d  %4s', $label, count($group),
+                fogEvaluatePercent(count(array_filter($group, static function (array $row): bool {
+                    return $row['frost_seen'];
+                })), count($group)));
         }
     }
 

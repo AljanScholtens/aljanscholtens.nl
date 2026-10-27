@@ -117,6 +117,30 @@ if (fogPhotoDayScore(array_fill(0, 31, $windScene))['score'] > 3
     fwrite(STDERR, "Photo scenario score check failed\n");
     exit(1);
 }
+$sunnyCalmInput = $windOnly;
+$sunnyCalmInput['cloud_cover'] = array_fill(0, 5, 10);
+$sunnyCalmInput['wind_speed_10m'] = array_fill(0, 5, 3);
+$sunnyCalmInput['wind_gusts_10m'] = array_fill(0, 5, 10);
+$sunnyCalmInput['relative_humidity_2m'] = array_fill(0, 5, 70);
+$sunnyCalmInput['temperature_2m'] = array_fill(0, 5, 8);
+$sunnyCalmInput['sunshine_duration'] = array_fill(0, 5, 3600);
+$sunnyCalmScene = fogMemberPhotoScenes($sunnyCalmInput, $photoIndices, 8,
+    fogMemberPhotoSignals($sunnyCalmInput, $photoIndices, 8));
+$rimeInput = $sunnyCalmInput;
+$rimeInput['temperature_2m'] = array_fill(0, 5, -3);
+$rimeInput['relative_humidity_2m'] = array_fill(0, 5, 92);
+$rimeScene = fogMemberPhotoScenes($rimeInput, $photoIndices, 8,
+    fogMemberPhotoSignals($rimeInput, $photoIndices, 8));
+$sunnyCalmDay = fogPhotoDayScore(array_fill(0, 31, $sunnyCalmScene));
+$rimeDay = fogPhotoDayScore(array_fill(0, 31, $rimeScene));
+if ($sunnyCalmDay['score'] !== 5 || $sunnyCalmDay['shares']['calm'] != 1
+    || $sunnyCalmDay['shares']['rime'] != 0
+    || $rimeDay['score'] !== 8 || $rimeDay['route'] !== 'frost'
+    || $rimeDay['shares']['rime'] != 1 || $rimeDay['min_temp'] !== -3.0) {
+    fwrite(STDERR, "Rime and sunny calm morning check failed\n");
+    exit(1);
+}
+
 $zone = new DateTimeZone('Europe/Amsterdam');
 $place = fogDefaultPlace();
 $outlookDates = ['2026-10-28', '2026-10-29'];
@@ -174,8 +198,8 @@ if (!is_array($metrics)
     || (float) $metrics['forest_outlook_share'] + 0.00001
         < max((float) $metrics['dense_share'], (float) $metrics['forest_conditions_share'])
     || !is_string($metrics['weather_summary'] ?? null)
-    || ($metrics['score_version'] ?? null) !== 3
-    || !in_array($metrics['photo_route'] ?? null, ['mist', 'winter', 'sky'], true)
+    || ($metrics['score_version'] ?? null) !== 4
+    || !in_array($metrics['photo_route'] ?? null, ['mist', 'winter', 'sky', 'frost'], true)
     || !is_string($metrics['photo_reason'] ?? null)
     || strpos($forecast['message'], '☀️↑ ') === false
     || strpos($forecast['message'], '☀️↓ ') !== false

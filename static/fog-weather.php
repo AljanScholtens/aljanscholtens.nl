@@ -345,9 +345,12 @@ function fogMemberPhotoScenes(array $series, array $indices, int $sunriseHour,
             + (int) ($showery && $lightAtHour)
             + (int) ($windAtHour && ($lightAtHour || $showery)));
     }
+    // Calm air at sunrise gives reflections in water.
+    $calm = (float) $series['wind_speed_10m'][$indices[$sunriseHour]] <= 5.0;
     // These are cues for changing light, not a measured cloud-color probability.
+    // A clear, sunny morning is a decent landscape morning, calm air makes it better.
     if (!$dynamicSky) {
-        $skyScore = $light ? 3 : 2;
+        $skyScore = $light ? 4 + (int) $calm : 2;
     }
     $wetGrey = (float) $series['cloud_cover'][$indices[$sunriseHour]] >= 85.0
         && (float) $series['precipitation'][$indices[$sunriseHour]] >= 0.1;
@@ -358,6 +361,20 @@ function fogMemberPhotoScenes(array $series, array $indices, int $sunriseHour,
     $mistScore = $signals['mist']
         ? 6 + (int) $signals['dense'] + (int) $signals['lifting'] + (int) $light
         : ($signals['forest_conditions'] ? 3 + (int) $light : 1);
+    // A clear, calm night that cools to freezing leaves rime; above freezing, dew.
+    // 2 m air is often a degree warmer than the grass, hence the 1 degree margin.
+    $beforeIndex = $indices[max(0, $sunriseHour - 1)];
+    $minTemp = min((float) $series['temperature_2m'][$beforeIndex],
+        (float) $series['temperature_2m'][$indices[$sunriseHour]]);
+    $clearCalmNight = (float) $series['wind_speed_10m'][$beforeIndex] <= 10.0
+        && (float) $series['cloud_cover'][$beforeIndex] <= 40.0
+        && (float) $series['precipitation'][$beforeIndex] < 0.1;
+    $rime = $clearCalmNight && $minTemp <= 1.0
+        && (float) $series['relative_humidity_2m'][$beforeIndex] >= 85.0;
+    $dew = $clearCalmNight && !$rime
+        && (float) $series['relative_humidity_2m'][$beforeIndex] >= 95.0;
+    $frostScore = $rime ? 6 + (int) $light + (int) ($minTemp <= -2.0)
+        : ($dew ? 4 + (int) $light : 1);
     $winterScore = ($snowCover || $snowing)
         ? 5 + (int) ($snowCover && $snowing) + (int) $light
             + (int) $dynamicSky + (int) ($snowWind || ($snowCover && $skyWind))
@@ -366,6 +383,11 @@ function fogMemberPhotoScenes(array $series, array $indices, int $sunriseHour,
         'mist' => min(9, $mistScore),
         'winter' => min(9, $winterScore),
         'sky' => min(9, $skyScore),
+        'frost' => min(9, $frostScore),
+        'rime' => $rime,
+        'dew' => $dew,
+        'calm' => $calm,
+        'min_temp' => $minTemp,
         'snow_cover' => $snowCover,
         'snow_falling' => $snowing,
         'dynamic_sky' => $dynamicSky,
@@ -383,11 +405,13 @@ function fogPhotoDayScore(array $scenes): array
     if (!$scenes) {
         throw new RuntimeException('No photo scenarios available');
     }
-    $routeTotals = ['mist' => 0, 'winter' => 0, 'sky' => 0];
+    $routeTotals = ['mist' => 0, 'winter' => 0, 'sky' => 0, 'frost' => 0];
     $counts = ['snow_cover' => 0, 'snow_falling' => 0, 'dynamic_sky' => 0,
         'light' => 0, 'windy' => 0, 'snow_landscape_light' => 0,
-        'snow_wind_sky' => 0, 'sky_light' => 0, 'sky_wind' => 0];
+        'snow_wind_sky' => 0, 'sky_light' => 0, 'sky_wind' => 0,
+        'rime' => 0, 'dew' => 0, 'calm' => 0];
     $total = 0;
+    $minTemps = [];
     foreach ($scenes as $scene) {
         $routes = [];
         foreach (array_keys($routeTotals) as $route) {
@@ -399,7 +423,9 @@ function fogPhotoDayScore(array $scenes): array
         foreach (array_keys($counts) as $signal) {
             $counts[$signal] += (int) $scene[$signal];
         }
+        $minTemps[] = (float) $scene['min_temp'];
     }
+    sort($minTemps, SORT_NUMERIC);
     arsort($routeTotals, SORT_NUMERIC);
     $members = count($scenes);
     $routeValues = array_values($routeTotals);
@@ -412,6 +438,8 @@ function fogPhotoDayScore(array $scenes): array
         'route' => (string) array_key_first($routeTotals),
         'route_margin' => ($routeValues[0] - $routeValues[1]) / $members,
         'shares' => $shares,
+        // The middle scenario, so one outlier does not set the shown temperature.
+        'min_temp' => $minTemps[intdiv(count($minTemps), 2)],
     ];
 }
 
@@ -777,10 +805,20 @@ function fogBuildForecast(
                 $reason = 'kans op bijzonder ochtendlicht tussen wolken';
             } elseif ($photoShares['dynamic_sky'] >= 0.4) {
                 $reason = 'dynamische wolkenlucht mogelijk';
+            } elseif ($openSkyChance >= 0.5 && $photoShares['calm'] >= 0.6) {
+                $reason = 'zonnige, windstille ochtend';
             } elseif ($openSkyChance >= 0.5) {
                 $reason = 'kans op ochtendzon';
             } else {
                 $reason = 'weinig uitgesproken fotoweer';
+            }
+        } elseif ($photoRoute === 'frost') {
+            if ($photoShares['rime'] >= 0.3) {
+                $reason = 'rijp kansrijk rond zonsopkomst';
+            } elseif ($photoShares['dew'] >= 0.3) {
+                $reason = 'dauw met ochtendlicht mogelijk';
+            } else {
+                $reason = 'kans op rijp of dauw';
             }
         } elseif ($denseChance >= 0.5) {
             $reason = 'dichte mist is kansrijk';
@@ -835,6 +873,17 @@ function fogBuildForecast(
         }
         foreach ($mistDetails as $detail) {
             $lines[] = ($mistPercent >= 10 ? '↳ ' : '🌁 ') . $detail;
+        }
+        $minTemp = (int) round($photoDay['min_temp']);
+        if ($photoShares['rime'] >= 0.3) {
+            $lines[] = sprintf('✨ Rijp: %d%% · min %s°', (int) round($photoShares['rime'] * 100),
+                str_replace('-', '−', (string) $minTemp));
+        } elseif ($photoShares['dew'] >= 0.5) {
+            $lines[] = sprintf('💧 Dauw: %d%% · min %d°', (int) round($photoShares['dew'] * 100),
+                $minTemp);
+        }
+        if ($photoShares['calm'] >= 0.6) {
+            $lines[] = '🪞 Windstil: spiegelingen mogelijk';
         }
         if ($bestHour !== null && $bestCount / $complete >= 0.2) {
             $lines[] = sprintf(
@@ -908,11 +957,15 @@ function fogBuildForecast(
             'lifting_share' => $liftingChance,
             'ensemble_score' => $ensembleScore,
             'score' => $photoScore,
-            'score_version' => 3,
+            'score_version' => 4,
             'photo_route' => $photoRoute,
             'photo_route_margin' => $photoDay['route_margin'],
             'photo_reason' => $reason,
             'photo_shares' => $photoShares,
+            'rime_share' => $photoShares['rime'],
+            'dew_share' => $photoShares['dew'],
+            'calm_share' => $photoShares['calm'],
+            'min_temp' => $photoDay['min_temp'],
             'outlook_scores' => $outlookScores,
             'knmi' => $harmonie,
             'fog_models_disagree' => $fogModelsDisagree,

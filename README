@@ -31,7 +31,13 @@ Sneeuw verschijnt alleen bij een positieve kans op minstens 0,1 cm
 sneeuwval per uur rond zonsopkomst. Ontbrekende sneeuwgegevens laten de
 rest van de verwachting ongemoeid.
 Het algemene fotocijfer neemt per modeluitkomst de sterkste fotokans uit mist,
-sneeuw en dynamische ochtendlucht. Wind telt alleen mee als er sneeuw of een
+sneeuw, dynamische ochtendlucht en rijp of dauw (rekenwijze versie 4).
+Rijp vraagt een heldere, rustige nacht met hooguit 1 °C op 2 m hoogte en
+minstens 85% luchtvochtigheid; boven dat punt geeft 95% vocht dauw. Het
+bericht toont rijp vanaf 30% kans met de verwachte minimumtemperatuur, dauw
+vanaf 50%, en "Windstil" bij wind tot 5 km/u rond zonsopkomst in minstens 60%
+van de scenario's. Een heldere ochtend met zon krijgt een 4, windstil een 5;
+een 1 betekent grijs en nat. Wind telt alleen mee als er sneeuw of een
 dynamische lucht is. De wolkeninschatting gebruikt veranderingen in totale
 bewolking, buien en licht; echte wolkenkleur is hiermee niet te voorspellen.
 Dezelfde berekening bepaalt de voorlopige vooruitblik voor de twee
@@ -54,7 +60,8 @@ op het dichtstbijzijnde hele uur (rekenwijze versie 3).
 
 `ops/fog-evaluate.php` legt de bewaarde avondvoorspellingen naast de feedback:
 per cijfer hoe vaak het foto waard was, per mistkans hoe vaak er echt mist was,
-de Brier-score en hoe vaak het KNMI-model goed zat. Cijfers staan per
+de Brier-score, hoe vaak het KNMI-model goed zat en of rijp of dauw er was
+als die verwacht werd (knoppen "Rijp/dauw: ja/nee"). Cijfers staan per
 rekenversie, omdat die niet hetzelfde meten. De Brier-score is alleen een
 aanwijzing: de kans geldt voor meerdere uren, de feedback voor één blik.
 "Niet gekeken" telt niet mee. Draai het op de hosting, met `--days` voor een overzicht per dag:

@@ -19,10 +19,11 @@ foreach ($days as [$date, $score, $mist, $dense, $seen, $photo, $version]) {
         'date' => $date,
         'forecast' => ['metrics' => ['score' => $score, 'score_version' => $version,
             'mist_share' => $mist, 'dense_share' => $dense, 'photo_route' => 'mist',
+            'rime_share' => $version >= 3 ? $dense : null, 'dew_share' => 0.0,
             'knmi' => ['fog' => $mist >= 0.5]]],
     ]));
     file_put_contents($privateDir . "/fog-feedback/$date.json", json_encode([
-        'date' => $date, 'mist' => $seen, 'photo_worthy' => $photo,
+        'date' => $date, 'mist' => $seen, 'photo_worthy' => $photo, 'frost' => $photo,
     ]));
 }
 
@@ -36,6 +37,8 @@ try {
         || !preg_match('/^1-3\s+1\s+0% \( 1\)\s+0% \( 1\)$/m', $report)
         || strpos($report, 'KNMI-model mist ja/nee klopte: 100% van 2 dagen') === false
         || strpos($report, '2026-10-03') === false
+        || !preg_match('/^verwacht\s+1\s+100%$/m', $report)
+        || !preg_match('/^niet\s+0\s+-$/m', $report)
         // Scores from different versions must land in separate tables.
         || !preg_match('/Rekenversie 2\n.*\n1-3\s+1\s.*\n4-5\s+0\s.*\n6-7\s+0\s.*\n8-10\s+0\s/', $report)
         || !preg_match('/Rekenversie 3\n.*\n1-3\s+0\s.*\n4-5\s+1\s.*\n6-7\s+0\s.*\n8-10\s+1\s/', $report)) {

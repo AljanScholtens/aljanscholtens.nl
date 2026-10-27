@@ -58,9 +58,15 @@ try {
     );
     feedbackCheck(count(feedbackRead($privateDir, $date)['events']) === 4,
         'A retried callback must not add an event or change the summary');
+    feedbackCheck(
+        fogRecordFeedback($privateDir, $date, 123, 'frost', 'yes', $now, 'callback-frost')
+            === 'Genoteerd: rijp/dauw gezien.'
+        && feedbackRead($privateDir, $date)['frost'] === true,
+        'Rime or dew feedback should be stored');
     fogRecordFeedback($privateDir, $date, 123, 'mist', 'unseen', $now, 'callback-unseen');
     $record = feedbackRead($privateDir, $date);
-    feedbackCheck(count($record['events']) === 5 && $record['photo_worthy'] === null,
+    feedbackCheck(count($record['events']) === 6 && $record['photo_worthy'] === null
+        && $record['frost'] === null,
         'Not looked should clear the summary but preserve earlier photo feedback');
 
     feedbackCheck(fogRecordFeedback($privateDir, $date, 124, 'mist', 'none', $now, 'wrong-message')
@@ -68,7 +74,7 @@ try {
         'Feedback from another message should be rejected');
     feedbackCheck(fogRecordFeedback($privateDir, $date, 123, 'mist', 'invalid', $now, 'invalid-choice')
         === 'Deze keuze herken ik niet.', 'Unknown choices should be rejected');
-    feedbackCheck(count(feedbackRead($privateDir, $date)['events']) === 5,
+    feedbackCheck(count(feedbackRead($privateDir, $date)['events']) === 6,
         'Rejected choices must not enter the history');
 
     fogSaveForecastArchive($privateDir, ['date' => $yesterday], $now, 321, 'Legacy test');
