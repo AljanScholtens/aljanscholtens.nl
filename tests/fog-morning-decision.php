@@ -89,7 +89,8 @@ $message = fogMorningMessage(
     $sample
 );
 if (strpos($message, 'Cijfer: 3 → 6/10') === false
-    || strpos($message, 'KNMI-model ziet nu dichte mist') === false
+    || strpos($message, '🌁 Mist: 10% → 60%') === false
+    || strpos($message, 'KNMI') !== false
     || strpos($message, 'Droog en bewolkt') === false) {
     fwrite(STDERR, "Morning message format check failed\n");
     exit(1);
@@ -116,6 +117,16 @@ $oldRoute['metrics']['photo_route_margin'] = 1.0;
 $newRoute['metrics']['photo_route_margin'] = 1.0;
 if (!fogMorningDecision(evening($oldRoute), $newRoute)['send']) {
     fwrite(STDERR, "Changed strong photo route was not reported\n");
+    exit(1);
+}
+// A local dense fog flip on an already high score still explains itself, without naming KNMI.
+$highEvening = evening(snapshot(7, 0.6, 0.3, 0.2));
+$highMorning = snapshot(7, 0.6, 0.3, 0.2, true);
+$highMessage = fogMorningMessage($highEvening, $highMorning);
+if (!fogMorningDecision($highEvening, $highMorning)['send']
+    || strpos($highMessage, '↳ Lokaal: nu dichte mist verwacht') === false
+    || strpos($highMessage, 'KNMI') !== false) {
+    fwrite(STDERR, "Local dense fog change was not reported\n");
     exit(1);
 }
 echo "Morning decision checks passed.\n";

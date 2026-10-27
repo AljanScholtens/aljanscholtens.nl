@@ -32,6 +32,12 @@ foreach ([
         exit(1);
     }
 }
+$roundZone = new DateTimeZone('Europe/Amsterdam');
+if (fogSunriseHour(new DateTimeImmutable('2026-12-21 08:50', $roundZone)) !== 9
+    || fogSunriseHour(new DateTimeImmutable('2026-10-28 07:29', $roundZone)) !== 7) {
+    fwrite(STDERR, "Sunrise hour is not rounded to the nearest hour\n");
+    exit(1);
+}
 if (!fogGroundMistFavorable(0.6, null)
     || fogGroundMistFavorable(0.59, null)
     || fogGroundMistFavorable(0.8, ['fog' => true])) {
@@ -103,7 +109,7 @@ $outlookDates = ['2026-10-28', '2026-10-29'];
 $syntheticHourly = ['time' => []];
 foreach ($outlookDates as $date) {
     [$sunrise] = fogSunTimes($date, $place['latitude'], $place['longitude'], $zone);
-    $sunriseHour = (int) $sunrise->format('G');
+    $sunriseHour = fogSunriseHour($sunrise);
     foreach (range($sunriseHour - 2, $sunriseHour + 2) as $hour) {
         $syntheticHourly['time'][] = $date . 'T' . sprintf('%02d', $hour) . ':00';
     }
@@ -153,12 +159,13 @@ if (!is_array($metrics)
     || (float) $metrics['forest_outlook_share'] + 0.00001
         < max((float) $metrics['dense_share'], (float) $metrics['forest_conditions_share'])
     || !is_string($metrics['weather_summary'] ?? null)
-    || ($metrics['score_version'] ?? null) !== 2
+    || ($metrics['score_version'] ?? null) !== 3
     || !in_array($metrics['photo_route'] ?? null, ['mist', 'winter', 'sky'], true)
     || !is_string($metrics['photo_reason'] ?? null)
     || strpos($forecast['message'], '☀️↑ ') === false
     || strpos($forecast['message'], '☀️↓ ') === false
     || strpos($forecast['message'], '🌁 Mist: ') === false
+    || strpos($forecast['message'], 'KNMI') !== false
     || ((strpos($forecast['message'], '↳ Dichte mist: ') !== false)
         !== ((int) round((float) $metrics['dense_share'] * 100) >= 15))
     || strpos($forecast['message'], '🌤️ Kans op ochtendzon: ') === false

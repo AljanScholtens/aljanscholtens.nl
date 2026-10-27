@@ -153,6 +153,35 @@ function fogSunTimes(string $date, float $latitude, float $longitude, DateTimeZo
     return [$sunrise, $sunset];
 }
 
+// Round to the nearest hour, so a 07:50 sunrise is judged at 08:00 instead of 07:00.
+function fogSunriseHour(DateTimeImmutable $sunrise): int
+{
+    return min(23, (int) $sunrise->modify('+30 minutes')->format('G'));
+}
+
+function fogSaveJson(string $path, array $data): void
+{
+    $directory = dirname($path);
+    if (!is_dir($directory) && !mkdir($directory, 0700, true) && !is_dir($directory)) {
+        throw new RuntimeException('Could not create directory for ' . basename($path));
+    }
+    $encoded = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) . "\n";
+    $temporary = tempnam($directory, '.fog-');
+    if ($temporary === false) {
+        throw new RuntimeException('Could not create temporary file for ' . basename($path));
+    }
+    if (file_put_contents($temporary, $encoded) !== strlen($encoded)) {
+        @unlink($temporary);
+        throw new RuntimeException('Could not write ' . basename($path));
+    }
+    @chmod($temporary, 0600);
+    // Rename replaces the file in one step, so readers never see half a file.
+    if (!rename($temporary, $path)) {
+        @unlink($temporary);
+        throw new RuntimeException('Could not save ' . basename($path));
+    }
+}
+
 function fogMemberPhotoSignals(array $series, array $indices, int $sunriseHour): array
 {
     $memberMist = false;
@@ -378,7 +407,7 @@ function fogOutlookScores(
     foreach ([1, 2] as $daysAhead) {
         $date = $baseDate->modify('+' . $daysAhead . ' days')->format('Y-m-d');
         [$sunrise] = fogSunTimes($date, $latitude, $longitude, $zone);
-        $sunriseHour = (int) $sunrise->format('G');
+        $sunriseHour = fogSunriseHour($sunrise);
         $hours = range(max(0, $sunriseHour - 2), min(23, $sunriseHour + 2));
         $indices = [];
         foreach ($hours as $hour) {
@@ -511,7 +540,7 @@ function fogBuildForecast(
     try {
         // Use the local sunrise so the photo window follows the seasons.
         [$sunrise, $sunset] = fogSunTimes($forecastDate, $latitude, $longitude, $zone);
-        $sunriseHour = (int) $sunrise->format('G');
+        $sunriseHour = fogSunriseHour($sunrise);
         $hours = range(max(0, $sunriseHour - 2), min(23, $sunriseHour + 2));
 
         // Ask for two extra mornings in one call. If the extended request fails,
@@ -783,17 +812,6 @@ function fogBuildForecast(
                 $bestHour
             );
         }
-        if ($modelsDisagree && $harmonie !== null) {
-            if ($forestModelsDisagree && !$fogModelsDisagree) {
-                $localLabel = $harmonie['forest_conditions']
-                    ? 'gunstige boscondities' : 'geen gunstige boscondities';
-            } else {
-                $localLabel = $harmonie['dense'] ? 'dichte mist'
-                    : ($harmonie['fog'] ? 'mist'
-                        : ($harmonie['low_visibility'] ? 'laag zicht' : 'geen mist'));
-            }
-            $lines[] = '⚠️ KNMI-model: ' . $localLabel;
-        }
         $lines[] = sprintf('🌤️ Kans op ochtendzon: %d%%', (int) round($openSkyChance * 100));
         if ($snowChance !== null && $snowChance > 0.0) {
             $lines[] = sprintf('❄️ Sneeuw: %d%%', (int) round($snowChance * 100));
@@ -860,7 +878,7 @@ function fogBuildForecast(
             'lifting_share' => $liftingChance,
             'ensemble_score' => $ensembleScore,
             'score' => $photoScore,
-            'score_version' => 2,
+            'score_version' => 3,
             'photo_route' => $photoRoute,
             'photo_route_margin' => $photoDay['route_margin'],
             'photo_reason' => $reason,

@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 // Nightly forecast snapshots and optional observations stay outside the web root.
+require_once __DIR__ . '/fog-weather.php';
+
 function fogFeedbackKeyboard(string $date): array
 {
     $stamp = str_replace('-', '', $date);
@@ -33,23 +35,14 @@ function fogSaveForecastArchive(
     string $telegramText
 ): void {
     $path = fogForecastArchivePath($privateDir, (string) $forecast['date']);
-    $directory = dirname($path);
-    if (!is_dir($directory) && !mkdir($directory, 0700, true) && !is_dir($directory)) {
-        throw new RuntimeException('Could not create forecast archive directory');
-    }
-    $data = [
+    fogSaveJson($path, [
         'date' => $forecast['date'],
         'sent_at' => $now->format(DATE_ATOM),
         'place' => 'Vries',
         'forecast' => $forecast,
         'telegram_message_id' => $messageId,
         'telegram_text' => $telegramText,
-    ];
-    $encoded = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) . "\n";
-    if (file_put_contents($path, $encoded, LOCK_EX) !== strlen($encoded)) {
-        throw new RuntimeException('Could not save forecast archive');
-    }
-    @chmod($path, 0600);
+    ]);
 }
 
 function fogRecordFeedback(
@@ -91,11 +84,7 @@ function fogRecordFeedback(
         return 'Deze keuze herken ik niet.';
     }
 
-    $directory = $privateDir . '/fog-feedback';
-    if (!is_dir($directory) && !mkdir($directory, 0700, true) && !is_dir($directory)) {
-        throw new RuntimeException('Could not create feedback directory');
-    }
-    $path = $directory . '/' . $date . '.json';
+    $path = $privateDir . '/fog-feedback/' . $date . '.json';
     $hasExisting = is_file($path);
     $existing = $hasExisting ? json_decode((string) file_get_contents($path), true) : null;
     if ($hasExisting && !is_array($existing)) {
@@ -154,20 +143,7 @@ function fogRecordFeedback(
         'value' => $value,
         'reply' => $reply,
     ];
-    $encoded = json_encode($record, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) . "\n";
-    $temporary = tempnam($directory, '.feedback-');
-    if ($temporary === false) {
-        throw new RuntimeException('Could not create feedback file');
-    }
-    if (file_put_contents($temporary, $encoded) !== strlen($encoded)) {
-        @unlink($temporary);
-        throw new RuntimeException('Could not write feedback file');
-    }
-    @chmod($temporary, 0600);
-    if (!rename($temporary, $path)) {
-        @unlink($temporary);
-        throw new RuntimeException('Could not save feedback file');
-    }
+    fogSaveJson($path, $record);
     return $reply;
 }
 

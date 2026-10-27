@@ -12,16 +12,20 @@ require_once dirname(__DIR__) . '/www/fog-weather.php';
 function fogMorningSunrise(string $date, DateTimeZone $zone): DateTimeImmutable
 {
     $place = fogDefaultPlace();
-    $utcNoon = new DateTimeImmutable($date . ' 12:00', new DateTimeZone('UTC'));
-    $sun = date_sun_info($utcNoon->getTimestamp(), $place['latitude'], $place['longitude']);
-    if (!is_array($sun) || !is_int($sun['sunrise'] ?? null)) {
-        throw new RuntimeException('Could not calculate morning sunrise');
-    }
-    $sunrise = (new DateTimeImmutable('@' . $sun['sunrise']))->setTimezone($zone);
-    if ($sunrise->format('Y-m-d') !== $date) {
-        throw new RuntimeException('Morning sunrise has the wrong date');
-    }
+    [$sunrise] = fogSunTimes($date, $place['latitude'], $place['longitude'], $zone);
     return $sunrise;
+}
+
+// Returns the new local dense fog state when it flipped since the evening, else null.
+function fogMorningLocalDenseChanged(array $old, array $new): ?bool
+{
+    $oldKnmi = $old['knmi'] ?? null;
+    $newKnmi = $new['knmi'] ?? null;
+    if (!is_array($oldKnmi) || !is_array($newKnmi)) {
+        return null;
+    }
+    $newDense = (bool) ($newKnmi['dense'] ?? false);
+    return (bool) ($oldKnmi['dense'] ?? false) !== $newDense ? $newDense : null;
 }
 
 function fogMorningDecision(?array $evening, array $morning): array
@@ -88,10 +92,8 @@ function fogMorningDecision(?array $evening, array $morning): array
         )) {
         $reasons[] = 'ground fog conditions changed substantially';
     }
-    $oldKnmi = $old['knmi'] ?? null;
-    $newKnmi = $new['knmi'] ?? null;
-    if (is_array($oldKnmi) && is_array($newKnmi)
-        && (bool) ($oldKnmi['dense'] ?? false) !== (bool) ($newKnmi['dense'] ?? false)) {
+    // Dense fog in the local run matters even when the score was already high.
+    if (fogMorningLocalDenseChanged($old, $new) !== null) {
         $reasons[] = 'local dense fog signal changed';
     }
     return ['send' => count($reasons) > 0, 'reasons' => $reasons];
@@ -122,6 +124,11 @@ function fogMorningMessage(array $evening, array $morning): string
         $lines[] = sprintf('↳ Dichte mist: %d%% → %d%%',
             (int) round((float) $old['dense_share'] * 100),
             (int) round((float) $new['dense_share'] * 100));
+    }
+    $localDense = fogMorningLocalDenseChanged($old, $new);
+    if ($localDense !== null) {
+        $lines[] = $localDense
+            ? '↳ Lokaal: nu dichte mist verwacht' : '↳ Lokaal: geen dichte mist meer verwacht';
     }
     if (is_numeric($old['forest_outlook_share'] ?? null)
         && is_numeric($new['forest_outlook_share'] ?? null)
@@ -161,50 +168,12 @@ function fogMorningMessage(array $evening, array $morning): string
                 ? 'omstandigheden nu gunstig' : 'gunstig signaal verdwenen');
         }
     }
-    $oldKnmi = $old['knmi'] ?? null;
-    $newKnmi = $new['knmi'] ?? null;
-    if (is_array($oldKnmi) && is_array($newKnmi)) {
-        if ((bool) ($oldKnmi['dense'] ?? false) !== (bool) ($newKnmi['dense'] ?? false)) {
-            $lines[] = (bool) $newKnmi['dense']
-                ? '• KNMI-model ziet nu dichte mist' : '• KNMI-model ziet geen dichte mist meer';
-        } elseif ((bool) ($oldKnmi['fog'] ?? false) !== (bool) ($newKnmi['fog'] ?? false)) {
-            $lines[] = (bool) $newKnmi['fog']
-                ? '• KNMI-model ziet nu mist' : '• KNMI-model ziet geen mist meer';
-        } elseif ((bool) ($oldKnmi['forest_conditions'] ?? false)
-            !== (bool) ($newKnmi['forest_conditions'] ?? false)) {
-            $lines[] = (bool) $newKnmi['forest_conditions']
-                ? '• KNMI-model ziet nu gunstige boscondities'
-                : '• KNMI-model ziet geen gunstige boscondities meer';
-        }
-    }
     $sunrise = fogMorningSunrise($morning['date'], new DateTimeZone('Europe/Amsterdam'));
     $lines[] = '☀️↑ ' . $sunrise->format('H:i');
     if (is_string($new['weather_summary'] ?? null)) {
         $lines[] = '• ' . $new['weather_summary'];
     }
     return implode("\n", $lines);
-}
-
-function fogMorningSave(string $path, array $data): void
-{
-    $directory = dirname($path);
-    if (!is_dir($directory) && !mkdir($directory, 0700, true) && !is_dir($directory)) {
-        throw new RuntimeException('Could not create morning archive directory');
-    }
-    $encoded = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) . "\n";
-    $temporary = tempnam($directory, '.morning-');
-    if ($temporary === false) {
-        throw new RuntimeException('Could not create morning archive file');
-    }
-    if (file_put_contents($temporary, $encoded) !== strlen($encoded)) {
-        @unlink($temporary);
-        throw new RuntimeException('Could not write morning archive file');
-    }
-    @chmod($temporary, 0600);
-    if (!rename($temporary, $path)) {
-        @unlink($temporary);
-        throw new RuntimeException('Could not save morning archive');
-    }
 }
 
 if (defined('FOG_MORNING_LIBRARY_ONLY')) {
@@ -273,7 +242,7 @@ try {
     }
 
     // Save the comparison before delivery; ambiguous failures must not duplicate a push.
-    fogMorningSave($archivePath, $record);
+    fogSaveJson($archivePath, $record);
     if ($decision['send']) {
         try {
             if (!is_array($evening)) {
@@ -286,11 +255,11 @@ try {
             );
             $record['telegram_message_id'] = $messageId;
             $record['delivery'] = 'sent';
-            fogMorningSave($archivePath, $record);
+            fogSaveJson($archivePath, $record);
         } catch (Throwable $deliveryError) {
             $record['delivery'] = strpos($deliveryError->getMessage(), 'Telegram delivery returned HTTP ') === 0
                 ? 'retryable' : 'uncertain';
-            fogMorningSave($archivePath, $record);
+            fogSaveJson($archivePath, $record);
             throw $deliveryError;
         }
     }

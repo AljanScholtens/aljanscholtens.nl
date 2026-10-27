@@ -40,12 +40,26 @@ blijven ook direct beschikbaar. Herhaalde afleveringen van dezelfde Telegram-
 actie tellen maar één keer. Voor oude feedbackbestanden blijft de laatst bekende
 stand als beginpunt bewaard; eerdere overschreven keuzes zijn niet te herstellen.
 
+Het KNMI-model weegt mee in het cijfer en de mistregels, maar staat
+niet als aparte regel in de avondmelding. Verandert het lokale signaal voor
+dichte mist 's nachts, dan meldt de ochtendupdate dat als "Lokaal: …", ook
+als het cijfer al hoog was. Het uur van zonsopkomst wordt afgerond
+op het dichtstbijzijnde hele uur (rekenwijze versie 3).
+
+`ops/fog-evaluate.php` legt de bewaarde avondvoorspellingen naast de feedback:
+per cijfer hoe vaak het foto waard was, per mistkans hoe vaak er echt mist was,
+de Brier-score en hoe vaak het KNMI-model goed zat. Cijfers staan per
+rekenversie, omdat die niet hetzelfde meten. De Brier-score is alleen een
+aanwijzing: de kans geldt voor meerdere uren, de feedback voor één blik.
+"Niet gekeken" telt niet mee. Draai het op de hosting, met `--days` voor een overzicht per dag:
+`ssh aljanscholtensnl@aljans.ssh.transip.me php private/fog-evaluate.php --days`.
+
 Controleer een botwijziging eerst zonder live bestanden of Telegram-berichten
 te wijzigen: `./deploy-fog.sh --check`. Dit zet een kopie in
 `~/private/fog-bot-stage`, controleert PHP en rekent een voorbeeldverwachting
 en de ochtendbeslisregels en feedbackopslag door. Publiceer daarna met `./deploy-fog.sh`.
-Het script vervangt alleen de vier publieke botbestanden en de private
-ochtendtaak, zonder bestanden te verwijderen. De vorige versie wordt bewaard
+Het script vervangt alleen de vier publieke botbestanden, de private
+ochtendtaak en het evaluatiescript, zonder bestanden te verwijderen. De vorige versie wordt bewaard
 in `~/private/fog-bot-previous`. `./deploy-fog.sh --verify` vergelijkt de
 live bestanden met de geteste kopie zonder de vorige versie te overschrijven.
 
