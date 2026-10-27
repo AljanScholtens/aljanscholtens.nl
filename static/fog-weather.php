@@ -110,21 +110,6 @@ function fogFindDutchPlace(string $query): array
     return ['status' => 'not_found', 'suggestions' => array_slice($suggestions, 0, 3)];
 }
 
-function fogPhotoScore(
-    float $mistChance,
-    float $denseChance,
-    float $forestSignalShare,
-    float $openSkyChance,
-    float $liftingChance
-): int {
-    // A personal, mist-focused outing score; forest conditions are only an indirect cue.
-    return max(1, min(10, (int) round(
-        1.0 + 5.0 * $mistChance + 2.0 * $denseChance
-        + $forestSignalShare + 0.5 * $openSkyChance
-        + 0.3 * $liftingChance
-    )));
-}
-
 function fogGroundMistConditions(array $series, array $indices, int $sunriseHour): bool
 {
     $earlier = $indices[max(0, $sunriseHour - 2)] ?? null;
@@ -237,6 +222,148 @@ function fogMemberSnowfall(array $hourly, string $suffix, array $indices, array 
     return $snowing;
 }
 
+function fogOptionalSeries(array $hourly, string $variable, string $suffix, array $indices): ?array
+{
+    $values = $hourly[$variable . $suffix] ?? null;
+    if (!is_array($values)) {
+        return null;
+    }
+    foreach ($indices as $index) {
+        if (!is_numeric($values[$index] ?? null)) {
+            return null;
+        }
+    }
+    return $values;
+}
+
+function fogMemberPhotoScenes(array $series, array $indices, int $sunriseHour,
+    array $signals): array
+{
+    $snowing = false;
+    $windy = false;
+    $snowWind = false;
+    foreach ($indices as $hour => $index) {
+        $snowAtHour = is_array($series['snowfall'])
+            && ($hour === $sunriseHour || $hour === $sunriseHour + 1)
+            && (float) $series['snowfall'][$index] >= 0.1;
+        $windAtHour = is_array($series['wind_gusts_10m'])
+            && (float) $series['wind_gusts_10m'][$index] >= 55.0;
+        $snowing = $snowing || $snowAtHour;
+        $windy = $windy || $windAtHour;
+        $snowWind = $snowWind || ($snowAtHour && $windAtHour);
+    }
+    $snowCover = is_array($series['snow_depth'])
+        && (float) $series['snow_depth'][$indices[$sunriseHour]] >= 0.02;
+    $light = $signals['open_sky'];
+    $dynamicSky = false;
+    $dynamicLight = false;
+    $skyWind = false;
+    $skyScore = 2;
+    foreach ([$sunriseHour, $sunriseHour + 1, $sunriseHour + 2] as $hour) {
+        if (!isset($indices[$hour], $indices[$hour - 1])) {
+            continue;
+        }
+        $index = $indices[$hour];
+        $beforeIndex = $indices[$hour - 1];
+        $cloud = (float) $series['cloud_cover'][$index];
+        $cloudBefore = (float) $series['cloud_cover'][$beforeIndex];
+        $partlyCloudy = ($cloud >= 20.0 && $cloud <= 80.0)
+            || ($cloudBefore >= 20.0 && $cloudBefore <= 80.0);
+        $showery = in_array((int) $series['weather_code'][$index],
+            [80, 81, 82, 95, 96, 99], true)
+            || in_array((int) $series['weather_code'][$beforeIndex],
+                [80, 81, 82, 95, 96, 99], true);
+        $lightAtHour = $hour > $sunriseHour
+            && ((is_array($series['sunshine_duration'])
+                    && (float) $series['sunshine_duration'][$index] >= 300.0)
+                || ($cloud <= 50.0 && (float) $series['visibility'][$index] >= 1500.0
+                    && (float) $series['precipitation'][$index] < 0.1));
+        $light = $light || $lightAtHour;
+        // Adjacent hours may describe a shower followed by a sun break.
+        $dynamicAtHour = $partlyCloudy
+            && (abs($cloud - $cloudBefore) >= 25.0 || $showery);
+        if (!$dynamicAtHour) {
+            continue;
+        }
+        $dynamicSky = true;
+        $dynamicLight = $dynamicLight || $lightAtHour;
+        $windAtHour = is_array($series['wind_gusts_10m'])
+            && (float) $series['wind_gusts_10m'][$index] >= 55.0;
+        $skyWind = $skyWind || $windAtHour;
+        $skyScore = max($skyScore, 5 + 2 * (int) $lightAtHour
+            + (int) ($showery && $lightAtHour)
+            + (int) ($windAtHour && ($lightAtHour || $showery)));
+    }
+    // These are cues for changing light, not a measured cloud-color probability.
+    if (!$dynamicSky) {
+        $skyScore = $light ? 3 : 2;
+    }
+    $wetGrey = (float) $series['cloud_cover'][$indices[$sunriseHour]] >= 85.0
+        && (float) $series['precipitation'][$indices[$sunriseHour]] >= 0.1;
+    if (!$dynamicSky && !$light && $wetGrey) {
+        $skyScore = 1;
+    }
+
+    $mistScore = $signals['mist']
+        ? 6 + (int) $signals['dense'] + (int) $signals['lifting'] + (int) $light
+        : ($signals['forest_conditions'] ? 3 + (int) $light : 1);
+    $winterScore = ($snowCover || $snowing)
+        ? 5 + (int) ($snowCover && $snowing) + (int) $light
+            + (int) $dynamicSky + (int) ($snowWind || ($snowCover && $skyWind))
+        : 1;
+    return [
+        'mist' => min(9, $mistScore),
+        'winter' => min(9, $winterScore),
+        'sky' => min(9, $skyScore),
+        'snow_cover' => $snowCover,
+        'snow_falling' => $snowing,
+        'dynamic_sky' => $dynamicSky,
+        'light' => $light,
+        'windy' => $windy,
+        'snow_landscape_light' => $snowCover && $dynamicLight,
+        'snow_wind_sky' => $snowing && $snowWind && $dynamicSky,
+        'sky_light' => $dynamicLight,
+        'sky_wind' => $skyWind,
+    ];
+}
+
+function fogPhotoDayScore(array $scenes): array
+{
+    if (!$scenes) {
+        throw new RuntimeException('No photo scenarios available');
+    }
+    $routeTotals = ['mist' => 0, 'winter' => 0, 'sky' => 0];
+    $counts = ['snow_cover' => 0, 'snow_falling' => 0, 'dynamic_sky' => 0,
+        'light' => 0, 'windy' => 0, 'snow_landscape_light' => 0,
+        'snow_wind_sky' => 0, 'sky_light' => 0, 'sky_wind' => 0];
+    $total = 0;
+    foreach ($scenes as $scene) {
+        $routes = [];
+        foreach (array_keys($routeTotals) as $route) {
+            $routes[] = $scene[$route];
+            $routeTotals[$route] += $scene[$route];
+        }
+        rsort($routes, SORT_NUMERIC);
+        $total += min(10, $routes[0] + (int) ($routes[0] >= 7 && $routes[1] >= 7));
+        foreach (array_keys($counts) as $signal) {
+            $counts[$signal] += (int) $scene[$signal];
+        }
+    }
+    arsort($routeTotals, SORT_NUMERIC);
+    $members = count($scenes);
+    $routeValues = array_values($routeTotals);
+    $shares = [];
+    foreach ($counts as $signal => $count) {
+        $shares[$signal] = $count / $members;
+    }
+    return [
+        'score' => max(1, min(10, (int) round($total / $members))),
+        'route' => (string) array_key_first($routeTotals),
+        'route_margin' => ($routeValues[0] - $routeValues[1]) / $members,
+        'shares' => $shares,
+    ];
+}
+
 function fogOutlookScores(
     array $hourly,
     array $suffixes,
@@ -262,12 +389,7 @@ function fogOutlookScores(
             }
             $indices[$hour] = $index;
         }
-        $complete = 0;
-        $mist = 0;
-        $dense = 0;
-        $forest = 0;
-        $openSky = 0;
-        $lifting = 0;
+        $scenes = [];
         foreach ($suffixes as $suffix) {
             $series = [];
             foreach ($variables as $variable) {
@@ -284,24 +406,17 @@ function fogOutlookScores(
                     }
                 }
             }
+            foreach (['snowfall', 'snow_depth', 'wind_gusts_10m',
+                'sunshine_duration'] as $variable) {
+                $series[$variable] = fogOptionalSeries($hourly, $variable, $suffix, $indices);
+            }
             $signals = fogMemberPhotoSignals($series, $indices, $sunriseHour);
-            $complete++;
-            $mist += (int) $signals['mist'];
-            $dense += (int) $signals['dense'];
-            $forest += (int) $signals['forest_conditions'];
-            $openSky += (int) $signals['open_sky'];
-            $lifting += (int) $signals['lifting'];
+            $scenes[] = fogMemberPhotoScenes($series, $indices, $sunriseHour, $signals);
         }
-        if ($complete < 25) {
-            throw new RuntimeException('Too few usable outlook members: ' . $complete);
+        if (count($scenes) < 25) {
+            throw new RuntimeException('Too few usable outlook members: ' . count($scenes));
         }
-        $scores[$date] = fogPhotoScore(
-            $mist / $complete,
-            $dense / $complete,
-            $forest / $complete,
-            $openSky / $complete,
-            $lifting / $complete
-        );
+        $scores[$date] = fogPhotoDayScore($scenes)['score'];
     }
     return $scores;
 }
@@ -405,7 +520,7 @@ function fogBuildForecast(
             try {
                 $url = 'https://ensemble-api.open-meteo.com/v1/ensemble?latitude=' . rawurlencode((string) $latitude)
                     . '&longitude=' . rawurlencode((string) $longitude)
-                    . '&hourly=visibility,weather_code,cloud_cover,precipitation,snowfall,relative_humidity_2m,wind_speed_10m,temperature_2m'
+                    . '&hourly=visibility,weather_code,cloud_cover,precipitation,snowfall,snow_depth,wind_gusts_10m,sunshine_duration,relative_humidity_2m,wind_speed_10m,temperature_2m'
                     . '&models=gfs025&forecast_days=' . $forecastDays . '&timezone=Europe%2FAmsterdam';
                 [$status, $response] = fogRequest($url);
                 if ($status !== 200) {
@@ -459,6 +574,7 @@ function fogBuildForecast(
         $snowyWeather = 0;
         $snowfallMembers = 0;
         $snowfallEvents = 0;
+        $photoScenes = [];
         $cloudCoverTotal = 0.0;
         $mistByHour = array_fill_keys($hours, 0);
         $weatherHours = [$sunriseHour, min(23, $sunriseHour + 1)];
@@ -478,6 +594,10 @@ function fogBuildForecast(
                     }
                 }
             }
+            foreach (['snowfall', 'snow_depth', 'wind_gusts_10m',
+                'sunshine_duration'] as $variable) {
+                $series[$variable] = fogOptionalSeries($hourly, $variable, $suffix, $indices);
+            }
 
             $complete++;
             $memberSnowfall = fogMemberSnowfall($hourly, $suffix, $indices, $weatherHours);
@@ -486,6 +606,7 @@ function fogBuildForecast(
                 $snowfallEvents += (int) $memberSnowfall;
             }
             $signals = fogMemberPhotoSignals($series, $indices, $sunriseHour);
+            $photoScenes[] = fogMemberPhotoScenes($series, $indices, $sunriseHour, $signals);
             foreach ($signals['fog_by_hour'] as $hour => $fog) {
                 if ($fog) {
                     $mistByHour[$hour]++;
@@ -531,13 +652,9 @@ function fogBuildForecast(
         $forestOutlookShare = $forestOutlook / $complete;
         $groundMistConditionsShare = $groundMistConditions / $complete;
         $liftingChance = $liftingMist / $complete;
-        $ensembleScore = fogPhotoScore(
-            $mistChance,
-            $denseChance,
-            $forestSignalShare,
-            $openSkyChance,
-            $liftingChance
-        );
+        $photoDay = fogPhotoDayScore($photoScenes);
+        $ensembleScore = $photoDay['score'];
+        $photoRoute = $photoDay['route'];
         $harmonie = fogHarmonieCheck($latitude, $longitude, $forecastDate, $hours, $sunriseHour);
         $fogModelsDisagree = $harmonie !== null && (
             ($harmonie['fog'] && $mistChance < 0.2)
@@ -555,17 +672,32 @@ function fogBuildForecast(
         // score without being treated as a percentage or a certain outcome.
         if ($harmonie !== null) {
             if ($harmonie['dense']) {
-                $photoScore = max($photoScore, 6);
+                if ($photoScore < 6) {
+                    $photoScore = 6;
+                    $photoRoute = 'mist';
+                }
             } elseif ($harmonie['fog']) {
-                $photoScore = max($photoScore, 5);
+                if ($photoScore < 5) {
+                    $photoScore = 5;
+                    $photoRoute = 'mist';
+                }
             } elseif ($harmonie['forest_conditions']) {
-                $photoScore = max($photoScore, 3);
+                if ($photoScore < 3) {
+                    $photoScore = 3;
+                    $photoRoute = 'mist';
+                }
             }
         }
         if ($forestSignalShare >= 0.8) {
-            $photoScore = max($photoScore, 4);
+            if ($photoScore < 4) {
+                $photoScore = 4;
+                $photoRoute = 'mist';
+            }
         } elseif ($forestSignalShare >= 0.5) {
-            $photoScore = max($photoScore, 3);
+            if ($photoScore < 3) {
+                $photoScore = 3;
+                $photoRoute = 'mist';
+            }
         }
         $bestHour = null;
         $bestCount = 0;
@@ -578,7 +710,28 @@ function fogBuildForecast(
 
         $title = sprintf('Fotoweer %s (%s)', $sunrise->format('d-m'), $placeName);
         $priority = $denseChance >= 0.8 ? 4 : 3;
-        if ($denseChance >= 0.5) {
+        $photoShares = $photoDay['shares'];
+        if ($photoRoute === 'winter') {
+            if ($photoShares['snow_landscape_light'] >= 0.3) {
+                $reason = 'sneeuwlandschap met kans op bijzonder ochtendlicht';
+            } elseif ($photoShares['snow_cover'] >= 0.3) {
+                $reason = 'kans op een sneeuwlandschap';
+            } elseif ($photoShares['snow_wind_sky'] >= 0.4) {
+                $reason = 'sneeuwbuien en dynamische lucht mogelijk';
+            } else {
+                $reason = 'kans op sneeuw rond zonsopkomst';
+            }
+        } elseif ($photoRoute === 'sky') {
+            if ($photoShares['sky_light'] >= 0.4) {
+                $reason = 'kans op bijzonder ochtendlicht tussen wolken';
+            } elseif ($photoShares['dynamic_sky'] >= 0.4) {
+                $reason = 'dynamische wolkenlucht mogelijk';
+            } elseif ($openSkyChance >= 0.5) {
+                $reason = 'kans op ochtendzon';
+            } else {
+                $reason = 'weinig uitgesproken fotoweer';
+            }
+        } elseif ($denseChance >= 0.5) {
             $reason = 'dichte mist is kansrijk';
         } elseif ($mistChance >= 0.4 && $liftingChance >= 0.25
             && $openSkyChance >= 0.25) {
@@ -592,20 +745,21 @@ function fogBuildForecast(
         } elseif ($forestSignalShare >= 0.4) {
             $reason = 'condities voor lokale bosmist';
         } elseif ($openSkyChance >= 0.5) {
-            $reason = 'weinig mist, wel kans op ochtendzon';
+            $reason = 'kans op ochtendzon';
         } else {
-            $reason = 'weinig aanleiding voor mistfoto’s';
+            $reason = 'weinig uitgesproken fotoweer';
         }
-        if ($fogModelsDisagree) {
+        if ($photoRoute === 'mist' && $fogModelsDisagree) {
             $reason = 'modellen verschillen over mist';
-        } elseif ($forestModelsDisagree) {
+        } elseif ($photoRoute === 'mist' && $forestModelsDisagree) {
             $reason = 'modellen verschillen over bosmistcondities';
         }
         $lines = [
             sprintf(
                 'Cijfer: %d/10%s — %s.',
                 $photoScore,
-                $modelsDisagree ? ' (onzeker)' : ($harmonie === null ? ' (alleen ensemble)' : ''),
+                $modelsDisagree && $photoRoute === 'mist'
+                    ? ' (onzeker)' : ($harmonie === null ? ' (alleen ensemble)' : ''),
                 $reason
             ),
             '',
@@ -706,6 +860,11 @@ function fogBuildForecast(
             'lifting_share' => $liftingChance,
             'ensemble_score' => $ensembleScore,
             'score' => $photoScore,
+            'score_version' => 2,
+            'photo_route' => $photoRoute,
+            'photo_route_margin' => $photoDay['route_margin'],
+            'photo_reason' => $reason,
+            'photo_shares' => $photoShares,
             'outlook_scores' => $outlookScores,
             'knmi' => $harmonie,
             'fog_models_disagree' => $fogModelsDisagree,
@@ -733,7 +892,7 @@ function fogBuildForecast(
         $title = 'Fotoweer ' . $placeName . ': gegevens ontbreken';
         $priority = 3;
         $message = 'De fotoweerverwachting voor ' . $dayLabel
-            . ' kan nu niet worden berekend. Er is geen betrouwbare mistinschatting.';
+            . ' kan nu niet worden berekend. Er is geen betrouwbare weersinschatting.';
         $checkStatus = $now->format('Y-m-d H:i:sP') . '; datum=' . $forecastDate
             . '; fout=' . $forecastError->getMessage() . "\n";
     }

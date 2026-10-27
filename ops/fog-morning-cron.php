@@ -42,11 +42,24 @@ function fogMorningDecision(?array $evening, array $morning): array
     $reasons = [];
     $oldScore = (int) $old['score'];
     $newScore = (int) $new['score'];
+    $sameScoreVersion = ($old['score_version'] ?? 1) === ($new['score_version'] ?? 1);
     $scoreDelta = abs($newScore - $oldScore);
     $oldBand = $oldScore <= 3 ? 0 : ($oldScore <= 5 ? 1 : 2);
     $newBand = $newScore <= 3 ? 0 : ($newScore <= 5 ? 1 : 2);
-    if ($scoreDelta >= 3 || ($scoreDelta >= 2 && $oldBand !== $newBand)) {
+    if ($sameScoreVersion
+        && ($scoreDelta >= 3 || ($scoreDelta >= 2 && $oldBand !== $newBand))) {
         $reasons[] = 'outing advice changed';
+    }
+    if ($sameScoreVersion && ($new['score_version'] ?? 1) >= 2
+        && is_string($old['photo_route'] ?? null)
+        && is_string($new['photo_route'] ?? null)
+        && $old['photo_route'] !== $new['photo_route']
+        && min($oldScore, $newScore) >= 6
+        && is_numeric($old['photo_route_margin'] ?? null)
+        && is_numeric($new['photo_route_margin'] ?? null)
+        && (float) $old['photo_route_margin'] >= 0.75
+        && (float) $new['photo_route_margin'] >= 0.75) {
+        $reasons[] = 'best photo opportunity changed';
     }
     if (abs((float) $new['mist_share'] - (float) $old['mist_share']) >= 0.35
         && max((float) $new['mist_share'], (float) $old['mist_share']) >= 0.4) {
@@ -88,13 +101,18 @@ function fogMorningMessage(array $evening, array $morning): string
 {
     $old = $evening['forecast']['metrics'];
     $new = $morning['metrics'];
+    $sameScoreVersion = ($old['score_version'] ?? 1) === ($new['score_version'] ?? 1);
     $lines = [
         'Ochtendupdate ' . (new DateTimeImmutable($morning['date']))->format('d-m') . ' (Vries)',
-        (int) $old['score'] === (int) $new['score']
+        !$sameScoreVersion || (int) $old['score'] === (int) $new['score']
             ? sprintf('Cijfer: %d/10', (int) $new['score'])
             : sprintf('Cijfer: %d → %d/10', (int) $old['score'], (int) $new['score']),
         'Sinds gisteravond:',
     ];
+    if ($sameScoreVersion && is_string($new['photo_reason'] ?? null)
+        && ($new['photo_reason'] !== ($old['photo_reason'] ?? null))) {
+        $lines[] = '• Fotokans: ' . $new['photo_reason'];
+    }
     if (abs((float) $new['mist_share'] - (float) $old['mist_share']) >= 0.1) {
         $lines[] = sprintf('🌁 Mist: %d%% → %d%%',
             (int) round((float) $old['mist_share'] * 100),

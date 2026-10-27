@@ -24,8 +24,12 @@ ochtendzon gebruikt bewolking, zicht en droog weer na zonsopkomst.
 Sneeuw verschijnt alleen bij een positieve kans op minstens 0,1 cm
 sneeuwval per uur rond zonsopkomst. Ontbrekende sneeuwgegevens laten de
 rest van de verwachting ongemoeid.
-Onder het hoofdbericht staat een voorlopige vooruitblik met het mistgerichte
-cijfer voor de twee daaropvolgende ochtenden. Die cijfers gebruiken het
+Het algemene fotocijfer neemt per modeluitkomst de sterkste fotokans uit mist,
+sneeuw en dynamische ochtendlucht. Wind telt alleen mee als er sneeuw of een
+dynamische lucht is. De wolkeninschatting gebruikt veranderingen in totale
+bewolking, buien en licht; echte wolkenkleur is hiermee niet te voorspellen.
+Dezelfde berekening bepaalt de voorlopige vooruitblik voor de twee
+daaropvolgende ochtenden. Die cijfers gebruiken het
 GFS-ensemble; het lokale KNMI-model reikt niet altijd zo ver. Als de extra
 gegevens ontbreken, blijft de hoofdvoorspelling beschikbaar zonder vooruitblik.
 

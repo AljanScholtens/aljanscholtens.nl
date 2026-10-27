@@ -47,6 +47,12 @@ if (fogMorningDecision(null, snapshot(8, 0.9, 0.7, 0.8))['send']) {
     fwrite(STDERR, "Missing baseline incorrectly triggered a message\n");
     exit(1);
 }
+$newScoreVersion = snapshot(9, 0.05, 0.0, 0.0);
+$newScoreVersion['metrics']['score_version'] = 2;
+if (fogMorningDecision(evening(snapshot(2, 0.05, 0.0, 0.0)), $newScoreVersion)['send']) {
+    fwrite(STDERR, "A score formula change triggered a morning alert\n");
+    exit(1);
+}
 $legacy = evening(snapshot(6, 0.2, 0.0, 0.1));
 unset($legacy['forecast']['metrics']['forest_outlook_share']);
 if (fogMorningDecision($legacy, snapshot(6, 0.2, 0.0, 0.8))['send']) {
@@ -86,6 +92,30 @@ if (strpos($message, 'Cijfer: 3 → 6/10') === false
     || strpos($message, 'KNMI-model ziet nu dichte mist') === false
     || strpos($message, 'Droog en bewolkt') === false) {
     fwrite(STDERR, "Morning message format check failed\n");
+    exit(1);
+}
+$oldPhoto = snapshot(3, 0.1, 0.0, 0.1);
+$newPhoto = snapshot(8, 0.1, 0.0, 0.1);
+$oldPhoto['metrics']['score_version'] = 2;
+$newPhoto['metrics']['score_version'] = 2;
+$oldPhoto['metrics']['photo_reason'] = 'weinig uitgesproken fotoweer';
+$newPhoto['metrics']['photo_reason'] = 'sneeuw en bijzonder ochtendlicht';
+if (!fogMorningDecision(evening($oldPhoto), $newPhoto)['send']
+    || strpos(fogMorningMessage(evening($oldPhoto), $newPhoto),
+        'Fotokans: sneeuw en bijzonder ochtendlicht') === false) {
+    fwrite(STDERR, "Photo opportunity change was not reported\n");
+    exit(1);
+}
+$oldRoute = snapshot(7, 0.2, 0.0, 0.1);
+$newRoute = snapshot(7, 0.2, 0.0, 0.1);
+$oldRoute['metrics']['score_version'] = 2;
+$newRoute['metrics']['score_version'] = 2;
+$oldRoute['metrics']['photo_route'] = 'mist';
+$newRoute['metrics']['photo_route'] = 'winter';
+$oldRoute['metrics']['photo_route_margin'] = 1.0;
+$newRoute['metrics']['photo_route_margin'] = 1.0;
+if (!fogMorningDecision(evening($oldRoute), $newRoute)['send']) {
+    fwrite(STDERR, "Changed strong photo route was not reported\n");
     exit(1);
 }
 echo "Morning decision checks passed.\n";
