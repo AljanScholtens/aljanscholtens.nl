@@ -142,15 +142,37 @@ function fogSunTimes(string $date, float $latitude, float $longitude, DateTimeZo
     $utcNoon = new DateTimeImmutable($date . ' 12:00', new DateTimeZone('UTC'));
     $sun = date_sun_info($utcNoon->getTimestamp(), $latitude, $longitude);
     if (!is_array($sun) || !is_int($sun['sunrise'] ?? null)
-        || !is_int($sun['sunset'] ?? null)) {
+        || !is_int($sun['sunset'] ?? null)
+        || !is_int($sun['civil_twilight_begin'] ?? null)) {
         throw new RuntimeException('Could not calculate sun times');
     }
     $sunrise = (new DateTimeImmutable('@' . $sun['sunrise']))->setTimezone($zone);
     $sunset = (new DateTimeImmutable('@' . $sun['sunset']))->setTimezone($zone);
-    if ($sunrise->format('Y-m-d') !== $date || $sunset->format('Y-m-d') !== $date) {
+    // First light is the start of civil twilight, when the blue hour begins.
+    $firstLight = (new DateTimeImmutable('@' . $sun['civil_twilight_begin']))->setTimezone($zone);
+    if ($sunrise->format('Y-m-d') !== $date || $sunset->format('Y-m-d') !== $date
+        || $firstLight->format('Y-m-d') !== $date) {
         throw new RuntimeException('Sun date does not match forecast date');
     }
-    return [$sunrise, $sunset];
+    return [$sunrise, $sunset, $firstLight];
+}
+
+// Getting up and walking out the door takes 30 minutes, the trip another 15.
+const FOG_WAKE_MINUTES_BEFORE_FIRST_LIGHT = 45;
+
+// The same bands the morning update uses: 1-3 skip, 4-5 maybe, 6-10 go.
+function fogAdviceLine(int $score, DateTimeImmutable $firstLight): string
+{
+    if ($score <= 3) {
+        return '⚪ Uitslapen';
+    }
+    $wake = $firstLight->modify('-' . FOG_WAKE_MINUTES_BEFORE_FIRST_LIGHT . ' minutes');
+    // Round the alarm down to whole five minutes.
+    $wake = $wake->setTime((int) $wake->format('G'), intdiv((int) $wake->format('i'), 5) * 5);
+    return sprintf('%s — wekker %s · eerste licht %s',
+        $score >= 6 ? '🟢 Gaan' : '🟡 Twijfel',
+        $wake->format('H:i'),
+        $firstLight->format('H:i'));
 }
 
 // Round to the nearest hour, so a 07:50 sunrise is judged at 08:00 instead of 07:00.
@@ -539,7 +561,7 @@ function fogBuildForecast(
     $metrics = null;
     try {
         // Use the local sunrise so the photo window follows the seasons.
-        [$sunrise, $sunset] = fogSunTimes($forecastDate, $latitude, $longitude, $zone);
+        [$sunrise, , $firstLight] = fogSunTimes($forecastDate, $latitude, $longitude, $zone);
         $sunriseHour = fogSunriseHour($sunrise);
         $hours = range(max(0, $sunriseHour - 2), min(23, $sunriseHour + 2));
 
@@ -784,6 +806,7 @@ function fogBuildForecast(
             $reason = 'modellen verschillen over bosmistcondities';
         }
         $lines = [
+            fogAdviceLine($photoScore, $firstLight),
             sprintf(
                 'Cijfer: %d/10%s — %s.',
                 $photoScore,
@@ -792,19 +815,26 @@ function fogBuildForecast(
                 $reason
             ),
             '',
-            sprintf('☀️↑ %s · ☀️↓ %s', $sunrise->format('H:i'), $sunset->format('H:i')),
-            sprintf('🌁 Mist: %d%% (zicht <1 km)', (int) round($mistChance * 100)),
+            '☀️↑ ' . $sunrise->format('H:i'),
         ];
+        // A 0% mist line is noise; the details hang under it only when it is shown.
+        $mistPercent = (int) round($mistChance * 100);
+        $mistDetails = [];
         $densePercent = (int) round($denseChance * 100);
         if ($densePercent >= 15) {
-            $lines[] = sprintf('↳ Dichte mist: %d%% (zicht <200 m)',
-                $densePercent);
+            $mistDetails[] = sprintf('Dichte mist: %d%% (zicht <200 m)', $densePercent);
         }
         if (fogGroundMistFavorable($groundMistConditionsShare, $harmonie)) {
-            $lines[] = '↳ Grondmist: omstandigheden gunstig';
+            $mistDetails[] = 'Grondmist: omstandigheden gunstig';
         }
         if ($forestOutlookShare >= 0.5 && !$modelsDisagree) {
-            $lines[] = '↳ Bosmist: omstandigheden gunstig';
+            $mistDetails[] = 'Bosmist: omstandigheden gunstig';
+        }
+        if ($mistPercent >= 10) {
+            $lines[] = sprintf('🌁 Mist: %d%% (zicht <1 km)', $mistPercent);
+        }
+        foreach ($mistDetails as $detail) {
+            $lines[] = ($mistPercent >= 10 ? '↳ ' : '🌁 ') . $detail;
         }
         if ($bestHour !== null && $bestCount / $complete >= 0.2) {
             $lines[] = sprintf(

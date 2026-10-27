@@ -38,6 +38,20 @@ if (fogSunriseHour(new DateTimeImmutable('2026-12-21 08:50', $roundZone)) !== 9
     fwrite(STDERR, "Sunrise hour is not rounded to the nearest hour\n");
     exit(1);
 }
+$adviceLight = new DateTimeImmutable('2026-10-28 06:43', $roundZone);
+if (fogAdviceLine(3, $adviceLight) !== '⚪ Uitslapen'
+    || fogAdviceLine(4, $adviceLight) !== '🟡 Twijfel — wekker 05:55 · eerste licht 06:43'
+    || fogAdviceLine(6, $adviceLight) !== '🟢 Gaan — wekker 05:55 · eerste licht 06:43') {
+    fwrite(STDERR, "Advice line check failed\n");
+    exit(1);
+}
+// The morning check (an hour before first light) must stay inside the 03:00 cron window.
+$vries = fogDefaultPlace();
+[, , $midsummerLight] = fogSunTimes('2026-06-21', $vries['latitude'], $vries['longitude'], $roundZone);
+if ($midsummerLight->modify('-' . (FOG_WAKE_MINUTES_BEFORE_FIRST_LIGHT + 15) . ' minutes')->format('H:i') < '03:00') {
+    fwrite(STDERR, "Midsummer morning check falls before the cron window\n");
+    exit(1);
+}
 if (!fogGroundMistFavorable(0.6, null)
     || fogGroundMistFavorable(0.59, null)
     || fogGroundMistFavorable(0.8, ['fog' => true])) {
@@ -137,6 +151,7 @@ $forecast = fogBuildForecast(new DateTimeImmutable('now', $zone), $zone);
 $metrics = $forecast['metrics'] ?? null;
 $outlook = $metrics['outlook_scores'] ?? null;
 $forecastDate = new DateTimeImmutable($forecast['date'] . ' 12:00', $zone);
+[, , $forecastFirstLight] = fogSunTimes($forecast['date'], $place['latitude'], $place['longitude'], $zone);
 $expectedDates = [
     $forecastDate->modify('+1 day')->format('Y-m-d'),
     $forecastDate->modify('+2 days')->format('Y-m-d'),
@@ -163,8 +178,10 @@ if (!is_array($metrics)
     || !in_array($metrics['photo_route'] ?? null, ['mist', 'winter', 'sky'], true)
     || !is_string($metrics['photo_reason'] ?? null)
     || strpos($forecast['message'], '☀️↑ ') === false
-    || strpos($forecast['message'], '☀️↓ ') === false
-    || strpos($forecast['message'], '🌁 Mist: ') === false
+    || strpos($forecast['message'], '☀️↓ ') !== false
+    || ((strpos($forecast['message'], '🌁 Mist: ') !== false)
+        !== ((int) round((float) $metrics['mist_share'] * 100) >= 10))
+    || strpos($forecast['message'], fogAdviceLine((int) $metrics['score'], $forecastFirstLight)) !== 0
     || strpos($forecast['message'], 'KNMI') !== false
     || ((strpos($forecast['message'], '↳ Dichte mist: ') !== false)
         !== ((int) round((float) $metrics['dense_share'] * 100) >= 15))

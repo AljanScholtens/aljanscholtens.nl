@@ -15,8 +15,14 @@ De publieke botbestanden staan in `static/`; de ochtendtaak staat in
 `ops/fog-morning-cron.php` en draait op de hosting vanuit `~/private`.
 De privéconfiguratie en de geplande taken blijven op de hosting.
 
-Het bericht toont dichte mist als onderdeel van de algemene mistkans,
-alleen vanaf 15% modelkans.
+Onder de titel staat een advies: Gaan (cijfer 6-10), Twijfel (4-5) of
+Uitslapen (1-3). Bij Gaan en Twijfel staan de wektijd en het eerste licht
+(begin burgerlijke schemering) erbij; de wekker staat 45 minuten vóór het
+eerste licht (30 minuten klaarmaken, 15 minuten reizen), afgerond op vijf
+minuten. Zonsondergang staat niet meer in het bericht.
+
+Het bericht toont de mistkans pas vanaf 10%. Dichte mist verschijnt als
+onderdeel van de algemene mistkans, alleen vanaf 15% modelkans.
 Bosmist en grondmist verschijnen alleen bij gunstige modelomstandigheden,
 zonder percentage: dit zijn aanwijzingen en geen gemeten kansen. Het
 grondmistsignaal vraagt ook om goed zicht op ooghoogte. De kans op
@@ -69,5 +75,5 @@ dan `public/` naar `~/www`. Het private ochtendscript wordt alleen door
 `./deploy-fog.sh` bijgewerkt.
 
 Op de hosting draait de avondtaak om 20:00; de ochtendtaak controleert elke
-vijf minuten tussen 03:00 en 08:59 en werkt alleen rond 90 minuten vóór
-zonsopkomst. De ochtendtaak meldt uitsluitend een duidelijke verandering.
+vijf minuten tussen 03:00 en 08:59 en werkt vanaf een uur vóór het eerste
+licht, dus een kwartier vóór de wekker. De ochtendtaak meldt uitsluitend een duidelijke verandering.

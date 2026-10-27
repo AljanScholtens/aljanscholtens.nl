@@ -88,7 +88,8 @@ $message = fogMorningMessage(
     evening(snapshot(3, 0.1, 0.0, 0.2)),
     $sample
 );
-if (strpos($message, 'Cijfer: 3 → 6/10') === false
+if (strpos($message, "(Vries)\n🟢 Gaan — wekker ") === false
+    || strpos($message, 'Cijfer: 3 → 6/10') === false
     || strpos($message, '🌁 Mist: 10% → 60%') === false
     || strpos($message, 'KNMI') !== false
     || strpos($message, 'Droog en bewolkt') === false) {

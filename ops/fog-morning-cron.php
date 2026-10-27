@@ -9,11 +9,12 @@ if (PHP_SAPI !== 'cli') {
 
 require_once dirname(__DIR__) . '/www/fog-weather.php';
 
-function fogMorningSunrise(string $date, DateTimeZone $zone): DateTimeImmutable
+// Returns [sunrise, first light] for the default place.
+function fogMorningSun(string $date, DateTimeZone $zone): array
 {
     $place = fogDefaultPlace();
-    [$sunrise] = fogSunTimes($date, $place['latitude'], $place['longitude'], $zone);
-    return $sunrise;
+    [$sunrise, , $firstLight] = fogSunTimes($date, $place['latitude'], $place['longitude'], $zone);
+    return [$sunrise, $firstLight];
 }
 
 // Returns the new local dense fog state when it flipped since the evening, else null.
@@ -106,6 +107,8 @@ function fogMorningMessage(array $evening, array $morning): string
     $sameScoreVersion = ($old['score_version'] ?? 1) === ($new['score_version'] ?? 1);
     $lines = [
         'Ochtendupdate ' . (new DateTimeImmutable($morning['date']))->format('d-m') . ' (Vries)',
+        fogAdviceLine((int) $new['score'],
+            fogMorningSun($morning['date'], new DateTimeZone('Europe/Amsterdam'))[1]),
         !$sameScoreVersion || (int) $old['score'] === (int) $new['score']
             ? sprintf('Cijfer: %d/10', (int) $new['score'])
             : sprintf('Cijfer: %d → %d/10', (int) $old['score'], (int) $new['score']),
@@ -168,7 +171,7 @@ function fogMorningMessage(array $evening, array $morning): string
                 ? 'omstandigheden nu gunstig' : 'gunstig signaal verdwenen');
         }
     }
-    $sunrise = fogMorningSunrise($morning['date'], new DateTimeZone('Europe/Amsterdam'));
+    [$sunrise] = fogMorningSun($morning['date'], new DateTimeZone('Europe/Amsterdam'));
     $lines[] = '☀️↑ ' . $sunrise->format('H:i');
     if (is_string($new['weather_summary'] ?? null)) {
         $lines[] = '• ' . $new['weather_summary'];
@@ -186,8 +189,9 @@ try {
     $zone = new DateTimeZone('Europe/Amsterdam');
     $now = new DateTimeImmutable('now', $zone);
     $date = $now->format('Y-m-d');
-    $sunrise = fogMorningSunrise($date, $zone);
-    $target = $sunrise->modify('-90 minutes');
+    [$sunrise, $firstLight] = fogMorningSun($date, $zone);
+    // Check 15 minutes before the alarm, so a changed advice arrives before it rings.
+    $target = $firstLight->modify('-' . (FOG_WAKE_MINUTES_BEFORE_FIRST_LIGHT + 15) . ' minutes');
     $preview = in_array('--preview', $argv ?? [], true);
     if (!$preview && ($now < $target || $now >= $sunrise)) {
         exit;
