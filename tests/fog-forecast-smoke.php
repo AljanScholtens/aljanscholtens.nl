@@ -53,7 +53,7 @@ $outlookLabels = [];
 if (is_array($outlook)) {
     foreach ($outlook as $date => $score) {
         $weekday = (int) (new DateTimeImmutable($date . ' 12:00', $zone))->format('w');
-        $outlookLabels[] = $weekdays[$weekday] . ' ' . $score;
+        $outlookLabels[] = $weekdays[$weekday] . ' ' . $score . '/10';
     }
 }
 if (!is_array($metrics)
@@ -67,7 +67,8 @@ if (!is_array($metrics)
     || strpos($forecast['message'], '☀️↑ ') === false
     || strpos($forecast['message'], '☀️↓ ') === false
     || strpos($forecast['message'], '🌁 Mist: ') === false
-    || strpos($forecast['message'], '↳ Dichte mist: ') === false
+    || ((strpos($forecast['message'], '↳ Dichte mist: ') !== false)
+        !== ((int) round((float) $metrics['dense_share'] * 100) > 0))
     || strpos($forecast['message'], '🌤️ Kans op ochtendzon: ') === false
     || strpos($forecast['message'], $metrics['weather_summary']) === false
     || !is_array($outlook)

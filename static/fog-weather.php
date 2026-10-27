@@ -586,8 +586,12 @@ function fogBuildForecast(
             '',
             sprintf('☀️↑ %s · ☀️↓ %s', $sunrise->format('H:i'), $sunset->format('H:i')),
             sprintf('🌁 Mist: %d%% (zicht <1 km)', (int) round($mistChance * 100)),
-            sprintf('↳ Dichte mist: %d%% (zicht <200 m)', (int) round($denseChance * 100)),
         ];
+        $densePercent = (int) round($denseChance * 100);
+        if ($densePercent > 0) {
+            $lines[] = sprintf('↳ Dichte mist: %d%% (zicht <200 m)',
+                $densePercent);
+        }
         if (fogGroundMistFavorable($groundMistConditionsShare, $harmonie)) {
             $lines[] = '↳ Grondmist: omstandigheden gunstig';
         }
@@ -648,7 +652,7 @@ function fogBuildForecast(
                 $outlookLabels = [];
                 foreach ($outlookScores as $date => $score) {
                     $weekday = (int) (new DateTimeImmutable($date . ' 12:00', $zone))->format('w');
-                    $outlookLabels[] = $weekdays[$weekday] . ' ' . $score;
+                    $outlookLabels[] = $weekdays[$weekday] . ' ' . $score . '/10';
                 }
                 $lines[] = '';
                 $lines[] = 'Vooruitblik: ' . implode(' · ', $outlookLabels);

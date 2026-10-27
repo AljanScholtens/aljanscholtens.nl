@@ -15,7 +15,8 @@ De publieke botbestanden staan in `static/`; de ochtendtaak staat in
 `ops/fog-morning-cron.php` en draait op de hosting vanuit `~/private`.
 De privéconfiguratie en de geplande taken blijven op de hosting.
 
-Het bericht toont dichte mist als onderdeel van de algemene mistkans.
+Het bericht toont dichte mist als onderdeel van de algemene mistkans,
+alleen wanneer het model er een positieve kans voor geeft.
 Bosmist en grondmist verschijnen alleen bij gunstige modelomstandigheden,
 zonder percentage: dit zijn aanwijzingen en geen gemeten kansen. Het
 grondmistsignaal vraagt ook om goed zicht op ooghoogte. De kans op

@@ -63,9 +63,6 @@ try {
     $feedbackReady = $forecast['metrics'] !== null
         && !empty($config['telegram_bot_token'])
         && !empty($config['telegram_chat_id']);
-    if ($feedbackReady) {
-        $telegramText .= "\n\nNa je ochtend: tik wat je zelf zag.";
-    }
     try {
         fogSaveForecastArchive($privateDir, $forecast, $now, null, $telegramText);
     } catch (Throwable $archiveError) {
