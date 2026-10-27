@@ -103,7 +103,8 @@ try {
                     $callbackMessage['message_id'],
                     $feedbackMatch[2],
                     $feedbackMatch[3],
-                    new DateTimeImmutable('now', new DateTimeZone('Europe/Amsterdam'))
+                    new DateTimeImmutable('now', new DateTimeZone('Europe/Amsterdam')),
+                    $callback['id']
                 );
             } catch (InvalidArgumentException $feedbackError) {
                 $answer = 'Deze keuze herken ik niet.';

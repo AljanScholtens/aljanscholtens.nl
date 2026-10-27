@@ -17,6 +17,7 @@ rsync -az static/fog-weather.php static/fog-feedback.php \
 rsync -az ops/fog-morning-cron.php "$host:$stage/private/"
 ssh -o BatchMode=yes "$host" "php -l $stage/www/fog-weather.php && php -l $stage/www/fog-feedback.php && php -l $stage/www/fog-alert.php && php -l $stage/www/fog-bot.php && php -l $stage/private/fog-morning-cron.php"
 ssh -o BatchMode=yes "$host" "FOG_BOT_ROOT=\$HOME/$stage php" < tests/fog-morning-decision.php
+ssh -o BatchMode=yes "$host" "FOG_BOT_ROOT=\$HOME/$stage php" < tests/fog-feedback-history.php
 ssh -o BatchMode=yes "$host" "FOG_BOT_ROOT=\$HOME/$stage php" < tests/fog-forecast-smoke.php
 
 verify_live() {

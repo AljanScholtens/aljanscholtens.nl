@@ -58,8 +58,12 @@ function fogRecordFeedback(
     int $messageId,
     string $kind,
     string $value,
-    DateTimeImmutable $now
+    DateTimeImmutable $now,
+    string $callbackId
 ): string {
+    if ($callbackId === '') {
+        throw new InvalidArgumentException('Invalid feedback callback');
+    }
     $archivePath = fogForecastArchivePath($privateDir, $date);
     $today = $now->format('Y-m-d');
     if ($date > $today) {
@@ -92,7 +96,11 @@ function fogRecordFeedback(
         throw new RuntimeException('Could not create feedback directory');
     }
     $path = $directory . '/' . $date . '.json';
-    $existing = is_file($path) ? json_decode((string) file_get_contents($path), true) : null;
+    $hasExisting = is_file($path);
+    $existing = $hasExisting ? json_decode((string) file_get_contents($path), true) : null;
+    if ($hasExisting && !is_array($existing)) {
+        throw new RuntimeException('Existing feedback cannot be read');
+    }
     $record = is_array($existing) ? $existing : [
         'date' => $date,
         'place' => 'Vries',
@@ -100,6 +108,32 @@ function fogRecordFeedback(
         'mist' => null,
         'photo_worthy' => null,
     ];
+    if (($record['date'] ?? null) !== $date
+        || ($record['telegram_message_id'] ?? null) !== $messageId) {
+        throw new RuntimeException('Existing feedback does not match forecast');
+    }
+    if (!array_key_exists('events', $record)) {
+        // Older files contain only the last known choices; earlier clicks cannot be recovered.
+        if ($hasExisting) {
+            $record['history_baseline'] = [
+                'mist' => $record['mist'] ?? null,
+                'photo_worthy' => $record['photo_worthy'] ?? null,
+                'updated_at' => $record['updated_at'] ?? null,
+            ];
+        }
+        $record['events'] = [];
+    }
+    if (!is_array($record['events'])) {
+        throw new RuntimeException('Existing feedback history cannot be read');
+    }
+    foreach ($record['events'] as $event) {
+        if (!is_array($event)) {
+            throw new RuntimeException('Existing feedback history cannot be read');
+        }
+        if (($event['callback_query_id'] ?? null) === $callbackId) {
+            return (string) ($event['reply'] ?? 'Al genoteerd.');
+        }
+    }
     if ($kind === 'mist') {
         $record['mist'] = $value;
         if ($value === 'unseen') {
@@ -107,13 +141,19 @@ function fogRecordFeedback(
         }
         $reply = 'Genoteerd: ' . $mistLabels[$value] . '.';
     } else {
-        if ($record['mist'] === null || $record['mist'] === 'unseen') {
-            return 'Kies eerst wat je zelf hebt gezien.';
-        }
         $record['photo_worthy'] = $value === 'yes';
         $reply = $value === 'yes' ? 'Genoteerd: foto waard.' : 'Genoteerd: foto niet waard.';
     }
     $record['updated_at'] = $now->format(DATE_ATOM);
+    $record['events'][] = [
+        'callback_query_id' => $callbackId,
+        'recorded_at' => $record['updated_at'],
+        'forecast_date' => $date,
+        'telegram_message_id' => $messageId,
+        'kind' => $kind,
+        'value' => $value,
+        'reply' => $reply,
+    ];
     $encoded = json_encode($record, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) . "\n";
     $temporary = tempnam($directory, '.feedback-');
     if ($temporary === false) {

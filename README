@@ -33,10 +33,17 @@ daaropvolgende ochtenden. Die cijfers gebruiken het
 GFS-ensemble; het lokale KNMI-model reikt niet altijd zo ver. Als de extra
 gegevens ontbreken, blijft de hoofdvoorspelling beschikbaar zonder vooruitblik.
 
+De automatische avondmelding bewaart de volledige voorspelling en de feedback
+per datum buiten de publieke website. Iedere nieuwe geldige feedbacktik krijgt
+een eigen gebeurtenis met tijd en Telegram-berichtnummer; de laatste keuzes
+blijven ook direct beschikbaar. Herhaalde afleveringen van dezelfde Telegram-
+actie tellen maar één keer. Voor oude feedbackbestanden blijft de laatst bekende
+stand als beginpunt bewaard; eerdere overschreven keuzes zijn niet te herstellen.
+
 Controleer een botwijziging eerst zonder live bestanden of Telegram-berichten
 te wijzigen: `./deploy-fog.sh --check`. Dit zet een kopie in
 `~/private/fog-bot-stage`, controleert PHP en rekent een voorbeeldverwachting
-en de ochtendbeslisregels door. Publiceer daarna met `./deploy-fog.sh`.
+en de ochtendbeslisregels en feedbackopslag door. Publiceer daarna met `./deploy-fog.sh`.
 Het script vervangt alleen de vier publieke botbestanden en de private
 ochtendtaak, zonder bestanden te verwijderen. De vorige versie wordt bewaard
 in `~/private/fog-bot-previous`. `./deploy-fog.sh --verify` vergelijkt de
