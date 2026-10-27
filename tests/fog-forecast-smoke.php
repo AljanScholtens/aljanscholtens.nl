@@ -38,6 +38,12 @@ if (!fogGroundMistFavorable(0.6, null)
     fwrite(STDERR, "Ground mist display threshold is incorrect\n");
     exit(1);
 }
+if (fogMemberSnowfall(['snowfall' => [0.04, 0.09]], '', [7 => 0, 8 => 1], [7, 8]) !== false
+    || fogMemberSnowfall(['snowfall' => [0.04, 0.11]], '', [7 => 0, 8 => 1], [7, 8]) !== true
+    || fogMemberSnowfall(['snowfall' => [null, 0.11]], '', [7 => 0, 8 => 1], [7, 8]) !== null) {
+    fwrite(STDERR, "Snowfall signal check failed\n");
+    exit(1);
+}
 
 $zone = new DateTimeZone('Europe/Amsterdam');
 $forecast = fogBuildForecast(new DateTimeImmutable('now', $zone), $zone);
@@ -50,6 +56,8 @@ $expectedDates = [
 ];
 $weekdays = ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za'];
 $outlookLabels = [];
+$snowShare = $metrics['snow_share'] ?? null;
+$snowLine = strpos($forecast['message'], '❄️ Sneeuw: ') !== false;
 if (is_array($outlook)) {
     foreach ($outlook as $date => $score) {
         $weekday = (int) (new DateTimeImmutable($date . ' 12:00', $zone))->format('w');
@@ -68,8 +76,12 @@ if (!is_array($metrics)
     || strpos($forecast['message'], '☀️↓ ') === false
     || strpos($forecast['message'], '🌁 Mist: ') === false
     || ((strpos($forecast['message'], '↳ Dichte mist: ') !== false)
-        !== ((int) round((float) $metrics['dense_share'] * 100) > 0))
+        !== ((int) round((float) $metrics['dense_share'] * 100) >= 15))
     || strpos($forecast['message'], '🌤️ Kans op ochtendzon: ') === false
+    || ($snowShare !== null && !is_numeric($snowShare))
+    || ($snowLine !== ($snowShare !== null && $snowShare > 0))
+    || ($snowLine && strpos($forecast['message'], sprintf('❄️ Sneeuw: %d%%',
+        (int) round((float) $snowShare * 100))) === false)
     || strpos($forecast['message'], $metrics['weather_summary']) === false
     || !is_array($outlook)
     || array_keys($outlook) !== $expectedDates

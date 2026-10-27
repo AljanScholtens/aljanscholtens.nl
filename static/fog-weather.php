@@ -220,6 +220,23 @@ function fogMemberPhotoSignals(array $series, array $indices, int $sunriseHour):
     ];
 }
 
+function fogMemberSnowfall(array $hourly, string $suffix, array $indices, array $hours): ?bool
+{
+    $snowfall = $hourly['snowfall' . $suffix] ?? null;
+    if (!is_array($snowfall)) {
+        return null;
+    }
+    $snowing = false;
+    foreach ($hours as $hour) {
+        $value = $snowfall[$indices[$hour]] ?? null;
+        if (!is_numeric($value)) {
+            return null;
+        }
+        $snowing = $snowing || (float) $value >= 0.1;
+    }
+    return $snowing;
+}
+
 function fogOutlookScores(
     array $hourly,
     array $suffixes,
@@ -388,7 +405,7 @@ function fogBuildForecast(
             try {
                 $url = 'https://ensemble-api.open-meteo.com/v1/ensemble?latitude=' . rawurlencode((string) $latitude)
                     . '&longitude=' . rawurlencode((string) $longitude)
-                    . '&hourly=visibility,weather_code,cloud_cover,precipitation,relative_humidity_2m,wind_speed_10m,temperature_2m'
+                    . '&hourly=visibility,weather_code,cloud_cover,precipitation,snowfall,relative_humidity_2m,wind_speed_10m,temperature_2m'
                     . '&models=gfs025&forecast_days=' . $forecastDays . '&timezone=Europe%2FAmsterdam';
                 [$status, $response] = fogRequest($url);
                 if ($status !== 200) {
@@ -440,6 +457,8 @@ function fogBuildForecast(
         $wetWeather = 0;
         $showeryWeather = 0;
         $snowyWeather = 0;
+        $snowfallMembers = 0;
+        $snowfallEvents = 0;
         $cloudCoverTotal = 0.0;
         $mistByHour = array_fill_keys($hours, 0);
         $weatherHours = [$sunriseHour, min(23, $sunriseHour + 1)];
@@ -461,6 +480,11 @@ function fogBuildForecast(
             }
 
             $complete++;
+            $memberSnowfall = fogMemberSnowfall($hourly, $suffix, $indices, $weatherHours);
+            if ($memberSnowfall !== null) {
+                $snowfallMembers++;
+                $snowfallEvents += (int) $memberSnowfall;
+            }
             $signals = fogMemberPhotoSignals($series, $indices, $sunriseHour);
             foreach ($signals['fog_by_hour'] as $hour => $fog) {
                 if ($fog) {
@@ -501,6 +525,7 @@ function fogBuildForecast(
 
         $mistChance = $mist / $complete;
         $denseChance = $dense / $complete;
+        $snowChance = $snowfallMembers >= 25 ? $snowfallEvents / $snowfallMembers : null;
         $openSkyChance = $openSky / $complete;
         $forestSignalShare = $forestMistSignal / $complete;
         $forestOutlookShare = $forestOutlook / $complete;
@@ -588,7 +613,7 @@ function fogBuildForecast(
             sprintf('🌁 Mist: %d%% (zicht <1 km)', (int) round($mistChance * 100)),
         ];
         $densePercent = (int) round($denseChance * 100);
-        if ($densePercent > 0) {
+        if ($densePercent >= 15) {
             $lines[] = sprintf('↳ Dichte mist: %d%% (zicht <200 m)',
                 $densePercent);
         }
@@ -616,6 +641,9 @@ function fogBuildForecast(
             $lines[] = '⚠️ KNMI-model: ' . $localLabel;
         }
         $lines[] = sprintf('🌤️ Kans op ochtendzon: %d%%', (int) round($openSkyChance * 100));
+        if ($snowChance !== null && $snowChance > 0.0) {
+            $lines[] = sprintf('❄️ Sneeuw: %d%%', (int) round($snowChance * 100));
+        }
         $wetShare = $wetWeather / $complete;
         if ($wetShare >= 0.25) {
             $weatherType = $snowyWeather > $wetWeather / 2 ? 'sneeuw'
@@ -624,7 +652,8 @@ function fogBuildForecast(
             $weatherIcon = $weatherType === 'sneeuw' ? '❄️'
                 : ($weatherType === 'buien' ? '🌦️' : '🌧️');
         } else {
-            $weatherSummary = $wetShare >= 0.1 ? 'Overwegend droog' : 'Droog';
+            $weatherSummary = $wetShare >= 0.1 || ($snowChance !== null && $snowChance > 0.0)
+                ? 'Overwegend droog' : 'Droog';
             $weatherIcon = '⛅';
             $cloudCover = $cloudCoverTotal / $complete;
             if ($cloudCover >= 75.0) {
@@ -672,6 +701,7 @@ function fogBuildForecast(
             'ground_conditions_share' => $groundMistConditionsShare,
             'sun_share' => $openSkyChance,
             'wet_share' => $wetShare,
+            'snow_share' => $snowChance,
             'weather_summary' => $weatherSummary,
             'lifting_share' => $liftingChance,
             'ensemble_score' => $ensembleScore,
