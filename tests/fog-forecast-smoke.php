@@ -4,33 +4,20 @@ declare(strict_types=1);
 $root = getenv('FOG_BOT_ROOT') ?: getenv('HOME');
 require $root . '/www/fog-weather.php';
 
-$hours = [6 => 0, 7 => 1, 8 => 2];
-$clearMorning = [
-    'relative_humidity_2m' => [95, 97, 97],
-    'wind_speed_10m' => [5, 5, 5],
-    'cloud_cover' => [20, 20, 20],
-    'precipitation' => [0, 0, 0],
-    'visibility' => [2000, 2000, 2000],
-    'weather_code' => [0, 0, 0],
-];
-if (!fogGroundMistConditions($clearMorning, $hours, 8)) {
-    fwrite(STDERR, "Ground mist cue missed a clear, moist, calm morning\n");
+// The one night test: clear, calm and damp gives local mist and dew; frost gives rime.
+$night = static function (float $cloud, float $wind, float $rain, float $humidity, float $temp): string {
+    $result = fogNightConditions($cloud, $wind, $rain, $humidity, $temp);
+    return (int) $result['local_mist'] . (int) $result['dew'] . (int) $result['rime'];
+};
+if ($night(20, 5, 0, 97, 6) !== '110'
+    || $night(20, 5, 0, 97, -1) !== '101'
+    || $night(20, 5, 0, 90, -1) !== '001'
+    || $night(60, 5, 0, 97, 6) !== '000'
+    || $night(20, 12, 0, 97, 6) !== '000'
+    || $night(20, 5, 0.3, 97, 6) !== '000'
+    || $night(20, 5, 0, 90, 6) !== '000') {
+    fwrite(STDERR, "Night conditions check failed\n");
     exit(1);
-}
-foreach ([
-    ['visibility', 2, 100],
-    ['relative_humidity_2m', 1, 80],
-    ['wind_speed_10m', 1, 18],
-    ['cloud_cover', 0, 90],
-    ['precipitation', 1, 0.3],
-    ['weather_code', 2, 45],
-] as [$variable, $index, $value]) {
-    $unfavorable = $clearMorning;
-    $unfavorable[$variable][$index] = $value;
-    if (fogGroundMistConditions($unfavorable, $hours, 8)) {
-        fwrite(STDERR, "Ground mist cue accepted unfavorable conditions\n");
-        exit(1);
-    }
 }
 $roundZone = new DateTimeZone('Europe/Amsterdam');
 if (fogSunriseHour(new DateTimeImmutable('2026-12-21 08:50', $roundZone)) !== 9
@@ -52,12 +39,6 @@ $vries = fogDefaultPlace();
 [, , $midsummerLight] = fogSunTimes('2026-06-21', $vries['latitude'], $vries['longitude'], $roundZone);
 if ($midsummerLight->modify('-' . (FOG_WAKE_MINUTES_BEFORE_FIRST_LIGHT + 15) . ' minutes')->format('H:i') < '03:00') {
     fwrite(STDERR, "Midsummer morning check falls before the cron window\n");
-    exit(1);
-}
-if (!fogGroundMistFavorable(0.6, null)
-    || fogGroundMistFavorable(0.59, null)
-    || fogGroundMistFavorable(0.8, ['fog' => true])) {
-    fwrite(STDERR, "Ground mist display threshold is incorrect\n");
     exit(1);
 }
 if (fogMemberSnowfall(['snowfall' => [0.04, 0.09]], '', [7 => 0, 8 => 1], [7, 8]) !== false
@@ -224,14 +205,11 @@ if (is_array($outlook)) {
     }
 }
 if (!is_array($metrics)
-    || !is_numeric($metrics['forest_outlook_share'] ?? null)
-    || !is_numeric($metrics['ground_conditions_share'] ?? null)
+    || !is_numeric($metrics['local_mist_share'] ?? null)
+    || !is_bool($metrics['local_mist'] ?? null)
     || !is_numeric($metrics['dense_share'] ?? null)
-    || !is_numeric($metrics['forest_conditions_share'] ?? null)
-    || (float) $metrics['forest_outlook_share'] + 0.00001
-        < max((float) $metrics['dense_share'], (float) $metrics['forest_conditions_share'])
     || !is_string($metrics['weather_summary'] ?? null)
-    || ($metrics['score_version'] ?? null) !== 5
+    || ($metrics['score_version'] ?? null) !== 6
     || !in_array($metrics['photo_route'] ?? null, ['mist', 'winter', 'sky', 'frost'], true)
     || !is_string($metrics['photo_reason'] ?? null)
     || strpos($forecast['message'], '☀️↑ ') === false

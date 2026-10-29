@@ -5,8 +5,9 @@ define('FOG_MORNING_LIBRARY_ONLY', true);
 $root = getenv('FOG_BOT_ROOT') ?: getenv('HOME');
 require $root . '/private/fog-morning-cron.php';
 
-function snapshot(int $score, float $mist, float $dense, float $forest, bool $localDense = false,
-    ?float $forestOutlook = null): array
+// $local is the share of scenarios with a clear, calm, damp night; from half on
+// the forecast says "local mist possible".
+function snapshot(int $score, float $mist, float $dense, float $local, bool $localDense = false): array
 {
     return [
         'date' => '2026-10-19',
@@ -14,10 +15,9 @@ function snapshot(int $score, float $mist, float $dense, float $forest, bool $lo
             'score' => $score,
             'mist_share' => $mist,
             'dense_share' => $dense,
-            'forest_conditions_share' => $forest,
-            'forest_outlook_share' => $forestOutlook ?? max($dense, $forest),
-            'knmi' => ['fog' => $localDense, 'dense' => $localDense,
-                'forest_conditions' => false],
+            'local_mist_share' => $local,
+            'local_mist' => $local >= 0.5,
+            'knmi' => ['fog' => $localDense, 'dense' => $localDense, 'local_mist' => false],
         ],
     ];
 }
@@ -33,8 +33,7 @@ $cases = [
     [snapshot(3, 0.2, 0.0, 0.0), snapshot(6, 0.2, 0.0, 0.0), true],
     [snapshot(6, 0.4, 0.0, 0.0), snapshot(6, 0.4, 0.0, 0.0, true), true],
     [snapshot(3, 0.1, 0.0, 0.1), snapshot(3, 0.1, 0.0, 0.6), true],
-    [snapshot(6, 0.8, 0.8, 0.1, false, 0.8),
-        snapshot(6, 0.8, 0.8, 0.7, false, 0.8), false],
+    [snapshot(6, 0.8, 0.8, 0.6), snapshot(6, 0.8, 0.8, 0.9), false],
 ];
 foreach ($cases as $index => $case) {
     $result = fogMorningDecision(evening($case[0]), $case[1]);
@@ -54,32 +53,19 @@ if (fogMorningDecision(evening(snapshot(2, 0.05, 0.0, 0.0)), $newScoreVersion)['
     exit(1);
 }
 $legacy = evening(snapshot(6, 0.2, 0.0, 0.1));
-unset($legacy['forecast']['metrics']['forest_outlook_share']);
+unset($legacy['forecast']['metrics']['local_mist']);
 if (fogMorningDecision($legacy, snapshot(6, 0.2, 0.0, 0.8))['send']) {
-    fwrite(STDERR, "Legacy forest metric incorrectly triggered a message\n");
+    fwrite(STDERR, "A forecast without the local mist flag incorrectly triggered a message\n");
     exit(1);
 }
-$groundEvening = evening(snapshot(6, 0.2, 0.0, 0.1));
-$groundMorning = snapshot(6, 0.2, 0.0, 0.1);
-$groundEvening['forecast']['metrics']['ground_conditions_share'] = 0.2;
-$groundMorning['metrics']['ground_conditions_share'] = 0.8;
-if (!fogMorningDecision($groundEvening, $groundMorning)['send']
-    || strpos(fogMorningMessage($groundEvening, $groundMorning),
-        '↳ Lokale mist: nu mogelijk') === false) {
-    fwrite(STDERR, "Ground mist change was not reported\n");
-    exit(1);
-}
-if (fogMorningDecision(evening(snapshot(6, 0.2, 0.0, 0.1)), $groundMorning)['send']) {
-    fwrite(STDERR, "Legacy ground mist metric incorrectly triggered a message\n");
-    exit(1);
-}
-$forestEvening = evening(snapshot(6, 0.2, 0.0, 0.1, false, 0.1));
-$forestMorning = snapshot(6, 0.2, 0.0, 0.6, false, 0.6);
-$forestMessage = fogMorningMessage($forestEvening, $forestMorning);
-if (!fogMorningDecision($forestEvening, $forestMorning)['send']
-    || strpos($forestMessage, '↳ Lokale mist: nu mogelijk') === false
-    || strpos($forestMessage, 'Bosmist-signaal:') !== false) {
-    fwrite(STDERR, "Forest mist change was not reported clearly\n");
+$localEvening = evening(snapshot(6, 0.2, 0.0, 0.1));
+$localMorning = snapshot(6, 0.2, 0.0, 0.6);
+$localMessage = fogMorningMessage($localEvening, $localMorning);
+if (!fogMorningDecision($localEvening, $localMorning)['send']
+    || strpos($localMessage, '↳ Lokale mist: nu mogelijk') === false
+    || strpos(fogMorningMessage(evening($localMorning), snapshot(6, 0.2, 0.0, 0.1)),
+        '↳ Lokale mist: niet meer verwacht') === false) {
+    fwrite(STDERR, "Local mist change was not reported clearly\n");
     exit(1);
 }
 $sample = snapshot(6, 0.6, 0.3, 0.2, true);

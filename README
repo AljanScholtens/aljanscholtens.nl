@@ -23,14 +23,18 @@ minuten. Zonsondergang staat niet meer in het bericht.
 
 Het bericht toont de mistkans pas vanaf 10%. Dichte mist verschijnt als
 onderdeel van de algemene mistkans, alleen vanaf 15% modelkans.
-"Lokale mist: mogelijk" verschijnt bij gunstige modelomstandigheden voor
-mist die het grove model zelf niet ziet (vochtige, rustige lucht voor
-zonsopkomst), zonder percentage: het is een aanwijzing en geen gemeten kans.
-Mist ontstaat meestal eerst boven open veld en in lage delen, daarom heet het
-niet meer bos- of grondmist.
+Rekenwijze versie 6 (`static/fog-weather.php`, drempels in één blok bovenaan):
+per scenario van het GFS-ensemble telt de beste fotokans (mist, sneeuw,
+ochtendlicht, rijp of dauw); het cijfer is het gemiddelde over de scenario's.
+Eén nachttest, een uur voor zonsopkomst, beoordeelt of het helder, rustig en
+vochtig is: dat geeft "Lokale mist: mogelijk" (alleen als er geen mistregel
+staat), dauw en bij vorst rijp. Het KNMI-model is leidend voor mist en lokale
+mist zolang het die ochtend bereikt; anders moet de helft van de scenario's het
+eens zijn. Rekenen (`fogForecastMetrics`) en tekst (`fogForecastMessage`) zijn
+gescheiden. `FOG_FIXTURES` laat tests vastgelegde modeldata terugspelen.
 
-Rekenwijze versie 5: elke mist en een vers sneeuwdek (minstens 3 cm gevallen
-tussen 18:00 de avond ervoor en zonsopkomst) zijn minstens een 7, ook op een
+Sinds versie 5 is elke mist, net als een vers sneeuwdek (minstens 3 cm gevallen
+tussen 18:00 de avond ervoor en zonsopkomst), minstens een 7, ook op een
 grijze ochtend. Ziet het KNMI-model mist, dan is het minstens een 7, bij dichte
 mist een 8. Een ouder sneeuwdek zonder verse sneeuw blijft rond de 5. De kans op
 ochtendzon gebruikt bewolking, zicht en droog weer na zonsopkomst.

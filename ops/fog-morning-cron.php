@@ -29,30 +29,14 @@ function fogMorningLocalDenseChanged(array $old, array $new): ?bool
     return (bool) ($oldKnmi['dense'] ?? false) !== $newDense ? $newDense : null;
 }
 
-// Returns the new "local mist possible" state when it clearly flipped since the
-// evening, else null. It combines the ground and forest cues the message shows.
+// Returns the new "local mist possible" state when it flipped since the evening,
+// else null. Older forecasts without the flag never count as a change.
 function fogMorningLocalMistChanged(array $old, array $new): ?bool
 {
-    if (!is_numeric($old['forest_outlook_share'] ?? null)
-        || !is_numeric($new['forest_outlook_share'] ?? null)) {
+    if (!is_bool($old['local_mist'] ?? null) || !is_bool($new['local_mist'] ?? null)) {
         return null;
     }
-    // Older forecasts lack the ground cue; then compare the forest cue alone.
-    $useGround = is_numeric($old['ground_conditions_share'] ?? null)
-        && is_numeric($new['ground_conditions_share'] ?? null);
-    $state = static function (array $metrics) use ($useGround): bool {
-        return ($useGround && fogGroundMistFavorable((float) $metrics['ground_conditions_share'],
-                is_array($metrics['knmi'] ?? null) ? $metrics['knmi'] : null))
-            || ((float) $metrics['forest_outlook_share'] >= 0.5
-                && !($metrics['models_disagree'] ?? false));
-    };
-    $before = $state($old);
-    $after = $state($new);
-    // A share hovering around a threshold should not flip-flop into a message.
-    $shift = max(abs((float) $new['forest_outlook_share'] - (float) $old['forest_outlook_share']),
-        $useGround ? abs((float) $new['ground_conditions_share']
-            - (float) $old['ground_conditions_share']) : 0.0);
-    return $before !== $after && $shift >= 0.3 ? $after : null;
+    return $old['local_mist'] !== $new['local_mist'] ? $new['local_mist'] : null;
 }
 
 function fogMorningDecision(?array $evening, array $morning): array
@@ -64,7 +48,7 @@ function fogMorningDecision(?array $evening, array $morning): array
         || !is_array($old) || !is_array($new)) {
         return ['send' => false, 'reasons' => ['no comparable evening forecast']];
     }
-    foreach (['score', 'mist_share', 'dense_share', 'forest_conditions_share'] as $key) {
+    foreach (['score', 'mist_share', 'dense_share'] as $key) {
         if (!is_numeric($old[$key] ?? null) || !is_numeric($new[$key] ?? null)) {
             return ['send' => false, 'reasons' => ['incomplete forecast metrics']];
         }

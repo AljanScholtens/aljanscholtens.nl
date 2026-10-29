@@ -18,7 +18,7 @@ $metrics = [
     'score' => 8, 'photo_reason' => 'mist kan optrekken in ochtendlicht',
     'models_disagree' => false, 'photo_route' => 'mist', 'knmi' => ['fog' => true],
     'mist_share' => 0.55, 'dense_share' => 0.2, 'best_mist_hour' => 8,
-    'ground_favorable' => false, 'forest_favorable' => true, 'local_mist' => true,
+    'local_mist' => true,
     'fresh_snow_share' => 0.6, 'fresh_snow_cm' => 9.6,
     'photo_shares' => ['rime' => 0.7, 'dew' => 0.0, 'calm' => 0.8],
     'min_temp' => -3.2, 'sun_share' => 0.6, 'snow_share' => 0.0,
