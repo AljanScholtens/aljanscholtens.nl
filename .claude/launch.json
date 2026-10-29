@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "hugo",
+      "runtimeExecutable": "hugo",
+      "runtimeArgs": ["server", "--port", "1313", "--disableFastRender"],
+      "port": 1313
+    },
+    {
+      "name": "mockup",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8765", "--bind", "127.0.0.1", "--directory", "/private/tmp/claude-501/-Users-aljan-Sites-aljanscholtens-nl-v2/e3ebc2c8-65c7-4a94-b205-50e0da60c123/scratchpad/mockup"],
+      "port": 8765
+    }
+  ]
+}
