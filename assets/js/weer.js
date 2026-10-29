@@ -19,10 +19,6 @@
       + '-' + String(date.getDate()).padStart(2, '0');
   }
 
-  function temperature(value) {
-    return String(value).replace('-', '−') + '°';
-  }
-
   function row(label, value, note) {
     var item = el('li', 'w-row');
     item.appendChild(el('span', 'w-row__label', label));
@@ -89,23 +85,16 @@
     light.appendChild(sun);
     card.appendChild(light);
 
+    // The six photo chances always in the same order; the one behind the score stands out.
     var rows = el('ul', 'w-rows');
-    if (day.mist) {
-      var notes = [];
-      if (day.mist.dense_percent) notes.push('dicht ' + day.mist.dense_percent + '%');
-      if (day.mist.best_hour) notes.push('rond ' + day.mist.best_hour);
-      rows.appendChild(row('Mist', day.mist.percent + '%', notes.join(' · ')));
-    }
-    if (day.local_mist) rows.appendChild(row('Lokale mist', 'mogelijk'));
-    if (day.rime) rows.appendChild(row('Rijp', day.rime.percent + '%', 'min ' + temperature(day.rime.min_temp)));
-    if (day.dew) rows.appendChild(row('Dauw', day.dew.label, 'min ' + temperature(day.dew.min_temp)));
-    if (day.calm) rows.appendChild(row('Windstil', 'spiegelingen mogelijk'));
-    if (day.fresh_snow_cm) rows.appendChild(row('Verse sneeuw', 'ongeveer ' + day.fresh_snow_cm + ' cm'));
-    if (day.snow_percent) rows.appendChild(row('Sneeuw', day.snow_percent + '%'));
-    if (day.color) rows.appendChild(row('Kleur in de lucht', day.color));
-    rows.appendChild(row('Ochtendzon', day.sun));
-    rows.appendChild(row('Weer', day.weather));
+    (day.categories || []).forEach(function (category) {
+      var item = row(category.label, category.value || '—', category.notes.join(' · '));
+      if (!category.value) item.className += ' w-row--empty';
+      if (category.lead) item.className += ' w-row--lead';
+      rows.appendChild(item);
+    });
     card.appendChild(rows);
+    card.appendChild(el('p', 'w-weather', day.weather));
     return card;
   }
 
@@ -216,6 +205,15 @@
   });
   window.addEventListener('popstate', function () {
     load(queryFromUrl());
+  });
+
+  // The explanation lives in a dialog; a click on the dark backdrop also closes it.
+  var info = document.querySelector('[data-info]');
+  document.querySelector('[data-info-open]').addEventListener('click', function () {
+    info.showModal();
+  });
+  info.addEventListener('click', function (event) {
+    if (event.target === info) info.close();
   });
 
   window.fotoweerRender = render;

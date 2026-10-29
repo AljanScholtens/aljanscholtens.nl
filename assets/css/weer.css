@@ -55,7 +55,7 @@ body {
 /* Logo left, search in the middle; the empty third column keeps it centred. */
 .w-header__bar {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 16px;
   max-width: var(--max-width);
@@ -338,24 +338,6 @@ body {
   text-align: center;
 }
 
-.w-about {
-  max-width: 640px;
-  margin: 48px auto 0;
-  font-size: var(--font-size-30);
-  line-height: 1.6;
-  color: var(--w-muted);
-
-  p {
-    margin: 0;
-  }
-}
-
-.w-about__title {
-  margin: 0 0 16px;
-  font-size: var(--font-size-40);
-  color: var(--w-ink);
-}
-
 .w-legend {
   display: grid;
   gap: 8px;
@@ -483,4 +465,134 @@ body {
 
 .w-status p {
   margin: 0;
+}
+
+/*
+ * Fixed photo chances: empty ones fade back, the one behind the score stands out.
+ */
+.w-row--empty {
+  .w-row__label {
+    color: var(--color-neutral-50);
+  }
+
+  .w-row__value {
+    color: var(--color-neutral-30);
+    font-weight: 400;
+  }
+}
+
+.w-row--lead {
+  .w-row__label {
+    color: var(--w-ink);
+    font-weight: 500;
+  }
+
+  .w-row__value {
+    color: var(--w-tone, var(--w-ink));
+  }
+}
+
+.w-weather {
+  margin: 12px 0 0;
+  font-size: var(--font-size-20);
+  color: var(--w-muted);
+}
+
+/*
+ * Info button and the explanation dialog.
+ */
+.w-info {
+  justify-self: end;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-neutral-0a75);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-neutral-0);
+    background: var(--color-neutral-0a10);
+  }
+}
+
+.w-dialog {
+  width: calc(100% - 32px);
+  max-width: 520px;
+  max-height: calc(100% - 48px);
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background: var(--color-neutral-0);
+  color: var(--w-ink);
+  box-shadow: var(--box-shadow-30);
+  font-size: var(--font-size-30);
+  line-height: 1.55;
+
+  &::backdrop {
+    background: var(--color-primary-90a80);
+  }
+
+  p {
+    margin: 0 0 16px;
+    color: var(--w-muted);
+  }
+}
+
+.w-dialog__body {
+  padding: 24px;
+}
+
+.w-dialog__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.w-dialog__title {
+  margin: 0;
+  font-size: var(--font-size-40);
+}
+
+.w-dialog__close {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-neutral-10);
+  color: var(--w-ink);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--color-neutral-20);
+  }
+}
+
+.w-kinds {
+  margin: 0 0 16px;
+  font-size: var(--font-size-20);
+
+  div {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 12px;
+    padding: 8px 0;
+    border-top: 1px solid var(--w-line);
+  }
+
+  dt {
+    font-weight: 500;
+  }
+
+  dd {
+    margin: 0;
+    color: var(--w-muted);
+  }
 }

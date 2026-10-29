@@ -18,34 +18,59 @@ $metrics = [
     'score' => 8, 'photo_reason' => 'mist kan optrekken in ochtendlicht',
     'models_disagree' => false, 'photo_route' => 'mist', 'knmi' => ['fog' => true],
     'mist_share' => 0.55, 'dense_share' => 0.2, 'best_mist_hour' => 8,
-    'local_mist' => true,
-    'fresh_snow_share' => 0.6, 'fresh_snow_cm' => 9.6,
-    'photo_shares' => ['rime' => 0.7, 'dew' => 0.0, 'calm' => 0.8],
+    'lifting_share' => 0.3, 'freezing_mist_share' => 0.4, 'local_mist' => true,
+    'fresh_snow_share' => 0.6, 'fresh_snow_cm' => 9.6, 'color_share' => 0.5,
+    'photo_shares' => ['rime' => 0.7, 'dew' => 0.0, 'calm' => 0.8, 'dynamic_sky' => 0.1,
+        'sky_light' => 0.0, 'sky_wind' => 0.0, 'snow_cover' => 0.6, 'snow_wind_sky' => 0.0],
     'min_temp' => -3.2, 'sun_share' => 0.6, 'snow_share' => 0.0,
     'weather_summary' => 'Droog',
 ];
 $day = fogWebDay(['date' => '2026-12-11', 'metrics' => $metrics], $place, $zone);
 webCheck($day['weekday'] === 'vr' && $day['day_label'] === '11 dec', 'Day label is wrong');
 webCheck($day['advice'] === 'go' && $day['advice_label'] === 'Uitstekend'
-    && is_string($day['wake']) && $day['wake'] < $day['first_light'], 'Advice or alarm is wrong');
-webCheck($day['mist'] === ['percent' => 55, 'dense_percent' => 20, 'best_hour' => '08:00'],
-    'Mist block is wrong');
-webCheck($day['rime'] === ['percent' => 70, 'min_temp' => -3] && $day['dew'] === null
-    && $day['calm'] === true && $day['local_mist'] === true && $day['fresh_snow_cm'] === 10
-    && $day['preliminary'] === false
-    && $day['snow_percent'] === null, 'Extra signals are wrong');
+    && is_string($day['wake']) && $day['wake'] < $day['first_light']
+    && $day['preliminary'] === false, 'Advice or alarm is wrong');
+$byKey = static function (array $day): array {
+    return array_column($day['categories'], null, 'key');
+};
+$categories = $byKey($day);
+// Always six categories in the same order, with at most two notes each.
+webCheck(array_keys($categories) === ['mist', 'color', 'sky', 'sun', 'frost', 'snow'],
+    'Categories should come in a fixed order');
+webCheck($categories['mist']['value'] === '55%' && $categories['mist']['lead'] === true
+    && $categories['mist']['notes'] === ['bevroren mist', 'trekt op in zonlicht'],
+    'Mist category is wrong');
+webCheck($categories['color']['value'] === 'waarschijnlijk' && $categories['color']['lead'] === false
+    && $categories['sky']['value'] === null
+    && $categories['sun']['value'] === 'waarschijnlijk'
+    && $categories['sun']['notes'] === ['windstil · spiegelingen']
+    && $categories['frost']['value'] === 'rijp waarschijnlijk'
+    && $categories['frost']['notes'] === ['min −3°', 'strenge vorst']
+    && $categories['snow']['value'] === 'vers, ongeveer 10 cm', 'Other categories are wrong');
 
-// Quiet mornings hide the details the Telegram message also leaves out.
+// A quiet sunny morning: no mist, the sun is the lead, empty categories stay empty.
 $quiet = $metrics;
-$quiet['score'] = 2;
+$quiet['score'] = 4;
+$quiet['photo_route'] = 'sky';
 $quiet['mist_share'] = 0.05;
 $quiet['dense_share'] = 0.0;
-$quiet['photo_shares'] = ['rime' => 0.1, 'dew' => 0.2, 'calm' => 0.3];
+$quiet['local_mist'] = false;
+$quiet['color_share'] = null;
+$quiet['fresh_snow_share'] = 0.0;
+$quiet['photo_shares'] = ['rime' => 0.1, 'dew' => 0.2, 'calm' => 0.3, 'dynamic_sky' => 0.1,
+    'sky_light' => 0.0, 'sky_wind' => 0.0, 'snow_cover' => 0.0, 'snow_wind_sky' => 0.0];
 $quiet['knmi'] = null;
 $quietDay = fogWebDay(['date' => '2026-12-11', 'metrics' => $quiet], $place, $zone);
-webCheck($quietDay['advice'] === 'skip' && $quietDay['wake'] === null
-    && $quietDay['mist'] === null && $quietDay['rime'] === null && $quietDay['dew'] === null
-    && $quietDay['calm'] === false && $quietDay['preliminary'] === true, 'Quiet morning is wrong');
+$quietCategories = $byKey($quietDay);
+webCheck($quietDay['advice'] === 'maybe' && $quietDay['preliminary'] === true
+    && $quietCategories['sun']['lead'] === true
+    && $quietCategories['mist']['value'] === null && $quietCategories['color']['value'] === null
+    && $quietCategories['frost']['value'] === null && $quietCategories['snow']['value'] === null,
+    'Quiet morning is wrong');
+$neutral = $quiet;
+$neutral['score'] = 2;
+webCheck(fogWebDay(['date' => '2026-12-11', 'metrics' => $neutral], $place, $zone)['wake'] === null,
+    'A neutral morning needs no alarm');
 
 $failed = fogWebDay(['date' => '2026-12-11', 'metrics' => null], $place, $zone);
 webCheck(isset($failed['error']) && !isset($failed['score']), 'Missing data should show an error');

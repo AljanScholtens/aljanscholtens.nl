@@ -161,6 +161,24 @@ if (abs($colorShare - 2 / 31) > 0.0001 || fogColorShare(null, '2026-12-11', 8) !
     fwrite(STDERR, "Colour chance check failed\n");
     exit(1);
 }
+// Mist that lifts into sunlight or freezes is worth saying in the alert.
+$messageMetrics = ['score' => 8, 'photo_route' => 'mist', 'photo_reason' => 'test',
+    'models_disagree' => false, 'knmi' => null, 'mist_share' => 0.6, 'dense_share' => 0.0,
+    'local_mist' => false, 'best_mist_hour' => null, 'lifting_share' => 0.3,
+    'freezing_mist_share' => 0.4, 'photo_shares' => ['rime' => 0.0, 'dew' => 0.0, 'calm' => 0.0,
+        'fresh_snow' => 0.0], 'min_temp' => 0.0, 'fresh_snow_cm' => 0.0, 'sun_share' => 0.5,
+    'snow_share' => null, 'color_share' => null, 'weather_icon' => '⛅',
+    'weather_summary' => 'Droog', 'outlook_scores' => []];
+$testMessage = fogForecastMessage($messageMetrics, new DateTimeImmutable('2026-12-11 08:40', $roundZone),
+    new DateTimeImmutable('2026-12-11 08:00', $roundZone), $roundZone);
+$messageMetrics['mist_share'] = 0.05;
+$noMistMessage = fogForecastMessage($messageMetrics, new DateTimeImmutable('2026-12-11 08:40', $roundZone),
+    new DateTimeImmutable('2026-12-11 08:00', $roundZone), $roundZone);
+if (strpos($testMessage, "🌁 Mist: 60% (zicht <1 km)\n↳ Trekt op in zonlicht\n↳ Bevroren mist: rijp op alles") === false
+    || strpos($noMistMessage, 'Trekt op') !== false || strpos($noMistMessage, 'Bevroren') !== false) {
+    fwrite(STDERR, "Lifting and freezing mist lines are wrong\n");
+    exit(1);
+}
 $sunnyCalmInput = $windOnly;
 $sunnyCalmInput['cloud_cover'] = array_fill(0, 5, 10);
 $sunnyCalmInput['wind_speed_10m'] = array_fill(0, 5, 3);

@@ -99,6 +99,13 @@ de weermodellen. Vóór zonsopkomst telt vandaag nog mee; de pagina laat een
 ochtend vallen zodra de zon op is. Een ochtend zonder KNMI-model heet
 "voorlopig".
 
+Elke kaart toont zes fotokansen in vaste volgorde (mist, kleur, wolkenlucht,
+zon, rijp/dauw, sneeuw), met een streepje als er niets te verwachten is en
+hooguit twee details. De fotokans die het cijfer bepaalt, valt op. De uitleg
+staat in een venster achter de "i" rechtsboven. Telegram toont alleen wat
+relevant is, met onder de mistregel ook "trekt op in zonlicht" en
+"bevroren mist".
+
 Met `/weer/?plaats=Assen` zoekt de pagina een Nederlandse plaats op
 (`static/fog-web.php`). Bij een dubbele naam kies je de provincie, zoals
 "Hengelo, Gelderland". Het resultaat wordt twee uur per plaats bewaard in

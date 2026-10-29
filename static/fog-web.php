@@ -31,11 +31,6 @@ function fogWebDay(array $forecast, array $place, DateTimeZone $zone): array
 
     $score = (int) $metrics['score'];
     $advice = fogAdvice($score);
-    $mistPercent = (int) round((float) $metrics['mist_share'] * 100);
-    $densePercent = (int) round((float) $metrics['dense_share'] * 100);
-    $shares = $metrics['photo_shares'];
-    $minTemp = (int) round((float) $metrics['min_temp']);
-    $snow = $metrics['snow_share'];
     return $result + [
         'score' => $score,
         'advice' => $advice,
@@ -45,26 +40,99 @@ function fogWebDay(array $forecast, array $place, DateTimeZone $zone): array
         'uncertain' => $metrics['models_disagree'] && $metrics['photo_route'] === 'mist',
         // Without the local KNMI run the morning rests on the coarse ensemble alone.
         'preliminary' => $metrics['knmi'] === null,
-        'mist' => $mistPercent >= 10 ? [
-            'percent' => $mistPercent,
-            'dense_percent' => $densePercent >= 15 ? $densePercent : null,
-            'best_hour' => $metrics['best_mist_hour'] === null
-                ? null : sprintf('%02d:00', $metrics['best_mist_hour']),
-        ] : null,
-        'local_mist' => (bool) ($metrics['local_mist'] ?? false),
-        'fresh_snow_cm' => ($metrics['fresh_snow_share'] ?? 0) >= 0.3
-            ? (int) round((float) $metrics['fresh_snow_cm']) : null,
-        'rime' => $shares['rime'] >= 0.3
-            ? ['percent' => (int) round($shares['rime'] * 100), 'min_temp' => $minTemp] : null,
-        'dew' => $shares['rime'] < 0.3 && $shares['dew'] >= 0.5
-            ? ['label' => fogLikelihood($shares['dew']), 'min_temp' => $minTemp] : null,
-        'calm' => $shares['calm'] >= 0.6,
-        'color' => is_numeric($metrics['color_share'] ?? null) && $metrics['color_share'] >= 0.2
-            ? fogLikelihood((float) $metrics['color_share']) : null,
-        'sun' => fogLikelihood((float) $metrics['sun_share']),
-        'snow_percent' => is_numeric($snow) && $snow > 0 ? (int) round($snow * 100) : null,
+        'categories' => fogWebCategories($metrics),
         'weather' => (string) $metrics['weather_summary'],
     ];
+}
+
+// The six photo chances in a fixed order, so mornings line up side by side. A value
+// of null means nothing to expect; notes are short details, at most two. The
+// category behind the score is marked as the lead.
+function fogWebCategories(array $metrics): array
+{
+    $shares = $metrics['photo_shares'];
+    $percent = static function (float $share): int {
+        return (int) round($share * 100);
+    };
+    $minTemp = (int) round((float) $metrics['min_temp']);
+    $degrees = str_replace('-', '−', (string) $minTemp) . '°';
+    $mistPercent = $percent((float) $metrics['mist_share']);
+
+    $mistNotes = [];
+    if ($mistPercent >= 10) {
+        if (($metrics['freezing_mist_share'] ?? 0) >= 0.3) {
+            $mistNotes[] = 'bevroren mist';
+        }
+        if ($metrics['lifting_share'] >= 0.25) {
+            $mistNotes[] = 'trekt op in zonlicht';
+        }
+        if ($percent((float) $metrics['dense_share']) >= 15) {
+            $mistNotes[] = 'dicht ' . $percent((float) $metrics['dense_share']) . '%';
+        }
+        if ($metrics['best_mist_hour'] !== null) {
+            $mistNotes[] = sprintf('rond %02d:00', $metrics['best_mist_hour']);
+        }
+    }
+    $color = $metrics['color_share'] ?? null;
+    $skyNotes = [];
+    if (($shares['sky_light'] ?? 0) >= 0.3) {
+        $skyNotes[] = 'licht tussen de wolken';
+    }
+    if (($shares['sky_wind'] ?? 0) >= 0.3) {
+        $skyNotes[] = 'harde wind';
+    }
+    $frost = null;
+    if ($shares['rime'] >= 0.3) {
+        $frost = 'rijp ' . fogLikelihood($shares['rime']);
+    } elseif ($shares['dew'] >= 0.5) {
+        $frost = 'dauw ' . fogLikelihood($shares['dew']);
+    }
+    $frostNotes = $frost === null ? [] : array_merge(['min ' . $degrees],
+        $minTemp <= FOG_HARD_FROST_TEMP && $shares['rime'] >= 0.3 ? ['strenge vorst'] : []);
+    $snowFalling = is_numeric($metrics['snow_share'] ?? null) && $metrics['snow_share'] > 0
+        ? $percent((float) $metrics['snow_share']) : 0;
+    if (($metrics['fresh_snow_share'] ?? 0) >= 0.3) {
+        $snow = 'vers, ongeveer ' . (int) round((float) $metrics['fresh_snow_cm']) . ' cm';
+    } elseif ($snowFalling > 0) {
+        $snow = 'sneeuwval ' . $snowFalling . '%';
+    } elseif ($shares['snow_cover'] >= 0.3) {
+        $snow = 'sneeuwdek';
+    } else {
+        $snow = null;
+    }
+    $snowNotes = [];
+    if ($snow !== null && $snowFalling > 0 && strpos($snow, 'sneeuwval') !== 0) {
+        $snowNotes[] = 'sneeuwval ' . $snowFalling . '%';
+    }
+    if (($shares['snow_wind_sky'] ?? 0) >= 0.4) {
+        $snowNotes[] = 'sneeuwbuien met wind';
+    }
+
+    // Changing skies and a clear sunny morning share one score route; tell them apart.
+    $lead = ['mist' => 'mist', 'color' => 'color', 'frost' => 'frost', 'winter' => 'snow',
+        'sky' => ($shares['dynamic_sky'] ?? 0) >= 0.4 ? 'sky' : 'sun'][$metrics['photo_route']] ?? null;
+    $categories = [
+        ['key' => 'mist', 'label' => 'Mist',
+            'value' => $mistPercent >= 10 ? $mistPercent . '%'
+                : (($metrics['local_mist'] ?? false) ? 'lokaal mogelijk' : null),
+            'notes' => $mistNotes],
+        ['key' => 'color', 'label' => 'Kleur',
+            'value' => is_numeric($color) && $color >= 0.2 ? fogLikelihood((float) $color) : null,
+            'notes' => []],
+        ['key' => 'sky', 'label' => 'Wolkenlucht',
+            'value' => ($shares['dynamic_sky'] ?? 0) >= 0.2 ? fogLikelihood($shares['dynamic_sky']) : null,
+            'notes' => $skyNotes],
+        ['key' => 'sun', 'label' => 'Zon',
+            'value' => $metrics['sun_share'] >= 0.2 ? fogLikelihood((float) $metrics['sun_share']) : null,
+            'notes' => $shares['calm'] >= 0.6 ? ['windstil · spiegelingen'] : []],
+        ['key' => 'frost', 'label' => 'Rijp/dauw', 'value' => $frost, 'notes' => $frostNotes],
+        ['key' => 'snow', 'label' => 'Sneeuw', 'value' => $snow, 'notes' => $snowNotes],
+    ];
+    foreach ($categories as $index => $category) {
+        $categories[$index]['notes'] = array_slice($category['notes'], 0, 2);
+        $categories[$index]['lead'] = $category['key'] === $lead && $category['value'] !== null;
+    }
+    return $categories;
 }
 
 // Builds the coming mornings. Today is included until its sunrise has passed.

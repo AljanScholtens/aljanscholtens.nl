@@ -1186,6 +1186,7 @@ function fogForecastMetrics(
         'snow_share' => $snowChance,
         'weather_summary' => $weatherSummary,
         'lifting_share' => $liftingChance,
+        'freezing_mist_share' => $freezingMist / $complete,
         'ensemble_score' => $ensembleScore,
         'score' => $photoScore,
         'score_version' => 7,
@@ -1259,6 +1260,13 @@ function fogForecastMessage(
     }
     foreach ($mistDetails as $detail) {
         $lines[] = ($mistPercent >= 10 ? '↳ ' : '🌁 ') . $detail;
+    }
+    // Mist that lifts into sunlight, or freezes onto everything, is the best of mist.
+    if ($mistPercent >= 10 && $metrics['lifting_share'] >= 0.25) {
+        $lines[] = '↳ Trekt op in zonlicht';
+    }
+    if ($mistPercent >= 10 && ($metrics['freezing_mist_share'] ?? 0) >= 0.3) {
+        $lines[] = '↳ Bevroren mist: rijp op alles';
     }
     if ($bestMistHour !== null) {
         $lines[] = sprintf('⏱️ Grootste mistkans: rond %02d:00', $bestMistHour);
