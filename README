@@ -73,7 +73,7 @@ aanwijzing: de kans geldt voor meerdere uren, de feedback voor één blik.
 drempels als de Telegram-melding. `ops/fog-web-cron.php` draait op de hosting
 elke twee uur en schrijft `~/private/fog-web.json`; `static/weer-data.php` geeft
 dat bestand door aan de pagina (`layouts/_default/weer.html`,
-`assets/css/weer.css`, `static/scripts/weer.js`). Zo wacht een bezoeker nooit op
+`assets/css/weer.css`, `assets/js/weer.js`). Zo wacht een bezoeker nooit op
 de weermodellen. Vóór zonsopkomst telt vandaag nog mee; de pagina laat een
 ochtend vallen zodra de zon op is. Een ochtend zonder KNMI-model heet
 "voorlopig".

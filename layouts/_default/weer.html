@@ -59,6 +59,7 @@
       </section>
     </main>
 
-    <script src="/scripts/weer.js"></script>
+    {{ $script := resources.Get "js/weer.js" | minify | fingerprint }}
+    <script src="{{ $script.RelPermalink }}"></script>
   </body>
 </html>
