@@ -1,0 +1,426 @@
+/*------------------------------------*\
+  #WEER
+  Standalone page for the three-day photo weather forecast.
+\*------------------------------------*/
+
+@import "fonts.css";
+@import "tokens.css";
+
+:root {
+  --w-go: var(--color-success-70);
+  --w-go-soft: hsla(143, 64%, 54%, 0.16);
+  --w-maybe: hsla(32, 95%, 48%, 1);
+  --w-maybe-soft: var(--color-tertiary-10);
+  --w-skip: var(--color-neutral-50);
+  --w-skip-soft: var(--color-neutral-20);
+  --w-ink: var(--color-neutral-90);
+  --w-muted: var(--color-neutral-60);
+  --w-line: var(--color-neutral-20);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--color-neutral-10);
+  color: var(--w-ink);
+  font-family: var(--font-family-a);
+  font-size: var(--font-size-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+/*
+ * Header: the site's dark navy with the warm gradient title.
+ */
+.w-header {
+  padding: 16px 16px 112px;
+  background:
+    radial-gradient(120% 90% at 85% 0%, hsla(248, 93%, 61%, 0.45), transparent 60%),
+    var(--color-primary-90);
+  color: var(--color-neutral-0);
+
+  @media (--breakpoint-20) {
+    padding: 24px 32px 136px;
+  }
+}
+
+.w-header__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-width);
+  margin: 0 auto 40px;
+}
+
+.w-header__logo {
+  font-family: var(--font-family-d);
+  font-size: 26px;
+  color: var(--color-neutral-0);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-neutral-0a75);
+  }
+}
+
+.w-header__place {
+  padding: 6px 14px;
+  border-radius: var(--border-radius-50);
+  background: var(--color-neutral-0a10);
+  font-size: var(--font-size-20);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.w-header__title,
+.w-header__subtitle {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.w-header__title {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(180deg, #fff2dc, #ffdca2);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  @media (--breakpoint-20) {
+    font-size: 72px;
+  }
+}
+
+.w-header__subtitle {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: var(--font-size-30);
+  line-height: 1.5;
+  color: var(--color-neutral-0a75);
+}
+
+/*
+ * Day cards overlap the header, like panels in an app.
+ */
+.w-main {
+  max-width: calc(var(--max-width) + 64px);
+  margin: -88px auto 0;
+  padding: 0 16px 48px;
+
+  @media (--breakpoint-20) {
+    margin-top: -104px;
+    padding: 0 32px 64px;
+  }
+}
+
+.w-days {
+  display: grid;
+  gap: 16px;
+
+  @media (--breakpoint-30) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
+.w-status {
+  margin: 0;
+  padding: 32px;
+  border-radius: 16px;
+  background: var(--color-neutral-0);
+  box-shadow: var(--box-shadow-30);
+  color: var(--w-muted);
+  text-align: center;
+
+  @media (--breakpoint-30) {
+    grid-column: 1 / -1;
+  }
+}
+
+.w-day {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 20px;
+  border-radius: 16px;
+  background: var(--color-neutral-0);
+  box-shadow: var(--box-shadow-30);
+
+  @media (--breakpoint-20) {
+    padding: 24px;
+  }
+}
+
+.w-day__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.w-day__date {
+  margin: 0;
+  font-size: var(--font-size-40);
+  font-weight: 700;
+}
+
+.w-day__weekday {
+  text-transform: capitalize;
+}
+
+.w-day__date-sub {
+  margin-left: 6px;
+  font-weight: 400;
+  color: var(--w-muted);
+}
+
+.w-badge {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  border-radius: var(--border-radius-50);
+  background: var(--color-primary-10);
+  color: var(--color-primary-70);
+  font-size: var(--font-size-10);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/*
+ * Verdict: score ring, advice and alarm.
+ */
+.w-verdict {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.w-score {
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, var(--color-neutral-0) 78%, transparent 80% 100%),
+    conic-gradient(var(--w-tone) calc(var(--w-score, 0) * 10%), var(--w-tone-soft) 0);
+}
+
+.w-score__value {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--w-ink);
+}
+
+.w-score__max {
+  font-size: var(--font-size-10);
+  color: var(--w-muted);
+}
+
+.w-advice {
+  margin: 0 0 2px;
+  font-size: var(--font-size-50);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--w-tone);
+}
+
+.w-wake {
+  margin: 0;
+  font-size: var(--font-size-30);
+  color: var(--w-muted);
+
+  strong {
+    color: var(--w-ink);
+    font-weight: 500;
+  }
+}
+
+.w-day--go {
+  --w-tone: var(--w-go);
+  --w-tone-soft: var(--w-go-soft);
+}
+
+.w-day--maybe {
+  --w-tone: var(--w-maybe);
+  --w-tone-soft: var(--w-maybe-soft);
+}
+
+.w-day--skip {
+  --w-tone: var(--w-skip);
+  --w-tone-soft: var(--w-skip-soft);
+}
+
+.w-reason {
+  margin: 0 0 20px;
+  font-size: var(--font-size-30);
+  line-height: 1.45;
+  color: var(--w-ink);
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+/*
+ * Light timeline: first light to sunrise.
+ */
+.w-light {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, hsla(242, 82%, 77%, 0.22), hsla(32, 100%, 82%, 0.55));
+  font-size: var(--font-size-20);
+  color: var(--w-muted);
+}
+
+.w-light__point strong {
+  display: block;
+  font-size: var(--font-size-30);
+  font-weight: 500;
+  color: var(--w-ink);
+}
+
+.w-light__line {
+  flex: 1;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-primary-30), #ffb347);
+}
+
+.w-light__point--sun {
+  text-align: right;
+}
+
+/*
+ * Detail rows.
+ */
+.w-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--w-line);
+}
+
+.w-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--w-line);
+  font-size: var(--font-size-20);
+  line-height: 1.4;
+}
+
+.w-row__label {
+  color: var(--w-muted);
+}
+
+.w-row__value {
+  text-align: right;
+  font-weight: 500;
+  color: var(--w-ink);
+}
+
+.w-row__note {
+  display: block;
+  font-weight: 400;
+  color: var(--w-muted);
+}
+
+.w-day__error {
+  margin: 0;
+  color: var(--w-muted);
+}
+
+/*
+ * Footer text.
+ */
+.w-updated {
+  margin: 16px 0 0;
+  font-size: var(--font-size-20);
+  color: var(--w-muted);
+  text-align: center;
+}
+
+.w-about {
+  max-width: 640px;
+  margin: 48px auto 0;
+  font-size: var(--font-size-30);
+  line-height: 1.6;
+  color: var(--w-muted);
+
+  p {
+    margin: 0;
+  }
+}
+
+.w-about__title {
+  margin: 0 0 16px;
+  font-size: var(--font-size-40);
+  color: var(--w-ink);
+}
+
+.w-legend {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 16px;
+
+  div {
+    display: flex;
+    gap: 12px;
+  }
+
+  dt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 96px;
+    font-weight: 500;
+    color: var(--w-ink);
+  }
+
+  dd {
+    margin: 0;
+  }
+}
+
+.w-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.w-dot--go {
+  background: var(--w-go);
+}
+
+.w-dot--maybe {
+  background: var(--w-maybe);
+}
+
+.w-dot--skip {
+  background: var(--w-skip);
+}

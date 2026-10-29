@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0b37" />
+    {{ $styles := resources.Get "css/weer.css" | postCSS (dict "config" "postcss.config.js") | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+    <link rel="shortcut icon" href="/images/favicon.svg">
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+
+    <title>{{ .Title }} - Aljan Scholtens</title>
+    <meta name="description" content="{{ .Params.description }}">
+    <meta property="og:title" content="{{ .Title }}">
+    <meta property="og:description" content="{{ .Params.description }}">
+    <meta property="og:image" content="{{ "/images/landscape-photography-01.jpg" | absURL }}">
+
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="dee73cd2-27f7-482f-a5e1-6eae9df645db"></script>
+  </head>
+  <body class="w-page">
+    <header class="w-header">
+      <div class="w-header__bar">
+        <a class="w-header__logo" href="/">aljan</a>
+        <span class="w-header__place" data-place>Vries</span>
+      </div>
+      <h1 class="w-header__title">Fotoweer</h1>
+      <p class="w-header__subtitle">De komende drie ochtenden: wanneer is het de moeite om op te staan?</p>
+    </header>
+
+    <main class="w-main">
+      <div class="w-days" data-days aria-live="polite">
+        <p class="w-status">Verwachting laden…</p>
+      </div>
+
+      <p class="w-updated" data-updated></p>
+
+      <section class="w-about">
+        <h2 class="w-about__title">Zo lees je het</h2>
+        <dl class="w-legend">
+          <div><dt><span class="w-dot w-dot--go"></span>Gaan</dt><dd>Cijfer 6–10. Zet de wekker.</dd></div>
+          <div><dt><span class="w-dot w-dot--maybe"></span>Twijfel</dt><dd>Cijfer 4–5. Kan mooi worden, kijk morgenvroeg nog even.</dd></div>
+          <div><dt><span class="w-dot w-dot--skip"></span>Uitslapen</dt><dd>Cijfer 1–3. Weinig bijzonders verwacht.</dd></div>
+        </dl>
+        <p>
+          Het cijfer neemt de sterkste fotokans uit mist, rijp of dauw, sneeuw en
+          ochtendlicht. De wekker staat 45 minuten voor het eerste licht, het begin
+          van het blauwe uur. Een ochtend is <em>voorlopig</em> als het fijnmazige
+          KNMI-model er nog niet bij kan; dan rekent alleen het grovere GFS-ensemble mee.
+        </p>
+      </section>
+    </main>
+
+    <script src="/scripts/weer.js"></script>
+  </body>
+</html>

@@ -161,17 +161,27 @@ function fogSunTimes(string $date, float $latitude, float $longitude, DateTimeZo
 const FOG_WAKE_MINUTES_BEFORE_FIRST_LIGHT = 45;
 
 // The same bands the morning update uses: 1-3 skip, 4-5 maybe, 6-10 go.
-function fogAdviceLine(int $score, DateTimeImmutable $firstLight): string
+function fogAdvice(int $score): string
 {
-    if ($score <= 3) {
-        return '⚪ Uitslapen';
-    }
+    return $score >= 6 ? 'go' : ($score >= 4 ? 'maybe' : 'skip');
+}
+
+function fogWakeTime(DateTimeImmutable $firstLight): DateTimeImmutable
+{
     $wake = $firstLight->modify('-' . FOG_WAKE_MINUTES_BEFORE_FIRST_LIGHT . ' minutes');
     // Round the alarm down to whole five minutes.
-    $wake = $wake->setTime((int) $wake->format('G'), intdiv((int) $wake->format('i'), 5) * 5);
+    return $wake->setTime((int) $wake->format('G'), intdiv((int) $wake->format('i'), 5) * 5);
+}
+
+function fogAdviceLine(int $score, DateTimeImmutable $firstLight): string
+{
+    $advice = fogAdvice($score);
+    if ($advice === 'skip') {
+        return '⚪ Uitslapen';
+    }
     return sprintf('%s — wekker %s · eerste licht %s',
-        $score >= 6 ? '🟢 Gaan' : '🟡 Twijfel',
-        $wake->format('H:i'),
+        $advice === 'go' ? '🟢 Gaan' : '🟡 Twijfel',
+        fogWakeTime($firstLight)->format('H:i'),
         $firstLight->format('H:i'));
 }
 
@@ -500,8 +510,14 @@ function fogOutlookScores(
     return $scores;
 }
 
-function fogHarmonieCheck(float $latitude, float $longitude, string $date, array $hours, int $sunriseHour): ?array
-{
+function fogHarmonieCheck(
+    float $latitude,
+    float $longitude,
+    string $date,
+    array $hours,
+    int $sunriseHour,
+    int $forecastDays = 2
+): ?array {
     try {
         $url = 'https://api.open-meteo.com/v1/forecast?'
             . http_build_query([
@@ -509,7 +525,7 @@ function fogHarmonieCheck(float $latitude, float $longitude, string $date, array
                 'longitude' => $longitude,
                 'hourly' => 'visibility,weather_code,cloud_cover,relative_humidity_2m,wind_speed_10m',
                 'models' => 'knmi_harmonie_arome_netherlands',
-                'forecast_days' => 2,
+                'forecast_days' => $forecastDays,
                 'timezone' => 'Europe/Amsterdam',
             ], '', '&', PHP_QUERY_RFC3986);
         [$status, $response] = fogRequest($url, null, [], 8);
@@ -534,7 +550,11 @@ function fogHarmonieCheck(float $latitude, float $longitude, string $date, array
                 throw new RuntimeException('KNMI forecast is missing an hour');
             }
             foreach ($variables as $variable) {
-                if (!isset($hourly[$variable][$index]) || !is_numeric($hourly[$variable][$index])) {
+                // The local model reaches about 2.5 days ahead; later hours are empty.
+                if (!isset($hourly[$variable][$index])) {
+                    return null;
+                }
+                if (!is_numeric($hourly[$variable][$index])) {
                     throw new RuntimeException('KNMI forecast has an incomplete hour');
                 }
             }
@@ -593,9 +613,13 @@ function fogBuildForecast(
         $sunriseHour = fogSunriseHour($sunrise);
         $hours = range(max(0, $sunriseHour - 2), min(23, $sunriseHour + 2));
 
+        // The models count days from today, so a later morning needs a longer request.
+        $baseDays = max(2, (new DateTimeImmutable($now->format('Y-m-d'), $zone))
+            ->diff(new DateTimeImmutable($forecastDate, $zone))->days + 1);
+        $outlookDays = $baseDays + 2;
         // Ask for two extra mornings in one call. If the extended request fails,
-        // keep the main forecast available with the original two-day request.
-        foreach ($includeOutlook ? [4, 2] : [2] as $forecastDays) {
+        // keep the main forecast available with the shorter request.
+        foreach ($includeOutlook ? [$outlookDays, $baseDays] : [$baseDays] as $forecastDays) {
             try {
                 $url = 'https://ensemble-api.open-meteo.com/v1/ensemble?latitude=' . rawurlencode((string) $latitude)
                     . '&longitude=' . rawurlencode((string) $longitude)
@@ -612,7 +636,7 @@ function fogBuildForecast(
                 }
                 break;
             } catch (Throwable $extendedError) {
-                if ($forecastDays === 2) {
+                if ($forecastDays === $baseDays) {
                     throw $extendedError;
                 }
                 error_log('Fog extended forecast: ' . $extendedError->getMessage());
@@ -734,7 +758,8 @@ function fogBuildForecast(
         $photoDay = fogPhotoDayScore($photoScenes);
         $ensembleScore = $photoDay['score'];
         $photoRoute = $photoDay['route'];
-        $harmonie = fogHarmonieCheck($latitude, $longitude, $forecastDate, $hours, $sunriseHour);
+        $harmonie = fogHarmonieCheck($latitude, $longitude, $forecastDate, $hours, $sunriseHour,
+            $baseDays);
         $fogModelsDisagree = $harmonie !== null && (
             ($harmonie['fog'] && $mistChance < 0.2)
             || (!$harmonie['fog'] && $mistChance >= 0.5)
@@ -862,10 +887,12 @@ function fogBuildForecast(
         if ($densePercent >= 15) {
             $mistDetails[] = sprintf('Dichte mist: %d%% (zicht <200 m)', $densePercent);
         }
-        if (fogGroundMistFavorable($groundMistConditionsShare, $harmonie)) {
+        $groundFavorable = fogGroundMistFavorable($groundMistConditionsShare, $harmonie);
+        if ($groundFavorable) {
             $mistDetails[] = 'Grondmist: omstandigheden gunstig';
         }
-        if ($forestOutlookShare >= 0.5 && !$modelsDisagree) {
+        $forestFavorable = $forestOutlookShare >= 0.5 && !$modelsDisagree;
+        if ($forestFavorable) {
             $mistDetails[] = 'Bosmist: omstandigheden gunstig';
         }
         if ($mistPercent >= 10) {
@@ -873,6 +900,10 @@ function fogBuildForecast(
         }
         foreach ($mistDetails as $detail) {
             $lines[] = ($mistPercent >= 10 ? '↳ ' : '🌁 ') . $detail;
+        }
+        $bestMistHour = $bestHour !== null && $bestCount / $complete >= 0.2 ? $bestHour : null;
+        if ($bestMistHour !== null) {
+            $lines[] = sprintf('⏱️ Grootste mistkans: rond %02d:00', $bestMistHour);
         }
         $minTemp = (int) round($photoDay['min_temp']);
         if ($photoShares['rime'] >= 0.3) {
@@ -884,12 +915,6 @@ function fogBuildForecast(
         }
         if ($photoShares['calm'] >= 0.6) {
             $lines[] = '🪞 Windstil: spiegelingen mogelijk';
-        }
-        if ($bestHour !== null && $bestCount / $complete >= 0.2) {
-            $lines[] = sprintf(
-                '⏱️ Grootste mistkans: rond %02d:00',
-                $bestHour
-            );
         }
         $lines[] = sprintf('🌤️ Kans op ochtendzon: %d%%', (int) round($openSkyChance * 100));
         if ($snowChance !== null && $snowChance > 0.0) {
@@ -922,7 +947,7 @@ function fogBuildForecast(
         }
         $lines[] = $weatherIcon . ' ' . $weatherSummary;
         $outlookScores = [];
-        if ($includeOutlook && $forecastDays === 4) {
+        if ($includeOutlook && $forecastDays === $outlookDays) {
             try {
                 $outlookScores = fogOutlookScores(
                     $hourly, $suffixes, $variables, $forecastDate,
@@ -971,6 +996,9 @@ function fogBuildForecast(
             'fog_models_disagree' => $fogModelsDisagree,
             'forest_models_disagree' => $forestModelsDisagree,
             'models_disagree' => $modelsDisagree,
+            'ground_favorable' => $groundFavorable,
+            'forest_favorable' => $forestFavorable,
+            'best_mist_hour' => $bestMistHour,
         ];
 
         $checkStatus = sprintf(
@@ -986,7 +1014,7 @@ function fogBuildForecast(
         );
     } catch (Throwable $forecastError) {
         error_log('Fog forecast: ' . $forecastError->getMessage());
-        if ($includeOutlook && isset($forecastDays) && $forecastDays === 4) {
+        if ($includeOutlook && isset($forecastDays, $outlookDays) && $forecastDays === $outlookDays) {
             // An incomplete extended response must not break tomorrow's forecast.
             return fogBuildForecast($now, $zone, $place, $targetDate, false);
         }

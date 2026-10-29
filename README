@@ -67,12 +67,24 @@ aanwijzing: de kans geldt voor meerdere uren, de feedback voor één blik.
 "Niet gekeken" telt niet mee. Draai het op de hosting, met `--days` voor een overzicht per dag:
 `ssh aljanscholtensnl@aljans.ssh.transip.me php private/fog-evaluate.php --days`.
 
+## Webpagina /weer
+
+`/weer` toont de komende drie ochtenden voor Vries, met dezelfde berekening en
+drempels als de Telegram-melding. `ops/fog-web-cron.php` draait op de hosting
+elke twee uur en schrijft `~/private/fog-web.json`; `static/weer-data.php` geeft
+dat bestand door aan de pagina (`layouts/_default/weer.html`,
+`assets/css/weer.css`, `static/scripts/weer.js`). Zo wacht een bezoeker nooit op
+de weermodellen. Vóór zonsopkomst telt vandaag nog mee; de pagina laat een
+ochtend vallen zodra de zon op is. Een ochtend zonder KNMI-model heet
+"voorlopig". Cron-regel:
+`20 */2 * * * /usr/local/bin/php /data/sites/web/aljanscholtensnl/private/fog-web-cron.php >> /data/sites/web/aljanscholtensnl/private/fog-web-cron.log 2>&1`
+
 Controleer een botwijziging eerst zonder live bestanden of Telegram-berichten
 te wijzigen: `./deploy-fog.sh --check`. Dit zet een kopie in
 `~/private/fog-bot-stage`, controleert PHP en rekent een voorbeeldverwachting
 en de ochtendbeslisregels en feedbackopslag door. Publiceer daarna met `./deploy-fog.sh`.
-Het script vervangt alleen de vier publieke botbestanden, de private
-ochtendtaak en het evaluatiescript, zonder bestanden te verwijderen. De vorige versie wordt bewaard
+Het script vervangt alleen de publieke botbestanden (inclusief
+`weer-data.php`) en de private taken (ochtend, evaluatie en webpagina), zonder bestanden te verwijderen. De vorige versie wordt bewaard
 in `~/private/fog-bot-previous`. `./deploy-fog.sh --verify` vergelijkt de
 live bestanden met de geteste kopie zonder de vorige versie te overschrijven.
 
