@@ -51,8 +51,9 @@ function fogWebDay(array $forecast, array $place, DateTimeZone $zone): array
             'best_hour' => $metrics['best_mist_hour'] === null
                 ? null : sprintf('%02d:00', $metrics['best_mist_hour']),
         ] : null,
-        'ground' => (bool) $metrics['ground_favorable'],
-        'forest' => (bool) $metrics['forest_favorable'],
+        'local_mist' => (bool) ($metrics['local_mist'] ?? false),
+        'fresh_snow_cm' => ($metrics['fresh_snow_share'] ?? 0) >= 0.3
+            ? (int) round((float) $metrics['fresh_snow_cm']) : null,
         'rime' => $shares['rime'] >= 0.3
             ? ['percent' => (int) round($shares['rime'] * 100), 'min_temp' => $minTemp] : null,
         'dew' => $shares['rime'] < 0.3 && $shares['dew'] >= 0.5

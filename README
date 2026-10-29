@@ -23,9 +23,16 @@ minuten. Zonsondergang staat niet meer in het bericht.
 
 Het bericht toont de mistkans pas vanaf 10%. Dichte mist verschijnt als
 onderdeel van de algemene mistkans, alleen vanaf 15% modelkans.
-Bosmist en grondmist verschijnen alleen bij gunstige modelomstandigheden,
-zonder percentage: dit zijn aanwijzingen en geen gemeten kansen. Het
-grondmistsignaal vraagt ook om goed zicht op ooghoogte. De kans op
+"Lokale mist: mogelijk" verschijnt bij gunstige modelomstandigheden voor
+mist die het grove model zelf niet ziet (vochtige, rustige lucht voor
+zonsopkomst), zonder percentage: het is een aanwijzing en geen gemeten kans.
+Mist ontstaat meestal eerst boven open veld en in lage delen, daarom heet het
+niet meer bos- of grondmist.
+
+Rekenwijze versie 5: elke mist en een vers sneeuwdek (minstens 3 cm gevallen
+tussen 18:00 de avond ervoor en zonsopkomst) zijn minstens een 7, ook op een
+grijze ochtend. Ziet het KNMI-model mist, dan is het minstens een 7, bij dichte
+mist een 8. Een ouder sneeuwdek zonder verse sneeuw blijft rond de 5. De kans op
 ochtendzon gebruikt bewolking, zicht en droog weer na zonsopkomst.
 Sneeuw verschijnt alleen bij een positieve kans op minstens 0,1 cm
 sneeuwval per uur rond zonsopkomst. Ontbrekende sneeuwgegevens laten de

@@ -29,6 +29,32 @@ function fogMorningLocalDenseChanged(array $old, array $new): ?bool
     return (bool) ($oldKnmi['dense'] ?? false) !== $newDense ? $newDense : null;
 }
 
+// Returns the new "local mist possible" state when it clearly flipped since the
+// evening, else null. It combines the ground and forest cues the message shows.
+function fogMorningLocalMistChanged(array $old, array $new): ?bool
+{
+    if (!is_numeric($old['forest_outlook_share'] ?? null)
+        || !is_numeric($new['forest_outlook_share'] ?? null)) {
+        return null;
+    }
+    // Older forecasts lack the ground cue; then compare the forest cue alone.
+    $useGround = is_numeric($old['ground_conditions_share'] ?? null)
+        && is_numeric($new['ground_conditions_share'] ?? null);
+    $state = static function (array $metrics) use ($useGround): bool {
+        return ($useGround && fogGroundMistFavorable((float) $metrics['ground_conditions_share'],
+                is_array($metrics['knmi'] ?? null) ? $metrics['knmi'] : null))
+            || ((float) $metrics['forest_outlook_share'] >= 0.5
+                && !($metrics['models_disagree'] ?? false));
+    };
+    $before = $state($old);
+    $after = $state($new);
+    // A share hovering around a threshold should not flip-flop into a message.
+    $shift = max(abs((float) $new['forest_outlook_share'] - (float) $old['forest_outlook_share']),
+        $useGround ? abs((float) $new['ground_conditions_share']
+            - (float) $old['ground_conditions_share']) : 0.0);
+    return $before !== $after && $shift >= 0.3 ? $after : null;
+}
+
 function fogMorningDecision(?array $evening, array $morning): array
 {
     $old = $evening['forecast']['metrics'] ?? null;
@@ -74,24 +100,8 @@ function fogMorningDecision(?array $evening, array $morning): array
         && max((float) $new['dense_share'], (float) $old['dense_share']) >= 0.25) {
         $reasons[] = 'dense fog chance changed substantially';
     }
-    if (is_numeric($old['forest_outlook_share'] ?? null)
-        && is_numeric($new['forest_outlook_share'] ?? null)
-        && abs((float) $new['forest_outlook_share'] - (float) $old['forest_outlook_share']) >= 0.4
-        && max((float) $new['forest_outlook_share'], (float) $old['forest_outlook_share']) >= 0.5) {
-        $reasons[] = 'forest fog outlook changed substantially';
-    }
-    if (is_numeric($old['ground_conditions_share'] ?? null)
-        && is_numeric($new['ground_conditions_share'] ?? null)
-        && abs((float) $new['ground_conditions_share']
-            - (float) $old['ground_conditions_share']) >= 0.3
-        && fogGroundMistFavorable(
-            (float) $old['ground_conditions_share'],
-            is_array($old['knmi'] ?? null) ? $old['knmi'] : null
-        ) !== fogGroundMistFavorable(
-            (float) $new['ground_conditions_share'],
-            is_array($new['knmi'] ?? null) ? $new['knmi'] : null
-        )) {
-        $reasons[] = 'ground fog conditions changed substantially';
+    if (fogMorningLocalMistChanged($old, $new) !== null) {
+        $reasons[] = 'local mist conditions changed';
     }
     // Dense fog in the local run matters even when the score was already high.
     if (fogMorningLocalDenseChanged($old, $new) !== null) {
@@ -133,43 +143,9 @@ function fogMorningMessage(array $evening, array $morning): string
         $lines[] = $localDense
             ? '↳ Lokaal: nu dichte mist verwacht' : '↳ Lokaal: geen dichte mist meer verwacht';
     }
-    if (is_numeric($old['forest_outlook_share'] ?? null)
-        && is_numeric($new['forest_outlook_share'] ?? null)
-        && abs((float) $new['forest_outlook_share'] - (float) $old['forest_outlook_share']) >= 0.2
-        && max((float) $new['forest_outlook_share'],
-            (float) $old['forest_outlook_share']) >= 0.5) {
-        $oldForest = (float) $old['forest_outlook_share'];
-        $newForest = (float) $new['forest_outlook_share'];
-        $oldFavorable = $oldForest >= 0.5 && !($old['models_disagree'] ?? false);
-        $newFavorable = $newForest >= 0.5 && !($new['models_disagree'] ?? false);
-        if ($newFavorable) {
-            $lines[] = '↳ Bosmist: ' . (!$oldFavorable
-                ? 'omstandigheden nu gunstig'
-                : ($newForest > $oldForest ? 'signaal sterker' : 'signaal zwakker'));
-        } elseif ($oldFavorable) {
-            $lines[] = '↳ Bosmist: gunstig signaal verdwenen';
-        } else {
-            $lines[] = ($new['models_disagree'] ?? false)
-                ? '↳ Bosmist: modellen verschillen'
-                : '↳ Bosmist: geen duidelijk gunstig signaal';
-        }
-    }
-    if (is_numeric($old['ground_conditions_share'] ?? null)
-        && is_numeric($new['ground_conditions_share'] ?? null)
-        && abs((float) $new['ground_conditions_share']
-            - (float) $old['ground_conditions_share']) >= 0.3) {
-        $oldGround = fogGroundMistFavorable(
-            (float) $old['ground_conditions_share'],
-            is_array($old['knmi'] ?? null) ? $old['knmi'] : null
-        );
-        $newGround = fogGroundMistFavorable(
-            (float) $new['ground_conditions_share'],
-            is_array($new['knmi'] ?? null) ? $new['knmi'] : null
-        );
-        if ($oldGround !== $newGround) {
-            $lines[] = '↳ Grondmist: ' . ($newGround
-                ? 'nu mogelijk' : 'niet meer verwacht');
-        }
+    $localMist = fogMorningLocalMistChanged($old, $new);
+    if ($localMist !== null) {
+        $lines[] = '↳ Lokale mist: ' . ($localMist ? 'nu mogelijk' : 'niet meer verwacht');
     }
     [$sunrise] = fogMorningSun($morning['date'], new DateTimeZone('Europe/Amsterdam'));
     $lines[] = '☀️↑ ' . $sunrise->format('H:i');

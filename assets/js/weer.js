@@ -96,11 +96,11 @@
       if (day.mist.best_hour) notes.push('rond ' + day.mist.best_hour);
       rows.appendChild(row('Mist', day.mist.percent + '%', notes.join(' · ')));
     }
-    if (day.ground) rows.appendChild(row('Grondmist', 'mogelijk'));
-    if (day.forest) rows.appendChild(row('Bosmist', 'gunstig'));
+    if (day.local_mist) rows.appendChild(row('Lokale mist', 'mogelijk'));
     if (day.rime) rows.appendChild(row('Rijp', day.rime.percent + '%', 'min ' + temperature(day.rime.min_temp)));
     if (day.dew) rows.appendChild(row('Dauw', day.dew.label, 'min ' + temperature(day.dew.min_temp)));
     if (day.calm) rows.appendChild(row('Windstil', 'spiegelingen mogelijk'));
+    if (day.fresh_snow_cm) rows.appendChild(row('Verse sneeuw', 'ongeveer ' + day.fresh_snow_cm + ' cm'));
     if (day.snow_percent) rows.appendChild(row('Sneeuw', day.snow_percent + '%'));
     rows.appendChild(row('Ochtendzon', day.sun));
     rows.appendChild(row('Weer', day.weather));

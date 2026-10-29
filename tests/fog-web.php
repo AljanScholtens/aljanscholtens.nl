@@ -18,7 +18,8 @@ $metrics = [
     'score' => 8, 'photo_reason' => 'mist kan optrekken in ochtendlicht',
     'models_disagree' => false, 'photo_route' => 'mist', 'knmi' => ['fog' => true],
     'mist_share' => 0.55, 'dense_share' => 0.2, 'best_mist_hour' => 8,
-    'ground_favorable' => false, 'forest_favorable' => true,
+    'ground_favorable' => false, 'forest_favorable' => true, 'local_mist' => true,
+    'fresh_snow_share' => 0.6, 'fresh_snow_cm' => 9.6,
     'photo_shares' => ['rime' => 0.7, 'dew' => 0.0, 'calm' => 0.8],
     'min_temp' => -3.2, 'sun_share' => 0.6, 'snow_share' => 0.0,
     'weather_summary' => 'Droog',
@@ -30,7 +31,8 @@ webCheck($day['advice'] === 'go' && $day['advice_label'] === 'Uitstekend'
 webCheck($day['mist'] === ['percent' => 55, 'dense_percent' => 20, 'best_hour' => '08:00'],
     'Mist block is wrong');
 webCheck($day['rime'] === ['percent' => 70, 'min_temp' => -3] && $day['dew'] === null
-    && $day['calm'] === true && $day['forest'] === true && $day['preliminary'] === false
+    && $day['calm'] === true && $day['local_mist'] === true && $day['fresh_snow_cm'] === 10
+    && $day['preliminary'] === false
     && $day['snow_percent'] === null, 'Extra signals are wrong');
 
 // Quiet mornings hide the details the Telegram message also leaves out.

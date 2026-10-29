@@ -65,7 +65,7 @@ $groundEvening['forecast']['metrics']['ground_conditions_share'] = 0.2;
 $groundMorning['metrics']['ground_conditions_share'] = 0.8;
 if (!fogMorningDecision($groundEvening, $groundMorning)['send']
     || strpos(fogMorningMessage($groundEvening, $groundMorning),
-        '↳ Grondmist: nu mogelijk') === false) {
+        '↳ Lokale mist: nu mogelijk') === false) {
     fwrite(STDERR, "Ground mist change was not reported\n");
     exit(1);
 }
@@ -77,7 +77,7 @@ $forestEvening = evening(snapshot(6, 0.2, 0.0, 0.1, false, 0.1));
 $forestMorning = snapshot(6, 0.2, 0.0, 0.6, false, 0.6);
 $forestMessage = fogMorningMessage($forestEvening, $forestMorning);
 if (!fogMorningDecision($forestEvening, $forestMorning)['send']
-    || strpos($forestMessage, '↳ Bosmist: omstandigheden nu gunstig') === false
+    || strpos($forestMessage, '↳ Lokale mist: nu mogelijk') === false
     || strpos($forestMessage, 'Bosmist-signaal:') !== false) {
     fwrite(STDERR, "Forest mist change was not reported clearly\n");
     exit(1);

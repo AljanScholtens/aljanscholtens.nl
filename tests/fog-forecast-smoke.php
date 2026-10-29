@@ -119,6 +119,37 @@ if (fogPhotoDayScore(array_fill(0, 31, $windScene))['score'] > 3
     fwrite(STDERR, "Photo scenario score check failed\n");
     exit(1);
 }
+// Any mist, even on a grey morning, and a fresh layer of snow are both worth at least a 7.
+$greyMistInput = $windOnly;
+$greyMistInput['visibility'] = array_fill(0, 5, 500);
+$greyMistInput['weather_code'] = array_fill(0, 5, 45);
+$greyMistInput['wind_speed_10m'] = array_fill(0, 5, 3);
+$greyMistInput['wind_gusts_10m'] = array_fill(0, 5, 10);
+$greyMistInput['relative_humidity_2m'] = array_fill(0, 5, 99);
+$greyMistDay = fogPhotoDayScore(array_fill(0, 31, fogMemberPhotoScenes($greyMistInput,
+    $photoIndices, 8, fogMemberPhotoSignals($greyMistInput, $photoIndices, 8))));
+$freshSnowInput = $windOnly;
+$freshSnowInput['fresh_snow'] = 10.0;
+$freshSnowDay = fogPhotoDayScore(array_fill(0, 31, fogMemberPhotoScenes($freshSnowInput,
+    $photoIndices, 8, fogMemberPhotoSignals($freshSnowInput, $photoIndices, 8))));
+$oldSnowInput = $windOnly;
+$oldSnowInput['snow_depth'] = array_fill(0, 5, 0.05);
+$oldSnowDay = fogPhotoDayScore(array_fill(0, 31, fogMemberPhotoScenes($oldSnowInput,
+    $photoIndices, 8, fogMemberPhotoSignals($oldSnowInput, $photoIndices, 8))));
+if ($greyMistDay['score'] !== 7 || $greyMistDay['route'] !== 'mist'
+    || $freshSnowDay['score'] !== 7 || $freshSnowDay['route'] !== 'winter'
+    || $freshSnowDay['fresh_snow_cm'] !== 10.0
+    || $oldSnowDay['score'] !== 5 || $oldSnowDay['fresh_snow_cm'] !== 0.0) {
+    fwrite(STDERR, "Mist and fresh snow minimum score check failed\n");
+    exit(1);
+}
+$hourlyNight = ['time' => ['2026-12-10T18:00', '2026-12-10T23:00', '2026-12-11T03:00', '2026-12-11T08:00'],
+    'snowfall' => [0.0, 4.0, 5.5, 0.5]];
+if (fogMemberFreshSnow($hourlyNight, '', '2026-12-11', 8) !== 10.0
+    || fogMemberFreshSnow(['time' => ['2026-12-11T08:00'], 'snowfall' => [null]], '', '2026-12-11', 8) !== null) {
+    fwrite(STDERR, "Fresh snow total check failed\n");
+    exit(1);
+}
 $sunnyCalmInput = $windOnly;
 $sunnyCalmInput['cloud_cover'] = array_fill(0, 5, 10);
 $sunnyCalmInput['wind_speed_10m'] = array_fill(0, 5, 3);
@@ -200,7 +231,7 @@ if (!is_array($metrics)
     || (float) $metrics['forest_outlook_share'] + 0.00001
         < max((float) $metrics['dense_share'], (float) $metrics['forest_conditions_share'])
     || !is_string($metrics['weather_summary'] ?? null)
-    || ($metrics['score_version'] ?? null) !== 4
+    || ($metrics['score_version'] ?? null) !== 5
     || !in_array($metrics['photo_route'] ?? null, ['mist', 'winter', 'sky', 'frost'], true)
     || !is_string($metrics['photo_reason'] ?? null)
     || strpos($forecast['message'], '☀️↑ ') === false

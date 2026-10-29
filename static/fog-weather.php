@@ -334,6 +334,33 @@ function fogMemberSnowfall(array $hourly, string $suffix, array $indices, array 
     return $snowing;
 }
 
+// Snow that fell between the previous evening and sunrise, in cm: a fresh, untouched layer.
+function fogMemberFreshSnow(array $hourly, string $suffix, string $date, int $sunriseHour): ?float
+{
+    $snowfall = $hourly['snowfall' . $suffix] ?? null;
+    if (!is_array($snowfall)) {
+        return null;
+    }
+    $eveningBefore = (new DateTimeImmutable($date . ' 12:00'))->modify('-1 day')->format('Y-m-d');
+    // For a morning today the data starts at midnight; then the night is all there is.
+    $start = array_search($eveningBefore . 'T18:00', $hourly['time'], true);
+    if ($start === false) {
+        $start = array_search($date . 'T00:00', $hourly['time'], true);
+    }
+    $end = array_search($date . 'T' . sprintf('%02d', $sunriseHour) . ':00', $hourly['time'], true);
+    if ($start === false || $end === false) {
+        return null;
+    }
+    $total = 0.0;
+    for ($index = $start; $index <= $end; $index++) {
+        if (!is_numeric($snowfall[$index] ?? null)) {
+            return null;
+        }
+        $total += (float) $snowfall[$index];
+    }
+    return $total;
+}
+
 function fogOptionalSeries(array $hourly, string $variable, string $suffix, array $indices): ?array
 {
     $values = $hourly[$variable . $suffix] ?? null;
@@ -419,8 +446,9 @@ function fogMemberPhotoScenes(array $series, array $indices, int $sunriseHour,
         $skyScore = 1;
     }
 
+    // Any real mist is worth getting up for, even on a grey morning.
     $mistScore = $signals['mist']
-        ? 6 + (int) $signals['dense'] + (int) $signals['lifting'] + (int) $light
+        ? 7 + (int) $signals['dense'] + (int) $signals['lifting'] + (int) $light
         : ($signals['forest_conditions'] ? 3 + (int) $light : 1);
     // A clear, calm night that cools to freezing leaves rime; above freezing, dew.
     // 2 m air is often a degree warmer than the grass, hence the 1 degree margin.
@@ -436,10 +464,18 @@ function fogMemberPhotoScenes(array $series, array $indices, int $sunriseHour,
         && (float) $series['relative_humidity_2m'][$beforeIndex] >= 95.0;
     $frostScore = $rime ? 6 + (int) $light + (int) ($minTemp <= -2.0)
         : ($dew ? 4 + (int) $light : 1);
-    $winterScore = ($snowCover || $snowing)
-        ? 5 + (int) ($snowCover && $snowing) + (int) $light
-            + (int) $dynamicSky + (int) ($snowWind || ($snowCover && $skyWind))
-        : 1;
+    // A fresh layer from the night is untouched and white, even under a grey sky;
+    // older snow cover is often trodden, grey or melting.
+    $freshSnowCm = isset($series['fresh_snow']) ? (float) $series['fresh_snow'] : 0.0;
+    $freshSnow = $freshSnowCm >= 3.0;
+    if ($freshSnow) {
+        $winterScore = 7 + (int) $light + (int) $dynamicSky;
+    } elseif ($snowCover || $snowing) {
+        $winterScore = 5 + (int) ($snowCover && $snowing) + (int) $light
+            + (int) $dynamicSky + (int) ($snowWind || ($snowCover && $skyWind));
+    } else {
+        $winterScore = 1;
+    }
     return [
         'mist' => min(9, $mistScore),
         'winter' => min(9, $winterScore),
@@ -449,6 +485,8 @@ function fogMemberPhotoScenes(array $series, array $indices, int $sunriseHour,
         'dew' => $dew,
         'calm' => $calm,
         'min_temp' => $minTemp,
+        'fresh_snow' => $freshSnow,
+        'fresh_snow_cm' => $freshSnowCm,
         'snow_cover' => $snowCover,
         'snow_falling' => $snowing,
         'dynamic_sky' => $dynamicSky,
@@ -470,9 +508,10 @@ function fogPhotoDayScore(array $scenes): array
     $counts = ['snow_cover' => 0, 'snow_falling' => 0, 'dynamic_sky' => 0,
         'light' => 0, 'windy' => 0, 'snow_landscape_light' => 0,
         'snow_wind_sky' => 0, 'sky_light' => 0, 'sky_wind' => 0,
-        'rime' => 0, 'dew' => 0, 'calm' => 0];
+        'rime' => 0, 'dew' => 0, 'calm' => 0, 'fresh_snow' => 0];
     $total = 0;
     $minTemps = [];
+    $freshSnow = [];
     foreach ($scenes as $scene) {
         $routes = [];
         foreach (array_keys($routeTotals) as $route) {
@@ -485,8 +524,13 @@ function fogPhotoDayScore(array $scenes): array
             $counts[$signal] += (int) $scene[$signal];
         }
         $minTemps[] = (float) $scene['min_temp'];
+        // The amount shown is that of the scenarios that do bring a fresh layer.
+        if ($scene['fresh_snow']) {
+            $freshSnow[] = (float) $scene['fresh_snow_cm'];
+        }
     }
     sort($minTemps, SORT_NUMERIC);
+    sort($freshSnow, SORT_NUMERIC);
     arsort($routeTotals, SORT_NUMERIC);
     $members = count($scenes);
     $routeValues = array_values($routeTotals);
@@ -501,6 +545,7 @@ function fogPhotoDayScore(array $scenes): array
         'shares' => $shares,
         // The middle scenario, so one outlier does not set the shown temperature.
         'min_temp' => $minTemps[intdiv(count($minTemps), 2)],
+        'fresh_snow_cm' => $freshSnow ? $freshSnow[intdiv(count($freshSnow), 2)] : 0.0,
     ];
 }
 
@@ -550,6 +595,7 @@ function fogOutlookScores(
                 'sunshine_duration'] as $variable) {
                 $series[$variable] = fogOptionalSeries($hourly, $variable, $suffix, $indices);
             }
+            $series['fresh_snow'] = fogMemberFreshSnow($hourly, $suffix, $date, $sunriseHour);
             $signals = fogMemberPhotoSignals($series, $indices, $sunriseHour);
             $scenes[] = fogMemberPhotoScenes($series, $indices, $sunriseHour, $signals);
         }
@@ -756,6 +802,7 @@ function fogBuildForecast(
                 'sunshine_duration'] as $variable) {
                 $series[$variable] = fogOptionalSeries($hourly, $variable, $suffix, $indices);
             }
+            $series['fresh_snow'] = fogMemberFreshSnow($hourly, $suffix, $forecastDate, $sunriseHour);
 
             $complete++;
             $memberSnowfall = fogMemberSnowfall($hourly, $suffix, $indices, $weatherHours);
@@ -831,13 +878,13 @@ function fogBuildForecast(
         // score without being treated as a percentage or a certain outcome.
         if ($harmonie !== null) {
             if ($harmonie['dense']) {
-                if ($photoScore < 6) {
-                    $photoScore = 6;
+                if ($photoScore < 8) {
+                    $photoScore = 8;
                     $photoRoute = 'mist';
                 }
             } elseif ($harmonie['fog']) {
-                if ($photoScore < 5) {
-                    $photoScore = 5;
+                if ($photoScore < 7) {
+                    $photoScore = 7;
                     $photoRoute = 'mist';
                 }
             } elseif ($harmonie['forest_conditions']) {
@@ -871,7 +918,9 @@ function fogBuildForecast(
         $priority = $denseChance >= 0.8 ? 4 : 3;
         $photoShares = $photoDay['shares'];
         if ($photoRoute === 'winter') {
-            if ($photoShares['snow_landscape_light'] >= 0.3) {
+            if ($photoShares['fresh_snow'] >= 0.3) {
+                $reason = 'vers sneeuwdek na een nacht met sneeuw';
+            } elseif ($photoShares['snow_landscape_light'] >= 0.3) {
                 $reason = 'sneeuwlandschap met kans op bijzonder ochtendlicht';
             } elseif ($photoShares['snow_cover'] >= 0.3) {
                 $reason = 'kans op een sneeuwlandschap';
@@ -912,7 +961,7 @@ function fogBuildForecast(
         } elseif ($harmonie !== null && $harmonie['fog']) {
             $reason = 'lokaal model ziet mist';
         } elseif ($forestSignalShare >= 0.4) {
-            $reason = 'condities voor lokale bosmist';
+            $reason = 'condities voor lokale mist';
         } elseif ($openSkyChance >= 0.5) {
             $reason = 'kans op ochtendzon';
         } else {
@@ -921,7 +970,7 @@ function fogBuildForecast(
         if ($photoRoute === 'mist' && $fogModelsDisagree) {
             $reason = 'modellen verschillen over mist';
         } elseif ($photoRoute === 'mist' && $forestModelsDisagree) {
-            $reason = 'modellen verschillen over bosmistcondities';
+            $reason = 'modellen verschillen over mistcondities';
         }
         $lines = [
             fogAdviceLine($photoScore, $firstLight),
@@ -943,12 +992,12 @@ function fogBuildForecast(
             $mistDetails[] = sprintf('Dichte mist: %d%% (zicht <200 m)', $densePercent);
         }
         $groundFavorable = fogGroundMistFavorable($groundMistConditionsShare, $harmonie);
-        if ($groundFavorable) {
-            $mistDetails[] = 'Grondmist: mogelijk';
-        }
         $forestFavorable = $forestOutlookShare >= 0.5 && !$modelsDisagree;
-        if ($forestFavorable) {
-            $mistDetails[] = 'Bosmist: omstandigheden gunstig';
+        // Mist forms first over open fields and low ground, so these are cues for
+        // local mist in general rather than for mist in the woods.
+        $localMist = $groundFavorable || $forestFavorable;
+        if ($localMist) {
+            $mistDetails[] = 'Lokale mist: mogelijk';
         }
         if ($mistPercent >= 10) {
             $lines[] = sprintf('🌁 Mist: %d%% (zicht <1 km)', $mistPercent);
@@ -973,6 +1022,10 @@ function fogBuildForecast(
         $lines[] = '🌤️ Ochtendzon: ' . fogLikelihood($openSkyChance);
         if ($snowChance !== null && $snowChance > 0.0) {
             $lines[] = sprintf('❄️ Sneeuw: %d%%', (int) round($snowChance * 100));
+        }
+        if ($photoShares['fresh_snow'] >= 0.3) {
+            $lines[] = sprintf('❄️ Verse sneeuw: %s · ongeveer %d cm',
+                fogLikelihood($photoShares['fresh_snow']), (int) round($photoDay['fresh_snow_cm']));
         }
         $wetShare = $wetWeather / $complete;
         if ($wetShare >= 0.25) {
@@ -1036,7 +1089,7 @@ function fogBuildForecast(
             'lifting_share' => $liftingChance,
             'ensemble_score' => $ensembleScore,
             'score' => $photoScore,
-            'score_version' => 4,
+            'score_version' => 5,
             'photo_route' => $photoRoute,
             'photo_route_margin' => $photoDay['route_margin'],
             'photo_reason' => $reason,
@@ -1052,11 +1105,14 @@ function fogBuildForecast(
             'models_disagree' => $modelsDisagree,
             'ground_favorable' => $groundFavorable,
             'forest_favorable' => $forestFavorable,
+            'local_mist' => $localMist,
+            'fresh_snow_share' => $photoShares['fresh_snow'],
+            'fresh_snow_cm' => $photoDay['fresh_snow_cm'],
             'best_mist_hour' => $bestMistHour,
         ];
 
         $checkStatus = sprintf(
-            "%s; datum=%s; zon=%s; cijfer=%d/10; mist=%.1f%%; dicht=%.1f%%; bosmist-signaal=%.1f%%; scenario's=%d\n",
+            "%s; datum=%s; zon=%s; cijfer=%d/10; mist=%.1f%%; dicht=%.1f%%; lokale-mist-signaal=%.1f%%; scenario's=%d\n",
             $now->format('Y-m-d H:i:sP'),
             $forecastDate,
             $sunrise->format('H:i'),
