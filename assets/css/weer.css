@@ -596,3 +596,30 @@ body {
     color: var(--w-muted);
   }
 }
+
+/*
+ * Side by side, the cards share their row heights (subgrid), so a reason over two
+ * lines or a row with a detail never pushes the rows of one card out of line.
+ * A card has 11 parts: top, verdict, reason, light, six photo chances, weather.
+ */
+@media (--breakpoint-30) {
+  .w-days {
+    row-gap: 0;
+  }
+
+  .w-day {
+    display: grid;
+    grid-row: span 11;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+    align-content: start;
+  }
+
+  .w-day .w-rows {
+    display: contents;
+  }
+
+  .w-day .w-row:first-child {
+    border-top: 1px solid var(--w-line);
+  }
+}
