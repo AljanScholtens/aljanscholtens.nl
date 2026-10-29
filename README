@@ -15,8 +15,8 @@ De publieke botbestanden staan in `static/`; de ochtendtaak staat in
 `ops/fog-morning-cron.php` en draait op de hosting vanuit `~/private`.
 De privéconfiguratie en de geplande taken blijven op de hosting.
 
-Onder de titel staat een advies: Gaan (cijfer 6-10), Twijfel (4-5) of
-Uitslapen (1-3). Bij Gaan en Twijfel staan de wektijd en het eerste licht
+Onder de titel staat een advies: Uitstekend (cijfer 6-10), Prima (4-5) of
+Neutraal (1-3). Bij Uitstekend en Prima staan de wektijd en het eerste licht
 (begin burgerlijke schemering) erbij; de wekker staat 45 minuten vóór het
 eerste licht (30 minuten klaarmaken, 15 minuten reizen), afgerond op vijf
 minuten. Zonsondergang staat niet meer in het bericht.
@@ -76,7 +76,14 @@ dat bestand door aan de pagina (`layouts/_default/weer.html`,
 `assets/css/weer.css`, `static/scripts/weer.js`). Zo wacht een bezoeker nooit op
 de weermodellen. Vóór zonsopkomst telt vandaag nog mee; de pagina laat een
 ochtend vallen zodra de zon op is. Een ochtend zonder KNMI-model heet
-"voorlopig". Cron-regel:
+"voorlopig".
+
+Met `/weer/?plaats=Assen` zoekt de pagina een Nederlandse plaats op
+(`static/fog-web.php`). Bij een dubbele naam kies je de provincie, zoals
+"Hengelo, Gelderland". Het resultaat wordt twee uur per plaats bewaard in
+`~/private/fog-web-cache`. Er gelden limieten: 20 zoekopdrachten per bezoeker
+per uur en 200 nieuwe berekeningen per dag. Alle ochtenden delen één download
+van elk weermodel. Cron-regel:
 `20 */2 * * * /usr/local/bin/php /data/sites/web/aljanscholtensnl/private/fog-web-cron.php >> /data/sites/web/aljanscholtensnl/private/fog-web-cron.log 2>&1`
 
 Controleer een botwijziging eerst zonder live bestanden of Telegram-berichten

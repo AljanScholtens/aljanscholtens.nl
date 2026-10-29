@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 
-define('FOG_WEB_LIBRARY_ONLY', true);
 $root = getenv('FOG_BOT_ROOT') ?: getenv('HOME');
-require rtrim($root, '/') . '/private/fog-web-cron.php';
+require rtrim($root, '/') . '/www/fog-web.php';
 
 function webCheck(bool $condition, string $message): void
 {
@@ -26,7 +25,7 @@ $metrics = [
 ];
 $day = fogWebDay(['date' => '2026-12-11', 'metrics' => $metrics], $place, $zone);
 webCheck($day['weekday'] === 'vr' && $day['day_label'] === '11 dec', 'Day label is wrong');
-webCheck($day['advice'] === 'go' && $day['advice_label'] === 'Gaan'
+webCheck($day['advice'] === 'go' && $day['advice_label'] === 'Uitstekend'
     && is_string($day['wake']) && $day['wake'] < $day['first_light'], 'Advice or alarm is wrong');
 webCheck($day['mist'] === ['percent' => 55, 'dense_percent' => 20, 'best_hour' => '08:00'],
     'Mist block is wrong');
@@ -59,4 +58,40 @@ webCheck($data['place'] === 'Vries' && count($dates) >= 3 && count($dates) <= 4
     'Live web data has the wrong mornings');
 webCheck(isset($data['days'][0]['score']) && !isset($data['days'][0]['error']),
     'Live web data for the first morning failed');
+
+// Duplicate place names need a province; the province must then pick one.
+webCheck(fogFindDutchPlace('Hengelo')['status'] === 'ambiguous', 'Hengelo should be ambiguous');
+$gelderland = fogFindDutchPlace('Hengelo, Gelderland');
+webCheck($gelderland['status'] === 'ok' && $gelderland['place']['province'] === 'Gelderland',
+    'A province should settle a duplicate place name');
+
+// Search, cache and limits work in their own folder.
+$privateDir = rtrim($root, '/') . '/private/test-web-' . bin2hex(random_bytes(6));
+mkdir($privateDir, 0700);
+try {
+    webCheck(fogWebSearch('<script>', $privateDir, $now, $zone, 'a')['status'] === 'invalid',
+        'Markup should be rejected');
+    $choose = fogWebSearch('Hengelo', $privateDir, $now, $zone, 'a');
+    webCheck($choose['status'] === 'choose' && in_array('Hengelo, Gelderland', $choose['places'], true),
+        'Ambiguous search should offer choices');
+    $assen = fogWebSearch('Assen', $privateDir, $now, $zone, 'a');
+    webCheck($assen['status'] === 'ok' && $assen['data']['place'] === 'Assen'
+        && count($assen['data']['days']) >= 3, 'Assen should get a forecast');
+    $again = fogWebSearch('assen', $privateDir, $now, $zone, 'b');
+    $limits = json_decode((string) file_get_contents($privateDir . '/fog-web-limits.json'), true);
+    webCheck($again['status'] === 'ok' && $limits['calculations'] === 1,
+        'A second search should use the cache');
+    for ($i = 0; $i < FOG_WEB_SEARCHES_PER_CLIENT_HOUR; $i++) {
+        fogWebAllow($privateDir, 'c', 'search', $now);
+    }
+    webCheck(fogWebSearch('Assen', $privateDir, $now, $zone, 'c')['status'] === 'limited'
+        && fogWebSearch('Assen', $privateDir, $now, $zone, 'd')['status'] === 'ok',
+        'The search limit should apply per visitor');
+} finally {
+    foreach (array_merge(glob($privateDir . '/fog-web-cache/*') ?: [], glob($privateDir . '/*.*') ?: []) as $path) {
+        @unlink($path);
+    }
+    @rmdir($privateDir . '/fog-web-cache');
+    @rmdir($privateDir);
+}
 echo "Web data checks passed.\n";

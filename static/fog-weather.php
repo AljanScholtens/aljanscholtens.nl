@@ -4,6 +4,20 @@ declare(strict_types=1);
 // Shared forecast and delivery code for the evening job and Telegram bot.
 function fogRequest(string $url, ?string $body = null, array $headers = [], int $timeout = 30): array
 {
+    // Several mornings share one model download; remember successful reads for this run.
+    static $memo = [];
+    if ($body === null && isset($memo[$url])) {
+        return $memo[$url];
+    }
+    $result = fogRequestUncached($url, $body, $headers, $timeout);
+    if ($body === null && $result[0] === 200) {
+        $memo[$url] = $result;
+    }
+    return $result;
+}
+
+function fogRequestUncached(string $url, ?string $body, array $headers, int $timeout): array
+{
     if (function_exists('curl_init')) {
         $curl = curl_init($url);
         curl_setopt_array($curl, [
@@ -49,11 +63,15 @@ function fogDefaultPlace(): array
     return ['name' => 'Vries', 'latitude' => 53.07165252, 'longitude' => 6.57674584];
 }
 
+// Accepts "Assen" or "Assen, Drenthe"; the province narrows down duplicate names.
 function fogFindDutchPlace(string $query): array
 {
+    $parts = explode(',', $query, 2);
+    $name = trim($parts[0]);
+    $province = trim($parts[1] ?? '');
     $url = 'https://geocoding-api.open-meteo.com/v1/search?'
         . http_build_query([
-            'name' => $query,
+            'name' => $name,
             'count' => 20,
             'language' => 'nl',
             'countryCode' => 'NL',
@@ -72,7 +90,6 @@ function fogFindDutchPlace(string $query): array
         throw new RuntimeException('Place search has no result list');
     }
 
-    $name = trim(explode(',', $query, 2)[0]);
     $fold = static function (string $value): string {
         return function_exists('mb_strtolower')
             ? mb_strtolower($value, 'UTF-8')
@@ -94,12 +111,13 @@ function fogFindDutchPlace(string $query): array
                 ? $candidate['admin1'] : '',
         ];
         $suggestions[] = $place;
-        if ($fold($place['name']) === $fold($name)) {
+        if ($fold($place['name']) === $fold($name)
+            && ($province === '' || strpos($fold($place['province']), $fold($province)) === 0)) {
             $matches[] = $place;
         }
     }
     if (count($matches) === 1) {
-        if (strpos($query, ',') !== false && $matches[0]['province'] !== '') {
+        if ($province !== '' && $matches[0]['province'] !== '') {
             $matches[0]['name'] .= ', ' . $matches[0]['province'];
         }
         return ['status' => 'ok', 'place' => $matches[0]];
@@ -160,10 +178,18 @@ function fogSunTimes(string $date, float $latitude, float $longitude, DateTimeZo
 // Getting up and walking out the door takes 30 minutes, the trip another 15.
 const FOG_WAKE_MINUTES_BEFORE_FIRST_LIGHT = 45;
 
-// The same bands the morning update uses: 1-3 skip, 4-5 maybe, 6-10 go.
+// The same bands the morning update uses: 1-3 Neutraal, 4-5 Prima, 6-10 Uitstekend.
+// The internal keys stay go/maybe/skip so stored data keeps its meaning.
 function fogAdvice(int $score): string
 {
     return $score >= 6 ? 'go' : ($score >= 4 ? 'maybe' : 'skip');
+}
+
+// Words instead of exact shares: 31 coarse scenarios agreeing is not certainty.
+function fogLikelihood(float $share): string
+{
+    return $share >= 0.8 ? 'zeer waarschijnlijk'
+        : ($share >= 0.5 ? 'waarschijnlijk' : ($share >= 0.2 ? 'mogelijk' : 'weinig kans'));
 }
 
 function fogWakeTime(DateTimeImmutable $firstLight): DateTimeImmutable
@@ -177,10 +203,10 @@ function fogAdviceLine(int $score, DateTimeImmutable $firstLight): string
 {
     $advice = fogAdvice($score);
     if ($advice === 'skip') {
-        return '⚪ Uitslapen';
+        return '⚪ Neutraal';
     }
     return sprintf('%s — wekker %s · eerste licht %s',
-        $advice === 'go' ? '🟢 Gaan' : '🟡 Twijfel',
+        $advice === 'go' ? '🟢 Uitstekend' : '🟡 Prima',
         fogWakeTime($firstLight)->format('H:i'),
         $firstLight->format('H:i'));
 }
@@ -525,7 +551,8 @@ function fogHarmonieCheck(
                 'longitude' => $longitude,
                 'hourly' => 'visibility,weather_code,cloud_cover,relative_humidity_2m,wind_speed_10m',
                 'models' => 'knmi_harmonie_arome_netherlands',
-                'forecast_days' => $forecastDays,
+                // A fixed length keeps the URL, and so the download, shared between mornings.
+                'forecast_days' => max(3, $forecastDays),
                 'timezone' => 'Europe/Amsterdam',
             ], '', '&', PHP_QUERY_RFC3986);
         [$status, $response] = fogRequest($url, null, [], 8);
@@ -619,7 +646,10 @@ function fogBuildForecast(
         $outlookDays = $baseDays + 2;
         // Ask for two extra mornings in one call. If the extended request fails,
         // keep the main forecast available with the shorter request.
-        foreach ($includeOutlook ? [$outlookDays, $baseDays] : [$baseDays] as $forecastDays) {
+        // Without the outlook still ask for four days: the same URL serves every morning.
+        $attempts = array_values(array_unique($includeOutlook
+            ? [$outlookDays, $baseDays] : [max(4, $baseDays), $baseDays]));
+        foreach ($attempts as $forecastDays) {
             try {
                 $url = 'https://ensemble-api.open-meteo.com/v1/ensemble?latitude=' . rawurlencode((string) $latitude)
                     . '&longitude=' . rawurlencode((string) $longitude)
@@ -889,7 +919,7 @@ function fogBuildForecast(
         }
         $groundFavorable = fogGroundMistFavorable($groundMistConditionsShare, $harmonie);
         if ($groundFavorable) {
-            $mistDetails[] = 'Grondmist: omstandigheden gunstig';
+            $mistDetails[] = 'Grondmist: mogelijk';
         }
         $forestFavorable = $forestOutlookShare >= 0.5 && !$modelsDisagree;
         if ($forestFavorable) {
@@ -910,13 +940,12 @@ function fogBuildForecast(
             $lines[] = sprintf('✨ Rijp: %d%% · min %s°', (int) round($photoShares['rime'] * 100),
                 str_replace('-', '−', (string) $minTemp));
         } elseif ($photoShares['dew'] >= 0.5) {
-            $lines[] = sprintf('💧 Dauw: %d%% · min %d°', (int) round($photoShares['dew'] * 100),
-                $minTemp);
+            $lines[] = sprintf('💧 Dauw: %s · min %d°', fogLikelihood($photoShares['dew']), $minTemp);
         }
         if ($photoShares['calm'] >= 0.6) {
             $lines[] = '🪞 Windstil: spiegelingen mogelijk';
         }
-        $lines[] = sprintf('🌤️ Kans op ochtendzon: %d%%', (int) round($openSkyChance * 100));
+        $lines[] = '🌤️ Ochtendzon: ' . fogLikelihood($openSkyChance);
         if ($snowChance !== null && $snowChance > 0.0) {
             $lines[] = sprintf('❄️ Sneeuw: %d%%', (int) round($snowChance * 100));
         }

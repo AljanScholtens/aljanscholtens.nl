@@ -39,9 +39,11 @@ if (fogSunriseHour(new DateTimeImmutable('2026-12-21 08:50', $roundZone)) !== 9
     exit(1);
 }
 $adviceLight = new DateTimeImmutable('2026-10-28 06:43', $roundZone);
-if (fogAdviceLine(3, $adviceLight) !== '⚪ Uitslapen'
-    || fogAdviceLine(4, $adviceLight) !== '🟡 Twijfel — wekker 05:55 · eerste licht 06:43'
-    || fogAdviceLine(6, $adviceLight) !== '🟢 Gaan — wekker 05:55 · eerste licht 06:43') {
+if (fogAdviceLine(3, $adviceLight) !== '⚪ Neutraal'
+    || fogAdviceLine(4, $adviceLight) !== '🟡 Prima — wekker 05:55 · eerste licht 06:43'
+    || fogAdviceLine(6, $adviceLight) !== '🟢 Uitstekend — wekker 05:55 · eerste licht 06:43'
+    || fogLikelihood(1) !== 'zeer waarschijnlijk' || fogLikelihood(0.5) !== 'waarschijnlijk'
+    || fogLikelihood(0.2) !== 'mogelijk' || fogLikelihood(0.19) !== 'weinig kans') {
     fwrite(STDERR, "Advice line check failed\n");
     exit(1);
 }
@@ -209,7 +211,7 @@ if (!is_array($metrics)
     || strpos($forecast['message'], 'KNMI') !== false
     || ((strpos($forecast['message'], '↳ Dichte mist: ') !== false)
         !== ((int) round((float) $metrics['dense_share'] * 100) >= 15))
-    || strpos($forecast['message'], '🌤️ Kans op ochtendzon: ') === false
+    || strpos($forecast['message'], '🌤️ Ochtendzon: ' . fogLikelihood((float) $metrics['sun_share'])) === false
     || ($snowShare !== null && !is_numeric($snowShare))
     || ($snowLine !== ($snowShare !== null && $snowShare > 0))
     || ($snowLine && strpos($forecast['message'], sprintf('❄️ Sneeuw: %d%%',

@@ -97,16 +97,51 @@
       if (day.mist.best_hour) notes.push('rond ' + day.mist.best_hour);
       rows.appendChild(row('Mist', day.mist.percent + '%', notes.join(' · ')));
     }
-    if (day.ground) rows.appendChild(row('Grondmist', 'gunstig'));
+    if (day.ground) rows.appendChild(row('Grondmist', 'mogelijk'));
     if (day.forest) rows.appendChild(row('Bosmist', 'gunstig'));
     if (day.rime) rows.appendChild(row('Rijp', day.rime.percent + '%', 'min ' + temperature(day.rime.min_temp)));
-    if (day.dew) rows.appendChild(row('Dauw', day.dew.percent + '%', 'min ' + temperature(day.dew.min_temp)));
+    if (day.dew) rows.appendChild(row('Dauw', day.dew.label, 'min ' + temperature(day.dew.min_temp)));
     if (day.calm) rows.appendChild(row('Windstil', 'spiegelingen mogelijk'));
     if (day.snow_percent) rows.appendChild(row('Sneeuw', day.snow_percent + '%'));
-    rows.appendChild(row('Ochtendzon', day.sun_percent + '%'));
+    rows.appendChild(row('Ochtendzon', day.sun));
     rows.appendChild(row('Weer', day.weather));
     card.appendChild(rows);
     return card;
+  }
+
+  function setPlace(name) {
+    // Another place gets a link back to the default forecast for Vries.
+    var isDefault = !name || name === 'Vries';
+    var chip = el(isDefault ? 'span' : 'a', 'w-header__place' + (isDefault ? '' : ' w-header__place--link'),
+      isDefault ? 'Vries' : name + ' ×');
+    if (!isDefault) {
+      chip.href = '/weer/';
+      chip.setAttribute('aria-label', name + ', terug naar Vries');
+    }
+    chip.setAttribute('data-place', '');
+    placeEl.replaceWith(chip);
+    placeEl = chip;
+    document.title = 'Fotoweer' + (isDefault ? '' : ' ' + name) + ' - Aljan Scholtens';
+  }
+
+  function showMessage(text, choices) {
+    daysEl.textContent = '';
+    updatedEl.textContent = '';
+    var box = el('div', 'w-status');
+    box.appendChild(el('p', null, text));
+    if (choices && choices.length) {
+      var list = el('div', 'w-choices');
+      choices.forEach(function (choice) {
+        var button = el('button', 'w-choice', choice);
+        button.type = 'button';
+        button.addEventListener('click', function () {
+          search(choice);
+        });
+        list.appendChild(button);
+      });
+      box.appendChild(list);
+    }
+    daysEl.appendChild(box);
   }
 
   function render(data) {
@@ -115,31 +150,73 @@
     var days = (data.days || []).filter(function (day) {
       return Date.parse(day.sunrise_at) > now;
     }).slice(0, 3);
-    daysEl.textContent = '';
+    setPlace(data.place);
     if (!days.length) {
-      daysEl.appendChild(el('p', 'w-status', 'Er is nu geen verwachting beschikbaar.'));
+      showMessage('Er is nu geen verwachting beschikbaar.');
       return;
     }
+    daysEl.textContent = '';
     days.forEach(function (day) {
       daysEl.appendChild(dayCard(day));
     });
-    placeEl.textContent = data.place;
     var updated = new Date(data.generated_at);
     updatedEl.textContent = 'Bijgewerkt om ' + updated.toLocaleTimeString('nl-NL',
       { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Amsterdam' })
       + ' · wordt elke twee uur opnieuw berekend';
   }
 
-  window.fotoweerRender = render;
+  var request = 0;
 
-  fetch('/weer-data.php', { headers: { Accept: 'application/json' } })
-    .then(function (response) {
-      if (!response.ok) throw new Error('HTTP ' + response.status);
-      return response.json();
-    })
-    .then(render)
-    .catch(function () {
-      daysEl.textContent = '';
-      daysEl.appendChild(el('p', 'w-status', 'De verwachting kan nu niet worden geladen. Probeer het later opnieuw.'));
-    });
+  function load(query) {
+    var current = ++request;
+    searchInput.value = query || '';
+    showMessage(query ? 'Verwachting voor ' + query + ' berekenen…' : 'Verwachting laden…');
+    fetch('/weer-data.php' + (query ? '?plaats=' + encodeURIComponent(query) : ''),
+      { headers: { Accept: 'application/json' } })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        // A slower, older search must not overwrite a newer one.
+        if (current !== request) return;
+        if (data.days) {
+          render(data);
+        } else if (data.status === 'choose') {
+          showMessage('Er zijn meerdere plaatsen met deze naam. Welke bedoel je?', data.places);
+        } else if (data.status === 'not_found') {
+          showMessage(data.message + (data.suggestions && data.suggestions.length
+            ? ' Bedoel je een van deze?' : ''), data.suggestions);
+        } else {
+          showMessage(data.message || 'De verwachting kan nu niet worden geladen.');
+        }
+      })
+      .catch(function () {
+        if (current !== request) return;
+        showMessage('De verwachting kan nu niet worden geladen. Probeer het later opnieuw.');
+      });
+  }
+
+  function search(query) {
+    history.pushState(null, '', '/weer/?plaats=' + encodeURIComponent(query));
+    load(query);
+  }
+
+  function queryFromUrl() {
+    return (new URLSearchParams(location.search).get('plaats') || '').trim();
+  }
+
+  var searchForm = document.querySelector('[data-search]');
+  var searchInput = searchForm.querySelector('input');
+  searchForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var query = searchInput.value.trim();
+    if (query) search(query);
+  });
+  window.addEventListener('popstate', function () {
+    load(queryFromUrl());
+  });
+
+  window.fotoweerRender = render;
+  window.fotoweerMessage = showMessage;
+  load(queryFromUrl());
 })();

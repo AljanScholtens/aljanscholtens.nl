@@ -168,7 +168,7 @@ function fogMorningMessage(array $evening, array $morning): string
         );
         if ($oldGround !== $newGround) {
             $lines[] = '↳ Grondmist: ' . ($newGround
-                ? 'omstandigheden nu gunstig' : 'gunstig signaal verdwenen');
+                ? 'nu mogelijk' : 'niet meer verwacht');
         }
     }
     [$sunrise] = fogMorningSun($morning['date'], new DateTimeZone('Europe/Amsterdam'));

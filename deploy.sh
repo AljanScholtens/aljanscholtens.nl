@@ -6,7 +6,7 @@ cd "$(dirname "$0")"
 hugo --minify
 
 # Stop als de build niet alle bestanden van de weerbot heeft meegenomen.
-for file in fog-weather.php fog-feedback.php fog-alert.php fog-bot.php weer-data.php; do
+for file in fog-weather.php fog-feedback.php fog-alert.php fog-bot.php fog-web.php weer-data.php; do
     if [ ! -f "public/$file" ] || ! cmp -s "static/$file" "public/$file"; then
         echo "Deploy gestopt: public/$file ontbreekt of is verouderd." >&2
         exit 1

@@ -10,7 +10,7 @@ fi
 host='aljanscholtensnl@aljans.ssh.transip.me'
 stage='private/fog-bot-stage'
 # Publieke bestanden gaan naar ~/www, private taken naar ~/private.
-www_files='fog-weather.php fog-feedback.php fog-alert.php fog-bot.php weer-data.php'
+www_files='fog-weather.php fog-feedback.php fog-alert.php fog-bot.php fog-web.php weer-data.php'
 private_files='fog-morning-cron.php fog-evaluate.php fog-web-cron.php'
 
 # Controleer eerst een volledige kopie buiten de publieke website.
