@@ -33,6 +33,16 @@ mist zolang het die ochtend bereikt; anders moet de helft van de scenario's het
 eens zijn. Rekenen (`fogForecastMetrics`) en tekst (`fogForecastMessage`) zijn
 gescheiden. `FOG_FIXTURES` laat tests vastgelegde modeldata terugspelen.
 
+Versie 7 voegt kleur in de lucht toe. GFS levert geen bewolking per hoogte;
+daarvoor haalt de bot de wolkenlagen van het ECMWF-ensemble (51 scenario's).
+Een scenario heeft kleur als er in het uur voor of bij zonsopkomst 20-80%
+middelhoge of hoge bewolking is en hooguit 40% lage bewolking. In dat deel van
+de scenario's telt de ochtend als minstens een 7 (windstil een 8); omdat het
+een ander ensemble is, gaat dat als gewogen gemiddelde in het cijfer. Of er
+oostelijk een opening aan de horizon is, ziet het model niet; daarvoor zijn de
+knoppen "Kleur in de lucht: ja/nee". Zonder ECMWF-data rekent de bot gewoon
+zonder kleur.
+
 Sinds versie 5 is elke mist, net als een vers sneeuwdek (minstens 3 cm gevallen
 tussen 18:00 de avond ervoor en zonsopkomst), minstens een 7, ook op een
 grijze ochtend. Ziet het KNMI-model mist, dan is het minstens een 7, bij dichte

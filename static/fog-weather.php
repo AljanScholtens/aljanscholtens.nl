@@ -30,6 +30,12 @@ const FOG_SNOW_COVER_M = 0.02;
 const FOG_FRESH_SNOW_CM = 3.0;
 // Without the local KNMI run, local mist needs half of the GFS scenarios.
 const FOG_LOCAL_MIST_SHARE = 0.5;
+// Colour at sunrise: mid or high cloud to light up, but not a closed deck, and
+// little low cloud in the way. A colourful sky is worth at least a 7, like mist.
+const FOG_COLOR_MIN_UPPER_CLOUD = 20.0;
+const FOG_COLOR_MAX_UPPER_CLOUD = 80.0;
+const FOG_COLOR_MAX_LOW_CLOUD = 40.0;
+const FOG_COLOR_SCORE = 7;
 function fogRequest(string $url, ?string $body = null, array $headers = [], int $timeout = 30): array
 {
     // Several mornings share one model download; remember successful reads for this run.
@@ -587,7 +593,8 @@ function fogOutlookScores(
     string $forecastDate,
     float $latitude,
     float $longitude,
-    DateTimeZone $zone
+    DateTimeZone $zone,
+    ?array $clouds = null
 ): array {
     $scores = [];
     $baseDate = new DateTimeImmutable($forecastDate . ' 12:00', $zone);
@@ -633,7 +640,9 @@ function fogOutlookScores(
         if (count($scenes) < 25) {
             throw new RuntimeException('Too few usable outlook members: ' . count($scenes));
         }
-        $scores[$date] = fogPhotoDayScore($scenes)['score'];
+        $day = fogPhotoDayScore($scenes);
+        $scores[$date] = fogBlendColor($day['score'],
+            fogColorShare($clouds, $date, $sunriseHour), $day['shares']['calm'] >= 0.6);
     }
     return $scores;
 }
@@ -785,6 +794,82 @@ function fogBuildForecast(
         'check_status' => $checkStatus,
         'metrics' => $metrics,
     ];
+}
+
+// Downloads cloud layers from the ECMWF ensemble; the GFS ensemble leaves them empty.
+// Without this download the forecast simply has no colour chance.
+function fogFetchCloudLayers(float $latitude, float $longitude, int $forecastDays): ?array
+{
+    try {
+        // A fixed length keeps the URL, and so the download, shared between mornings.
+        $url = 'https://ensemble-api.open-meteo.com/v1/ensemble?latitude=' . rawurlencode((string) $latitude)
+            . '&longitude=' . rawurlencode((string) $longitude)
+            . '&hourly=cloud_cover_low,cloud_cover_mid,cloud_cover_high'
+            . '&models=ecmwf_ifs025&forecast_days=' . max(4, $forecastDays) . '&timezone=Europe%2FAmsterdam';
+        [$status, $response] = fogRequest($url, null, [], 15);
+        if ($status !== 200) {
+            throw new RuntimeException('Cloud layers returned HTTP ' . $status);
+        }
+        $hourly = json_decode($response, true, 512, JSON_THROW_ON_ERROR)['hourly'] ?? null;
+        if (!is_array($hourly) || !is_array($hourly['time'] ?? null)) {
+            throw new RuntimeException('Cloud layers have no hourly data');
+        }
+        return $hourly;
+    } catch (Throwable $error) {
+        error_log('Fog cloud layers: ' . $error->getMessage());
+        return null;
+    }
+}
+
+// Share of ECMWF scenarios with a colourful setup in the hour before or at sunrise,
+// or null without enough data.
+function fogColorShare(?array $clouds, string $date, int $sunriseHour): ?float
+{
+    if ($clouds === null) {
+        return null;
+    }
+    $indices = [];
+    foreach ([$sunriseHour - 1, $sunriseHour] as $hour) {
+        $index = array_search($date . 'T' . sprintf('%02d', $hour) . ':00', $clouds['time'], true);
+        if ($index === false) {
+            return null;
+        }
+        $indices[] = $index;
+    }
+    $members = 0;
+    $colourful = 0;
+    foreach (array_keys($clouds) as $key) {
+        if (!preg_match('/^cloud_cover_low((?:_member\d+)?)$/', $key, $match)) {
+            continue;
+        }
+        $color = false;
+        foreach ($indices as $index) {
+            $low = $clouds['cloud_cover_low' . $match[1]][$index] ?? null;
+            $mid = $clouds['cloud_cover_mid' . $match[1]][$index] ?? null;
+            $high = $clouds['cloud_cover_high' . $match[1]][$index] ?? null;
+            if (!is_numeric($low) || !is_numeric($mid) || !is_numeric($high)) {
+                continue 2;
+            }
+            $upper = max((float) $mid, (float) $high);
+            $color = $color || ((float) $low <= FOG_COLOR_MAX_LOW_CLOUD
+                && $upper >= FOG_COLOR_MIN_UPPER_CLOUD && $upper <= FOG_COLOR_MAX_UPPER_CLOUD);
+        }
+        $members++;
+        $colourful += (int) $color;
+    }
+    return $members >= 25 ? $colourful / $members : null;
+}
+
+// Mixes the colour chance into the score: in the share of scenarios with colour the
+// morning is worth at least FOG_COLOR_SCORE (one more when calm). The colour comes
+// from another ensemble, so this is a weighted average, not a per-scenario maximum.
+function fogBlendColor(int $score, ?float $colorShare, bool $calm): int
+{
+    if ($colorShare === null) {
+        return $score;
+    }
+    $value = FOG_COLOR_SCORE + (int) $calm;
+    return max($score, (int) round($score + $colorShare * max(0, $value - $score)));
 }
 
 // Downloads the GFS ensemble. Returns [hourly data, days fetched, days needed for the
@@ -967,7 +1052,12 @@ function fogForecastMetrics(
     // Mist forms first over open fields and low ground. KNMI judges the night when
     // it reaches this morning; otherwise half the GFS scenarios must agree.
     $localMist = $harmonie !== null ? $harmonie['local_mist'] : $localMistShare >= FOG_LOCAL_MIST_SHARE;
-    $photoScore = $ensembleScore;
+    $clouds = fogFetchCloudLayers($latitude, $longitude, $baseDays);
+    $colorShare = fogColorShare($clouds, $forecastDate, $sunriseHour);
+    $photoScore = fogBlendColor($ensembleScore, $colorShare, $photoDay['shares']['calm'] >= 0.6);
+    if ($photoScore > $ensembleScore) {
+        $photoRoute = 'color';
+    }
     // KNMI leads for mist: its 2.5 km grid sees what the coarse ensemble misses.
     // It is a single scenario, so it lifts the score rather than replacing it.
     if ($harmonie !== null) {
@@ -1017,6 +1107,9 @@ function fogForecastMetrics(
         } else {
             $reason = 'weinig uitgesproken fotoweer';
         }
+    } elseif ($photoRoute === 'color') {
+        $reason = $colorShare >= 0.5 ? 'kans op kleur in de lucht bij zonsopkomst'
+            : 'mogelijk kleur in de lucht bij zonsopkomst';
     } elseif ($photoRoute === 'frost') {
         if ($photoShares['rime'] >= 0.3) {
             $reason = 'rijp kansrijk rond zonsopkomst';
@@ -1076,7 +1169,7 @@ function fogForecastMetrics(
         try {
             $outlookScores = fogOutlookScores(
                 $hourly, $suffixes, $variables, $forecastDate,
-                $latitude, $longitude, $zone
+                $latitude, $longitude, $zone, $clouds
             );
         } catch (Throwable $outlookError) {
             error_log('Fog outlook: ' . $outlookError->getMessage());
@@ -1095,7 +1188,7 @@ function fogForecastMetrics(
         'lifting_share' => $liftingChance,
         'ensemble_score' => $ensembleScore,
         'score' => $photoScore,
-        'score_version' => 6,
+        'score_version' => 7,
         'photo_route' => $photoRoute,
         'photo_route_margin' => $photoDay['route_margin'],
         'photo_reason' => $reason,
@@ -1113,6 +1206,7 @@ function fogForecastMetrics(
         'fresh_snow_cm' => $photoDay['fresh_snow_cm'],
         'best_mist_hour' => $bestMistHour,
         'weather_icon' => $weatherIcon,
+        'color_share' => $colorShare,
     ];
 
 }
@@ -1178,6 +1272,9 @@ function fogForecastMessage(
     }
     if ($photoShares['calm'] >= 0.6) {
         $lines[] = '🪞 Windstil: spiegelingen mogelijk';
+    }
+    if (($metrics['color_share'] ?? null) !== null && $metrics['color_share'] >= 0.2) {
+        $lines[] = '🌅 Kleur in de lucht: ' . fogLikelihood($metrics['color_share']);
     }
     $lines[] = '🌤️ Ochtendzon: ' . fogLikelihood($openSkyChance);
     if ($snowChance !== null && $snowChance > 0.0) {

@@ -102,6 +102,7 @@
     if (day.calm) rows.appendChild(row('Windstil', 'spiegelingen mogelijk'));
     if (day.fresh_snow_cm) rows.appendChild(row('Verse sneeuw', 'ongeveer ' + day.fresh_snow_cm + ' cm'));
     if (day.snow_percent) rows.appendChild(row('Sneeuw', day.snow_percent + '%'));
+    if (day.color) rows.appendChild(row('Kleur in de lucht', day.color));
     rows.appendChild(row('Ochtendzon', day.sun));
     rows.appendChild(row('Weer', day.weather));
     card.appendChild(rows);

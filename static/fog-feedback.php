@@ -15,6 +15,7 @@ function fogFeedbackKeyboard(string $date): array
         [$button('Dichte mist', 'mist', 'dense'), $button('Bosmist', 'mist', 'forest')],
         [$button('Dichte bosmist', 'mist', 'dense_forest'), $button('Niet gekeken', 'mist', 'unseen')],
         [$button('Rijp/dauw: ja', 'frost', 'yes'), $button('Rijp/dauw: nee', 'frost', 'no')],
+        [$button('Kleur in de lucht: ja', 'color', 'yes'), $button('Kleur: nee', 'color', 'no')],
         [$button('Foto waard: ja', 'photo', 'yes'), $button('Foto waard: nee', 'photo', 'no')],
     ]];
 }
@@ -80,8 +81,8 @@ function fogRecordFeedback(
         'unseen' => 'niet gekeken',
     ];
     if (($kind === 'mist' && !isset($mistLabels[$value]))
-        || (in_array($kind, ['photo', 'frost'], true) && !in_array($value, ['yes', 'no'], true))
-        || !in_array($kind, ['mist', 'photo', 'frost'], true)) {
+        || (in_array($kind, ['photo', 'frost', 'color'], true) && !in_array($value, ['yes', 'no'], true))
+        || !in_array($kind, ['mist', 'photo', 'frost', 'color'], true)) {
         return 'Deze keuze herken ik niet.';
     }
 
@@ -97,6 +98,7 @@ function fogRecordFeedback(
         'telegram_message_id' => $messageId,
         'mist' => null,
         'frost' => null,
+        'color' => null,
         'photo_worthy' => null,
     ];
     if (($record['date'] ?? null) !== $date
@@ -130,8 +132,12 @@ function fogRecordFeedback(
         if ($value === 'unseen') {
             $record['photo_worthy'] = null;
             $record['frost'] = null;
+            $record['color'] = null;
         }
         $reply = 'Genoteerd: ' . $mistLabels[$value] . '.';
+    } elseif ($kind === 'color') {
+        $record['color'] = $value === 'yes';
+        $reply = $value === 'yes' ? 'Genoteerd: kleur in de lucht.' : 'Genoteerd: geen kleur in de lucht.';
     } elseif ($kind === 'frost') {
         $record['frost'] = $value === 'yes';
         $reply = $value === 'yes' ? 'Genoteerd: rijp/dauw gezien.' : 'Genoteerd: geen rijp/dauw.';

@@ -59,6 +59,8 @@ function fogWebDay(array $forecast, array $place, DateTimeZone $zone): array
         'dew' => $shares['rime'] < 0.3 && $shares['dew'] >= 0.5
             ? ['label' => fogLikelihood($shares['dew']), 'min_temp' => $minTemp] : null,
         'calm' => $shares['calm'] >= 0.6,
+        'color' => is_numeric($metrics['color_share'] ?? null) && $metrics['color_share'] >= 0.2
+            ? fogLikelihood((float) $metrics['color_share']) : null,
         'sun' => fogLikelihood((float) $metrics['sun_share']),
         'snow_percent' => is_numeric($snow) && $snow > 0 ? (int) round($snow * 100) : null,
         'weather' => (string) $metrics['weather_summary'],

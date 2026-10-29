@@ -131,6 +131,36 @@ if (fogMemberFreshSnow($hourlyNight, '', '2026-12-11', 8) !== 10.0
     fwrite(STDERR, "Fresh snow total check failed\n");
     exit(1);
 }
+// Colour: mid or high cloud to light up and little low cloud, in the hour before
+// or at sunrise. A closed high deck or a low grey layer blocks it.
+$clouds = ['time' => ['2026-12-11T07:00', '2026-12-11T08:00']];
+$layers = [
+    '' => [[10, 50, 0], [10, 50, 0]],
+    '_member01' => [[10, 0, 95], [10, 0, 95]],
+    '_member02' => [[80, 50, 50], [80, 50, 50]],
+    '_member03' => [[90, 0, 0], [20, 0, 30]],
+];
+foreach ($layers as $suffix => $hoursOfCloud) {
+    foreach (['low', 'mid', 'high'] as $layer => $name) {
+        $clouds['cloud_cover_' . $name . $suffix] = array_column($hoursOfCloud, $layer);
+    }
+}
+// The other 27 scenarios are grey: a closed low deck.
+for ($member = 4; $member <= 30; $member++) {
+    $suffix = sprintf('_member%02d', $member);
+    $clouds['cloud_cover_low' . $suffix] = [100, 100];
+    $clouds['cloud_cover_mid' . $suffix] = [100, 100];
+    $clouds['cloud_cover_high' . $suffix] = [0, 0];
+}
+$colorShare = fogColorShare($clouds, '2026-12-11', 8);
+if (abs($colorShare - 2 / 31) > 0.0001 || fogColorShare(null, '2026-12-11', 8) !== null
+    || fogColorShare($clouds, '2026-12-12', 8) !== null
+    || fogBlendColor(4, 1.0, false) !== 7 || fogBlendColor(4, 1.0, true) !== 8
+    || fogBlendColor(4, 0.5, false) !== 6 || fogBlendColor(4, 0.0, false) !== 4
+    || fogBlendColor(8, 1.0, false) !== 8 || fogBlendColor(4, null, false) !== 4) {
+    fwrite(STDERR, "Colour chance check failed\n");
+    exit(1);
+}
 $sunnyCalmInput = $windOnly;
 $sunnyCalmInput['cloud_cover'] = array_fill(0, 5, 10);
 $sunnyCalmInput['wind_speed_10m'] = array_fill(0, 5, 3);
@@ -207,9 +237,12 @@ if (is_array($outlook)) {
 if (!is_array($metrics)
     || !is_numeric($metrics['local_mist_share'] ?? null)
     || !is_bool($metrics['local_mist'] ?? null)
+    || !array_key_exists('color_share', $metrics)
+    || ((strpos($forecast['message'], '🌅 Kleur in de lucht: ') !== false)
+        !== ($metrics['color_share'] !== null && $metrics['color_share'] >= 0.2))
     || !is_numeric($metrics['dense_share'] ?? null)
     || !is_string($metrics['weather_summary'] ?? null)
-    || ($metrics['score_version'] ?? null) !== 6
+    || ($metrics['score_version'] ?? null) !== 7
     || !in_array($metrics['photo_route'] ?? null, ['mist', 'winter', 'sky', 'frost'], true)
     || !is_string($metrics['photo_reason'] ?? null)
     || strpos($forecast['message'], '☀️↑ ') === false

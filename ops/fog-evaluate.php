@@ -55,6 +55,8 @@ function fogEvaluateRows(string $privateDir): array
             'frost_share' => is_numeric($metrics['rime_share'] ?? null)
                 ? (float) $metrics['rime_share'] + (float) ($metrics['dew_share'] ?? 0) : null,
             'frost_seen' => is_bool($feedback['frost'] ?? null) ? $feedback['frost'] : null,
+            'color_share' => is_numeric($metrics['color_share'] ?? null) ? (float) $metrics['color_share'] : null,
+            'color_seen' => is_bool($feedback['color'] ?? null) ? $feedback['color'] : null,
         ];
     }
     usort($rows, static function (array $a, array $b): int {
@@ -151,20 +153,23 @@ function fogEvaluateReport(array $rows, bool $listDays): string
         }
     }
 
-    // Was rime or dew there when the forecast expected it?
-    $frostRows = array_filter($rows, static function (array $row): bool {
-        return $row['frost_share'] !== null && $row['frost_seen'] !== null;
-    });
-    if ($frostRows) {
+    // Was rime, dew or colour there when the forecast expected it?
+    foreach (['Rijp/dauw' => 'frost', 'Kleur' => 'color'] as $title => $signal) {
+        $signalRows = array_filter($rows, static function (array $row) use ($signal): bool {
+            return $row[$signal . '_share'] !== null && $row[$signal . '_seen'] !== null;
+        });
+        if (!$signalRows) {
+            continue;
+        }
         $out[] = '';
-        $out[] = 'Rijp/dauw   dagen  gezien';
+        $out[] = sprintf('%-11s dagen  gezien', $title);
         foreach (['verwacht' => true, 'niet' => false] as $label => $expected) {
-            $group = array_filter($frostRows, static function (array $row) use ($expected): bool {
-                return ($row['frost_share'] >= 0.3) === $expected;
+            $group = array_filter($signalRows, static function (array $row) use ($signal, $expected): bool {
+                return ($row[$signal . '_share'] >= 0.3) === $expected;
             });
             $out[] = sprintf('%-10s  %5d  %4s', $label, count($group),
-                fogEvaluatePercent(count(array_filter($group, static function (array $row): bool {
-                    return $row['frost_seen'];
+                fogEvaluatePercent(count(array_filter($group, static function (array $row) use ($signal): bool {
+                    return $row[$signal . '_seen'];
                 })), count($group)));
         }
     }

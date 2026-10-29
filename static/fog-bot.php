@@ -93,7 +93,7 @@ try {
 
     if (is_array($callback)) {
         $callbackData = $callback['data'];
-        if (preg_match('/^fb:(\d{8}):(mist|photo|frost):([a-z_]+)$/D', $callbackData, $feedbackMatch)) {
+        if (preg_match('/^fb:(\d{8}):(mist|photo|frost|color):([a-z_]+)$/D', $callbackData, $feedbackMatch)) {
             $stamp = $feedbackMatch[1];
             $date = substr($stamp, 0, 4) . '-' . substr($stamp, 4, 2) . '-' . substr($stamp, 6, 2);
             try {
