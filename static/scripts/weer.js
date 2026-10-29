@@ -152,6 +152,8 @@
       return Date.parse(day.sunrise_at) > now;
     }).slice(0, 3);
     setPlace(data.place);
+    // Show the place as found, not the query behind a choice ("Landgraaf, Landgraaf").
+    searchInput.value = data.place === 'Vries' ? '' : data.place;
     if (!days.length) {
       showMessage('Er is nu geen verwachting beschikbaar.');
       return;
