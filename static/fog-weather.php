@@ -28,6 +28,13 @@ const FOG_STORM_GUSTS_KMH = 55.0;
 const FOG_WET_MM = 0.1;
 const FOG_SNOW_COVER_M = 0.02;
 const FOG_FRESH_SNOW_CM = 3.0;
+// Saturated, nearly still air at the ground is mist the models often show as low
+// cloud, with too good a visibility. It counts as possible mist whatever the sky.
+const FOG_SATURATED_MIN_HUMIDITY = 97.0;
+const FOG_SATURATED_MAX_WIND_KMH = 5.0;
+// When KNMI sees it, the morning is at least a 5: it may lie on the ground as mist
+// or hang a hundred metres up as a grey deck, which the model cannot tell apart.
+const FOG_SATURATED_SCORE = 5;
 // Without the local KNMI run, local mist needs half of the GFS scenarios.
 const FOG_LOCAL_MIST_SHARE = 0.5;
 // Colour at sunrise: mid or high cloud to light up, but not a closed deck, and
@@ -213,8 +220,11 @@ function fogNightConditions(
         && $precipitation < FOG_WET_MM;
     $damp = $humidity >= FOG_NIGHT_MIN_HUMIDITY;
     $frost = $minTemp <= FOG_FROST_MAX_TEMP;
+    $saturated = $humidity >= FOG_SATURATED_MIN_HUMIDITY && $windKmh <= FOG_SATURATED_MAX_WIND_KMH
+        && $precipitation < FOG_WET_MM;
     return [
-        'local_mist' => $clearCalm && $damp,
+        'local_mist' => ($clearCalm && $damp) || $saturated,
+        'saturated' => $saturated,
         'dew' => $clearCalm && $damp && !$frost,
         'rime' => $clearCalm && $frost && $humidity >= FOG_NIGHT_MIN_HUMIDITY_FROST,
         'min_temp' => $minTemp,
@@ -728,6 +738,7 @@ function fogHarmonieCheck(
             'dense' => $dense,
             'low_visibility' => $lowVisibility,
             'local_mist' => $night['local_mist'],
+            'saturated' => $night['saturated'],
             'min_visibility_m' => (int) round($minVisibility),
         ];
     } catch (Throwable $error) {
@@ -958,6 +969,7 @@ function fogForecastMetrics(
     $dense = 0;
     $freezingMist = 0;
     $localMistSignal = 0;
+    $saturatedSignal = 0;
     $liftingMist = 0;
     $openSky = 0;
     $wetWeather = 0;
@@ -1024,6 +1036,7 @@ function fogForecastMetrics(
         $snowyWeather += (int) ($memberWet && $memberSnowy);
 
         $localMistSignal += (int) $signals['night']['local_mist'];
+        $saturatedSignal += (int) $signals['night']['saturated'];
         $liftingMist += (int) $signals['lifting'];
         $openSky += (int) $signals['open_sky'];
     }
@@ -1036,6 +1049,7 @@ function fogForecastMetrics(
     $snowChance = $snowfallMembers >= 25 ? $snowfallEvents / $snowfallMembers : null;
     $openSkyChance = $openSky / $complete;
     $localMistShare = $localMistSignal / $complete;
+    $saturatedShare = $saturatedSignal / $complete;
     $liftingChance = $liftingMist / $complete;
     $photoDay = fogPhotoDayScore($photoScenes);
     $ensembleScore = $photoDay['score'];
@@ -1052,6 +1066,12 @@ function fogForecastMetrics(
     // Mist forms first over open fields and low ground. KNMI judges the night when
     // it reaches this morning; otherwise half the GFS scenarios must agree.
     $localMist = $harmonie !== null ? $harmonie['local_mist'] : $localMistShare >= FOG_LOCAL_MIST_SHARE;
+    // Saturated, still air near the ground: mist even under what models call low cloud.
+    $saturated = $harmonie !== null ? (bool) ($harmonie['saturated'] ?? false)
+        : $saturatedShare >= FOG_LOCAL_MIST_SHARE;
+    // KNMI sees saturated air under a low deck while GFS sees a sunny morning: say so.
+    $sunOrMist = $harmonie !== null && $saturated && $openSkyChance >= 0.5;
+    $modelsDisagree = $modelsDisagree || $sunOrMist;
     $clouds = fogFetchCloudLayers($latitude, $longitude, $baseDays);
     $colorShare = fogColorShare($clouds, $forecastDate, $sunriseHour);
     $photoScore = fogBlendColor($ensembleScore, $colorShare, $photoDay['shares']['calm'] >= 0.6);
@@ -1069,6 +1089,11 @@ function fogForecastMetrics(
         } elseif ($harmonie['fog']) {
             if ($photoScore < 7) {
                 $photoScore = 7;
+                $photoRoute = 'mist';
+            }
+        } elseif ($harmonie['saturated'] ?? false) {
+            if ($photoScore < FOG_SATURATED_SCORE) {
+                $photoScore = FOG_SATURATED_SCORE;
                 $photoRoute = 'mist';
             }
         }
@@ -1129,6 +1154,8 @@ function fogForecastMetrics(
         $reason = 'lokaal model ziet dichte mist';
     } elseif ($harmonie !== null && $harmonie['fog']) {
         $reason = 'lokaal model ziet mist';
+    } elseif ($saturated) {
+        $reason = 'verzadigde, windstille lucht: mist mogelijk';
     } elseif ($localMist) {
         $reason = 'condities voor lokale mist';
     } elseif ($openSkyChance >= 0.5) {
@@ -1136,7 +1163,9 @@ function fogForecastMetrics(
     } else {
         $reason = 'weinig uitgesproken fotoweer';
     }
-    if ($photoRoute === 'mist' && $fogModelsDisagree) {
+    if ($sunOrMist) {
+        $reason = 'modellen verschillen: zon of mist';
+    } elseif ($photoRoute === 'mist' && $fogModelsDisagree) {
         $reason = 'modellen verschillen over mist';
     }
     $bestMistHour = $bestHour !== null && $bestCount / $complete >= 0.2 ? $bestHour : null;
@@ -1181,6 +1210,8 @@ function fogForecastMetrics(
         'mist_share' => $mistChance,
         'dense_share' => $denseChance,
         'local_mist_share' => $localMistShare,
+        'saturated_share' => $saturatedShare,
+        'saturated' => $saturated,
         'sun_share' => $openSkyChance,
         'wet_share' => $wetShare,
         'snow_share' => $snowChance,
@@ -1189,7 +1220,7 @@ function fogForecastMetrics(
         'freezing_mist_share' => $freezingMist / $complete,
         'ensemble_score' => $ensembleScore,
         'score' => $photoScore,
-        'score_version' => 7,
+        'score_version' => 8,
         'photo_route' => $photoRoute,
         'photo_route_margin' => $photoDay['route_margin'],
         'photo_reason' => $reason,
@@ -1202,6 +1233,7 @@ function fogForecastMetrics(
         'knmi' => $harmonie,
         'fog_models_disagree' => $fogModelsDisagree,
         'models_disagree' => $modelsDisagree,
+        'sun_or_mist' => $sunOrMist,
         'local_mist' => $localMist,
         'fresh_snow_share' => $photoShares['fresh_snow'],
         'fresh_snow_cm' => $photoDay['fresh_snow_cm'],
@@ -1237,7 +1269,7 @@ function fogForecastMessage(
         sprintf(
             'Cijfer: %d/10%s — %s.',
             $photoScore,
-            $modelsDisagree && $photoRoute === 'mist'
+            $modelsDisagree && ($photoRoute === 'mist' || ($metrics['sun_or_mist'] ?? false))
                 ? ' (onzeker)' : ($harmonie === null ? ' (alleen ensemble)' : ''),
             $reason
         ),
@@ -1253,7 +1285,8 @@ function fogForecastMessage(
     }
     // With a mist line already shown, "local mist possible" adds nothing.
     if ($localMist && $mistPercent < 10) {
-        $mistDetails[] = 'Lokale mist: mogelijk';
+        $mistDetails[] = ($metrics['saturated'] ?? false)
+            ? 'Mist mogelijk: verzadigde, windstille lucht' : 'Lokale mist: mogelijk';
     }
     if ($mistPercent >= 10) {
         $lines[] = sprintf('🌁 Mist: %d%% (zicht <1 km)', $mistPercent);

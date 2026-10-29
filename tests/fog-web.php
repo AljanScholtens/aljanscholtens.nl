@@ -67,6 +67,12 @@ webCheck($quietDay['advice'] === 'maybe' && $quietDay['preliminary'] === true
     && $quietCategories['mist']['value'] === null && $quietCategories['color']['value'] === null
     && $quietCategories['frost']['value'] === null && $quietCategories['snow']['value'] === null,
     'Quiet morning is wrong');
+$saturatedDay = $quiet;
+$saturatedDay['saturated'] = true;
+$saturatedDay['local_mist'] = true;
+$saturatedMist = $byKey(fogWebDay(['date' => '2026-12-11', 'metrics' => $saturatedDay], $place, $zone))['mist'];
+webCheck($saturatedMist['value'] === 'mogelijk'
+    && $saturatedMist['notes'] === ['verzadigde, windstille lucht'], 'Saturated air should show as possible mist');
 $neutral = $quiet;
 $neutral['score'] = 2;
 webCheck(fogWebDay(['date' => '2026-12-11', 'metrics' => $neutral], $place, $zone)['wake'] === null,

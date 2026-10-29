@@ -37,7 +37,8 @@ function fogWebDay(array $forecast, array $place, DateTimeZone $zone): array
         'advice_label' => ['go' => 'Uitstekend', 'maybe' => 'Prima', 'skip' => 'Neutraal'][$advice],
         'wake' => $advice === 'skip' ? null : fogWakeTime($firstLight)->format('H:i'),
         'reason' => (string) $metrics['photo_reason'],
-        'uncertain' => $metrics['models_disagree'] && $metrics['photo_route'] === 'mist',
+        'uncertain' => $metrics['models_disagree']
+            && ($metrics['photo_route'] === 'mist' || ($metrics['sun_or_mist'] ?? false)),
         // Without the local KNMI run the morning rests on the coarse ensemble alone.
         'preliminary' => $metrics['knmi'] === null,
         'categories' => fogWebCategories($metrics),
@@ -59,6 +60,9 @@ function fogWebCategories(array $metrics): array
     $mistPercent = $percent((float) $metrics['mist_share']);
 
     $mistNotes = [];
+    if ($mistPercent < 10 && ($metrics['saturated'] ?? false)) {
+        $mistNotes[] = 'verzadigde, windstille lucht';
+    }
     if ($mistPercent >= 10) {
         if (($metrics['freezing_mist_share'] ?? 0) >= 0.3) {
             $mistNotes[] = 'bevroren mist';
@@ -114,7 +118,8 @@ function fogWebCategories(array $metrics): array
     $categories = [
         ['key' => 'mist', 'label' => 'Mist',
             'value' => $mistPercent >= 10 ? $mistPercent . '%'
-                : (($metrics['local_mist'] ?? false) ? 'lokaal mogelijk' : null),
+                : (($metrics['saturated'] ?? false) ? 'mogelijk'
+                    : (($metrics['local_mist'] ?? false) ? 'lokaal mogelijk' : null)),
             'notes' => $mistNotes],
         ['key' => 'color', 'label' => 'Kleur',
             'value' => is_numeric($color) && $color >= 0.2 ? fogLikelihood((float) $color) : null,

@@ -33,6 +33,12 @@ mist zolang het die ochtend bereikt; anders moet de helft van de scenario's het
 eens zijn. Rekenen (`fogForecastMetrics`) en tekst (`fogForecastMessage`) zijn
 gescheiden. `FOG_FIXTURES` laat tests vastgelegde modeldata terugspelen.
 
+Versie 8: verzadigde, windstille lucht bij de grond (luchtvochtigheid 97% of
+meer, wind tot 5 km/u, droog) telt als mogelijke mist, ook onder een wolkendek.
+Modellen tonen mist vaak als lage bewolking met een te ruim zicht. Ziet het
+KNMI-model dit, dan is het cijfer minstens een 5: het model weet niet of de laag
+op de grond ligt of als grijs wolkendek iets hoger hangt.
+
 Versie 7 voegt kleur in de lucht toe. GFS levert geen bewolking per hoogte;
 daarvoor haalt de bot de wolkenlagen van het ECMWF-ensemble (51 scenario's).
 Een scenario heeft kleur als er in het uur voor of bij zonsopkomst 20-80%

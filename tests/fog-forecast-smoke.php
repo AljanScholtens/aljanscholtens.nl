@@ -12,7 +12,10 @@ $night = static function (float $cloud, float $wind, float $rain, float $humidit
 if ($night(20, 5, 0, 97, 6) !== '110'
     || $night(20, 5, 0, 97, -1) !== '101'
     || $night(20, 5, 0, 90, -1) !== '001'
-    || $night(60, 5, 0, 97, 6) !== '000'
+    // Saturated, still air counts as possible mist even under a cloud deck.
+    || $night(60, 5, 0, 97, 6) !== '100'
+    || $night(100, 3, 0, 99, 9) !== '100'
+    || $night(60, 7, 0, 97, 6) !== '000'
     || $night(20, 12, 0, 97, 6) !== '000'
     || $night(20, 5, 0.3, 97, 6) !== '000'
     || $night(20, 5, 0, 90, 6) !== '000') {
@@ -172,6 +175,29 @@ $messageMetrics = ['score' => 8, 'photo_route' => 'mist', 'photo_reason' => 'tes
 $testMessage = fogForecastMessage($messageMetrics, new DateTimeImmutable('2026-12-11 08:40', $roundZone),
     new DateTimeImmutable('2026-12-11 08:00', $roundZone), $roundZone);
 $messageMetrics['mist_share'] = 0.05;
+$messageMetrics['local_mist'] = true;
+$messageMetrics['saturated'] = true;
+$saturatedMessage = fogForecastMessage($messageMetrics, new DateTimeImmutable('2026-12-11 08:40', $roundZone),
+    new DateTimeImmutable('2026-12-11 08:00', $roundZone), $roundZone);
+$messageMetrics['photo_route'] = 'sky';
+$messageMetrics['models_disagree'] = true;
+$messageMetrics['sun_or_mist'] = true;
+$messageMetrics['knmi'] = ['fog' => false];
+if (strpos(fogForecastMessage($messageMetrics, new DateTimeImmutable('2026-12-11 08:40', $roundZone),
+        new DateTimeImmutable('2026-12-11 08:00', $roundZone), $roundZone), 'Cijfer: 8/10 (onzeker)') === false) {
+    fwrite(STDERR, "Sun or mist disagreement should be marked uncertain\n");
+    exit(1);
+}
+$messageMetrics['photo_route'] = 'mist';
+$messageMetrics['models_disagree'] = false;
+$messageMetrics['sun_or_mist'] = false;
+$messageMetrics['knmi'] = null;
+$messageMetrics['local_mist'] = false;
+$messageMetrics['saturated'] = false;
+if (strpos($saturatedMessage, '🌁 Mist mogelijk: verzadigde, windstille lucht') === false) {
+    fwrite(STDERR, "Saturated air line is missing\n");
+    exit(1);
+}
 $noMistMessage = fogForecastMessage($messageMetrics, new DateTimeImmutable('2026-12-11 08:40', $roundZone),
     new DateTimeImmutable('2026-12-11 08:00', $roundZone), $roundZone);
 if (strpos($testMessage, "🌁 Mist: 60% (zicht <1 km)\n↳ Trekt op in zonlicht\n↳ Bevroren mist: rijp op alles") === false
@@ -260,7 +286,7 @@ if (!is_array($metrics)
         !== ($metrics['color_share'] !== null && $metrics['color_share'] >= 0.2))
     || !is_numeric($metrics['dense_share'] ?? null)
     || !is_string($metrics['weather_summary'] ?? null)
-    || ($metrics['score_version'] ?? null) !== 7
+    || ($metrics['score_version'] ?? null) !== 8
     || !in_array($metrics['photo_route'] ?? null, ['mist', 'winter', 'sky', 'frost'], true)
     || !is_string($metrics['photo_reason'] ?? null)
     || strpos($forecast['message'], '☀️↑ ') === false
