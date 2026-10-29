@@ -130,10 +130,10 @@ try {
                 } elseif ($search['status'] === 'ambiguous') {
                     $choices = [];
                     foreach (array_slice($search['places'], 0, 5) as $candidate) {
-                        $choices[] = $candidate['name'] . ', ' . $candidate['province'];
+                        $choices[] = $candidate['name'] . ', ' . $candidate['qualifier'];
                     }
                     $reply = 'Meerdere plaatsen gevonden: ' . implode('; ', $choices)
-                        . '. Voeg de provincie toe, bijvoorbeeld /weer ' . $choices[0] . '.';
+                        . '. Voeg de provincie of gemeente toe, bijvoorbeeld /weer ' . $choices[0] . '.';
                 } else {
                     $reply = 'Plaats niet gevonden: ' . $placeQuery . '. Gebruik een volledige Nederlandse plaatsnaam.';
                     if (!empty($search['suggestions'])) {

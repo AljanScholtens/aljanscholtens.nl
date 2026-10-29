@@ -132,10 +132,11 @@
     if (choices && choices.length) {
       var list = el('div', 'w-choices');
       choices.forEach(function (choice) {
-        var button = el('button', 'w-choice', choice);
+        // A choice is a plain place name or a {label, query} pair.
+        var button = el('button', 'w-choice', choice.label || choice);
         button.type = 'button';
         button.addEventListener('click', function () {
-          search(choice);
+          search(choice.query || choice);
         });
         list.appendChild(button);
       });

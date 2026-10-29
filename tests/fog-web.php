@@ -72,14 +72,30 @@ try {
     webCheck(fogWebSearch('<script>', $privateDir, $now, $zone, 'a')['status'] === 'invalid',
         'Markup should be rejected');
     $choose = fogWebSearch('Hengelo', $privateDir, $now, $zone, 'a');
-    webCheck($choose['status'] === 'choose' && in_array('Hengelo, Gelderland', $choose['places'], true),
+    webCheck($choose['status'] === 'choose'
+        && in_array('Hengelo, Gelderland', array_column($choose['places'], 'query'), true),
         'Ambiguous search should offer choices');
+    // Both places called Landgraaf lie in Limburg, so the municipality must tell them apart.
+    $landgraaf = fogWebSearch('Landgraaf', $privateDir, $now, $zone, 'a');
+    $queries = array_column($landgraaf['places'] ?? [], 'query');
+    webCheck($landgraaf['status'] === 'choose'
+        && in_array('Landgraaf, Sittard-Geleen', $queries, true)
+        && in_array('Landgraaf (gemeente Sittard-Geleen)', array_column($landgraaf['places'], 'label'), true),
+        'Landgraaf choices should name the municipality');
+    foreach ($queries as $query) {
+        webCheck(fogWebSearch($query, $privateDir, $now, $zone, 'a')['status'] === 'ok',
+            'Each Landgraaf choice should lead to a forecast: ' . $query);
+    }
     $assen = fogWebSearch('Assen', $privateDir, $now, $zone, 'a');
     webCheck($assen['status'] === 'ok' && $assen['data']['place'] === 'Assen'
         && count($assen['data']['days']) >= 3, 'Assen should get a forecast');
+    $calculations = static function () use ($privateDir): int {
+        return json_decode((string) file_get_contents($privateDir . '/fog-web-limits.json'),
+            true)['calculations'];
+    };
+    $before = $calculations();
     $again = fogWebSearch('assen', $privateDir, $now, $zone, 'b');
-    $limits = json_decode((string) file_get_contents($privateDir . '/fog-web-limits.json'), true);
-    webCheck($again['status'] === 'ok' && $limits['calculations'] === 1,
+    webCheck($again['status'] === 'ok' && $calculations() === $before,
         'A second search should use the cache');
     for ($i = 0; $i < FOG_WEB_SEARCHES_PER_CLIENT_HOUR; $i++) {
         fogWebAllow($privateDir, 'c', 'search', $now);

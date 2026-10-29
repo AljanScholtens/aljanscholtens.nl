@@ -63,12 +63,14 @@ function fogDefaultPlace(): array
     return ['name' => 'Vries', 'latitude' => 53.07165252, 'longitude' => 6.57674584];
 }
 
-// Accepts "Assen" or "Assen, Drenthe"; the province narrows down duplicate names.
+// Accepts "Assen", "Assen, Drenthe" or "Landgraaf, Sittard-Geleen": the part after
+// the comma narrows duplicate names down by province or, within one province, by
+// municipality. Ambiguous results carry that qualifier for each candidate.
 function fogFindDutchPlace(string $query): array
 {
     $parts = explode(',', $query, 2);
     $name = trim($parts[0]);
-    $province = trim($parts[1] ?? '');
+    $qualifier = trim($parts[1] ?? '');
     $url = 'https://geocoding-api.open-meteo.com/v1/search?'
         . http_build_query([
             'name' => $name,
@@ -109,20 +111,43 @@ function fogFindDutchPlace(string $query): array
             'longitude' => (float) $candidate['longitude'],
             'province' => is_string($candidate['admin1'] ?? null)
                 ? $candidate['admin1'] : '',
+            'municipality' => is_string($candidate['admin2'] ?? null)
+                ? $candidate['admin2'] : '',
         ];
         $suggestions[] = $place;
-        if ($fold($place['name']) === $fold($name)
-            && ($province === '' || strpos($fold($place['province']), $fold($province)) === 0)) {
-            $matches[] = $place;
+        if ($fold($place['name']) !== $fold($name)) {
+            continue;
         }
+        if ($qualifier !== '' && strpos($fold($place['province']), $fold($qualifier)) !== 0
+            && strpos($fold($place['municipality']), $fold($qualifier)) !== 0) {
+            continue;
+        }
+        // The geocoder sometimes lists one place twice; a kilometre apart is the same place.
+        foreach ($matches as $match) {
+            if (abs($match['latitude'] - $place['latitude']) < 0.01
+                && abs($match['longitude'] - $place['longitude']) < 0.01) {
+                continue 2;
+            }
+        }
+        $matches[] = $place;
     }
     if (count($matches) === 1) {
-        if ($province !== '' && $matches[0]['province'] !== '') {
-            $matches[0]['name'] .= ', ' . $matches[0]['province'];
+        $match = $matches[0];
+        $byMunicipality = $qualifier !== '' && $match['municipality'] !== $match['name']
+            && strpos($fold($match['province']), $fold($qualifier)) !== 0;
+        if ($byMunicipality) {
+            $matches[0]['name'] .= ' (' . $match['municipality'] . ')';
+        } elseif ($qualifier !== '' && $match['province'] !== '') {
+            $matches[0]['name'] .= ', ' . $match['province'];
         }
         return ['status' => 'ok', 'place' => $matches[0]];
     }
     if (count($matches) > 1) {
+        $provinces = array_count_values(array_column($matches, 'province'));
+        foreach ($matches as $index => $match) {
+            $matches[$index]['qualifier'] = $provinces[$match['province']] > 1
+                && $match['municipality'] !== '' ? $match['municipality'] : $match['province'];
+        }
         return ['status' => 'ambiguous', 'places' => $matches];
     }
     return ['status' => 'not_found', 'suggestions' => array_slice($suggestions, 0, 3)];

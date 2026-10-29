@@ -159,8 +159,18 @@ function fogWebSearch(
     }
     $search = fogFindDutchPlace($query);
     if ($search['status'] === 'ambiguous') {
-        return ['status' => 'choose',
-            'places' => array_map('fogWebPlaceLabel', array_slice($search['places'], 0, 6))];
+        // The query repeats the search with a qualifier; the label reads naturally.
+        $choices = [];
+        foreach (array_slice($search['places'], 0, 6) as $candidate) {
+            $byMunicipality = $candidate['qualifier'] !== $candidate['province'];
+            $choices[] = [
+                'label' => $byMunicipality
+                    ? $candidate['name'] . ' (gemeente ' . $candidate['qualifier'] . ')'
+                    : $candidate['name'] . ', ' . $candidate['province'],
+                'query' => $candidate['name'] . ', ' . $candidate['qualifier'],
+            ];
+        }
+        return ['status' => 'choose', 'places' => $choices];
     }
     if ($search['status'] !== 'ok') {
         return ['status' => 'not_found',
