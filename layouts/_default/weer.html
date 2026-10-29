@@ -21,17 +21,20 @@
     <header class="w-header">
       <div class="w-header__bar">
         <a class="w-header__logo" href="/">aljan</a>
-        <span class="w-header__place" data-place>Vries</span>
+        <form class="w-search" data-search role="search" action="/weer/">
+          <label class="w-hidden" for="w-search-input">Plaats in Nederland</label>
+          <input class="w-search__input" id="w-search-input" name="plaats" type="search"
+            value="Vries" placeholder="Zoek een plaats" autocomplete="off"
+            enterkeyhint="search" maxlength="60">
+          <button class="w-search__button" type="submit" aria-label="Zoek">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+              <path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </form>
       </div>
-      <h1 class="w-header__title">Fotoweer</h1>
-      <p class="w-header__subtitle">De komende drie ochtenden: wanneer is het de moeite om op te staan?</p>
-      <form class="w-search" data-search role="search" action="/weer/">
-        <label class="w-search__label" for="w-search-input">Plaats in Nederland</label>
-        <input class="w-search__input" id="w-search-input" name="plaats" type="search"
-          placeholder="Zoek een plaats, bijvoorbeeld Assen" autocomplete="off"
-          enterkeyhint="search" maxlength="60" required>
-        <button class="w-search__button" type="submit">Zoek</button>
-      </form>
+      <h1 class="w-hidden">Fotoweer</h1>
     </header>
 
     <main class="w-main">

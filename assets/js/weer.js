@@ -4,7 +4,6 @@
     vr: 'vrijdag', za: 'zaterdag', zo: 'zondag' };
   var daysEl = document.querySelector('[data-days]');
   var updatedEl = document.querySelector('[data-updated]');
-  var placeEl = document.querySelector('[data-place]');
 
   function el(tag, className, text) {
     var node = document.createElement(tag);
@@ -110,18 +109,10 @@
   }
 
   function setPlace(name) {
-    // Another place gets a link back to the default forecast for Vries.
     var isDefault = !name || name === 'Vries';
-    var chip = el(isDefault ? 'span' : 'a', 'w-header__place' + (isDefault ? '' : ' w-header__place--link'),
-      isDefault ? 'Vries' : name + ' ×');
-    if (!isDefault) {
-      chip.href = '/weer/';
-      chip.setAttribute('aria-label', name + ', terug naar Vries');
-    }
-    chip.setAttribute('data-place', '');
-    placeEl.replaceWith(chip);
-    placeEl = chip;
     document.title = 'Fotoweer' + (isDefault ? '' : ' ' + name) + ' - Aljan Scholtens';
+    // Show the place as found, not the query behind a choice ("Landgraaf, Landgraaf").
+    searchInput.value = name || 'Vries';
   }
 
   function showMessage(text, choices) {
@@ -152,8 +143,6 @@
       return Date.parse(day.sunrise_at) > now;
     }).slice(0, 3);
     setPlace(data.place);
-    // Show the place as found, not the query behind a choice ("Landgraaf, Landgraaf").
-    searchInput.value = data.place === 'Vries' ? '' : data.place;
     if (!days.length) {
       showMessage('Er is nu geen verwachting beschikbaar.');
       return;
@@ -172,7 +161,7 @@
 
   function load(query) {
     var current = ++request;
-    searchInput.value = query || '';
+    searchInput.value = query || 'Vries';
     showMessage(query ? 'Verwachting voor ' + query + ' berekenen…' : 'Verwachting laden…');
     fetch('/weer-data.php' + (query ? '?plaats=' + encodeURIComponent(query) : ''),
       { headers: { Accept: 'application/json' } })
@@ -200,7 +189,9 @@
   }
 
   function search(query) {
-    history.pushState(null, '', '/weer/?plaats=' + encodeURIComponent(query));
+    // Vries is the default page, so it keeps the plain address.
+    if (query.toLowerCase() === 'vries') query = '';
+    history.pushState(null, '', query ? '/weer/?plaats=' + encodeURIComponent(query) : '/weer/');
     load(query);
   }
 
@@ -212,8 +203,15 @@
   var searchInput = searchForm.querySelector('input');
   searchForm.addEventListener('submit', function (event) {
     event.preventDefault();
-    var query = searchInput.value.trim();
-    if (query) search(query);
+    search(searchInput.value.trim());
+    searchInput.blur();
+  });
+  // The field holds the current place; one tap selects it, so typing replaces it.
+  searchInput.addEventListener('focus', function () {
+    // After the click has placed the cursor, otherwise the browser undoes the selection.
+    setTimeout(function () {
+      searchInput.select();
+    }, 0);
   });
   window.addEventListener('popstate', function () {
     load(queryFromUrl());
