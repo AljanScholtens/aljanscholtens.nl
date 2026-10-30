@@ -670,7 +670,7 @@ function fogHarmonieCheck(
             . http_build_query([
                 'latitude' => $latitude,
                 'longitude' => $longitude,
-                'hourly' => 'visibility,weather_code,cloud_cover,relative_humidity_2m,wind_speed_10m,precipitation,temperature_2m',
+                'hourly' => 'visibility,weather_code,cloud_cover,cloud_cover_low,relative_humidity_2m,wind_speed_10m,precipitation,temperature_2m',
                 'models' => 'knmi_harmonie_arome_netherlands',
                 // A fixed length keeps the URL, and so the download, shared between mornings.
                 'forecast_days' => max(3, $forecastDays),
@@ -682,8 +682,8 @@ function fogHarmonieCheck(
         }
         $data = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
         $hourly = $data['hourly'] ?? null;
-        $variables = ['visibility', 'weather_code', 'cloud_cover', 'relative_humidity_2m',
-            'wind_speed_10m', 'precipitation', 'temperature_2m'];
+        $variables = ['visibility', 'weather_code', 'cloud_cover', 'cloud_cover_low',
+            'relative_humidity_2m', 'wind_speed_10m', 'precipitation', 'temperature_2m'];
         if (!is_array($hourly) || !is_array($hourly['time'] ?? null)) {
             throw new RuntimeException('KNMI forecast has no hourly data');
         }
@@ -740,6 +740,16 @@ function fogHarmonieCheck(
             'local_mist' => $night['local_mist'],
             'saturated' => $night['saturated'],
             'min_visibility_m' => (int) round($minVisibility),
+            // The values behind the verdict, for the page's explanation.
+            'values' => [
+                'visibility_m' => (float) $hourly['visibility'][$indices[$sunriseHour]],
+                'humidity' => (float) $hourly['relative_humidity_2m'][$before],
+                'temperature' => (float) $hourly['temperature_2m'][$before],
+                'min_temp' => $night['min_temp'],
+                'wind' => (float) $hourly['wind_speed_10m'][$before],
+                'cloud_night' => (float) $hourly['cloud_cover'][$before],
+                'low_cloud' => (float) $hourly['cloud_cover_low'][$before],
+            ],
         ];
     } catch (Throwable $error) {
         error_log('Fog KNMI check: ' . $error->getMessage());
@@ -830,6 +840,46 @@ function fogFetchCloudLayers(float $latitude, float $longitude, int $forecastDay
         error_log('Fog cloud layers: ' . $error->getMessage());
         return null;
     }
+}
+
+function fogMedian(array $values): ?float
+{
+    if (!$values) {
+        return null;
+    }
+    sort($values, SORT_NUMERIC);
+    return (float) $values[intdiv(count($values), 2)];
+}
+
+// Dew point spread from temperature and humidity (Magnus formula), in degrees.
+function fogDewPointSpread(float $temperature, float $humidity): float
+{
+    $gamma = log(max(1.0, $humidity) / 100) + 17.62 * $temperature / (243.12 + $temperature);
+    return max(0.0, $temperature - 243.12 * $gamma / (17.62 - $gamma));
+}
+
+// The middle ECMWF scenario's low, mid and high cloud at sunrise, or null.
+function fogCloudLayerMedians(?array $clouds, string $date, int $sunriseHour): ?array
+{
+    if ($clouds === null) {
+        return null;
+    }
+    $index = array_search($date . 'T' . sprintf('%02d', $sunriseHour) . ':00', $clouds['time'], true);
+    if ($index === false) {
+        return null;
+    }
+    $layers = [];
+    foreach (['low', 'mid', 'high'] as $layer) {
+        $values = [];
+        foreach ($clouds as $key => $series) {
+            if (preg_match('/^cloud_cover_' . $layer . '(_member\d+)?$/', $key)
+                && is_numeric($series[$index] ?? null)) {
+                $values[] = (float) $series[$index];
+            }
+        }
+        $layers[$layer] = fogMedian($values);
+    }
+    return in_array(null, $layers, true) ? null : $layers;
 }
 
 // Share of ECMWF scenarios with a colourful setup in the hour before or at sunrise,
@@ -981,6 +1031,7 @@ function fogForecastMetrics(
     $cloudCoverTotal = 0.0;
     $mistByHour = array_fill_keys($hours, 0);
     $weatherHours = [$sunriseHour, min(23, $sunriseHour + 1)];
+    $raw = [];
     foreach ($suffixes as $suffix) {
         $series = [];
         foreach ($variables as $variable) {
@@ -1011,6 +1062,36 @@ function fogForecastMetrics(
         }
         $signals = fogMemberPhotoSignals($series, $indices, $sunriseHour);
         $photoScenes[] = fogMemberPhotoScenes($series, $indices, $sunriseHour, $signals);
+        // Raw values behind the verdict; their medians explain the forecast on the page.
+        $beforeIndex = $indices[max(0, $sunriseHour - 1)];
+        $atIndex = $indices[$sunriseHour];
+        $laterIndex = $indices[min(23, $sunriseHour + 1)];
+        $raw['visibility_m'][] = (float) $series['visibility'][$atIndex];
+        $raw['humidity'][] = (float) $series['relative_humidity_2m'][$beforeIndex];
+        $raw['temperature'][] = (float) $series['temperature_2m'][$beforeIndex];
+        $raw['min_temp'][] = $signals['night']['min_temp'];
+        $raw['wind'][] = (float) $series['wind_speed_10m'][$beforeIndex];
+        $raw['cloud_night'][] = (float) $series['cloud_cover'][$beforeIndex];
+        $raw['cloud'][] = (float) $series['cloud_cover'][$atIndex];
+        $raw['cloud_later'][] = (float) $series['cloud_cover'][$laterIndex];
+        $raw['precipitation'][] = (float) $series['precipitation'][$atIndex]
+            + (float) $series['precipitation'][$laterIndex];
+        if (is_array($series['wind_gusts_10m'])) {
+            $raw['gusts'][] = max(array_map(static function (int $index) use ($series): float {
+                return (float) $series['wind_gusts_10m'][$index];
+            }, array_values(array_filter($indices, static function (int $hour) use ($sunriseHour): bool {
+                return $hour >= $sunriseHour;
+            }, ARRAY_FILTER_USE_KEY))));
+        }
+        if (is_array($series['sunshine_duration'])) {
+            $raw['sunshine_min'][] = (float) $series['sunshine_duration'][$laterIndex] / 60;
+        }
+        if (is_array($series['snow_depth'])) {
+            $raw['snow_depth_cm'][] = (float) $series['snow_depth'][$atIndex] * 100;
+        }
+        if ($series['fresh_snow'] !== null) {
+            $raw['fresh_snow_cm'][] = (float) $series['fresh_snow'];
+        }
         foreach ($signals['fog_by_hour'] as $hour => $fog) {
             if ($fog) {
                 $mistByHour[$hour]++;
@@ -1168,6 +1249,31 @@ function fogForecastMetrics(
     } elseif ($photoRoute === 'mist' && $fogModelsDisagree) {
         $reason = 'modellen verschillen over mist';
     }
+    // The values behind the verdict. Near the ground KNMI leads where it reaches the
+    // morning; colour comes from ECMWF; the rest is the middle GFS scenario.
+    $knmiValues = $harmonie['values'] ?? null;
+    $layers = fogCloudLayerMedians($clouds, $forecastDate, $sunriseHour);
+    $ground = $knmiValues ?? [
+        'visibility_m' => fogMedian($raw['visibility_m']),
+        'humidity' => fogMedian($raw['humidity']),
+        'temperature' => fogMedian($raw['temperature']),
+        'min_temp' => fogMedian($raw['min_temp']),
+        'wind' => fogMedian($raw['wind']),
+        'cloud_night' => fogMedian($raw['cloud_night']),
+        'low_cloud' => $layers['low'] ?? null,
+    ];
+    $conditions = $ground + [
+        'source' => $knmiValues !== null ? 'KNMI' : 'GFS',
+        'spread' => fogDewPointSpread((float) $ground['temperature'], (float) $ground['humidity']),
+        'layers' => $layers,
+        'cloud' => fogMedian($raw['cloud']),
+        'cloud_later' => fogMedian($raw['cloud_later']),
+        'precipitation' => fogMedian($raw['precipitation']),
+        'gusts' => fogMedian($raw['gusts'] ?? []),
+        'sunshine_min' => fogMedian($raw['sunshine_min'] ?? []),
+        'snow_depth_cm' => fogMedian($raw['snow_depth_cm'] ?? []),
+        'fresh_snow_cm' => fogMedian($raw['fresh_snow_cm'] ?? []),
+    ];
     $bestMistHour = $bestHour !== null && $bestCount / $complete >= 0.2 ? $bestHour : null;
     $wetShare = $wetWeather / $complete;
     if ($wetShare >= 0.25) {
@@ -1240,6 +1346,7 @@ function fogForecastMetrics(
         'best_mist_hour' => $bestMistHour,
         'weather_icon' => $weatherIcon,
         'color_share' => $colorShare,
+        'conditions' => $conditions,
     ];
 
 }

@@ -19,13 +19,53 @@
       + '-' + String(date.getDate()).padStart(2, '0');
   }
 
-  function row(label, value, note) {
+  function icon(name) {
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'w-fact__icon');
+    svg.setAttribute('aria-hidden', 'true');
+    var use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    use.setAttribute('href', '#w-i-' + name);
+    svg.appendChild(use);
+    return svg;
+  }
+
+  // The weather values behind a photo chance: icon plus value, the full label on hover.
+  function facts(list, source) {
+    var box = el('span', 'w-facts');
+    list.forEach(function (fact) {
+      var item = el('span', 'w-fact');
+      item.title = fact.label + ': ' + fact.text;
+      item.setAttribute('aria-label', fact.label + ' ' + fact.text);
+      item.appendChild(icon(fact.icon));
+      item.appendChild(document.createTextNode(fact.text));
+      box.appendChild(item);
+    });
+    if (source) box.appendChild(el('span', 'w-fact w-fact--source', source));
+    return box;
+  }
+
+  function row(label, value, note, factList, source) {
     var item = el('li', 'w-row');
     item.appendChild(el('span', 'w-row__label', label));
     var valueEl = el('span', 'w-row__value', value);
     if (note) valueEl.appendChild(el('span', 'w-row__note', note));
     item.appendChild(valueEl);
+    if (factList && factList.length) item.appendChild(facts(factList, source));
     return item;
+  }
+
+  // One switch for all cards, so their rows stay in line; the choice is remembered.
+  var showFacts = false;
+  try {
+    showFacts = localStorage.getItem('weer-facts') === '1';
+  } catch (error) {}
+
+  function applyFacts() {
+    document.body.classList.toggle('w-show-facts', showFacts);
+    document.querySelectorAll('[data-facts-toggle]').forEach(function (button) {
+      button.textContent = showFacts ? 'Onderbouwing verbergen' : 'Onderbouwing tonen';
+      button.setAttribute('aria-expanded', String(showFacts));
+    });
   }
 
   function dayCard(day) {
@@ -88,13 +128,25 @@
     // The six photo chances always in the same order; the one behind the score stands out.
     var rows = el('ul', 'w-rows');
     (day.categories || []).forEach(function (category) {
-      var item = row(category.label, category.value || '—', category.notes.join(' · '));
+      var item = row(category.label, category.value || '—', category.notes.join(' · '),
+        category.facts, category.source);
       if (!category.value) item.className += ' w-row--empty';
       if (category.lead) item.className += ' w-row--lead';
       rows.appendChild(item);
     });
     card.appendChild(rows);
     card.appendChild(el('p', 'w-weather', day.weather));
+    var toggle = el('button', 'w-facts-toggle');
+    toggle.type = 'button';
+    toggle.setAttribute('data-facts-toggle', '');
+    toggle.addEventListener('click', function () {
+      showFacts = !showFacts;
+      try {
+        localStorage.setItem('weer-facts', showFacts ? '1' : '0');
+      } catch (error) {}
+      applyFacts();
+    });
+    card.appendChild(toggle);
     return card;
   }
 
@@ -141,6 +193,7 @@
     days.forEach(function (day) {
       daysEl.appendChild(dayCard(day));
     });
+    applyFacts();
     var updated = new Date(data.generated_at);
     updatedEl.textContent = 'Bijgewerkt om ' + updated.toLocaleTimeString('nl-NL',
       { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Amsterdam' })

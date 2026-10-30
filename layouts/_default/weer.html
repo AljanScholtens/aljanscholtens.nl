@@ -18,6 +18,18 @@
     <script defer src="https://cloud.umami.is/script.js" data-website-id="dee73cd2-27f7-482f-a5e1-6eae9df645db"></script>
   </head>
   <body class="w-page">
+    <svg class="w-hidden" aria-hidden="true">
+      <symbol id="w-i-visibility" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+      <symbol id="w-i-humidity" viewBox="0 0 24 24"><path d="M12 3.5s6 6.6 6 10.8a6 6 0 0 1-12 0C6 10.1 12 3.5 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+      <symbol id="w-i-spread" viewBox="0 0 24 24"><path d="M12 4.5l8 14.5H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+      <symbol id="w-i-wind" viewBox="0 0 24 24"><path d="M3 9h11a3 3 0 1 0-3-3M3 15h15a3 3 0 1 1-3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="w-i-gusts" viewBox="0 0 24 24"><path d="M3 8h10a3 3 0 1 0-3-3M3 12h15M3 16h11a3 3 0 1 1-3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="w-i-cloud" viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6 1.5A3.3 3.3 0 0 0 7 18z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+      <symbol id="w-i-rain" viewBox="0 0 24 24"><path d="M7 14h10a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6 1.5A3.3 3.3 0 0 0 7 14zM9 17l-1 3M13 17l-1 3M17 17l-1 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="w-i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="w-i-temperature" viewBox="0 0 24 24"><path d="M10 14.5V5a2 2 0 0 1 4 0v9.5a4 4 0 1 1-4 0z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+      <symbol id="w-i-snow" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 7l2.5-2.5M9.5 19.5 12 17l2.5 2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    </svg>
     <header class="w-header">
       <div class="w-header__bar">
         <a class="w-header__logo" href="/">aljan</a>
@@ -80,6 +92,23 @@
         <div><dt>Rijp/dauw</dt><dd>Na een heldere, rustige nacht: rijp bij vorst, anders dauw.</dd></div>
         <div><dt>Sneeuw</dt><dd>Vers gevallen sneeuw, sneeuwval of een sneeuwdek.</dd></div>
       </dl>
+      <p>
+        Met <em>Onderbouwing tonen</em> zie je onder elke fotokans de waarden waarop hij
+        rust, rond zonsopkomst. Voor mist en rijp/dauw komen ze van het KNMI-model waar
+        dat de ochtend bereikt, voor kleur van ECMWF, en anders van het middelste
+        GFS-scenario.
+      </p>
+      <ul class="w-icon-legend">
+          <li><svg class="w-fact__icon" aria-hidden="true"><use href="#w-i-visibility"></use></svg>Zicht</li>
+          <li><svg class="w-fact__icon" aria-hidden="true"><use href="#w-i-humidity"></use></svg>Luchtvochtigheid</li>
+          <li><svg class="w-fact__icon" aria-hidden="true"><use href="#w-i-spread"></use></svg>Verschil temperatuur en dauwpunt; hoe kleiner, hoe dichter bij mist</li>
+          <li><svg class="w-fact__icon" aria-hidden="true"><use href="#w-i-wind"></use></svg>Wind</li>
+          <li><svg class="w-fact__icon" aria-hidden="true"><use href="#w-i-gusts"></use></svg>Windstoten</li>
+          <li><svg class="w-fact__icon" aria-hidden="true"><use href="#w-i-cloud"></use></svg>Bewolking; L, M en H zijn laag, middelhoog en hoog</li>
+          <li><svg class="w-fact__icon" aria-hidden="true"><use href="#w-i-rain"></use></svg>Neerslag</li>
+          <li><svg class="w-fact__icon" aria-hidden="true"><use href="#w-i-temperature"></use></svg>Temperatuur</li>
+          <li><svg class="w-fact__icon" aria-hidden="true"><use href="#w-i-snow"></use></svg>Sneeuw</li>
+      </ul>
       <p>
         Voor mist is het fijnmazige KNMI-model leidend; een ochtend waar dat model
         nog niet bij kan, heet <em>voorlopig</em>. De wekker staat 45 minuten voor

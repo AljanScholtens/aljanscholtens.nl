@@ -24,6 +24,11 @@ $metrics = [
         'sky_light' => 0.0, 'sky_wind' => 0.0, 'snow_cover' => 0.6, 'snow_wind_sky' => 0.0],
     'min_temp' => -3.2, 'sun_share' => 0.6, 'snow_share' => 0.0,
     'weather_summary' => 'Droog',
+    'conditions' => ['source' => 'KNMI', 'visibility_m' => 400.0, 'humidity' => 99.0,
+        'temperature' => -1.0, 'min_temp' => -3.2, 'wind' => 3.4, 'cloud_night' => 10.0,
+        'low_cloud' => 100.0, 'spread' => 0.14, 'layers' => ['low' => 10.0, 'mid' => 50.0, 'high' => 0.0],
+        'cloud' => 80.0, 'cloud_later' => 40.0, 'precipitation' => 0.0, 'gusts' => null,
+        'sunshine_min' => 45.0, 'snow_depth_cm' => 3.0, 'fresh_snow_cm' => 9.6],
 ];
 $day = fogWebDay(['date' => '2026-12-11', 'metrics' => $metrics], $place, $zone);
 webCheck($day['weekday'] === 'vr' && $day['day_label'] === '11 dec', 'Day label is wrong');
@@ -47,6 +52,19 @@ webCheck($categories['color']['value'] === 'waarschijnlijk' && $categories['colo
     && $categories['frost']['value'] === 'rijp waarschijnlijk'
     && $categories['frost']['notes'] === ['min −3°', 'strenge vorst']
     && $categories['snow']['value'] === 'vers, ongeveer 10 cm', 'Other categories are wrong');
+// The values behind each chance: short text with a unit and a full label; no gusts given.
+$texts = static function (array $category): array {
+    return array_column($category['facts'], 'text');
+};
+webCheck($texts($categories['mist']) === ['400 m', '99%', '0,1°', '3 km/u', 'L 100%']
+    && $categories['mist']['source'] === 'KNMI'
+    && $categories['mist']['facts'][2]['label'] === 'Verschil tussen temperatuur en dauwpunt'
+    && $texts($categories['color']) === ['L 10%', 'M 50%', 'H 0%'] && $categories['color']['source'] === 'ECMWF'
+    && $texts($categories['sky']) === ['80% → 40%', '0,0 mm']
+    && $texts($categories['sun']) === ['40%', '3 km/u']
+    && $texts($categories['frost']) === ['min −3°', '99%', '10%', '3 km/u']
+    && $texts($categories['snow']) === ['vers 10 cm', 'dek 3 cm', '−1°'],
+    'Facts behind the photo chances are wrong');
 
 // A quiet sunny morning: no mist, the sun is the lead, empty categories stay empty.
 $quiet = $metrics;

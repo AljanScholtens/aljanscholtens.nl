@@ -46,6 +46,95 @@ function fogWebDay(array $forecast, array $place, DateTimeZone $zone): array
     ];
 }
 
+// A Dutch number: a comma for decimals, a proper minus sign.
+function fogWebNumber(float $value, int $decimals = 0): string
+{
+    return str_replace(['.', '-'], [',', '−'], number_format($value, $decimals, '.', ''));
+}
+
+// The weather values behind each photo chance, as short icon facts with a full label
+// for hover and screen readers. Values the models do not give are left out.
+function fogWebFacts(array $conditions): array
+{
+    $fact = static function (string $icon, string $label, ?string $text): ?array {
+        return $text === null ? null : ['icon' => $icon, 'label' => $label, 'text' => $text];
+    };
+    $value = static function (string $key, callable $format) use ($conditions): ?string {
+        // A formatter may return null to leave a value out.
+        return is_numeric($conditions[$key] ?? null) ? $format((float) $conditions[$key]) : null;
+    };
+    $percent = static function (float $number): string {
+        return fogWebNumber($number) . '%';
+    };
+    $kmh = static function (float $number): string {
+        return fogWebNumber($number) . ' km/u';
+    };
+    $visibility = $value('visibility_m', static function (float $metres): string {
+        return $metres >= 1000 ? fogWebNumber($metres / 1000, 1) . ' km' : fogWebNumber($metres) . ' m';
+    });
+    $wind = $fact('wind', 'Wind', $value('wind', $kmh));
+    $humidity = $fact('humidity', 'Luchtvochtigheid', $value('humidity', $percent));
+    $layers = is_array($conditions['layers'] ?? null) ? $conditions['layers'] : null;
+    $filter = static function (array $facts): array {
+        return array_values(array_filter($facts));
+    };
+    $cloud = $value('cloud', $percent);
+    $cloudLater = $value('cloud_later', $percent);
+    return [
+        'mist' => $filter([
+            $fact('visibility', 'Zicht', $visibility),
+            $humidity,
+            $fact('spread', 'Verschil tussen temperatuur en dauwpunt',
+                $value('spread', static function (float $degrees): string {
+                    return fogWebNumber($degrees, 1) . '°';
+                })),
+            $wind,
+            $fact('cloud', 'Lage bewolking', $value('low_cloud', static function (float $number): string {
+                return 'L ' . fogWebNumber($number) . '%';
+            })),
+        ]),
+        'color' => $layers === null ? [] : [
+            $fact('cloud', 'Lage bewolking', 'L ' . fogWebNumber($layers['low']) . '%'),
+            $fact('cloud', 'Middelhoge bewolking', 'M ' . fogWebNumber($layers['mid']) . '%'),
+            $fact('cloud', 'Hoge bewolking', 'H ' . fogWebNumber($layers['high']) . '%'),
+        ],
+        'sky' => $filter([
+            $fact('cloud', 'Bewolking bij zonsopkomst en een uur later',
+                $cloud !== null && $cloudLater !== null ? $cloud . ' → ' . $cloudLater : null),
+            $fact('gusts', 'Windstoten', $value('gusts', $kmh)),
+            $fact('rain', 'Neerslag rond zonsopkomst', $value('precipitation', static function (float $mm): string {
+                return fogWebNumber($mm, 1) . ' mm';
+            })),
+        ]),
+        'sun' => $filter([
+            // Sunshine minutes are left out: in the hour after sunrise the sun is up for
+            // only part of it, and GFS then nearly always reports none.
+            $fact('cloud', 'Bewolking een uur na zonsopkomst', $cloudLater),
+            $wind,
+        ]),
+        'frost' => $filter([
+            $fact('temperature', 'Laagste temperatuur rond zonsopkomst', $value('min_temp', static function (float $degrees): string {
+                return 'min ' . fogWebNumber($degrees) . '°';
+            })),
+            $humidity,
+            $fact('cloud', 'Bewolking in de nacht', $value('cloud_night', $percent)),
+            $wind,
+        ]),
+        'snow' => $filter([
+            // Snow amounts only when there is snow; "0 cm" twice is just noise.
+            $fact('snow', 'Verse sneeuw sinds de avond', $value('fresh_snow_cm', static function (float $cm): ?string {
+                return $cm >= 0.5 ? 'vers ' . fogWebNumber($cm) . ' cm' : null;
+            })),
+            $fact('snow', 'Sneeuwdek bij zonsopkomst', $value('snow_depth_cm', static function (float $cm): ?string {
+                return $cm >= 0.5 ? 'dek ' . fogWebNumber($cm) . ' cm' : null;
+            })),
+            $fact('temperature', 'Temperatuur', $value('temperature', static function (float $degrees): string {
+                return fogWebNumber($degrees) . '°';
+            })),
+        ]),
+    ];
+}
+
 // The six photo chances in a fixed order, so mornings line up side by side. A value
 // of null means nothing to expect; notes are short details, at most two. The
 // category behind the score is marked as the lead.
@@ -55,7 +144,8 @@ function fogWebCategories(array $metrics): array
     $percent = static function (float $share): int {
         return (int) round($share * 100);
     };
-    $minTemp = (int) round((float) $metrics['min_temp']);
+    // The same minimum as in the facts below, so one row never shows two numbers.
+    $minTemp = (int) round((float) ($metrics['conditions']['min_temp'] ?? $metrics['min_temp']));
     $degrees = str_replace('-', '−', (string) $minTemp) . '°';
     $mistPercent = $percent((float) $metrics['mist_share']);
 
@@ -133,7 +223,14 @@ function fogWebCategories(array $metrics): array
         ['key' => 'frost', 'label' => 'Rijp/dauw', 'value' => $frost, 'notes' => $frostNotes],
         ['key' => 'snow', 'label' => 'Sneeuw', 'value' => $snow, 'notes' => $snowNotes],
     ];
+    $conditions = is_array($metrics['conditions'] ?? null) ? $metrics['conditions'] : [];
+    $facts = fogWebFacts($conditions);
+    // Near the ground KNMI leads where it reaches; colour is ECMWF; the rest is GFS.
+    $sources = ['mist' => $conditions['source'] ?? null, 'color' => 'ECMWF', 'sky' => 'GFS',
+        'sun' => 'GFS', 'frost' => $conditions['source'] ?? null, 'snow' => 'GFS'];
     foreach ($categories as $index => $category) {
+        $categories[$index]['facts'] = $conditions ? $facts[$category['key']] : [];
+        $categories[$index]['source'] = $categories[$index]['facts'] ? $sources[$category['key']] : null;
         $categories[$index]['notes'] = array_slice($category['notes'], 0, 2);
         $categories[$index]['lead'] = $category['key'] === $lead && $category['value'] !== null;
     }

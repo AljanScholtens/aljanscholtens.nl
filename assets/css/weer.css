@@ -600,7 +600,8 @@ body {
 /*
  * Side by side, the cards share their row heights (subgrid), so a reason over two
  * lines or a row with a detail never pushes the rows of one card out of line.
- * A card has 11 parts: top, verdict, reason, light, six photo chances, weather.
+ * A card has 12 parts: top, verdict, reason, light, six photo chances, weather and
+ * the explanation switch.
  */
 @media (--breakpoint-30) {
   .w-days {
@@ -609,7 +610,7 @@ body {
 
   .w-day {
     display: grid;
-    grid-row: span 11;
+    grid-row: span 12;
     grid-template-rows: subgrid;
     row-gap: 0;
     align-content: start;
@@ -621,5 +622,85 @@ body {
 
   .w-day .w-row:first-child {
     border-top: 1px solid var(--w-line);
+  }
+}
+
+/*
+ * The weather values behind each photo chance, shown with one switch for all cards.
+ */
+.w-row {
+  flex-wrap: wrap;
+}
+
+.w-facts {
+  display: none;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 6px;
+  font-size: var(--font-size-10);
+  color: var(--w-muted);
+}
+
+.w-show-facts .w-facts {
+  display: flex;
+}
+
+.w-fact {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  cursor: help;
+}
+
+.w-fact__icon {
+  width: 14px;
+  height: 14px;
+  color: var(--color-neutral-50);
+}
+
+.w-fact--source {
+  margin-left: auto;
+  color: var(--color-neutral-30);
+  cursor: default;
+}
+
+.w-facts-toggle {
+  justify-self: start;
+  margin-top: 12px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-primary-70);
+  font: inherit;
+  font-size: var(--font-size-20);
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-primary-50);
+  }
+}
+
+.w-icon-legend {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  font-size: var(--font-size-20);
+  color: var(--w-muted);
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .w-fact__icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
   }
 }

@@ -205,6 +205,12 @@ if (strpos($testMessage, "🌁 Mist: 60% (zicht <1 km)\n↳ Trekt op in zonlicht
     fwrite(STDERR, "Lifting and freezing mist lines are wrong\n");
     exit(1);
 }
+// Dew point spread: saturated air has none, 10 degrees at 50% is about 10 degrees apart.
+if (abs(fogDewPointSpread(10.0, 100.0)) > 0.01 || abs(fogDewPointSpread(10.0, 50.0) - 10.0) > 0.3
+    || fogMedian([3.0, 1.0, 2.0]) !== 2.0 || fogMedian([]) !== null) {
+    fwrite(STDERR, "Dew point spread or median check failed\n");
+    exit(1);
+}
 $sunnyCalmInput = $windOnly;
 $sunnyCalmInput['cloud_cover'] = array_fill(0, 5, 10);
 $sunnyCalmInput['wind_speed_10m'] = array_fill(0, 5, 3);
@@ -282,6 +288,9 @@ if (!is_array($metrics)
     || !is_numeric($metrics['local_mist_share'] ?? null)
     || !is_bool($metrics['local_mist'] ?? null)
     || !array_key_exists('color_share', $metrics)
+    || !in_array($metrics['conditions']['source'] ?? null, ['KNMI', 'GFS'], true)
+    || !is_numeric($metrics['conditions']['humidity'] ?? null)
+    || !is_numeric($metrics['conditions']['spread'] ?? null)
     || ((strpos($forecast['message'], '🌅 Kleur in de lucht: ') !== false)
         !== ($metrics['color_share'] !== null && $metrics['color_share'] >= 0.2))
     || !is_numeric($metrics['dense_share'] ?? null)
