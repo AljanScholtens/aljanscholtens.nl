@@ -299,16 +299,19 @@ body {
 
 .w-row {
   display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
   justify-content: space-between;
-  gap: 12px;
-  padding: 10px 0;
+  gap: 2px 12px;
+  padding: 12px 0;
   border-bottom: 1px solid var(--w-line);
-  font-size: var(--font-size-20);
+  font-size: 16px;
   line-height: 1.4;
 }
 
 .w-row__label {
-  color: var(--w-muted);
+  color: var(--w-ink);
+  font-weight: 500;
 }
 
 .w-row__value {
@@ -318,9 +321,13 @@ body {
 }
 
 .w-row__note {
-  display: block;
-  font-weight: 400;
+  flex-basis: 100%;
+  font-size: 13px;
   color: var(--w-muted);
+
+  span + span::before {
+    content: " · ";
+  }
 }
 
 .w-day__error {
@@ -525,6 +532,7 @@ body {
 .w-row--empty {
   .w-row__label {
     color: var(--color-neutral-50);
+    font-weight: 400;
   }
 
   .w-row__value {
@@ -534,11 +542,6 @@ body {
 }
 
 .w-row--lead {
-  .w-row__label {
-    color: var(--w-ink);
-    font-weight: 500;
-  }
-
   .w-row__value {
     color: var(--w-tone, var(--w-ink));
   }
@@ -679,18 +682,13 @@ body {
 /*
  * The weather values behind each photo chance, shown with one switch for all cards.
  */
-.w-row {
-  flex-wrap: wrap;
-}
-
 .w-facts {
   display: none;
   flex-basis: 100%;
   flex-wrap: wrap;
-  gap: 4px 12px;
-  margin-top: 6px;
-  font-size: var(--font-size-10);
-  color: var(--w-muted);
+  gap: 2px 10px;
+  font-size: 11px;
+  color: var(--color-neutral-50);
 }
 
 .w-show-facts .w-facts {
@@ -706,13 +704,23 @@ body {
 }
 
 .w-fact__icon {
-  width: 14px;
-  height: 14px;
-  color: var(--color-neutral-50);
+  width: 12px;
+  height: 12px;
+  color: var(--color-neutral-30);
+}
+
+/* With the facts showing, the minimum in a note would say the same twice. */
+.w-show-facts .w-note--min {
+  display: none;
+
+  & + span::before {
+    content: none;
+  }
 }
 
 .w-fact--source {
   margin-left: auto;
+  font-size: 10px;
   color: var(--color-neutral-30);
   cursor: default;
 }

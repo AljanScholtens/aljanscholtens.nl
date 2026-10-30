@@ -44,12 +44,19 @@
     return box;
   }
 
-  function row(label, value, note, factList, source) {
+  // Title and value on one line; notes and facts start right under the title.
+  function row(label, value, notes, factList, source) {
     var item = el('li', 'w-row');
     item.appendChild(el('span', 'w-row__label', label));
-    var valueEl = el('span', 'w-row__value', value);
-    if (note) valueEl.appendChild(el('span', 'w-row__note', note));
-    item.appendChild(valueEl);
+    item.appendChild(el('span', 'w-row__value', value));
+    if (notes.length) {
+      var noteEl = el('span', 'w-row__note');
+      notes.forEach(function (note) {
+        // The facts repeat the minimum temperature, so it hides while they show.
+        noteEl.appendChild(el('span', note.indexOf('min ') === 0 ? 'w-note--min' : null, note));
+      });
+      item.appendChild(noteEl);
+    }
     if (factList && factList.length) item.appendChild(facts(factList, source));
     return item;
   }
@@ -136,7 +143,7 @@
     // The six photo chances always in the same order; the one behind the score stands out.
     var rows = el('ul', 'w-rows');
     (day.categories || []).forEach(function (category) {
-      var item = row(category.label, category.value || '—', category.notes.join(' · '),
+      var item = row(category.label, category.value || '—', category.notes,
         category.facts, category.source);
       if (!category.value) item.className += ' w-row--empty';
       if (category.lead) item.className += ' w-row--lead';
