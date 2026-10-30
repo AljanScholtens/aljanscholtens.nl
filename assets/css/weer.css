@@ -746,3 +746,14 @@ body {
     height: 16px;
   }
 }
+
+.w-dialog .w-credit {
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--w-line);
+  font-size: var(--font-size-20);
+
+  a {
+    color: var(--color-primary-70);
+  }
+}
