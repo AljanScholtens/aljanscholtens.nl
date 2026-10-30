@@ -61,7 +61,13 @@
         <p class="w-status">Verwachting laden…</p>
       </div>
 
-      <p class="w-updated" data-updated></p>
+      <div class="w-foot">
+        <button class="w-switch" type="button" role="switch" aria-checked="false" data-facts-switch>
+          <span class="w-switch__track" aria-hidden="true"></span>
+          Onderbouwing
+        </button>
+        <p class="w-updated" data-updated></p>
+      </div>
     </main>
 
     <dialog class="w-dialog" data-info aria-labelledby="w-info-title">
@@ -93,8 +99,8 @@
         <div><dt>Sneeuw</dt><dd>Vers gevallen sneeuw, sneeuwval of een sneeuwdek.</dd></div>
       </dl>
       <p>
-        Met <em>Onderbouwing tonen</em> zie je onder elke fotokans de waarden waarop hij
-        rust, rond zonsopkomst. Voor mist en rijp/dauw komen ze van het KNMI-model waar
+        Met de schakelaar <em>Onderbouwing</em> linksonder zie je onder elke fotokans de
+        waarden waarop hij rust, rond zonsopkomst. Voor mist en rijp/dauw komen ze van het KNMI-model waar
         dat de ochtend bereikt, voor kleur van ECMWF, en anders van het middelste
         GFS-scenario.
       </p>

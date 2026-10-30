@@ -60,13 +60,21 @@
     showFacts = localStorage.getItem('weer-facts') === '1';
   } catch (error) {}
 
+  var factsSwitch = document.querySelector('[data-facts-switch]');
+
   function applyFacts() {
     document.body.classList.toggle('w-show-facts', showFacts);
-    document.querySelectorAll('[data-facts-toggle]').forEach(function (button) {
-      button.textContent = showFacts ? 'Onderbouwing verbergen' : 'Onderbouwing tonen';
-      button.setAttribute('aria-expanded', String(showFacts));
-    });
+    factsSwitch.setAttribute('aria-checked', String(showFacts));
   }
+
+  factsSwitch.addEventListener('click', function () {
+    showFacts = !showFacts;
+    try {
+      localStorage.setItem('weer-facts', showFacts ? '1' : '0');
+    } catch (error) {}
+    applyFacts();
+  });
+  applyFacts();
 
   function dayCard(day) {
     var card = el('article', 'w-day' + (day.advice ? ' w-day--' + day.advice : ''));
@@ -136,17 +144,6 @@
     });
     card.appendChild(rows);
     card.appendChild(el('p', 'w-weather', day.weather));
-    var toggle = el('button', 'w-facts-toggle');
-    toggle.type = 'button';
-    toggle.setAttribute('data-facts-toggle', '');
-    toggle.addEventListener('click', function () {
-      showFacts = !showFacts;
-      try {
-        localStorage.setItem('weer-facts', showFacts ? '1' : '0');
-      } catch (error) {}
-      applyFacts();
-    });
-    card.appendChild(toggle);
     return card;
   }
 
@@ -193,7 +190,6 @@
     days.forEach(function (day) {
       daysEl.appendChild(dayCard(day));
     });
-    applyFacts();
     var updated = new Date(data.generated_at);
     updatedEl.textContent = 'Bijgewerkt om ' + updated.toLocaleTimeString('nl-NL',
       { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Amsterdam' })

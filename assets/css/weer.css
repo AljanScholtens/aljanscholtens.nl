@@ -331,12 +331,64 @@ body {
 /*
  * Footer text.
  */
+.w-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: 16px;
+}
+
 .w-updated {
-  margin: 16px 0 0;
+  margin: 0;
   font-size: var(--font-size-20);
   color: var(--w-muted);
-  text-align: center;
 }
+
+.w-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--w-ink);
+  font: inherit;
+  font-size: var(--font-size-20);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.w-switch__track {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  border-radius: var(--border-radius-50);
+  background: var(--color-neutral-30);
+  transition: background 150ms ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--color-neutral-0);
+    transition: transform 150ms ease;
+  }
+}
+
+.w-switch[aria-checked="true"] .w-switch__track {
+  background: var(--color-primary-70);
+
+  &::after {
+    transform: translateX(16px);
+  }
+}
+
 
 .w-legend {
   display: grid;
@@ -600,8 +652,7 @@ body {
 /*
  * Side by side, the cards share their row heights (subgrid), so a reason over two
  * lines or a row with a detail never pushes the rows of one card out of line.
- * A card has 12 parts: top, verdict, reason, light, six photo chances, weather and
- * the explanation switch.
+ * A card has 11 parts: top, verdict, reason, light, six photo chances, weather.
  */
 @media (--breakpoint-30) {
   .w-days {
@@ -610,7 +661,7 @@ body {
 
   .w-day {
     display: grid;
-    grid-row: span 12;
+    grid-row: span 11;
     grid-template-rows: subgrid;
     row-gap: 0;
     align-content: start;
@@ -664,23 +715,6 @@ body {
   margin-left: auto;
   color: var(--color-neutral-30);
   cursor: default;
-}
-
-.w-facts-toggle {
-  justify-self: start;
-  margin-top: 12px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--color-primary-70);
-  font: inherit;
-  font-size: var(--font-size-20);
-  font-weight: 500;
-  cursor: pointer;
-
-  &:hover {
-    color: var(--color-primary-50);
-  }
 }
 
 .w-icon-legend {
