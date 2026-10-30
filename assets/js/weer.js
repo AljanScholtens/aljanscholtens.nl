@@ -147,11 +147,32 @@
     return card;
   }
 
+  var DEFAULT_PLACE = 'De Bilt';
+
+  // The last place stays in this browser, so a returning visitor sees their own spot.
+  function rememberPlace(query) {
+    try {
+      if (query) {
+        localStorage.setItem('weer-place', query);
+      } else {
+        localStorage.removeItem('weer-place');
+      }
+    } catch (error) {}
+  }
+
+  function rememberedPlace() {
+    try {
+      return localStorage.getItem('weer-place') || '';
+    } catch (error) {
+      return '';
+    }
+  }
+
   function setPlace(name) {
-    var isDefault = !name || name === 'Vries';
+    var isDefault = !name || name === DEFAULT_PLACE;
     document.title = 'Fotoweer' + (isDefault ? '' : ' ' + name) + ' - Aljan Scholtens';
     // Show the place as found, not the query behind a choice ("Landgraaf, Landgraaf").
-    searchInput.value = name || 'Vries';
+    searchInput.value = name || DEFAULT_PLACE;
   }
 
   function showMessage(text, choices) {
@@ -200,7 +221,7 @@
 
   function load(query) {
     var current = ++request;
-    searchInput.value = query || 'Vries';
+    searchInput.value = query || DEFAULT_PLACE;
     showMessage(query ? 'Verwachting voor ' + query + ' berekenen…' : 'Verwachting laden…');
     fetch('/weer-data.php' + (query ? '?plaats=' + encodeURIComponent(query) : ''),
       { headers: { Accept: 'application/json' } })
@@ -211,6 +232,7 @@
         // A slower, older search must not overwrite a newer one.
         if (current !== request) return;
         if (data.days) {
+          rememberPlace(query);
           render(data);
         } else if (data.status === 'choose') {
           showMessage('Er zijn meerdere plaatsen met deze naam. Welke bedoel je?', data.places);
@@ -228,8 +250,8 @@
   }
 
   function search(query) {
-    // Vries is the default page, so it keeps the plain address.
-    if (query.toLowerCase() === 'vries') query = '';
+    // The default place keeps the plain address.
+    if (query.toLowerCase() === DEFAULT_PLACE.toLowerCase()) query = '';
     history.pushState(null, '', query ? '/weer/?plaats=' + encodeURIComponent(query) : '/weer/');
     load(query);
   }
@@ -267,5 +289,5 @@
 
   window.fotoweerRender = render;
   window.fotoweerMessage = showMessage;
-  load(queryFromUrl());
+  load(queryFromUrl() || rememberedPlace());
 })();

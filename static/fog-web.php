@@ -46,6 +46,12 @@ function fogWebDay(array $forecast, array $place, DateTimeZone $zone): array
     ];
 }
 
+// The place a new visitor sees. The Telegram alert keeps using fogDefaultPlace().
+function fogWebDefaultPlace(): array
+{
+    return ['name' => 'De Bilt', 'latitude' => 52.1093, 'longitude' => 5.1810];
+}
+
 // A Dutch number: a comma for decimals, a proper minus sign.
 function fogWebNumber(float $value, int $decimals = 0): string
 {

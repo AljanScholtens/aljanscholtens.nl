@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-// Public, read-only data for the /weer page. Without ?plaats= it serves the Vries
+// Public, read-only data for the /weer page. Without ?plaats= it serves the De Bilt
 // forecast that ~/private/fog-web-cron.php writes; with it, a Dutch place is looked up.
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
@@ -16,7 +16,7 @@ function weerRespond(int $status, array $body, int $maxAge = 0): void
 }
 
 $query = $_GET['plaats'] ?? '';
-if (!is_string($query) || trim($query) === '' || strcasecmp(trim($query), 'Vries') === 0) {
+if (!is_string($query) || trim($query) === '' || strcasecmp(trim($query), 'De Bilt') === 0) {
     $data = is_file($privateDir . '/fog-web.json')
         ? file_get_contents($privateDir . '/fog-web.json') : false;
     if ($data === false) {

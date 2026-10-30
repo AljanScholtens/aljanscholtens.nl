@@ -18,7 +18,7 @@ try {
         exit;
     }
     fogWebPruneCache(__DIR__, $now);
-    $data = fogWebData($now, $zone, fogDefaultPlace());
+    $data = fogWebData($now, $zone, fogWebDefaultPlace());
     $usable = array_filter($data['days'], static function (array $day): bool {
         return !isset($day['error']);
     });

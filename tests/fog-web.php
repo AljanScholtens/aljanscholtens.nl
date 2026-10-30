@@ -142,6 +142,11 @@ try {
         webCheck(fogWebSearch($query, $privateDir, $now, $zone, 'a')['status'] === 'ok',
             'Each Landgraaf choice should lead to a forecast: ' . $query);
     }
+    // The bot's own place stays findable now that the page starts elsewhere.
+    webCheck(fogWebSearch('Vries', $privateDir, $now, $zone, 'a')['status'] === 'ok',
+        'Vries should be found by name');
+    webCheck(fogWebDefaultPlace()['name'] === 'De Bilt' && fogDefaultPlace()['name'] === 'Vries',
+        'The page and the alert have their own default place');
     $assen = fogWebSearch('Assen', $privateDir, $now, $zone, 'a');
     webCheck($assen['status'] === 'ok' && $assen['data']['place'] === 'Assen'
         && count($assen['data']['days']) >= 3, 'Assen should get a forecast');
