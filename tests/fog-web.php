@@ -65,6 +65,11 @@ webCheck($texts($categories['mist']) === ['400 m', '99%', '0,1°', '3 km/u', 'L 
     && $texts($categories['frost']) === ['min −3°', '99%', '10%', '3 km/u']
     && $texts($categories['snow']) === ['vers 10 cm', 'dek 3 cm', '−1°'],
     'Facts behind the photo chances are wrong');
+$visibility = static function (float $metres): string {
+    return fogWebFacts(['visibility_m' => $metres])['mist'][0]['text'];
+};
+webCheck($visibility(400) === '400 m' && $visibility(2260) === '2,3 km' && $visibility(50000) === '50 km',
+    'Visibility should only show a decimal below 10 km');
 
 // A quiet sunny morning: no mist, the sun is the lead, empty categories stay empty.
 $quiet = $metrics;

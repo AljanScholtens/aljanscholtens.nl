@@ -70,7 +70,11 @@ function fogWebFacts(array $conditions): array
         return fogWebNumber($number) . ' km/u';
     };
     $visibility = $value('visibility_m', static function (float $metres): string {
-        return $metres >= 1000 ? fogWebNumber($metres / 1000, 1) . ' km' : fogWebNumber($metres) . ' m';
+        // One decimal only where it helps: 2,3 km, but 24 km.
+        if ($metres < 1000) {
+            return fogWebNumber($metres) . ' m';
+        }
+        return fogWebNumber($metres / 1000, $metres < 10000 ? 1 : 0) . ' km';
     });
     $wind = $fact('wind', 'Wind', $value('wind', $kmh));
     $humidity = $fact('humidity', 'Luchtvochtigheid', $value('humidity', $percent));
