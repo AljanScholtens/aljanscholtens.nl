@@ -13,6 +13,9 @@ const FOG_WEATHER_CODES = [45, 48];
 // Mist counts from first light until this long after sunrise. Fog that only forms
 // later is a grey day, usually a low deck sinking to the ground, not a misty sunrise.
 const FOG_MIST_AFTER_SUNRISE_MIN = 90;
+// Later mist, until this long after sunrise, is shown apart for a late outing.
+// It never counts in the score or sets an alarm.
+const FOG_LATE_MIST_AFTER_SUNRISE_MIN = 240;
 // The one night test, an hour before sunrise: clear, calm and damp. It is the cue
 // for local mist the coarse model cannot see, for dew and, when cold, for rime.
 const FOG_NIGHT_MAX_CLOUD = 40.0;
@@ -686,7 +689,8 @@ function fogHarmonieCheck(
     array $hours,
     int $sunriseHour,
     int $forecastDays = 2,
-    ?array $mistHours = null
+    ?array $mistHours = null,
+    array $lateHours = []
 ): ?array {
     $mistHours = $mistHours ?? $hours;
     try {
@@ -769,6 +773,8 @@ function fogHarmonieCheck(
             'min_visibility_m' => (int) round($minVisibility),
             // The hours in the mist window in which KNMI sees mist, for the message.
             'fog_hours' => $fogHours,
+            // Mist after the window, for a late outing; it does not count in the score.
+            'late_fog_hours' => fogHarmonieLateFog($hourly, $date, $lateHours),
             // The values behind the verdict, for the page's explanation.
             'values' => [
                 'visibility_m' => (float) $hourly['visibility'][$indices[$sunriseHour]],
@@ -784,6 +790,24 @@ function fogHarmonieCheck(
         error_log('Fog KNMI check: ' . $error->getMessage());
         return null;
     }
+}
+
+// The later hours with mist in the KNMI run. Hours it does not reach are skipped.
+function fogHarmonieLateFog(array $hourly, string $date, array $lateHours): array
+{
+    $fogHours = [];
+    foreach ($lateHours as $hour) {
+        $index = array_search($date . 'T' . sprintf('%02d', $hour) . ':00', $hourly['time'], true);
+        if ($index === false || !is_numeric($hourly['visibility'][$index] ?? null)
+            || !is_numeric($hourly['weather_code'][$index] ?? null)) {
+            continue;
+        }
+        if ((float) $hourly['visibility'][$index] < FOG_MIST_VISIBILITY_M
+            && in_array((int) $hourly['weather_code'][$index], FOG_WEATHER_CODES, true)) {
+            $fogHours[] = $hour;
+        }
+    }
+    return $fogHours;
 }
 
 function fogBuildForecast(
@@ -1023,6 +1047,8 @@ function fogForecastMetrics(
     $sunriseHour = fogSunriseHour($sunrise);
     $hours = range(max(0, $sunriseHour - 2), min(23, $sunriseHour + 2));
     $mistHours = fogMistHours($hours, $firstLight, $sunrise);
+    $lateEnd = min(23, (int) $sunrise->modify('+' . FOG_LATE_MIST_AFTER_SUNRISE_MIN . ' minutes')->format('G'));
+    $lateHours = max($mistHours) < $lateEnd ? range(max($mistHours) + 1, $lateEnd) : [];
 
     $indices = [];
     foreach ($hours as $hour) {
@@ -1166,7 +1192,7 @@ function fogForecastMetrics(
     $ensembleScore = $photoDay['score'];
     $photoRoute = $photoDay['route'];
     $harmonie = fogHarmonieCheck($latitude, $longitude, $forecastDate, $hours, $sunriseHour,
-        $baseDays, $mistHours);
+        $baseDays, $mistHours, $lateHours);
     $fogModelsDisagree = $harmonie !== null && (
         ($harmonie['fog'] && $mistChance < 0.2)
         || (!$harmonie['fog'] && $mistChance >= 0.5)
@@ -1369,10 +1395,10 @@ function fogForecastMetrics(
 }
 
 // When KNMI sees mist in the window, as "08:00–09:00" or "rond 08:00"; else null.
-function fogKnmiMistHours(?array $harmonie): ?string
+function fogKnmiMistHours(?array $harmonie, string $key = 'fog_hours'): ?string
 {
-    $hours = $harmonie['fog_hours'] ?? [];
-    if (!($harmonie['fog'] ?? false) || !$hours) {
+    $hours = $harmonie[$key] ?? [];
+    if (($key === 'fog_hours' && !($harmonie['fog'] ?? false)) || !$hours) {
         return null;
     }
     $first = min($hours);
@@ -1469,6 +1495,11 @@ function fogForecastMessage(
     }
     if ($bestMistHour !== null) {
         $lines[] = sprintf('⏱️ Grootste mistkans: rond %02d:00', $bestMistHour);
+    }
+    // Mist that only comes later: no alarm, but worth a late outing.
+    $lateMist = fogKnmiMistHours($harmonie, 'late_fog_hours');
+    if ($lateMist !== null) {
+        $lines[] = '🌫️ Later mist: KNMI ' . $lateMist . ' (telt niet mee)';
     }
     $minTemp = (int) round($photoDay['min_temp']);
     if ($photoShares['rime'] >= 0.3) {

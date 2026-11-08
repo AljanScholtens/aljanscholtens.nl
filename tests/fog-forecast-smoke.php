@@ -229,6 +229,17 @@ $messageMetrics['knmi'] = ['fog' => true, 'dense' => false, 'fog_hours' => [9]];
 $bothMessage = fogForecastMessage($messageMetrics, new DateTimeImmutable('2026-12-11 08:40', $roundZone),
     new DateTimeImmutable('2026-12-11 08:00', $roundZone), $roundZone);
 $messageMetrics['mist_share'] = 0.05;
+// Mist after the window gets its own line, apart from the score.
+$messageMetrics['knmi'] = ['fog' => false, 'dense' => false, 'fog_hours' => [], 'late_fog_hours' => [10, 11]];
+$lateMessage = fogForecastMessage($messageMetrics, new DateTimeImmutable('2026-12-11 08:40', $roundZone),
+    new DateTimeImmutable('2026-12-11 08:00', $roundZone), $roundZone);
+if (strpos($lateMessage, '🌫️ Later mist: KNMI 10:00–11:00 (telt niet mee)') === false
+    || strpos($lateMessage, 'KNMI ziet') !== false
+    || fogHarmonieLateFog(['time' => ['2026-12-11T10:00', '2026-12-11T11:00', '2026-12-11T12:00'],
+        'visibility' => [300, 2000, null], 'weather_code' => [45, 3, null]], '2026-12-11', [10, 11, 12, 13]) !== [10]) {
+    fwrite(STDERR, "Later mist is wrong\n");
+    exit(1);
+}
 if (strpos($knmiMessage, "🌁 KNMI ziet dichte mist 08:00–09:00, GFS niet") === false
     || strpos($knmiMessage, 'Mist mogelijk') !== false
     || strpos($bothMessage, "🌁 Mist: 40% (zicht <1 km)\n↳ KNMI ziet mist rond 09:00") === false) {

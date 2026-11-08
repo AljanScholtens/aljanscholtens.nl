@@ -39,6 +39,9 @@ ontstaat, is meestal een wolkendek dat naar de grond zakt: een grijze dag, geen
 mistige zonsopkomst.
 Ziet KNMI mist in dat venster, dan staan de uren in het bericht ("KNMI ziet
 dichte mist 08:00–09:00, GFS niet") en onder Mist op de webpagina.
+Ziet KNMI pas later mist, tot vier uur na zonsopkomst, dan staat er "Later mist:
+KNMI 09:00–11:00 (telt niet mee)": geen wekker, maar wel iets voor een latere
+wandeling. Op /weer staat het als "later" onder Mist.
 Ziet alleen KNMI mist, dan telt het niet meer als ondergrens maar als 40% van
 de scenario's (`FOG_KNMI_WEIGHT`): GFS 4 en KNMI dichte mist geeft een 6
 "(onzeker)", geen 8. Eén KNMI-run wisselt vaak van mist naar geen mist en terug.

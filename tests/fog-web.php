@@ -102,6 +102,11 @@ $knmiOnly['knmi'] = ['fog' => true, 'dense' => true, 'fog_hours' => [8, 9]];
 $knmiMist = $byKey(fogWebDay(['date' => '2026-12-11', 'metrics' => $knmiOnly], $place, $zone))['mist'];
 webCheck($knmiMist['value'] === 'dicht mogelijk'
     && $knmiMist['notes'] === ['KNMI dicht 08:00–09:00, GFS niet'], 'KNMI-only mist is wrong');
+$lateOnly = $quiet;
+$lateOnly['knmi'] = ['fog' => false, 'dense' => false, 'late_fog_hours' => [10]];
+$lateMist = $byKey(fogWebDay(['date' => '2026-12-11', 'metrics' => $lateOnly], $place, $zone))['mist'];
+webCheck($lateMist['value'] === 'later' && $lateMist['notes'] === ['later rond 10:00']
+    && $lateMist['lead'] === false, 'Later mist is wrong');
 $neutral = $quiet;
 $neutral['score'] = 2;
 webCheck(fogWebDay(['date' => '2026-12-11', 'metrics' => $neutral], $place, $zone)['wake'] === null,
