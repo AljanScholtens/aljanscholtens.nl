@@ -38,6 +38,10 @@ const FOG_SATURATED_MAX_WIND_KMH = 5.0;
 // When KNMI sees it, the morning is at least a 5: it may lie on the ground as mist
 // or hang a hundred metres up as a grey deck, which the model cannot tell apart.
 const FOG_SATURATED_SCORE = 5;
+// KNMI's mist lifts the score to 7 (dense 8) when GFS agrees. When GFS does not,
+// the single KNMI run weighs in like this share of the scenarios: one model run
+// flips from mist to none and back, and an 8 must mean going out.
+const FOG_KNMI_WEIGHT = 0.4;
 // Without the local KNMI run, local mist needs half of the GFS scenarios.
 const FOG_LOCAL_MIST_SHARE = 0.5;
 // Colour at sunrise: mid or high cloud to light up, but not a closed deck, and
@@ -1185,25 +1189,12 @@ function fogForecastMetrics(
     if ($photoScore > $ensembleScore) {
         $photoRoute = 'color';
     }
-    // KNMI leads for mist: its 2.5 km grid sees what the coarse ensemble misses.
-    // It is a single scenario, so it lifts the score rather than replacing it.
-    if ($harmonie !== null) {
-        if ($harmonie['dense']) {
-            if ($photoScore < 8) {
-                $photoScore = 8;
-                $photoRoute = 'mist';
-            }
-        } elseif ($harmonie['fog']) {
-            if ($photoScore < 7) {
-                $photoScore = 7;
-                $photoRoute = 'mist';
-            }
-        } elseif ($harmonie['saturated'] ?? false) {
-            if ($photoScore < FOG_SATURATED_SCORE) {
-                $photoScore = FOG_SATURATED_SCORE;
-                $photoRoute = 'mist';
-            }
-        }
+    // KNMI's 2.5 km grid sees mist the coarse ensemble misses. It is a single run,
+    // so it lifts the score rather than replacing it, and less so on its own.
+    $knmiScore = fogKnmiLift($photoScore, $harmonie, $fogModelsDisagree);
+    if ($knmiScore > $photoScore) {
+        $photoScore = $knmiScore;
+        $photoRoute = 'mist';
     }
     $bestHour = null;
     $bestCount = 0;
@@ -1387,6 +1378,24 @@ function fogKnmiMistHours(?array $harmonie): ?string
     $first = min($hours);
     $last = max($hours);
     return $first === $last ? sprintf('rond %02d:00', $first) : sprintf('%02d:00–%02d:00', $first, $last);
+}
+
+// The score after KNMI's mist signal: its full floor when the models agree,
+// otherwise a weighted step towards it. Saturated air keeps its modest floor.
+function fogKnmiLift(int $score, ?array $harmonie, bool $modelsDisagree): int
+{
+    if ($harmonie === null) {
+        return $score;
+    }
+    $knmiScore = $harmonie['dense'] ? 8 : ($harmonie['fog'] ? 7
+        : (($harmonie['saturated'] ?? false) ? FOG_SATURATED_SCORE : null));
+    if ($knmiScore === null || $score >= $knmiScore) {
+        return $score;
+    }
+    if ($modelsDisagree && $knmiScore > FOG_SATURATED_SCORE) {
+        return max($score, (int) round($score + FOG_KNMI_WEIGHT * ($knmiScore - $score)));
+    }
+    return $knmiScore;
 }
 
 // The Telegram text for one morning, made only from its metrics.

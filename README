@@ -39,6 +39,9 @@ ontstaat, is meestal een wolkendek dat naar de grond zakt: een grijze dag, geen
 mistige zonsopkomst.
 Ziet KNMI mist in dat venster, dan staan de uren in het bericht ("KNMI ziet
 dichte mist 08:00–09:00, GFS niet") en onder Mist op de webpagina.
+Ziet alleen KNMI mist, dan telt het niet meer als ondergrens maar als 40% van
+de scenario's (`FOG_KNMI_WEIGHT`): GFS 4 en KNMI dichte mist geeft een 6
+"(onzeker)", geen 8. Eén KNMI-run wisselt vaak van mist naar geen mist en terug.
 
 Versie 8: verzadigde, windstille lucht bij de grond (luchtvochtigheid 97% of
 meer, wind tot 5 km/u, droog) telt als mogelijke mist, ook onder een wolkendek.
@@ -58,8 +61,8 @@ zonder kleur.
 
 Sinds versie 5 is elke mist, net als een vers sneeuwdek (minstens 3 cm gevallen
 tussen 18:00 de avond ervoor en zonsopkomst), minstens een 7, ook op een
-grijze ochtend. Ziet het KNMI-model mist, dan is het minstens een 7, bij dichte
-mist een 8. Een ouder sneeuwdek zonder verse sneeuw blijft rond de 5. De kans op
+grijze ochtend. Ziet het KNMI-model mist en is GFS het eens, dan is het minstens
+een 7, bij dichte mist een 8 (zie versie 9 voor als ze het oneens zijn). Een ouder sneeuwdek zonder verse sneeuw blijft rond de 5. De kans op
 ochtendzon gebruikt bewolking, zicht en droog weer na zonsopkomst.
 Sneeuw verschijnt alleen bij een positieve kans op minstens 0,1 cm
 sneeuwval per uur rond zonsopkomst. Ontbrekende sneeuwgegevens laten de

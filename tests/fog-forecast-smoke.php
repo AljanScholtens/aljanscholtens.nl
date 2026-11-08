@@ -206,6 +206,19 @@ if (strpos(fogForecastMessage($messageMetrics, new DateTimeImmutable('2026-12-11
     fwrite(STDERR, "Sun or mist disagreement should be marked uncertain\n");
     exit(1);
 }
+// KNMI's mist: the full floor when GFS agrees, a weighted step when it does not.
+// 5 November (GFS 4, KNMI dense) gives a 6; 8 November (GFS 3, KNMI mist) a 5.
+if (fogKnmiLift(4, ['dense' => true, 'fog' => true], false) !== 8
+    || fogKnmiLift(4, ['dense' => true, 'fog' => true], true) !== 6
+    || fogKnmiLift(3, ['dense' => false, 'fog' => true], true) !== 5
+    || fogKnmiLift(3, ['dense' => false, 'fog' => true], false) !== 7
+    || fogKnmiLift(3, ['dense' => false, 'fog' => false, 'saturated' => true], true) !== 5
+    || fogKnmiLift(7, ['dense' => true, 'fog' => true], true) !== 7
+    || fogKnmiLift(9, ['dense' => true, 'fog' => true], true) !== 9
+    || fogKnmiLift(4, null, true) !== 4) {
+    fwrite(STDERR, "KNMI weighting is wrong\n");
+    exit(1);
+}
 // Mist only KNMI sees gets its own line with the hours, so the score explains itself.
 $messageMetrics['sun_or_mist'] = false;
 $messageMetrics['knmi'] = ['fog' => true, 'dense' => true, 'fog_hours' => [8, 9]];
