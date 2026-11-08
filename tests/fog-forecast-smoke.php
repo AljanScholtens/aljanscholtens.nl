@@ -206,6 +206,22 @@ if (strpos(fogForecastMessage($messageMetrics, new DateTimeImmutable('2026-12-11
     fwrite(STDERR, "Sun or mist disagreement should be marked uncertain\n");
     exit(1);
 }
+// Mist only KNMI sees gets its own line with the hours, so the score explains itself.
+$messageMetrics['sun_or_mist'] = false;
+$messageMetrics['knmi'] = ['fog' => true, 'dense' => true, 'fog_hours' => [8, 9]];
+$knmiMessage = fogForecastMessage($messageMetrics, new DateTimeImmutable('2026-12-11 08:40', $roundZone),
+    new DateTimeImmutable('2026-12-11 08:00', $roundZone), $roundZone);
+$messageMetrics['mist_share'] = 0.4;
+$messageMetrics['knmi'] = ['fog' => true, 'dense' => false, 'fog_hours' => [9]];
+$bothMessage = fogForecastMessage($messageMetrics, new DateTimeImmutable('2026-12-11 08:40', $roundZone),
+    new DateTimeImmutable('2026-12-11 08:00', $roundZone), $roundZone);
+$messageMetrics['mist_share'] = 0.05;
+if (strpos($knmiMessage, "🌁 KNMI ziet dichte mist 08:00–09:00, GFS niet") === false
+    || strpos($knmiMessage, 'Mist mogelijk') !== false
+    || strpos($bothMessage, "🌁 Mist: 40% (zicht <1 km)\n↳ KNMI ziet mist rond 09:00") === false) {
+    fwrite(STDERR, "KNMI mist line is wrong\n");
+    exit(1);
+}
 $messageMetrics['photo_route'] = 'mist';
 $messageMetrics['models_disagree'] = false;
 $messageMetrics['sun_or_mist'] = false;
@@ -321,7 +337,7 @@ if (!is_array($metrics)
     || ((strpos($forecast['message'], '🌁 Mist: ') !== false)
         !== ((int) round((float) $metrics['mist_share'] * 100) >= 10))
     || strpos($forecast['message'], fogAdviceLine((int) $metrics['score'], $forecastFirstLight)) !== 0
-    || strpos($forecast['message'], 'KNMI') !== false
+    || (strpos($forecast['message'], 'KNMI') !== false) !== (fogKnmiMistHours($metrics['knmi']) !== null)
     || ((strpos($forecast['message'], '↳ Dichte mist: ') !== false)
         !== ((int) round((float) $metrics['dense_share'] * 100) >= 15))
     || strpos($forecast['message'], '🌤️ Ochtendzon: ' . fogLikelihood((float) $metrics['sun_share'])) === false

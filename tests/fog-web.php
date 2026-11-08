@@ -96,6 +96,12 @@ $saturatedDay['local_mist'] = true;
 $saturatedMist = $byKey(fogWebDay(['date' => '2026-12-11', 'metrics' => $saturatedDay], $place, $zone))['mist'];
 webCheck($saturatedMist['value'] === 'mogelijk'
     && $saturatedMist['notes'] === ['verzadigde, windstille lucht'], 'Saturated air should show as possible mist');
+// Mist only KNMI sees shows as possible, with its hours, even below 10% in GFS.
+$knmiOnly = $quiet;
+$knmiOnly['knmi'] = ['fog' => true, 'dense' => true, 'fog_hours' => [8, 9]];
+$knmiMist = $byKey(fogWebDay(['date' => '2026-12-11', 'metrics' => $knmiOnly], $place, $zone))['mist'];
+webCheck($knmiMist['value'] === 'dicht mogelijk'
+    && $knmiMist['notes'] === ['KNMI dicht 08:00–09:00, GFS niet'], 'KNMI-only mist is wrong');
 $neutral = $quiet;
 $neutral['score'] = 2;
 webCheck(fogWebDay(['date' => '2026-12-11', 'metrics' => $neutral], $place, $zone)['wake'] === null,

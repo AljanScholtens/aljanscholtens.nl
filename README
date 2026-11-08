@@ -37,6 +37,8 @@ Versie 9: mist telt alleen van het eerste licht tot anderhalf uur na
 zonsopkomst (`FOG_MIST_AFTER_SUNRISE_MIN`), voor GFS en KNMI. Mist die pas later
 ontstaat, is meestal een wolkendek dat naar de grond zakt: een grijze dag, geen
 mistige zonsopkomst.
+Ziet KNMI mist in dat venster, dan staan de uren in het bericht ("KNMI ziet
+dichte mist 08:00–09:00, GFS niet") en onder Mist op de webpagina.
 
 Versie 8: verzadigde, windstille lucht bij de grond (luchtvochtigheid 97% of
 meer, wind tot 5 km/u, droog) telt als mogelijke mist, ook onder een wolkendek.

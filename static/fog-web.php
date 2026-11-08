@@ -160,6 +160,13 @@ function fogWebCategories(array $metrics): array
     $mistPercent = $percent((float) $metrics['mist_share']);
 
     $mistNotes = [];
+    // KNMI's mist and its hours first, so a score resting on it says so.
+    $knmiHours = fogKnmiMistHours($metrics['knmi'] ?? null);
+    $knmiDense = (bool) ($metrics['knmi']['dense'] ?? false);
+    if ($knmiHours !== null) {
+        $mistNotes[] = 'KNMI ' . ($knmiDense ? 'dicht ' : '') . $knmiHours
+            . ($mistPercent < 10 ? ', GFS niet' : '');
+    }
     if ($mistPercent < 10 && ($metrics['saturated'] ?? false)) {
         $mistNotes[] = 'verzadigde, windstille lucht';
     }
@@ -218,8 +225,9 @@ function fogWebCategories(array $metrics): array
     $categories = [
         ['key' => 'mist', 'label' => 'Mist',
             'value' => $mistPercent >= 10 ? $mistPercent . '%'
+                : ($knmiHours !== null ? ($knmiDense ? 'dicht mogelijk' : 'mogelijk')
                 : (($metrics['saturated'] ?? false) ? 'mogelijk'
-                    : (($metrics['local_mist'] ?? false) ? 'lokaal mogelijk' : null)),
+                    : (($metrics['local_mist'] ?? false) ? 'lokaal mogelijk' : null))),
             'notes' => $mistNotes],
         ['key' => 'color', 'label' => 'Kleur',
             'value' => is_numeric($color) && $color >= 0.2 ? fogLikelihood((float) $color) : null,

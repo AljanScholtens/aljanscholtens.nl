@@ -1377,6 +1377,18 @@ function fogForecastMetrics(
 
 }
 
+// When KNMI sees mist in the window, as "08:00–09:00" or "rond 08:00"; else null.
+function fogKnmiMistHours(?array $harmonie): ?string
+{
+    $hours = $harmonie['fog_hours'] ?? [];
+    if (!($harmonie['fog'] ?? false) || !$hours) {
+        return null;
+    }
+    $first = min($hours);
+    $last = max($hours);
+    return $first === $last ? sprintf('rond %02d:00', $first) : sprintf('%02d:00–%02d:00', $first, $last);
+}
+
 // The Telegram text for one morning, made only from its metrics.
 function fogForecastMessage(
     array $metrics,
@@ -1416,13 +1428,25 @@ function fogForecastMessage(
     if ($densePercent >= 15) {
         $mistDetails[] = sprintf('Dichte mist: %d%% (zicht <200 m)', $densePercent);
     }
+    // KNMI's mist, with its hours, so a score resting on it says so.
+    $knmiHours = fogKnmiMistHours($harmonie);
+    $knmiLine = null;
+    if ($knmiHours !== null) {
+        $knmiLine = sprintf('KNMI ziet %s %s', $harmonie['dense'] ? 'dichte mist' : 'mist', $knmiHours);
+        if ($mistPercent < 10) {
+            $mistDetails[] = $knmiLine . ', GFS niet';
+        }
+    }
     // With a mist line already shown, "local mist possible" adds nothing.
-    if ($localMist && $mistPercent < 10) {
+    if ($localMist && $mistPercent < 10 && $knmiHours === null) {
         $mistDetails[] = ($metrics['saturated'] ?? false)
             ? 'Mist mogelijk: verzadigde, windstille lucht' : 'Lokale mist: mogelijk';
     }
     if ($mistPercent >= 10) {
         $lines[] = sprintf('🌁 Mist: %d%% (zicht <1 km)', $mistPercent);
+        if ($knmiLine !== null) {
+            $mistDetails[] = $knmiLine;
+        }
     }
     foreach ($mistDetails as $detail) {
         $lines[] = ($mistPercent >= 10 ? '↳ ' : '🌁 ') . $detail;
