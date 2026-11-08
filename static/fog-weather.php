@@ -10,6 +10,9 @@ declare(strict_types=1);
 const FOG_MIST_VISIBILITY_M = 1000.0;
 const FOG_DENSE_VISIBILITY_M = 200.0;
 const FOG_WEATHER_CODES = [45, 48];
+// Mist counts from first light until this long after sunrise. Fog that only forms
+// later is a grey day, usually a low deck sinking to the ground, not a misty sunrise.
+const FOG_MIST_AFTER_SUNRISE_MIN = 90;
 // The one night test, an hour before sunrise: clear, calm and damp. It is the cue
 // for local mist the coarse model cannot see, for dew and, when cold, for rime.
 const FOG_NIGHT_MAX_CLOUD = 40.0;
@@ -287,6 +290,18 @@ function fogAdviceLine(int $score, DateTimeImmutable $firstLight): string
         $firstLight->format('H:i'));
 }
 
+// The whole hours that fall in the mist window, from half an hour before first light
+// (the nearest hour) to FOG_MIST_AFTER_SUNRISE_MIN after sunrise.
+function fogMistHours(array $hours, DateTimeImmutable $firstLight, DateTimeImmutable $sunrise): array
+{
+    $start = $firstLight->modify('-30 minutes');
+    $end = $sunrise->modify('+' . FOG_MIST_AFTER_SUNRISE_MIN . ' minutes');
+    return array_values(array_filter($hours, static function (int $hour) use ($sunrise, $start, $end): bool {
+        $time = $sunrise->setTime($hour, 0);
+        return $time >= $start && $time <= $end;
+    }));
+}
+
 // Round to the nearest hour, so a 07:50 sunrise is judged at 08:00 instead of 07:00.
 function fogSunriseHour(DateTimeImmutable $sunrise): int
 {
@@ -316,7 +331,9 @@ function fogSaveJson(string $path, array $data): void
     }
 }
 
-function fogMemberPhotoSignals(array $series, array $indices, int $sunriseHour): array
+// Without $mistHours every hour counts for mist; lifting always looks at all hours.
+function fogMemberPhotoSignals(array $series, array $indices, int $sunriseHour,
+    ?array $mistHours = null): array
 {
     $memberMist = false;
     $memberDense = false;
@@ -326,7 +343,7 @@ function fogMemberPhotoSignals(array $series, array $indices, int $sunriseHour):
         $fog = (float) $series['visibility'][$index] < FOG_MIST_VISIBILITY_M
             && in_array((int) $series['weather_code'][$index], FOG_WEATHER_CODES, true);
         $fogAtHour[$hour] = $fog;
-        if ($fog) {
+        if ($fog && ($mistHours === null || in_array($hour, $mistHours, true))) {
             $memberMist = true;
             if ((float) $series['visibility'][$index] < FOG_DENSE_VISIBILITY_M) {
                 $memberDense = true;
@@ -610,9 +627,10 @@ function fogOutlookScores(
     $baseDate = new DateTimeImmutable($forecastDate . ' 12:00', $zone);
     foreach ([1, 2] as $daysAhead) {
         $date = $baseDate->modify('+' . $daysAhead . ' days')->format('Y-m-d');
-        [$sunrise] = fogSunTimes($date, $latitude, $longitude, $zone);
+        [$sunrise, , $firstLight] = fogSunTimes($date, $latitude, $longitude, $zone);
         $sunriseHour = fogSunriseHour($sunrise);
         $hours = range(max(0, $sunriseHour - 2), min(23, $sunriseHour + 2));
+        $mistHours = fogMistHours($hours, $firstLight, $sunrise);
         $indices = [];
         foreach ($hours as $hour) {
             $time = $date . 'T' . sprintf('%02d', $hour) . ':00';
@@ -644,7 +662,7 @@ function fogOutlookScores(
                 $series[$variable] = fogOptionalSeries($hourly, $variable, $suffix, $indices);
             }
             $series['fresh_snow'] = fogMemberFreshSnow($hourly, $suffix, $date, $sunriseHour);
-            $signals = fogMemberPhotoSignals($series, $indices, $sunriseHour);
+            $signals = fogMemberPhotoSignals($series, $indices, $sunriseHour, $mistHours);
             $scenes[] = fogMemberPhotoScenes($series, $indices, $sunriseHour, $signals);
         }
         if (count($scenes) < 25) {
@@ -663,8 +681,10 @@ function fogHarmonieCheck(
     string $date,
     array $hours,
     int $sunriseHour,
-    int $forecastDays = 2
+    int $forecastDays = 2,
+    ?array $mistHours = null
 ): ?array {
+    $mistHours = $mistHours ?? $hours;
     try {
         $url = 'https://api.open-meteo.com/v1/forecast?'
             . http_build_query([
@@ -714,7 +734,9 @@ function fogHarmonieCheck(
         $dense = false;
         $lowVisibility = false;
         $minVisibility = INF;
-        foreach ($indices as $index) {
+        $fogHours = [];
+        foreach ($mistHours as $hour) {
+            $index = $indices[$hour];
             $visibility = (float) $hourly['visibility'][$index];
             $minVisibility = min($minVisibility, $visibility);
             $lowVisibility = $lowVisibility || $visibility < FOG_MIST_VISIBILITY_M;
@@ -722,6 +744,7 @@ function fogHarmonieCheck(
                 && in_array((int) $hourly['weather_code'][$index], FOG_WEATHER_CODES, true)) {
                 $fog = true;
                 $dense = $dense || $visibility < FOG_DENSE_VISIBILITY_M;
+                $fogHours[] = $hour;
             }
         }
         $before = $indices[max(0, $sunriseHour - 1)];
@@ -740,6 +763,8 @@ function fogHarmonieCheck(
             'local_mist' => $night['local_mist'],
             'saturated' => $night['saturated'],
             'min_visibility_m' => (int) round($minVisibility),
+            // The hours in the mist window in which KNMI sees mist, for the message.
+            'fog_hours' => $fogHours,
             // The values behind the verdict, for the page's explanation.
             'values' => [
                 'visibility_m' => (float) $hourly['visibility'][$indices[$sunriseHour]],
@@ -990,9 +1015,10 @@ function fogForecastMetrics(
     int $baseDays,
     bool $withOutlook
 ): array {
-    [$sunrise] = fogSunTimes($forecastDate, $latitude, $longitude, $zone);
+    [$sunrise, , $firstLight] = fogSunTimes($forecastDate, $latitude, $longitude, $zone);
     $sunriseHour = fogSunriseHour($sunrise);
     $hours = range(max(0, $sunriseHour - 2), min(23, $sunriseHour + 2));
+    $mistHours = fogMistHours($hours, $firstLight, $sunrise);
 
     $indices = [];
     foreach ($hours as $hour) {
@@ -1029,7 +1055,7 @@ function fogForecastMetrics(
     $snowfallEvents = 0;
     $photoScenes = [];
     $cloudCoverTotal = 0.0;
-    $mistByHour = array_fill_keys($hours, 0);
+    $mistByHour = array_fill_keys($mistHours, 0);
     $weatherHours = [$sunriseHour, min(23, $sunriseHour + 1)];
     $raw = [];
     foreach ($suffixes as $suffix) {
@@ -1060,7 +1086,7 @@ function fogForecastMetrics(
             $snowfallMembers++;
             $snowfallEvents += (int) $memberSnowfall;
         }
-        $signals = fogMemberPhotoSignals($series, $indices, $sunriseHour);
+        $signals = fogMemberPhotoSignals($series, $indices, $sunriseHour, $mistHours);
         $photoScenes[] = fogMemberPhotoScenes($series, $indices, $sunriseHour, $signals);
         // Raw values behind the verdict; their medians explain the forecast on the page.
         $beforeIndex = $indices[max(0, $sunriseHour - 1)];
@@ -1093,7 +1119,7 @@ function fogForecastMetrics(
             $raw['fresh_snow_cm'][] = (float) $series['fresh_snow'];
         }
         foreach ($signals['fog_by_hour'] as $hour => $fog) {
-            if ($fog) {
+            if ($fog && in_array($hour, $mistHours, true)) {
                 $mistByHour[$hour]++;
             }
         }
@@ -1136,7 +1162,7 @@ function fogForecastMetrics(
     $ensembleScore = $photoDay['score'];
     $photoRoute = $photoDay['route'];
     $harmonie = fogHarmonieCheck($latitude, $longitude, $forecastDate, $hours, $sunriseHour,
-        $baseDays);
+        $baseDays, $mistHours);
     $fogModelsDisagree = $harmonie !== null && (
         ($harmonie['fog'] && $mistChance < 0.2)
         || (!$harmonie['fog'] && $mistChance >= 0.5)
@@ -1326,7 +1352,7 @@ function fogForecastMetrics(
         'freezing_mist_share' => $freezingMist / $complete,
         'ensemble_score' => $ensembleScore,
         'score' => $photoScore,
-        'score_version' => 8,
+        'score_version' => 9,
         'photo_route' => $photoRoute,
         'photo_route_margin' => $photoDay['route_margin'],
         'photo_reason' => $reason,

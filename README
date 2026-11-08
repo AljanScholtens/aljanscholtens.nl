@@ -33,6 +33,11 @@ mist zolang het die ochtend bereikt; anders moet de helft van de scenario's het
 eens zijn. Rekenen (`fogForecastMetrics`) en tekst (`fogForecastMessage`) zijn
 gescheiden. `FOG_FIXTURES` laat tests vastgelegde modeldata terugspelen.
 
+Versie 9: mist telt alleen van het eerste licht tot anderhalf uur na
+zonsopkomst (`FOG_MIST_AFTER_SUNRISE_MIN`), voor GFS en KNMI. Mist die pas later
+ontstaat, is meestal een wolkendek dat naar de grond zakt: een grijze dag, geen
+mistige zonsopkomst.
+
 Versie 8: verzadigde, windstille lucht bij de grond (luchtvochtigheid 97% of
 meer, wind tot 5 km/u, droog) telt als mogelijke mist, ook onder een wolkendek.
 Modellen tonen mist vaak als lage bewolking met een te ruim zicht. Ziet het

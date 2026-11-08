@@ -28,6 +28,24 @@ if (fogSunriseHour(new DateTimeImmutable('2026-12-21 08:50', $roundZone)) !== 9
     fwrite(STDERR, "Sunrise hour is not rounded to the nearest hour\n");
     exit(1);
 }
+// Mist counts from first light to 90 minutes after sunrise: on 8 November in Vries
+// (first light 07:08, sunrise 07:44) that is 07:00 to 09:00, not the grey 10:00.
+$mistHours = fogMistHours(range(6, 10), new DateTimeImmutable('2026-11-08 07:08', $roundZone),
+    new DateTimeImmutable('2026-11-08 07:44', $roundZone));
+if ($mistHours !== [7, 8, 9]) {
+    fwrite(STDERR, "Mist window is wrong: " . implode(',', $mistHours) . "\n");
+    exit(1);
+}
+$lateFog = ['visibility' => [5000, 5000, 5000, 5000, 300], 'weather_code' => [3, 3, 3, 3, 45],
+    'temperature_2m' => [4, 4, 4, 4, 5], 'cloud_cover' => array_fill(0, 5, 100),
+    'wind_speed_10m' => array_fill(0, 5, 4), 'precipitation' => array_fill(0, 5, 0),
+    'relative_humidity_2m' => array_fill(0, 5, 95)];
+$lateIndices = array_combine(range(6, 10), range(0, 4));
+if (fogMemberPhotoSignals($lateFog, $lateIndices, 8, $mistHours)['mist']
+    || !fogMemberPhotoSignals($lateFog, $lateIndices, 8)['mist']) {
+    fwrite(STDERR, "Fog after the mist window should not count\n");
+    exit(1);
+}
 $adviceLight = new DateTimeImmutable('2026-10-28 06:43', $roundZone);
 if (fogAdviceLine(3, $adviceLight) !== '⚪ Neutraal'
     || fogAdviceLine(4, $adviceLight) !== '🟡 Prima — wekker 05:55 · eerste licht 06:43'
@@ -295,8 +313,8 @@ if (!is_array($metrics)
         !== ($metrics['color_share'] !== null && $metrics['color_share'] >= 0.2))
     || !is_numeric($metrics['dense_share'] ?? null)
     || !is_string($metrics['weather_summary'] ?? null)
-    || ($metrics['score_version'] ?? null) !== 8
-    || !in_array($metrics['photo_route'] ?? null, ['mist', 'winter', 'sky', 'frost'], true)
+    || ($metrics['score_version'] ?? null) !== 9
+    || !in_array($metrics['photo_route'] ?? null, ['mist', 'winter', 'sky', 'frost', 'color'], true)
     || !is_string($metrics['photo_reason'] ?? null)
     || strpos($forecast['message'], '☀️↑ ') === false
     || strpos($forecast['message'], '☀️↓ ') !== false
