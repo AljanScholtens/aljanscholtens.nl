@@ -1,7 +1,8 @@
 ---
 title: "Landschaps&shy;fotografie"
-menuTitle: "Gallerij"
-slug: "gallerij"
+menuTitle: "Fotografie"
+slug: "fotografie"
+aliases: ["/gallerij/", "/gallery/"]
 layout: "default"
 menu: "main"
 weight: "1"

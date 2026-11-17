@@ -1,7 +1,8 @@
 ---
 title: Landscape Photography
-menuTitle: Gallery
-slug: gallery
+menuTitle: Photography
+slug: photography
+aliases: ["/en/gallery/"]
 layout: default
 menu: main
 weight: '1'

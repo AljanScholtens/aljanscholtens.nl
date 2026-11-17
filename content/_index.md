@@ -10,21 +10,36 @@ thumbnail: "" # Not required
 header: true # true is a large header, false is no header
 header_studio: false # Not required
 header_title_gradient: false # Not required
+
+projects_title: "Projecten"
+blog_title: "Laatste artikelen"
+now_title: "Waar ben ik nu mee bezig?"
+about_title: "Over mij"
+portrait: "/images/aljanscholtens.jpg"
+projects:
+  - title: "Wolf Maps"
+    subtitle: "Breng buiten in kaart."
+    url: "https://wolfmaps.com/"
+    image: "/images/header-08.jpg"
+  - title: "Drentsche Aa Trail"
+    subtitle: "Vier dagen dwalen door Drenthe."
+    page: "/blog/2026-07-08-drentsche-aa-trail"
+    image: "AJS-20260517-3549.jpg"
+  - title: "Waar Licht Ontstaat"
+    subtitle: "Twaalf jaar verwondering, gebundeld."
+    page: "/blog/2025-11-16-waar-licht-ontstaat"
+    image: "AJS-20260331-1783.jpg"
+  - title: "Fotoboek Holten"
+    subtitle: "Eén gebied, steeds opnieuw."
+    page: "/blog/2026-11-17-fotoboek-holten"
+    image_page: "/gallery"
+    image: "aljanscholtens-27.jpg" # Voorlopig beeld uit de bestaande Drenthe-selectie.
+now: >
+  Mijn aandacht gaat naar het bouwen van [Wolf Maps](https://wolfmaps.com/), het verder ontwikkelen van de Drentsche Aa Trail en een nieuw fotoproject: de Holten. Tussendoor ben ik buiten, met mijn camera en vaak met Nikki.
+now_updated: 2026-11-17
+about:
+  - >
+    Ik ben Aljan Scholtens, landschapsfotograaf en digital designer. Buiten zoek ik de rust op. Met mijn camera leg ik vast wat me raakt: het eerste licht, een stille bosrand of een landschap dat even helemaal van zichzelf is.
+  - >
+    Die nieuwsgierigheid neem ik ook mee in wat ik maak. Met [Wolf Maps](https://wolfmaps.com/) help ik anderen de buitenwereld in kaart te brengen. In mijn foto’s, boeken en wandelroutes komt dat samen: ruimte om te maken, te ontdekken en even stil te staan.
 ---
-
-Ik ben Aljan Scholtens. Als landschapsfotograaf leg ik de wilde natuur vast, waar de wereld even vertraagt en alles helder lijkt. Als maker van Wolf Maps bouw ik de tool waarmee anderen de buitenwereld in kaart brengen en verkennen. Twee werelden die voor mij samenkomen in creëren, vrijheid en ontdekken.
-
-## Waar ben ik mee bezig?
-
-- Mijn fotoboek 'Waar Licht Ontstaat' is afgerond. [Meer weten of bestellen](/blog/waar-licht-ontstaat)? Een kleine [sneak peek](https://www.linkedin.com/posts/aljanscholtens_ken-je-dat-gevoel-dat-je-zo-veel-leuke-activity-7183480484998356992-aj4o?utm_source=share&utm_medium=member_desktop).
-- Volledige focus op het bouwen van [Wolf Maps](https://www.wolfmaps.com/). Een tool om prachtige en deelbare kaarten te maken. [Neem contact op](/contact) als je meer wilt weten.
-- Ik ben bezig met het ontwikkelen van de Drentsche Aa Trail: een meerdaags micro-avontuur door het prachtige landschap van het Nationale Park Drentsche Aa. De voortgang is [te bekijken in Wolf Maps](https://maps.aljanscholtens.nl/drentsche-aa-trail).
-- Zojuist [een video afgerond](https://www.youtube.com/watch?v=mjObtvgZfg0) over het lopen van het Westerwoldepad.
-- Regelmatig post ik landschapsfoto’s op [Instagram](https://instagram.com/aljan).
-- Ik plaats foto’s van onze [Kleine Münsterländer Nikki](http://www.instagram.com/munsterlandernikki/) op Instagram. Ze is lief, eigenwijs en enthousiast!
-
-_Laatste update op 8 juli 2026. De Now'-pagina is geïnspireerd door [Nownownow](http://nownownow.com/)._
-
-## Laatste blogartikelen
-
-{{<latestblogs>}}

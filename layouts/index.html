@@ -1,12 +1,81 @@
 {{ define "main" }}
-<div class="l-wrapper">
-  <article class="l-container">
-    <div class="l-single u-content">
-      {{ if not .Params.header }}
-      <h1 class="c-heading c-heading--50">{{ .Params.title | safeHTML }}</h1>
-      {{ end }} 
-      {{ .Content }}
+<main class="c-home">
+  <section class="l-wrapper c-home__section" aria-labelledby="projects-title">
+    <div class="l-container">
+      <h2 id="projects-title" class="c-heading c-heading--30">{{ .Params.projects_title }}</h2>
+      <div class="c-project-grid">
+        {{ range .Params.projects }}
+          {{ $page := false }}
+          {{ with .page }}{{ $page = $.Site.GetPage . }}{{ end }}
+          {{ $url := .url }}
+          {{ with $page }}{{ $url = .RelPermalink }}{{ end }}
+          {{ $imagePage := $page }}
+          {{ with .image_page }}{{ $imagePage = $.Site.GetPage . }}{{ end }}
+          {{ $image := false }}
+          {{ $imageName := .image }}
+          {{ with $imagePage }}{{ $image = .Resources.GetMatch $imageName }}{{ end }}
+          <a class="c-project" href="{{ $url }}">
+            {{ if $image }}
+              {{ $small := $image.Fill "640x480 webp" }}
+              {{ $large := $image.Fill "1120x840 webp" }}
+              <img src="{{ $small.RelPermalink }}" srcset="{{ $small.RelPermalink }} 640w, {{ $large.RelPermalink }} 1120w" sizes="(min-width: 1240px) 540px, (min-width: 600px) 45vw, 100vw" width="640" height="480" alt="" loading="lazy">
+            {{ else }}
+              <img src="{{ .image }}" width="1120" height="840" alt="" loading="lazy">
+            {{ end }}
+            <div class="c-project__content">
+              <h3>{{ .title }}</h3>
+              <p>{{ .subtitle }}</p>
+            </div>
+          </a>
+        {{ end }}
+      </div>
     </div>
-  </article>
-</div>
+  </section>
+
+  <section class="l-wrapper c-home__section c-home__section--soft" aria-labelledby="blog-title">
+    <div class="l-container">
+      <div class="l-single">
+        <h2 id="blog-title" class="c-heading c-heading--30">{{ .Params.blog_title }}</h2>
+        <div class="c-card-grid c-card-grid--small c-home__blogs">
+          {{ range first 2 (where .Site.RegularPages "Section" "blog").ByDate.Reverse }}
+            <a href="{{ .RelPermalink }}" class="c-card">
+              <div class="c-card__inner">
+                {{ with .Resources.GetMatch (.Params.photo | default "__none__") }}
+                  {{ $thumb := .Fill "128x128 webp" }}
+                  <div class="c-card__image"><img src="{{ $thumb.RelPermalink }}" width="64" height="64" loading="lazy" alt=""></div>
+                {{ end }}
+                <div class="c-card__content">
+                  <h3>{{ .Title | safeHTML }}</h3>
+                  <p>{{ .Params.description }}</p>
+                </div>
+              </div>
+            </a>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="l-wrapper c-home__section" aria-labelledby="now-title">
+    <div class="l-container">
+      <div class="l-single u-content">
+        <h2 id="now-title">{{ .Params.now_title }}</h2>
+        <p>{{ .Params.now | markdownify }}</p>
+        <p class="c-home__updated"><small>{{ if eq .Lang "nl" }}Bijgewerkt op {{ time.Format "2 January 2006" .Params.now_updated }}{{ else }}Updated {{ time.Format "2 January 2006" .Params.now_updated }}{{ end }}</small></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="l-wrapper c-home__section c-home__section--soft" aria-labelledby="about-title">
+    <div class="l-container">
+      <div class="l-single u-content">
+        <div class="c-home__about-heading">
+          <img class="c-home__portrait" src="{{ .Params.portrait }}" alt="Aljan Scholtens" width="88" height="88" loading="lazy">
+          <h2 id="about-title">{{ .Params.about_title }}</h2>
+        </div>
+        {{ range .Params.about }}<p>{{ . | markdownify }}</p>{{ end }}
+      </div>
+    </div>
+  </section>
+</main>
 {{ end }}

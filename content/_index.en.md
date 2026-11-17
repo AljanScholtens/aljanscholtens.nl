@@ -9,21 +9,36 @@ thumbnail: ""
 header: true
 header_studio: false
 header_title_gradient: false
+
+projects_title: "Projects"
+blog_title: "Latest stories"
+now_title: "What am I doing now?"
+about_title: "About me"
+portrait: "/images/aljanscholtens.jpg"
+projects:
+  - title: "Wolf Maps"
+    subtitle: "Map the great outdoors."
+    url: "https://wolfmaps.com/"
+    image: "/images/header-08.jpg"
+  - title: "Drentsche Aa Trail"
+    subtitle: "Four days exploring Drenthe."
+    page: "/blog/2026-07-08-drentsche-aa-trail"
+    image: "AJS-20260517-3549.jpg"
+  - title: "Waar Licht Ontstaat"
+    subtitle: "Twelve years of wonder, bound."
+    page: "/blog/2025-11-16-waar-licht-ontstaat"
+    image: "AJS-20260331-1783.jpg"
+  - title: "Holten photo book"
+    subtitle: "One place, time and again."
+    page: "/blog/2026-11-17-fotoboek-holten"
+    image_page: "/gallery"
+    image: "aljanscholtens-27.jpg" # Voorlopig beeld uit de bestaande Drenthe-selectie.
+now: >
+  My focus is on building [Wolf Maps](https://wolfmaps.com/), developing the Drentsche Aa Trail and a new photography project: the Holten. In between, I’m outdoors with my camera, often with Nikki.
+now_updated: 2026-11-17
+about:
+  - >
+    I’m Aljan Scholtens, a landscape photographer and digital designer. Outdoors is where I find calm. With my camera I capture what moves me: the first light, a quiet woodland edge or a landscape simply being itself.
+  - >
+    That curiosity shapes the things I make, too. With [Wolf Maps](https://wolfmaps.com/) I help others map the outdoors. My photographs, books and walking routes bring it all together: room to create, explore and pause.
 ---
-
-I am Aljan Scholtens. As a landscape photographer, I capture the wild, where the world slows down and everything becomes clear. As the creator of Wolf Maps, I build the tools for others to map and explore the great outdoors. Two worlds that come together in creation, freedom, and discovery.
-
-## What am I doing?
-
-- Full focus on building [Wolf Maps](https://www.wolfmaps.com/). A tool to create beautiful and shareable maps. [Get in touch](/contact) if you want to know more.
-- I am in the process of creating a multi-day hiking trail in the area where I live. The progress is [viewable in Wolf Maps](https://wolfmaps.nl/kaart/route-du-drenthe-7b975eb).
-- Just finished [a video](https://www.youtube.com/watch?v=T2MwUVcXqPg) about hiking the Hermannshöhen in Germany.
-- I am working on a book with my best [landscape photos](/gallery). I expect to finish it in 2026. [Sneak peek](https://www.linkedin.com/posts/aljanscholtens_ken-je-dat-gevoel-dat-je-zo-veel-leuke-activity-7183480484998356992-aj4o?utm_source=share&utm_medium=member_desktop).
-- I occasionally post landscape photos on [Instagram](https://instagram.com/aljan).
-- I post pictures of our [Kleine Münsterländer Nikki](http://www.instagram.com/munsterlandernikki/) on Instagram. She is sweet, stubborn and enthusiastic!
-
-_Last update on January 14, 2026. The 'now' page is inspired by [Nownownow](http://nownownow.com/)._
-
-## Latest blogs
-
-{{<latestblogs>}}
