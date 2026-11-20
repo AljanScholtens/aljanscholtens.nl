@@ -4,6 +4,8 @@ subtitle: ""
 slug: "about"
 draft: false
 layout: "default"
+menu: main
+weight: 4
 description: ""
 photo: "header-08.jpg"
 thumbnail: ""
@@ -15,7 +17,7 @@ Hi, I'm Aljan, a landscape photographer. I wander in the great outdoors to captu
 
 Oh, and most of the time, besides my camera gear and good behaviour, I bring my [Small Münsterlander Nikki](https://www.instagram.com/munsterlandernikki/) on my photography trips.
 
-Interested in what I'm doing in landscape photography? Read about [what I do](/landscape-photography).
+Interested in what I'm doing in landscape photography? Read about [what I do]({{< relref "/gallery" >}}).
 
 {{<photos>}}
 about-01.jpg | | 50
@@ -60,4 +62,4 @@ Last year I switched from Canon to Sony, so below is my new gear. I also have a 
 
 ## What I do?
 
-Curious about what I do in [landscape photography](/landscape-photography)? Or maybe you want to [see my work](/gallery)?
+Curious about my landscape photography? [See my work]({{< relref "/gallery" >}}) or [get in touch]({{< relref "/contact" >}}).

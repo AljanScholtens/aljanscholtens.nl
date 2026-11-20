@@ -18,24 +18,36 @@ about_title: "Over mij"
 portrait: "/images/aljanscholtens.jpg"
 projects:
   - title: "Wolf Maps"
-    subtitle: "Breng buiten in kaart."
+    subtitle: "Digital design voor mooie, deelbare kaarten."
     url: "https://wolfmaps.com/"
-    image: "/images/header-08.jpg"
+    image: "/images/wolf-maps.jpg"
   - title: "Drentsche Aa Trail"
-    subtitle: "Vier dagen dwalen door Drenthe."
+    subtitle: "Een vierdaagse wandelroute door Drenthe."
     page: "/blog/2026-07-08-drentsche-aa-trail"
     image: "AJS-20260517-3549.jpg"
   - title: "Waar Licht Ontstaat"
-    subtitle: "Twaalf jaar verwondering, gebundeld."
+    subtitle: "Twaalf jaar verwondering in een fotoboek."
     page: "/blog/2025-11-16-waar-licht-ontstaat"
     image: "AJS-20260331-1783.jpg"
   - title: "Fotoboek Holten"
-    subtitle: "Eén gebied, steeds opnieuw."
+    subtitle: "Een fotoproject dat met de jaren groeit."
     page: "/blog/2026-11-17-fotoboek-holten"
-    image_page: "/gallery"
-    image: "aljanscholtens-27.jpg" # Voorlopig beeld uit de bestaande Drenthe-selectie.
-now: >
-  Mijn aandacht gaat naar het bouwen van [Wolf Maps](https://wolfmaps.com/), het verder ontwikkelen van de Drentsche Aa Trail en een nieuw fotoproject: de Holten. Tussendoor ben ik buiten, met mijn camera en vaak met Nikki.
+    image: "ree-holten.jpg"
+now_items:
+  - >
+    Volop aan het bouwen aan [Wolf Maps](https://wolfmaps.com/), voor mooie, deelbare kaarten. [Nieuwsgierig?](/contact/)
+  - >
+    De [Drentsche Aa Trail](/blog/drentsche-aa-trail/) verder ontwikkelen: een meerdaags micro-avontuur door Nationaal Park Drentsche Aa.
+  - >
+    De Holten door de jaren heen vastleggen voor een [nieuw fotoboek](/blog/fotoboek-holten/).
+  - >
+    Mijn fotoboek [Waar Licht Ontstaat](/blog/waar-licht-ontstaat/) is af en te bestellen.
+  - >
+    Een [video over het Westerwoldepad](https://www.youtube.com/watch?v=mjObtvgZfg0) gemaakt.
+  - >
+    Regelmatig deel ik landschapsfoto’s op [Instagram](https://instagram.com/aljan).
+  - >
+    Vaak samen op pad met onze Kleine Münsterländer Nikki. Lief, eigenwijs en enthousiast — en met een [eigen Instagram](https://www.instagram.com/munsterlandernikki/).
 now_updated: 2026-11-17
 about:
   - >

@@ -17,24 +17,36 @@ about_title: "About me"
 portrait: "/images/aljanscholtens.jpg"
 projects:
   - title: "Wolf Maps"
-    subtitle: "Map the great outdoors."
+    subtitle: "Digital design for beautiful, shareable maps."
     url: "https://wolfmaps.com/"
-    image: "/images/header-08.jpg"
+    image: "/images/wolf-maps.jpg"
   - title: "Drentsche Aa Trail"
-    subtitle: "Four days exploring Drenthe."
+    subtitle: "A four-day walking trail through Drenthe."
     page: "/blog/2026-07-08-drentsche-aa-trail"
     image: "AJS-20260517-3549.jpg"
   - title: "Waar Licht Ontstaat"
-    subtitle: "Twelve years of wonder, bound."
+    subtitle: "A photo book with twelve years of wonder."
     page: "/blog/2025-11-16-waar-licht-ontstaat"
     image: "AJS-20260331-1783.jpg"
   - title: "Holten photo book"
-    subtitle: "One place, time and again."
+    subtitle: "A photography project growing over the years."
     page: "/blog/2026-11-17-fotoboek-holten"
-    image_page: "/gallery"
-    image: "aljanscholtens-27.jpg" # Voorlopig beeld uit de bestaande Drenthe-selectie.
-now: >
-  My focus is on building [Wolf Maps](https://wolfmaps.com/), developing the Drentsche Aa Trail and a new photography project: the Holten. In between, I’m outdoors with my camera, often with Nikki.
+    image: "ree-holten.jpg"
+now_items:
+  - >
+    Focused on building [Wolf Maps](https://wolfmaps.com/), for beautiful, shareable maps. [Curious?](/en/contact/)
+  - >
+    Developing the [Drentsche Aa Trail](/en/blog/drentsche-aa-trail/): a multi-day micro-adventure through Drentsche Aa National Park.
+  - >
+    Documenting the Holten over the years for a [new photo book](/en/blog/fotoboek-holten/).
+  - >
+    My photo book [Waar Licht Ontstaat](/en/blog/where-light-begins/) is finished and available to order.
+  - >
+    Made a [video about the Westerwoldepad](https://www.youtube.com/watch?v=mjObtvgZfg0).
+  - >
+    I regularly share landscape photos on [Instagram](https://instagram.com/aljan).
+  - >
+    Often out with our Small Münsterländer Nikki. Sweet, stubborn and enthusiastic — with her [own Instagram](https://www.instagram.com/munsterlandernikki/).
 now_updated: 2026-11-17
 about:
   - >
