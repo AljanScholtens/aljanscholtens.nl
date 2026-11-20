@@ -10,7 +10,7 @@
   position: relative;
   quotes: none;
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     margin-left: calc(2rem - 2px);
   }
 

@@ -9,7 +9,7 @@
   width: 100%;
   overflow: hidden;
   position: relative;
-  background: url('image.svg') right 0.5rem center no-repeat;
+  background: right 0.5rem center no-repeat;
 
   &:focus {
     border: 1px solid var(--color-neutral-50);
@@ -32,8 +32,7 @@
     box-shadow: none;
     background: transparent;
     background-image: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+    appearance: none;
 
     color: inherit;
     display: block;

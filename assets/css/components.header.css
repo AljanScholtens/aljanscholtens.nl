@@ -10,7 +10,7 @@
   align-items: flex-end;
   background-color: var(--color-primary-90);
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     min-height: 800px;
     max-height: 900px;
   }
@@ -38,7 +38,7 @@
   }
 
   & .c-header__image {
-    @media (--breakpoint-40) {
+    @media (min-width: 1200px) {
       background-size: 1300px auto;
       background-position: center bottom;
       opacity: 1;
@@ -87,10 +87,11 @@
   margin: var(--space-stack-30);
   background: linear-gradient(180deg, #fff2dc, #ffdca2);
 
+  -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     margin: var(--space-stack-40);
     font-size: 100px;
     opacity: 0;
@@ -100,6 +101,7 @@
 
 .c-header__title--gradient {
   background: linear-gradient(180deg, #ffdca2 -20%, transparent 90%);
+  -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -122,7 +124,7 @@
   font-size: 30px;
   line-height: 1.3em;
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     font-size: 40px;
     opacity: 0;
     animation: c-header__subtitle 1000ms cubic-bezier(0, 0, 0, 1) forwards 900ms;
@@ -171,7 +173,7 @@
   background-position: center;
   mix-blend-mode: lighten;
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     filter: grayscale(1);
     opacity: 0;
     animation: c-header-image-a 2s linear forwards 500ms,
@@ -182,7 +184,7 @@
 .c-header__image--position {
   background-position: 80% 0;
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     background-position: center;
   }
 }

@@ -30,6 +30,7 @@
   --font-size-20: 14px;
   --font-size-30: 17px;
   --font-size-40: 19px; /* Body */
+  --font-size-45: 22px; /* Subheading */
   --font-size-50: 26px; /* Lead */
   --font-size-60: 30px; /* Heading */
   --font-size-65: 40px; /* Heading */
@@ -152,6 +153,8 @@
   --border-radius-default: var(--border-radius-10);
   --border-radius-10: 2px;
   --border-radius-20: 4px;
+  --border-radius-30: 6px;
+  --border-radius-40: 12px;
   --border-radius-50: 10rem;
 
   /* Shadows */
@@ -169,8 +172,10 @@
   --layer-30: 30;
 }
 
-/* Breakpoints */
-@custom-media --breakpoint-10 (min-width: 600px);
-@custom-media --breakpoint-20 (min-width: 750px);
-@custom-media --breakpoint-30 (min-width: 1000px);
-@custom-media --breakpoint-40 (min-width: 1200px);
+/* Breakpoints
+   Media queries can't read custom properties, so these are written out in
+   each @media rule. Use only these four:
+   10: (min-width: 600px)
+   20: (min-width: 750px)
+   30: (min-width: 1000px)
+   40: (min-width: 1200px) */

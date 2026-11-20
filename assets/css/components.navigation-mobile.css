@@ -42,10 +42,9 @@
   flex-flow: row nowrap;
 
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
   white-space: nowrap;
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     display: none;
   }
 }
@@ -57,7 +56,7 @@
   text-align: center;
   /* font-size: var(--font-size-20); */
 
-  @media (--breakpoint-10) {
+  @media (min-width: 600px) {
     font-size: var(--font-size-30);
   }
 

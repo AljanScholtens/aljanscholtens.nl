@@ -1,0 +1,23 @@
+{{/* One article card. `compact` changes only its size; headingLevel preserves the page hierarchy. */}}
+{{ $page := .page }}
+{{ $compact := .compact | default false }}
+{{ $heading := "h2" }}
+{{ if eq (.headingLevel | default 2) 3 }}{{ $heading = "h3" }}{{ end }}
+{{ $imagePage := $page }}
+{{ with $page.Params.card_image_page }}{{ $imagePage = $page.Site.GetPage . }}{{ end }}
+{{ $image := $imagePage.Resources.GetMatch ($page.Params.card_image | default $page.Params.photo | default "__none__") }}
+<a href="{{ $page.RelPermalink }}" class="c-card{{ if $compact }} c-card--small{{ end }}{{ if not $image }} c-card--no-image{{ end }}">
+  <div class="c-card__inner">
+    {{ with $image }}
+      {{ $thumb := .Fill "400x400 webp" }}
+      <div class="c-card__image">
+        <img src="{{ $thumb.RelPermalink }}" width="200" height="200" loading="lazy" alt="">
+      </div>
+    {{ end }}
+    <div class="c-card__content">
+      <time class="c-card__date" datetime="{{ $page.Date.Format "2006-01-02" }}">{{ time.Format "2 January 2006" $page.Date }}</time>
+      {{ printf "<%s class=\"c-heading %s c-card__title\">" $heading (cond $compact "c-heading--10" "c-heading--30") | safeHTML }}{{ $page.Title | safeHTML }}{{ printf "</%s>" $heading | safeHTML }}
+      <p class="c-card__description">{{ $page.Description }}</p>
+    </div>
+  </div>
+</a>

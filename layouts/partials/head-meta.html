@@ -1,0 +1,65 @@
+{{/* Title, description, canonical, language versions and share metadata
+     (Open Graph, X/Twitter) for every page. */}}
+
+{{- $description := .Description -}}
+{{- if and (not $description) .IsPage -}}
+  {{- $description = .Summary | plainify | htmlUnescape | truncate 160 -}}
+{{- end -}}
+{{- $description = $description | default site.Home.Description -}}
+
+{{- /* Titles may contain &shy; for hyphenation on the page; leave it out here. */ -}}
+{{- $title := replace .Title "&shy;" "" | plainify | htmlUnescape -}}
+
+<title>{{ $title }} - {{ site.Title }}</title>
+<meta name="description" content="{{ $description }}">
+<link rel="canonical" href="{{ .Permalink }}">
+
+{{- /* Every language version of this page, plus x-default for the Dutch one. */}}
+{{ range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Language.Name }}" href="{{ .Permalink }}">
+{{- end }}
+{{- $default := (index hugo.Sites 0).Language.Name }}
+{{- range .AllTranslations }}{{ if eq .Language.Name $default }}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
+{{- end }}{{ end }}
+
+{{- /* Share image: the page's own photo (from its bundle or a site path), else the site default.
+       Bundle photos are cropped to the 1200x630 that share previews use. */}}
+{{- $image := dict "url" ("/images/header-01.jpg" | absURL) -}}
+{{- with .Params.photo -}}
+  {{- $image = dict "url" (. | absURL) -}}
+  {{- with $.Resources.GetMatch (printf "*%s" .) -}}
+    {{- if in (slice "jpeg" "png" "webp") .MediaType.SubType -}}
+      {{- $share := .Fill "1200x630 jpg Smart q80" -}}
+      {{- $image = dict "url" $share.Permalink "width" $share.Width "height" $share.Height -}}
+    {{- else -}}
+      {{- $image = dict "url" .Permalink -}}
+    {{- end -}}
+  {{- end -}}
+{{- end }}
+
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:type" content="{{ if and .IsPage (eq .Section "blog") }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:locale" content="{{ replace site.Language.Locale "-" "_" }}">
+{{- range .Translations }}
+<meta property="og:locale:alternate" content="{{ replace .Language.Locale "-" "_" }}">
+{{- end }}
+<meta property="og:image" content="{{ $image.url }}">
+{{- with $image.width }}
+<meta property="og:image:width" content="{{ . }}">
+<meta property="og:image:height" content="{{ $image.height }}">
+{{- end }}
+<meta property="og:image:alt" content="{{ $title }}">
+
+{{- if and .IsPage (eq .Section "blog") }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+{{- if gt .Lastmod .Date }}
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">
+{{- end }}
+<meta property="article:author" content="{{ site.Title }}">
+{{- end }}
+
+<meta name="twitter:card" content="summary_large_image">

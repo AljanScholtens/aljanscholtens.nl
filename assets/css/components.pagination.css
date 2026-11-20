@@ -1,0 +1,62 @@
+/*------------------------------------*\
+  #COMPONENTS-PAGINATION
+\*------------------------------------*/
+
+/* "Page 2 of 6" between round previous/next buttons, centred under a list. */
+.c-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-30);
+  margin: var(--space-50) 0 var(--space-40);
+}
+
+.c-pagination__status {
+  margin: 0;
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-20);
+  color: var(--color-neutral-60);
+}
+
+.c-pagination__button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary-50);
+  color: var(--color-neutral-0);
+  transition: background-color 150ms var(--bezier-default), transform 150ms var(--bezier-default);
+
+  & .c-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: var(--color-neutral-0);
+    background: var(--color-primary-90);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-secondary-50);
+    outline-offset: 3px;
+  }
+}
+
+.c-pagination__button--prev .c-icon {
+  rotate: 180deg;
+}
+
+.t-dark .c-pagination__button:hover,
+.t-dark .c-pagination__button:focus-visible {
+  background: var(--color-primary-30);
+  color: var(--color-primary-90);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-pagination__button {
+    transition: none;
+  }
+}

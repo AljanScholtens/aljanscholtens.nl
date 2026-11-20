@@ -3,8 +3,19 @@
 {{/* Haal de bron voor de afbeelding op: gebruik de src-parameter als deze is meegegeven, anders de front matter (photo) */}}
 {{ $srcParam := .Get "src" | default $.Page.Params.photo }}
 {{ $src := $srcParam }}
+{{ $srcset := "" }}
+{{ $width := 0 }}
+{{ $height := 0 }}
 {{ with $.Page.Resources.GetMatch (printf "*%s" $srcParam) }}
   {{ $src = .RelPermalink }}
+  {{ if in (slice "jpeg" "png" "webp") .MediaType.SubType }}
+    {{ $small := .Fit "800x1600 webp" }}
+    {{ $large := .Fit "1600x3200 webp" }}
+    {{ $src = $large.RelPermalink }}
+    {{ $srcset = printf "%s %dw, %s %dw" $small.RelPermalink $small.Width $large.RelPermalink $large.Width }}
+    {{ $width = .Width }}
+    {{ $height = .Height }}
+  {{ end }}
 {{ end }}
 
 {{/* Bepaal ook de alt-tekst: als er geen alt is meegegeven, gebruik dan een fallback uit de front matter */}}
@@ -16,7 +27,10 @@
 {{ end }}
 
 <figure class="c-media {{ if eq $size "large" }}c-media--large{{ end }}">
-    <img class="c-media__image js-lazy" data-original="{{ $src }}" alt="{{ $alt }}" loading="lazy">
+    <img class="c-media__image" src="{{ $src }}"
+      {{- with $srcset }} srcset="{{ . }}" sizes="{{ if eq $size "large" }}100vw{{ else }}(min-width: 750px) 720px, 100vw{{ end }}"{{ end }}
+      {{- with $width }} width="{{ . }}" height="{{ $height }}"{{ end }}
+      alt="{{ $alt }}" loading="lazy" decoding="async">
     {{ with $caption }}
       <figcaption class="c-media__caption">{{ . }}</figcaption>
     {{ end }}

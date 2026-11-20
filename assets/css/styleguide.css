@@ -5,7 +5,7 @@
 @import "styles.css";
 
 .sg-wrapper {
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     display: flex;
     position: absolute;
     left: 0;
@@ -19,18 +19,16 @@
   background: var(--color-neutral-10);
   display: none;
 
-  /*@media (--breakpoint-20) {
+  /*@media (min-width: 750px) {
     overflow-y: auto;
     flex: 0 0 16rem;
-    -webkit-overflow-scrolling: touch;
   }*/
 }
 
 .sg-main {
-  /*@media (--breakpoint-20) {
+  /*@media (min-width: 750px) {
     overflow-y: auto;
     flex: auto;
-    -webkit-overflow-scrolling: touch;
   }*/
 }
 
@@ -92,7 +90,7 @@
 .sg-component {
   margin: var(--space-stack-default);
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     margin-bottom: calc(var(--space-default) * 3);
   }
 }

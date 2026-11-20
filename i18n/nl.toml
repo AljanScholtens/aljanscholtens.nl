@@ -1,0 +1,19 @@
+# Fixed template text in Dutch. Use with {{ T "key" }} in layouts.
+
+all_stories = "Alle artikelen"
+updated_on = "Bijgewerkt op"
+inspired_by = "Geïnspireerd door"
+
+respond = "Reageren? Leuk! Mag via een"
+respond_link = "mailtje"
+written_by = "Geschreven door"
+related = "Gerelateerd"
+
+page_of = "Pagina {{ .Page }} van {{ .Total }}"
+previous_page = "Vorige pagina"
+next_page = "Volgende pagina"
+pagination = "Paginering"
+
+open_photo = "Foto openen"
+
+footer_mail = "Mail me"

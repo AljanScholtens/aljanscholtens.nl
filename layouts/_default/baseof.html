@@ -1,18 +1,25 @@
 <!DOCTYPE html>
-<html lang="{{ site.Language }}">
+<html lang="{{ site.Language.Name }}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {{ $styles := resources.Get "css/styles.css" | postCSS (dict "config" "postcss.config.js") | minify | fingerprint }}
+    {{ $styles := resources.Get "css/styles.css" | css.Build (dict "minify" true "target" "safari15" "externals" (slice "/fonts/*" "/images/*")) | fingerprint }}
     <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+    <script>
+      // Set the dark theme before the first paint, and follow later system changes.
+      (() => {
+        const dark = matchMedia('(prefers-color-scheme: dark)');
+        const apply = () => document.documentElement.classList.toggle('t-dark', dark.matches);
+        apply();
+        dark.addEventListener('change', apply);
+      })();
+    </script>
+    {{ $script := resources.Get "js/site.js" | js.Build (dict "minify" true "target" "es2020") | fingerprint }}
+    <script defer src="{{ $script.RelPermalink }}"></script>
     <link rel="shortcut icon" href="/images/favicon.svg">
 
-    <title>{{ .Title | safeHTML }} - Aljan Scholtens</title>
-    <meta name="description" content="{{ .Params.description | default "Designer and photographer Aljan Scholtens" }}">
-    <meta property="og:title" content="{{ .Title | safeHTML }}">
-    <meta property="og:description" content="{{ .Params.description | default "Designer and photographer Aljan Scholtens" }}">
-    <meta property="og:image" content="{{ if .Resources.GetMatch .Params.photo }}{{ (.Resources.GetMatch .Params.photo).RelPermalink }}{{ else if .Params.photo }}{{ .Params.photo | absURL }}{{ else }}{{ "/images/header-01.jpg" | absURL }}{{ end }}">
-    
+    {{ partial "head-meta.html" . }}
+
     <script defer src="https://cloud.umami.is/script.js" data-website-id="dee73cd2-27f7-482f-a5e1-6eae9df645db"></script>
   </head>
   <body>
@@ -39,27 +46,18 @@
       <ul class="c-navigation__links">
         <!-- <li class="c-navigation__links-item"><a href="https://twitter.com/aljanscholtens"><svg class="c-icon"><use xlink:href="#icon-twitter"></svg></a></li> -->
           <li class="c-navigation__links-item">
-            {{ $currentLang := $.Page.Lang }}
-            {{ $otherLangs := where .Site.Languages "Lang" "!=" $currentLang }}
-            {{ if gt (len $otherLangs) 0 }}
-              {{ $other := index $otherLangs 0 }}
-              {{ if or $.Page.IsPage (eq $.Page.Kind "section") }}
-                {{ $translatedPage := where $.Page.Translations "Lang" $other.Lang | first 1 }}
-                {{ if $translatedPage }}
-                  <a href="{{ (index $translatedPage 0).RelPermalink }}">{{ $other.LanguageName }}</a>
-                {{ else if eq $.Page.Kind "section" }}
-                  <a href="/{{ $other.Lang }}/{{ $.Page.Section }}/">{{ $other.LanguageName }}</a>
-                {{ else }}
-                  <a href="/{{ $other.Lang }}/">{{ $other.LanguageName }}</a>
-                {{ end }}
-              {{ else }}
-                <a href="/{{ $other.Lang }}/">{{ $other.LanguageName }}</a>
+            {{/* Link to this page in the other language, or to that language's home page. */}}
+            {{ range hugo.Sites }}
+              {{ if ne .Language.Name site.Language.Name }}
+                {{ $target := .Home }}
+                {{ $lang := .Language.Name }}
+                {{ range $.Translations }}{{ if eq .Language.Name $lang }}{{ $target = . }}{{ end }}{{ end }}
+                <a href="{{ $target.RelPermalink }}" hreflang="{{ $lang }}" lang="{{ $lang }}">{{ .Language.Label }}</a>
               {{ end }}
             {{ end }}
-
           </li>
-        <li class="c-navigation__links-item"><a href="https://instagram.com/aljan"><svg class="c-icon"><use xlink:href="#icon-instagram"></svg></a></li>
-        <li class="c-navigation__links-item"><a href="https://www.linkedin.com/in/aljanscholtens/"><svg class="c-icon"><use xlink:href="#icon-linkedin"></svg></a></li>
+        <li class="c-navigation__links-item"><a href="https://instagram.com/aljan" aria-label="Instagram"><svg class="c-icon" aria-hidden="true"><use href="#icon-instagram"></use></svg></a></li>
+        <li class="c-navigation__links-item"><a href="https://www.linkedin.com/in/aljanscholtens/" aria-label="LinkedIn"><svg class="c-icon" aria-hidden="true"><use href="#icon-linkedin"></use></svg></a></li>
       </ul>
 
     </nav>
@@ -87,13 +85,18 @@
 
     {{ block "main" . }}{{ end }}
 
-    <div class="l-wrapper">
+    <footer class="l-wrapper c-footer">
       <div class="l-container">
-        <div class="l-single">
-          <div class="c-footer"></div>
+        <div class="c-footer__inner">
+          <p class="c-footer__name">© {{ now.Year }} Aljan Scholtens</p>
+          <ul class="c-footer__links">
+            <li><a href="mailto:aljan@scholtens.me">{{ T "footer_mail" }}</a></li>
+            <li><a href="https://instagram.com/aljan">Instagram</a></li>
+            <li><a href="https://www.linkedin.com/in/aljanscholtens/">LinkedIn</a></li>
+          </ul>
         </div>
       </div>
-    </div>
+    </footer>
     
     <div class="c-navigation-mobile__wrapper">
       <ul class="c-navigation-mobile">
@@ -113,12 +116,6 @@
     </div>
     
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
-    <script src="/scripts/lazyload.min.js"></script>
-    <script src="/scripts/fitie.js"></script>
-    <script src="/scripts/jquery.fancybox.min.js"></script>
-    <script src="/scripts/flickity.pkgd.min.js"></script>
-    <script src="/scripts/scripts.js"></script>
    
   </body>
 </html>

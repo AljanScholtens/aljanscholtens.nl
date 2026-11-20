@@ -1,0 +1,16 @@
+{{/* "Page 2 of 6" with round previous/next buttons. Takes a Paginator. */}}
+{{ if gt .TotalPages 1 }}
+<nav class="c-pagination" aria-label="{{ T "pagination" }}">
+  {{ with .Prev }}
+    <a class="c-pagination__button c-pagination__button--prev" href="{{ .URL }}" rel="prev" aria-label="{{ T "previous_page" }}">
+      <svg class="c-icon c-icon--stroke" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+    </a>
+  {{ end }}
+  <p class="c-pagination__status">{{ T "page_of" (dict "Page" .PageNumber "Total" .TotalPages) }}</p>
+  {{ with .Next }}
+    <a class="c-pagination__button" href="{{ .URL }}" rel="next" aria-label="{{ T "next_page" }}">
+      <svg class="c-icon c-icon--stroke" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+    </a>
+  {{ end }}
+</nav>
+{{ end }}

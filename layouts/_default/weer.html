@@ -1,19 +1,15 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="{{ site.Language.Name }}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0b0b37" />
-    {{ $styles := resources.Get "css/weer.css" | postCSS (dict "config" "postcss.config.js") | minify | fingerprint }}
+    {{ $styles := resources.Get "css/weer.css" | css.Build (dict "minify" true "target" "safari15" "externals" (slice "/fonts/*" "/images/*")) | fingerprint }}
     <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
     <link rel="shortcut icon" href="/images/favicon.svg">
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 
-    <title>{{ .Title }} - Aljan Scholtens</title>
-    <meta name="description" content="{{ .Params.description }}">
-    <meta property="og:title" content="{{ .Title }}">
-    <meta property="og:description" content="{{ .Params.description }}">
-    <meta property="og:image" content="{{ "/images/landscape-photography-01.jpg" | absURL }}">
+    {{ partial "head-meta.html" . }}
 
     <script defer src="https://cloud.umami.is/script.js" data-website-id="dee73cd2-27f7-482f-a5e1-6eae9df645db"></script>
   </head>

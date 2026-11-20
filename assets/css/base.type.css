@@ -36,14 +36,21 @@ a {
   }
 }
 
+/* Links in running text: a quiet underline that fills in on hover. */
 .u-content a {
-  background-color: var(--color-secondary-10);
-  padding: 0.2em 0.5rem;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  transition: text-decoration-color 150ms var(--bezier-default), color 150ms var(--bezier-default);
+
+  &:hover {
+    text-decoration-color: currentColor;
+  }
 }
 
 .t-dark .u-content a {
   color: var(--color-secondary-30);
-  background-color: var(--color-secondary-30a20);
 
   &:hover {
     color: var(--color-neutral-0);

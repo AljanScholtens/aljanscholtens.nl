@@ -1,0 +1,19 @@
+# Fixed template text in English. Use with {{ T "key" }} in layouts.
+
+all_stories = "All stories"
+updated_on = "Updated"
+inspired_by = "Inspired by"
+
+respond = "Want to respond? Lovely! Just send me an"
+respond_link = "email"
+written_by = "Written by"
+related = "Related"
+
+page_of = "Page {{ .Page }} of {{ .Total }}"
+previous_page = "Previous page"
+next_page = "Next page"
+pagination = "Pagination"
+
+open_photo = "Open photo"
+
+footer_mail = "Email me"

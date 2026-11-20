@@ -47,7 +47,7 @@ body {
   background: var(--color-primary-90);
   color: var(--color-neutral-0);
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     padding: 24px 32px 120px;
   }
 }
@@ -61,7 +61,7 @@ body {
   max-width: var(--max-width);
   margin: 0 auto;
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     grid-template-columns: 1fr minmax(0, 440px) 1fr;
   }
 }
@@ -94,7 +94,7 @@ body {
   margin: -88px auto 0;
   padding: 0 16px 48px;
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     margin-top: -104px;
     padding: 0 32px 64px;
   }
@@ -104,7 +104,7 @@ body {
   display: grid;
   gap: 16px;
 
-  @media (--breakpoint-30) {
+  @media (min-width: 1000px) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
   }
@@ -119,7 +119,7 @@ body {
   color: var(--w-muted);
   text-align: center;
 
-  @media (--breakpoint-30) {
+  @media (min-width: 1000px) {
     grid-column: 1 / -1;
   }
 }
@@ -133,7 +133,7 @@ body {
   background: var(--color-neutral-0);
   box-shadow: var(--box-shadow-10);
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     padding: 24px;
   }
 }
@@ -455,7 +455,6 @@ body {
   color: var(--color-neutral-0);
   font: inherit;
   font-size: var(--font-size-30);
-  -webkit-appearance: none;
   appearance: none;
 
   &::placeholder {
@@ -657,7 +656,7 @@ body {
  * lines or a row with a detail never pushes the rows of one card out of line.
  * A card has 11 parts: top, verdict, reason, light, six photo chances, weather.
  */
-@media (--breakpoint-30) {
+@media (min-width: 1000px) {
   .w-days {
     row-gap: 0;
   }

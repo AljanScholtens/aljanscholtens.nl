@@ -1,12 +1,23 @@
 {{ define "main" }}
+{{/* The web server shows a single /404.html for every missing URL, Dutch or
+     English, so this page speaks both languages. */}}
+{{ $text := dict
+  "nl" (dict "message" "Autsj, deze pagina bestaat niet (meer)." "back" "Terug naar de homepage")
+  "en" (dict "message" "Ouch, this page doesn't exist (anymore)." "back" "Back to the home page")
+}}
 <div class="l-wrapper">
   <article class="l-container">
     <div class="l-single u-content">
-      <!-- Content -->
       <h1 class="c-heading c-heading--50">404</h1>
-      <p class="c-paragraph c-paragraph--lead">Autsj, the page is missing. Go back to <a href="/">home</a>.</p>
+      {{ range hugo.Sites }}
+        {{ $lang := .Language.Name }}
+        {{ with index $text $lang }}
+          <p class="c-paragraph c-paragraph--lead" lang="{{ $lang }}">
+            {{ .message }} <a href="{{ (index (where hugo.Sites "Language.Name" $lang) 0).Home.RelPermalink }}">{{ .back }}</a>.
+          </p>
+        {{ end }}
+      {{ end }}
     </div>
   </article>
 </div>
-
 {{ end }}

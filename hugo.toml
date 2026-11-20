@@ -1,6 +1,5 @@
 baseURL = "https://www.aljanscholtens.nl/"
 title = "Aljan Scholtens"
-languageCode = "nl"
 defaultContentLanguage = "nl"
 defaultContentLanguageInSubdir = false
 
@@ -13,15 +12,11 @@ defaultContentLanguageInSubdir = false
 [languages]
 
   [languages.nl]
-    languageName = "Nederlands"
+    label = "Nederlands"
+    locale = "nl-NL"
     weight = 1
-    contentDir = "content"
-    lang = "nl"
 
   [languages.en]
-    languageName = "English"
+    label = "English"
+    locale = "en-GB"
     weight = 2
-    contentDir = "content"
-    lang = "en"
-
-  

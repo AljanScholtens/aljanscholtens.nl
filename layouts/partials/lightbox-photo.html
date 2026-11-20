@@ -1,0 +1,31 @@
+{{/* One photo that opens in the lightbox.
+     Params: res (page resource, optional), src (fallback path), alt, group,
+     sizes, caption, captionTag (default "small") and captionClass.
+     JPG, PNG and WebP get resized WebP versions; GIF and SVG are left as they are. */}}
+{{ $tag := .captionTag | default "small" }}
+{{ $href := .src }}
+{{ $img := dict "src" .src }}
+{{ with .res }}
+  {{ $href = .RelPermalink }}
+  {{ $img = dict "src" .RelPermalink }}
+  {{ if in (slice "jpeg" "png" "webp") .MediaType.SubType }}
+    {{ $small := .Fit "800x1600 webp" }}
+    {{ $large := .Fit "1600x3200 webp" }}
+    {{ $href = (.Fit "2400x2400 webp").RelPermalink }}
+    {{ $img = dict
+      "src" $large.RelPermalink
+      "srcset" (printf "%s %dw, %s %dw" $small.RelPermalink $small.Width $large.RelPermalink $large.Width)
+      "width" .Width
+      "height" .Height
+    }}
+  {{ end }}
+{{ end }}
+<a href="{{ $href }}" data-lightbox="{{ .group }}"{{ if not .alt }} aria-label="{{ T "open_photo" }}"{{ end }}>
+  <img src="{{ $img.src }}"
+    {{- with $img.srcset }} srcset="{{ . }}" sizes="{{ $.sizes | default "100vw" }}"{{ end }}
+    {{- with $img.width }} width="{{ . }}" height="{{ $img.height }}"{{ end }}
+    alt="{{ .alt }}" loading="lazy" decoding="async">
+  {{- with .caption }}
+    {{ printf "<%s class=%q>" $tag $.captionClass | safeHTML }}{{ . }}{{ printf "</%s>" $tag | safeHTML }}
+  {{- end }}
+</a>

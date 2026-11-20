@@ -2,13 +2,49 @@
   #COMPONENTS-FOOTER
 \*------------------------------------*/
 
-.c-footer {
-  width: 12px;
-  height: 12px;
-  background-color: var(--color-neutral-30);
-  margin: var(--space-stack-default);
+/* Quiet closing line on every page: name, mail and socials. */
+.c-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-25) var(--space-40);
+  padding: var(--space-40) 0;
+  border-top: 1px solid var(--color-neutral-20);
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-20);
+  color: var(--color-neutral-60);
 }
 
-.t-dark .c-footer {
-  background-color: var(--color-neutral-0a10);
+.c-footer .c-footer__name {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.c-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-30);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  & a {
+    color: inherit;
+    font-weight: 400;
+
+    &:hover {
+      color: var(--color-neutral-90);
+    }
+  }
+}
+
+.t-dark .c-footer__inner {
+  border-top-color: var(--color-neutral-0a10);
+}
+
+.t-dark .c-footer__links a:hover {
+  color: var(--color-neutral-0);
 }

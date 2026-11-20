@@ -1,0 +1,143 @@
+/*------------------------------------*\
+  #COMPONENTS-LIGHTBOX
+\*------------------------------------*/
+
+/* Full-screen photo viewer on a native <dialog>, see assets/js/lightbox.js. */
+.c-lightbox {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--color-neutral-90);
+  color: var(--color-neutral-0);
+  opacity: 0;
+  transition: opacity 200ms var(--bezier-default), display 200ms allow-discrete, overlay 200ms allow-discrete;
+
+  &[open] {
+    opacity: 1;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  &::backdrop {
+    background: transparent;
+  }
+}
+
+html:has(.c-lightbox[open]) {
+  overflow: hidden;
+}
+
+.c-lightbox__figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-25);
+  height: 100%;
+  margin: 0;
+  padding: var(--space-50) var(--space-30);
+
+  @media (min-width: 750px) {
+    padding: var(--space-50) calc(var(--space-50) + var(--space-40));
+  }
+}
+
+.c-lightbox__image {
+  display: block;
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: opacity 200ms var(--bezier-default);
+
+  .is-loading & {
+    opacity: 0;
+  }
+}
+
+.c-lightbox__caption {
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-20);
+  color: var(--color-neutral-0a75);
+  text-align: center;
+}
+
+.c-lightbox__counter {
+  position: absolute;
+  top: var(--space-30);
+  left: var(--space-30);
+  margin: 0;
+  font-size: var(--font-size-20);
+  line-height: 40px;
+  color: var(--color-neutral-0a75);
+}
+
+.c-lightbox__button {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-neutral-0a75);
+  cursor: pointer;
+  transition: color 150ms var(--bezier-default), background-color 150ms var(--bezier-default);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--color-neutral-0);
+    background: var(--color-neutral-0a10);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-neutral-0);
+    outline-offset: 2px;
+  }
+}
+
+.c-lightbox__button--close {
+  top: var(--space-30);
+  right: var(--space-30);
+}
+
+.c-lightbox__button--prev,
+.c-lightbox__button--next {
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.c-lightbox__button--prev {
+  left: var(--space-20);
+
+  & .c-icon {
+    rotate: 180deg;
+  }
+
+  @media (min-width: 750px) {
+    left: var(--space-30);
+  }
+}
+
+.c-lightbox__button--next {
+  right: var(--space-20);
+
+  @media (min-width: 750px) {
+    right: var(--space-30);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-lightbox,
+  .c-lightbox__image {
+    transition: none;
+  }
+}

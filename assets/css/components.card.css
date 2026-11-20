@@ -1,141 +1,113 @@
-/*------------------------------------*\
-  #COMPONENTS-CARDS
-\*------------------------------------*/
-
+/* Shared article card: standard on /blog, compact in recent-article lists. */
 .c-card-grid {
-}
-
-.c-card-grid--small {
-  .c-card__image {
-    position: relative;
-    overflow: hidden;
-    margin-right: 16px;
-    flex: 0 0 64px;
-    height: 64px;
-  
-    @media (--breakpoint-20) {
-    }
-  }
-
-  & h2 {
-    font-size: 18px;
-  }
-
-  & .c-paragraph--soft {
-    font-size: 12px;
-  }
+  display: grid;
+  gap: var(--space-40);
 }
 
 .c-card {
-  background: transparent;
-  padding: 0;
-  font-weight: inherit;
   display: block;
-  overflow: hidden;
-  margin-bottom: 16px;
   width: 100%;
-
-  &:hover {
-    & .c-card__inner {
-      @media (--breakpoint-30) {
-        background-color: var(--color-neutral-30a40);
-        transform: scale(0.99);
-      }
-    }
-  }
-}
-
-.t-dark .c-card {
-  &:hover {
-    & .c-card__inner {
-      @media (--breakpoint-30) {
-        background-color: var(--color-neutral-0a10);
-      }
-    }
-  }
+  color: inherit;
+  font-weight: inherit;
 }
 
 .c-card__inner {
   display: flex;
-  flex-flow: row nowrap;
+  align-items: center;
+  gap: var(--space-30);
 
-  @media (--breakpoint-20) {
-    padding: 16px;
-    backface-visibility: hidden;
-    transition: transform 150ms var(--bezier-a),
-      background-color 150ms var(--bezier-a);
-  }
-}
-
-.c-card__content {
-  & .c-paragraph--soft {
-    margin-bottom: 0;
-  }
-
-  & h2,
-  & h2.c-heading {
-    margin-bottom: 8px;
+  @media (min-width: 750px) {
+    gap: var(--space-40);
   }
 }
 
 .c-card__image {
   position: relative;
-  overflow: hidden;
-  margin-right: 16px;
   flex: 0 0 64px;
+  width: 64px;
   height: 64px;
+  overflow: hidden;
+  border-radius: var(--border-radius-30);
 
-  @media (--breakpoint-20) {
-    margin-right: 32px;
-    flex: 0 0 200px;
+  @media (min-width: 750px) {
+    flex-basis: 200px;
+    width: 200px;
     height: 200px;
   }
 
   & img {
-    object-fit: cover;
     display: block;
-    width: 64px;
-    height: 64px;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    transition: transform 450ms ease;
+  }
+}
 
-    @media (--breakpoint-20) {
-      width: 200px;
-      height: 200px;
+.c-card__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.c-card__date {
+  display: block;
+  color: var(--color-neutral-60);
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-20);
+  margin-bottom: 10px;
+}
+
+.c-card__content .c-card__title {
+  padding-top: 0;
+  margin-bottom: var(--space-20);
+}
+
+.c-card__description {
+  color: var(--color-neutral-60);
+  margin: 0;
+}
+
+/* Without a photo the text keeps to the same column as cards with one. */
+.c-card--no-image .c-card__content {
+  padding-left: calc(64px + var(--space-30));
+
+  @media (min-width: 750px) {
+    padding-left: calc(200px + var(--space-40));
+  }
+}
+
+.c-card--small.c-card--no-image .c-card__content {
+  padding-left: calc(88px + 24px);
+
+  @media (min-width: 600px) {
+    padding-left: calc(112px + 24px);
+  }
+}
+
+/* Only dimensions, spacing and excerpt length differ in the compact variant. */
+.c-card--small {
+  & .c-card__inner {
+    gap: 24px;
+  }
+
+  & .c-card__image {
+    flex-basis: 88px;
+    width: 88px;
+    height: 108px;
+
+    @media (min-width: 600px) {
+      flex-basis: 112px;
+      width: 112px;
+      height: 124px;
     }
   }
 
-  & figcaption {
-    display: none;
-    position: absolute;
-    z-index: var(--layer-10);
-    bottom: 0;
-    left: 0;
-    right: 0;
-    line-height: 1.5em;
-    padding: 0.5rem 0.75rem;
-    padding-top: 4.5rem;
-    font-weight: 400;
-    font-family: var(--font-family-body);
-    color: var(--color-neutral-0a75);
-    font-size: var(--font-size-20);
-
-    @media (--breakpoint-20) {
-      display: block;
-    }
-
-    &:after {
-      content: " ";
-      position: absolute;
-      z-index: -1;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 50%;
-      background-image: linear-gradient(
-        180deg,
-        transparent,
-        var(--color-primary-90a80)
-      );
-    }
+  & .c-card__description {
+    font-size: var(--font-size-default);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 
@@ -144,7 +116,7 @@
   align-items: center;
 
   & div {
-    line-height: 1.35em;
+    line-height: var(--line-height-20);
   }
 
   & figure {
@@ -163,5 +135,111 @@
     text-decoration: none;
     background-color: transparent;
     padding: 0;
+  }
+}
+
+
+.c-project-grid {
+  display: grid;
+  gap: 20px;
+
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
+}
+
+.c-project {
+  display: grid;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 1.2;
+  border-radius: var(--border-radius-40);
+  background: var(--color-neutral-90);
+  color: var(--color-neutral-0);
+  -webkit-tap-highlight-color: transparent;
+
+  @media (min-width: 750px) {
+    aspect-ratio: 1.25;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, transparent 35%, rgba(15, 20, 15, 0.28) 55%, rgba(15, 20, 15, 0.88));
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  & img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    transition: transform 650ms cubic-bezier(0.2, 0.65, 0.3, 1);
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: var(--color-neutral-0);
+  }
+}
+
+.c-project__content {
+  align-self: end;
+  position: relative;
+  padding: var(--space-40);
+
+  & h3 {
+    font-size: var(--font-size-50);
+    line-height: var(--line-height-20);
+    text-wrap: balance;
+    margin-bottom: var(--space-10);
+  }
+
+  & p {
+    font-size: var(--font-size-30);
+    line-height: var(--line-height-30);
+    color: var(--color-neutral-0a75);
+    font-weight: 400;
+    margin: 0;
+  }
+}
+
+.c-card:focus-visible,
+.c-project:focus-visible {
+  outline: 2px solid var(--color-secondary-50);
+  outline-offset: 6px;
+}
+
+@media (hover: hover) {
+  .c-project:hover img {
+    transform: scale(1.045);
+  }
+
+
+  .c-card:hover .c-card__image img {
+    transform: scale(1.06);
+  }
+
+  .c-card:hover .c-card__content .c-heading {
+    color: var(--color-neutral-90);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-project img,
+  .c-card__image img,
+  .c-card__inner {
+    transition: none;
+  }
+
+  .c-project:hover img,
+  .c-card:hover .c-card__image img {
+    transform: none;
   }
 }

@@ -56,22 +56,16 @@
   
         <li class="c-photos__item c-photos__item--{{ $cols }} {{ if eq $orientation "portrait" }}c-photos__item--portrait{{ end }}">
           {{/* Gebruik $page om de resource op te halen */}}
-          {{ $imgRes := $page.Resources.GetMatch (printf "*%s" $img) }}
-          {{ if $imgRes }}
-            <a data-fancybox="gallery-{{ $ordinal }}" href="{{ $imgRes.RelPermalink }}">
-              <img class="js-lazy" data-original="{{ $imgRes.RelPermalink }}" alt="{{ $caption }}" />
-              {{ if $caption }}
-                <small class="c-photos__caption">{{ $caption }}</small>
-              {{ end }}
-            </a>
-          {{ else }}
-            <a data-fancybox="gallery-{{ $ordinal }}" href="{{ $img }}">
-              <img class="js-lazy" data-original="{{ $img }}" alt="{{ $caption }}" />
-              {{ if $caption }}
-                <small class="c-photos__caption">{{ $caption }}</small>
-              {{ end }}
-            </a>
-          {{ end }}
+          {{ $sizes := cond (eq $cols "100") "100vw" (printf "(min-width: 750px) %svw, 100vw" $cols) }}
+          {{ partial "lightbox-photo.html" (dict
+            "res" ($page.Resources.GetMatch (printf "*%s" $img))
+            "src" $img
+            "alt" $caption
+            "group" (printf "photos-%d" $ordinal)
+            "sizes" $sizes
+            "caption" $caption
+            "captionClass" "c-photos__caption"
+          ) }}
         </li>
       {{ end }}
     {{ end }}

@@ -8,12 +8,12 @@
   margin-left: -10px;
   margin-right: -10px;
   
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     margin-left: -26px;
     margin-right: -26px;
   }
 
-  @media (--breakpoint-30) {
+  @media (min-width: 1000px) {
     margin: var(--space-stack-50);
     margin-left: -58px;
     margin-right: -58px;
@@ -30,16 +30,16 @@
   grid-auto-flow: dense; 
   grid-gap: 6px;
 
-  /* @media (--breakpoint-10) {
+  /* @media (min-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     margin-left: -32px;
     margin-right: -32px;
   }
 
-  @media (--breakpoint-30) {
+  @media (min-width: 1000px) {
     grid-template-columns: repeat(3, 1fr);
   } */
 }
@@ -48,67 +48,67 @@
 /* Dynamische breedtes */
 .c-photos__item--33 {
   grid-column: span 12;
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     grid-column: span 6;
   }
 
-  @media (--breakpoint-30) {
+  @media (min-width: 1000px) {
       grid-column: span 4; /* 4/12 = 33% */
   }
 }
 
 .c-photos__item--40 {
   grid-column: span 12;
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     grid-column: span 6;
   }
-  @media (--breakpoint-30) {
+  @media (min-width: 1000px) {
     grid-column: span 5; /* 5/12 ≈ 40% */
   }
 }
 
 .c-photos__item--50 {
   grid-column: span 12;
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     grid-column: span 6;
   }
-  @media (--breakpoint-30) {
+  @media (min-width: 1000px) {
     grid-column: span 6; /* 6/12 = 50% */
   }
 }
 
 .c-photos__item--60 {
   grid-column: span 12;
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     grid-column: span 6;
   }
-  @media (--breakpoint-30) {
+  @media (min-width: 1000px) {
     grid-column: span 7; /* 7/12 ≈ 60% */
   }
 }
 
 .c-photos__item--66 {
   grid-column: span 12;
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     grid-column: span 6;
   }
-  @media (--breakpoint-30) {
+  @media (min-width: 1000px) {
     grid-column: span 8; /* 8/12 ≈ 66% */
   }
 }
 
 .c-photos__item--100 {
   grid-column: span 12;
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     grid-column: span 12;
   }
-  @media (--breakpoint-30) {
+  @media (min-width: 1000px) {
     grid-column: span 12; /* Volledige breedte */
   }
 }
 
 .c-photos__item--portrait {
-  @media (--breakpoint-30) {
+  @media (min-width: 1000px) {
     grid-row: span 2;
   }
 }

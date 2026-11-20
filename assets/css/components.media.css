@@ -16,6 +16,7 @@
   .c-media__image {
     display: block;
     max-width: 100%;
+    height: auto;
   }
 
   .c-media__caption {
@@ -33,12 +34,12 @@
   margin-left: -10px;
   margin-right: -10px;
   
-  @media (--breakpoint-20) {
+  @media (min-width: 750px) {
     margin-left: -26px;
     margin-right: -26px;
   }
 
-  @media (--breakpoint-30) {
+  @media (min-width: 1000px) {
     margin: var(--space-stack-50);
     margin-left: -58px;
     margin-right: -58px;
