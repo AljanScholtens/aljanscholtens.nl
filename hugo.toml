@@ -2,6 +2,20 @@ baseURL = "https://www.aljanscholtens.nl/"
 title = "Aljan Scholtens"
 defaultContentLanguage = "nl"
 defaultContentLanguageInSubdir = false
+enableRobotsTXT = true
+
+# Tags and categories are not used; don't publish empty overview pages.
+disableKinds = ["taxonomy", "term"]
+
+# llms.txt: a Markdown overview of the site for AI tools, one per language.
+[outputFormats.llms]
+  mediaType = "text/plain"
+  baseName = "llms"
+  isPlainText = true
+  notAlternative = true
+
+[outputs]
+  home = ["html", "rss", "llms"]
 
 [pagination]
   pagerSize = 10
@@ -20,3 +34,16 @@ defaultContentLanguageInSubdir = false
     label = "English"
     locale = "en-GB"
     weight = 2
+
+# static/images is also mounted as assets/images so Hugo can resize those
+# photos (headers, share images). The files stay in static/ as well.
+[module]
+  # Needs css.Build, js.Build and the language API from Hugo 0.170.
+  [module.hugoVersion]
+    min = "0.170.0"
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "static/images"
+    target = "assets/images"

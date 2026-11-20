@@ -1,0 +1,40 @@
+{{- /* llms.txt (https://llmstxt.org): what this site is and where things are,
+       in plain Markdown for AI tools. Generated per language. */ -}}
+# {{ site.Title }}
+
+> {{ site.Home.Description }}
+
+{{ range .Params.about }}{{ . | plainify | htmlUnescape | strings.TrimSpace }}
+
+{{ end -}}
+{{- with .Params.projects }}
+## {{ $.Params.projects_title }}
+
+{{ range . }}
+{{- $url := .url -}}
+{{- with .page }}{{ with site.GetPage . }}{{ $url = .Permalink }}{{ end }}{{ end -}}
+- [{{ .title }}]({{ $url }}): {{ .subtitle }}
+{{ end }}
+{{- end }}
+## {{ if eq site.Language.Name "nl" }}Pagina's{{ else }}Pages{{ end }}
+
+{{ range where site.Pages "Kind" "in" (slice "page" "section") -}}
+{{ if and (ne .Section "blog") (not .Draft) -}}
+- [{{ replace .Title "&shy;" "" | plainify | htmlUnescape }}]({{ .Permalink }}){{ with .Description }}: {{ . }}{{ end }}
+{{ end -}}
+{{ end }}
+## Blog
+
+{{ range (where site.RegularPages "Section" "blog").ByDate.Reverse -}}
+- [{{ replace .Title "&shy;" "" | plainify | htmlUnescape }}]({{ .Permalink }}) ({{ .Date.Format "2006-01-02" }}){{ with .Description }}: {{ . }}{{ end }}
+{{ end }}
+## {{ if eq site.Language.Name "nl" }}Meer{{ else }}More{{ end }}
+
+- [RSS]({{ with site.GetPage "/blog" }}{{ (.OutputFormats.Get "rss").Permalink }}{{ end }})
+{{- range .Translations }}
+- [{{ .Language.Label }}]({{ (.OutputFormats.Get "llms").Permalink }})
+{{- end }}
+- Instagram: https://instagram.com/aljan
+- LinkedIn: https://www.linkedin.com/in/aljanscholtens/
+- YouTube: https://www.youtube.com/aljanscholtens
+- Wolf Maps: https://wolfmaps.com/

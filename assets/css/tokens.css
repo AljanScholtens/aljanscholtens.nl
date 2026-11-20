@@ -145,6 +145,11 @@
 --color-neutral-100a40: hsla(0, 0%, 0%, 0.4);
 --color-neutral-100a80: hsla(0, 0%, 0%, 0.8);
 
+  /* Text and lines by role; .t-dark below swaps them for dark mode. */
+  --color-text: var(--color-neutral-90);
+  --color-text-muted: var(--color-neutral-60);
+  --color-line: var(--color-neutral-20);
+
   /*
    * Other
    */
@@ -170,6 +175,12 @@
   --layer-10: 10;
   --layer-20: 20;
   --layer-30: 30;
+}
+
+.t-dark {
+  --color-text: var(--color-neutral-0);
+  --color-text-muted: var(--color-neutral-0a60);
+  --color-line: var(--color-neutral-0a10);
 }
 
 /* Breakpoints

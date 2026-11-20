@@ -32,6 +32,7 @@
   font-weight: 500;
 }
 
+.t-dark .c-heading,
 .t-dark .c-heading--30,
 .t-dark .u-content h2 {
   color: var(--color-primary-30);

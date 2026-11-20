@@ -3,6 +3,15 @@
 \*------------------------------------*/
 
 /* Quiet closing line on every page: name, mail and socials. */
+.c-footer {
+  /* Room for the fixed navigation bar at the bottom on phones. */
+  padding-bottom: 3.5rem;
+
+  @media (min-width: 750px) {
+    padding-bottom: 0;
+  }
+}
+
 .c-footer__inner {
   display: flex;
   flex-wrap: wrap;
@@ -10,10 +19,10 @@
   justify-content: space-between;
   gap: var(--space-25) var(--space-40);
   padding: var(--space-40) 0;
-  border-top: 1px solid var(--color-neutral-20);
+  border-top: 1px solid var(--color-line);
   font-size: var(--font-size-20);
   line-height: var(--line-height-20);
-  color: var(--color-neutral-60);
+  color: var(--color-text-muted);
 }
 
 .c-footer .c-footer__name {
@@ -36,15 +45,8 @@
     font-weight: 400;
 
     &:hover {
-      color: var(--color-neutral-90);
+      color: var(--color-text);
     }
   }
 }
 
-.t-dark .c-footer__inner {
-  border-top-color: var(--color-neutral-0a10);
-}
-
-.t-dark .c-footer__links a:hover {
-  color: var(--color-neutral-0);
-}

@@ -1,0 +1,29 @@
+# Apache settings for www.aljanscholtens.nl. Each block only applies when the
+# server has that module, so nothing breaks where one is missing.
+
+# One address for the whole site: https://www.aljanscholtens.nl/
+# PHP endpoints are left alone: the Telegram webhook posts to fog-bot.php, and
+# a redirect would drop that POST.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^aljanscholtens\.nl$ [NC]
+  RewriteCond %{REQUEST_URI} !\.php$
+  RewriteRule ^(.*)$ https://www.aljanscholtens.nl/$1 [R=301,L]
+</IfModule>
+
+ErrorDocument 404 /404.html
+
+# Browser caching. CSS, JS and resized images have a fingerprint in their
+# name, so they can be cached for a year; a change gets a new file name.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>

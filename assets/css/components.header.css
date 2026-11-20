@@ -39,9 +39,18 @@
 
   & .c-header__image {
     @media (min-width: 1200px) {
-      background-size: 1300px auto;
-      background-position: center bottom;
       opacity: 1;
+    }
+  }
+
+  & .c-header__img {
+    @media (min-width: 1200px) {
+      width: 1300px;
+      height: auto;
+      left: 50%;
+      top: auto;
+      bottom: 0;
+      translate: -50% 0;
     }
   }
 }
@@ -168,9 +177,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  overflow: hidden;
   mix-blend-mode: lighten;
 
   @media (min-width: 750px) {
@@ -181,10 +188,21 @@
   }
 }
 
-.c-header__image--position {
-  background-position: 80% 0;
+/* The photo fills the header like background-size: cover did. */
+.c-header__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.c-header__image--position .c-header__img {
+  object-position: 80% 0;
 
   @media (min-width: 750px) {
-    background-position: center;
+    object-position: center;
   }
 }

@@ -1,0 +1,28 @@
+# Search engines and AI answer engines may index the site and cite it.
+User-agent: *
+Disallow: /fog-
+Allow: /
+
+# AI search and answer bots: they link back to the source.
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+Disallow: /fog-
+Allow: /
+
+# AI training crawlers: the photos and texts are not training material.
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: Bytespider
+User-agent: Meta-ExternalAgent
+User-agent: cohere-training-data-crawler
+Disallow: /
+
+Sitemap: {{ "sitemap.xml" | absURL }}

@@ -5,7 +5,7 @@ slug: blog
 translationKey: blog
 weight: '2'
 subtitle: ''
-description: ''
+description: "Stories by Aljan Scholtens about landscape photography, hikes and micro-adventures, photo books and building Wolf Maps."
 photo: /images/header-06.jpg
 thumbnail: ''
 header: true

@@ -7,7 +7,7 @@
 .u-content ol {
   list-style: none;
   font-size: var(--font-size-40);
-  color: var(--color-neutral-90);
+  color: var(--color-text);
   line-height: var(--line-height-30);
   margin: var(--space-stack-30);
 
@@ -29,12 +29,6 @@
       }
     }
   }
-}
-
-.t-dark .c-list,
-.t-dark ul,
-.t-dark ol {
-  color: var(--color-neutral-0);
 }
 
 ul.c-list,

@@ -5,8 +5,7 @@ slug: contact
 menu: main
 weight: '3'
 subtitle: ''
-description: Looking for a designer who asks the why question, thinks technically
-  and creates beautiful products? I can help.
+description: "Get in touch with Aljan Scholtens about landscape photography, Wolf Maps and interactive maps, or hiking. Send an email, or let's have a coffee."
 photo: header-10.jpg
 thumbnail: ''
 header: true

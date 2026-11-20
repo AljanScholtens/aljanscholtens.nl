@@ -1,0 +1,14 @@
+{{/* Returns the image resource for a front matter photo value, or nil.
+     Looks in the page bundle first, then in static/images (mounted as
+     assets/images), so "/images/header-12.jpg" works too.
+     Params: page, path. */}}
+{{ $res := false }}
+{{ with .path }}
+  {{ $path := . }}
+  {{ with $.page.Resources.GetMatch (printf "*%s" $path) }}
+    {{ $res = . }}
+  {{ else }}
+    {{ with resources.Get (strings.TrimPrefix "/" $path) }}{{ $res = . }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ return $res }}

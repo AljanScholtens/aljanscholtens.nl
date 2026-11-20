@@ -1,0 +1,70 @@
+{{/* JSON-LD for search engines and AI answer engines: who Aljan is (Person),
+     the site (WebSite), this page (WebPage) and, for blog posts, the
+     article (BlogPosting). Built as data and jsonified, so it is always valid.
+     Params: page, title, description, image (dict with url), url. */}}
+{{ $page := .page }}
+{{ $home := site.Home.Permalink }}
+{{ $lang := site.Language.Name }}
+{{ $personID := printf "%s#person" ("/" | absURL) }}
+{{ $websiteID := printf "%s#website" $home }}
+
+{{ $person := dict
+  "@type" "Person"
+  "@id" $personID
+  "name" "Aljan Scholtens"
+  "url" ("/" | absURL)
+  "image" ("/images/aljanscholtens.jpg" | absURL)
+  "jobTitle" (slice (T "job_photographer") (T "job_designer"))
+  "worksFor" (dict "@type" "Organization" "name" "Wolf Maps" "url" "https://wolfmaps.com/")
+  "sameAs" (slice
+    "https://instagram.com/aljan"
+    "https://www.linkedin.com/in/aljanscholtens/"
+    "https://www.youtube.com/aljanscholtens"
+  )
+}}
+
+{{ $website := dict
+  "@type" "WebSite"
+  "@id" $websiteID
+  "url" $home
+  "name" site.Title
+  "inLanguage" $lang
+  "publisher" (dict "@id" $personID)
+}}
+
+{{ $webpage := dict
+  "@type" (cond (eq $page.Kind "section") "CollectionPage" "WebPage")
+  "@id" .url
+  "url" .url
+  "name" .title
+  "description" .description
+  "inLanguage" $lang
+  "isPartOf" (dict "@id" $websiteID)
+  "primaryImageOfPage" (dict "@type" "ImageObject" "url" .image.url)
+}}
+{{ if $page.IsHome }}
+  {{ $webpage = merge $webpage (dict "about" (dict "@id" $personID)) }}
+{{ end }}
+
+{{ $graph := slice $person $website $webpage }}
+
+{{ if and $page.IsPage (eq $page.Section "blog") }}
+  {{ $image := dict "@type" "ImageObject" "url" .image.url }}
+  {{ with .image.width }}{{ $image = merge $image (dict "width" . "height" $.image.height) }}{{ end }}
+  {{ $graph = $graph | append (dict
+    "@type" "BlogPosting"
+    "@id" (printf "%s#article" .url)
+    "headline" .title
+    "description" .description
+    "image" $image
+    "datePublished" ($page.Date.Format "2006-01-02T15:04:05Z07:00")
+    "dateModified" ($page.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+    "inLanguage" $lang
+    "author" (dict "@id" $personID)
+    "publisher" (dict "@id" $personID)
+    "mainEntityOfPage" (dict "@id" .url)
+    "isPartOf" (dict "@id" $websiteID)
+  ) }}
+{{ end }}
+
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}</script>

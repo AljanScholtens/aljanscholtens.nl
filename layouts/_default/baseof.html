@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {{ $styles := resources.Get "css/styles.css" | css.Build (dict "minify" true "target" "safari15" "externals" (slice "/fonts/*" "/images/*")) | fingerprint }}
+    <link rel="preload" href="/fonts/sofia-pro-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/lora_regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
     <script>
       // Set the dark theme before the first paint, and follow later system changes.
@@ -74,16 +76,13 @@
             {{ end }}
           </div>
         </div>
-        {{ $photo := .Params.photo }}
-        {{ with .Resources.GetMatch (printf "*%s" $photo) }}
-          <div class="c-header__image {{ if .Params.photoPosition }}c-header__image--position{{ end }}" style="background-image: url('{{ .RelPermalink }}')"></div>
-        {{ else }}
-          <div class="c-header__image {{ if .Params.photoPosition }}c-header__image--position{{ end }}" style="background-image: url('{{ $photo }}')"></div>
-        {{ end }}
+        {{ partial "header-image.html" . }}
       </div>
     {{ end }}
 
-    {{ block "main" . }}{{ end }}
+    <main id="main">
+      {{ block "main" . }}{{ end }}
+    </main>
 
     <footer class="l-wrapper c-footer">
       <div class="l-container">

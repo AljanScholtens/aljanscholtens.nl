@@ -1,0 +1,40 @@
+{{/* Full-screen header photo, sharp on high-density screens.
+
+     The photo covers the header, so on tall screens it is wider than the
+     viewport. `sizes` describes that real rendered width; the browser then
+     multiplies by the screen's pixel density and picks a source at least
+     that wide (2x on retina). Widths stop at the original.
+     Param: the page. */}}
+{{ $page := . }}
+{{ $photo := .Params.photo }}
+{{ $class := cond (.Params.photoPosition | default false) "c-header__image c-header__image--position" "c-header__image" }}
+{{ $res := partial "functions/photo.html" (dict "page" . "path" $photo) }}
+
+{{ if and $res (in (slice "jpeg" "png" "webp") $res.MediaType.SubType) }}
+  {{ $ratio := div (float $res.Width) $res.Height }}
+  {{/* Steps up to the original; a step within 10% of it adds nothing. */}}
+  {{ $widths := slice }}
+  {{ range slice 640 960 1280 1920 2560 3200 }}
+    {{ if lt (mul . 1.1) $res.Width }}{{ $widths = $widths | append . }}{{ end }}
+  {{ end }}
+  {{ $widths = $widths | append $res.Width }}
+  {{ $srcset := slice }}
+  {{ $fallback := $res.Resize (printf "%dx webp q82" (cond (gt $res.Width 1920) 1920 $res.Width)) }}
+  {{ range $widths }}
+    {{ $img := $res.Resize (printf "%dx webp q82" .) }}
+    {{ $srcset = $srcset | append (printf "%s %dw" $img.RelPermalink $img.Width) }}
+  {{ end }}
+  {{/* Header height: 100vh on phones, at most 900px from 750px up. */}}
+  {{ $sizes := printf "(min-width: 750px) max(100vw, %.0fpx), max(100vw, calc(100vh * %.3f))" (mul 900 $ratio) $ratio }}
+  <div class="{{ $class }}">
+    <img class="c-header__img" src="{{ $fallback.RelPermalink }}"
+      srcset="{{ delimit $srcset ", " }}"
+      sizes="{{ $sizes }}"
+      width="{{ $res.Width }}" height="{{ $res.Height }}"
+      alt="" fetchpriority="high" decoding="async">
+  </div>
+{{ else if $photo }}
+  <div class="{{ $class }}">
+    <img class="c-header__img" src="{{ with $res }}{{ .RelPermalink }}{{ else }}{{ $photo }}{{ end }}" alt="" fetchpriority="high" decoding="async">
+  </div>
+{{ end }}

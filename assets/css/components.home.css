@@ -23,7 +23,7 @@
   top: 0;
   left: 16px;
   right: 16px;
-  border-top: 1px solid var(--color-neutral-20);
+  border-top: 1px solid var(--color-line);
 
   @media (min-width: 750px) {
     left: 64px;
@@ -57,7 +57,7 @@
   font-size: var(--font-size-20);
   font-weight: 400;
   line-height: var(--line-height-30);
-  color: var(--color-neutral-60);
+  color: var(--color-text-muted);
   margin-bottom: 20px;
 }
 

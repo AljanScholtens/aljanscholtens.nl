@@ -5,7 +5,7 @@ slug: "contact"
 menu: "main"
 weight: "3"
 subtitle: "" # Not required
-description: "Op zoek naar een designer die de waarom-vraag stelt, technisch meedenkt en prachtige producten maakt? Ik kan je helpen." # Not required
+description: "Neem contact op met Aljan Scholtens over landschapsfotografie, Wolf Maps en interactieve kaarten, of trektochten. Mail gerust, of drink een kop koffie."
 photo: "header-10.jpg" # Not required
 thumbnail: "" # Not required
 

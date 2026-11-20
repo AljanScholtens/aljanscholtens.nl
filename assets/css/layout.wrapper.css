@@ -13,18 +13,15 @@
 .l-wrapper {
   clear: both;
   position: relative;
+}
 
-  &:first-of-type {
-    padding-top: 76px;
-  }
+/* Pages without a header photo: start the content below the navigation. */
+main > .l-wrapper:first-child {
+  padding-top: 76px;
+}
 
-  &:last-of-type {
-    padding-bottom: 3.5rem;
-
-    @media (min-width: 750px) {
-      padding-bottom: 0;
-    }
-  }
+.c-header + main > .l-wrapper:first-child {
+  padding-top: 0;
 }
 
 .t-dark .l-wrapper {

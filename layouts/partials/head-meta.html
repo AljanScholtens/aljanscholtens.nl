@@ -1,5 +1,5 @@
-{{/* Title, description, canonical, language versions and share metadata
-     (Open Graph, X/Twitter) for every page. */}}
+{{/* Title, description, canonical, language versions, feeds, share metadata
+     (Open Graph, X/Twitter) and structured data for every page. */}}
 
 {{- $description := .Description -}}
 {{- if and (not $description) .IsPage -}}
@@ -10,25 +10,43 @@
 {{- /* Titles may contain &shy; for hyphenation on the page; leave it out here. */ -}}
 {{- $title := replace .Title "&shy;" "" | plainify | htmlUnescape -}}
 
-<title>{{ $title }} - {{ site.Title }}</title>
-<meta name="description" content="{{ $description }}">
-<link rel="canonical" href="{{ .Permalink }}">
+{{- /* Paginated sections: every page is its own canonical URL with its own title. */ -}}
+{{- $canonical := .Permalink -}}
+{{- $pageNumber := 1 -}}
+{{- if eq .Kind "section" -}}
+  {{- $pageNumber = .Paginator.PageNumber -}}
+  {{- $canonical = .Paginator.URL | absURL -}}
+{{- end -}}
+{{- $fullTitle := $title -}}
+{{- if gt $pageNumber 1 }}{{ $fullTitle = printf "%s – %s" $title (T "page_of" (dict "Page" $pageNumber "Total" .Paginator.TotalPages)) }}{{ end -}}
 
-{{- /* Every language version of this page, plus x-default for the Dutch one. */}}
-{{ range .AllTranslations }}
+<title>{{ $fullTitle }} - {{ site.Title }}</title>
+<meta name="description" content="{{ $description }}">
+<link rel="canonical" href="{{ $canonical }}">
+
+{{- /* Every language version of this page, plus x-default for the Dutch one.
+       Later pages of a list have no counterpart, so only the first page gets them. */}}
+{{- if eq $pageNumber 1 }}
+{{- range .AllTranslations }}
 <link rel="alternate" hreflang="{{ .Language.Name }}" href="{{ .Permalink }}">
 {{- end }}
 {{- $default := (index hugo.Sites 0).Language.Name }}
 {{- range .AllTranslations }}{{ if eq .Language.Name $default }}
 <link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
 {{- end }}{{ end }}
+{{- end }}
 
-{{- /* Share image: the page's own photo (from its bundle or a site path), else the site default.
-       Bundle photos are cropped to the 1200x630 that share previews use. */}}
+{{- /* Full-text feed of the blog in this language. */}}
+{{- with site.GetPage "/blog" }}{{ with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .Permalink }}">
+{{- end }}{{ end }}
+
+{{- /* Share image: the page's photo (bundle or static/images) cropped to the
+       1200x630 that share previews use, else the site default. */}}
 {{- $image := dict "url" ("/images/header-01.jpg" | absURL) -}}
 {{- with .Params.photo -}}
   {{- $image = dict "url" (. | absURL) -}}
-  {{- with $.Resources.GetMatch (printf "*%s" .) -}}
+  {{- with partial "functions/photo.html" (dict "page" $ "path" .) -}}
     {{- if in (slice "jpeg" "png" "webp") .MediaType.SubType -}}
       {{- $share := .Fill "1200x630 jpg Smart q80" -}}
       {{- $image = dict "url" $share.Permalink "width" $share.Width "height" $share.Height -}}
@@ -40,8 +58,8 @@
 
 <meta property="og:site_name" content="{{ site.Title }}">
 <meta property="og:type" content="{{ if and .IsPage (eq .Section "blog") }}article{{ else }}website{{ end }}">
-<meta property="og:url" content="{{ .Permalink }}">
-<meta property="og:title" content="{{ $title }}">
+<meta property="og:url" content="{{ $canonical }}">
+<meta property="og:title" content="{{ $fullTitle }}">
 <meta property="og:description" content="{{ $description }}">
 <meta property="og:locale" content="{{ replace site.Language.Locale "-" "_" }}">
 {{- range .Translations }}
@@ -63,3 +81,5 @@
 {{- end }}
 
 <meta name="twitter:card" content="summary_large_image">
+
+{{ partial "structured-data.html" (dict "page" . "title" $title "description" $description "image" $image "url" $canonical) }}

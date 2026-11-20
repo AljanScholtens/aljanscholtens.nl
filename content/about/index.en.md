@@ -6,7 +6,7 @@ draft: false
 layout: "default"
 menu: main
 weight: 4
-description: ""
+description: "I'm Aljan Scholtens, a landscape photographer from Groningen: why I photograph nature, how I got started and the gear I take outside."
 photo: "header-08.jpg"
 thumbnail: ""
 header: true
