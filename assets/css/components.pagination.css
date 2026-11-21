@@ -26,7 +26,7 @@
   border-radius: 50%;
   background: var(--color-primary-50);
   color: var(--color-neutral-0);
-  transition: background-color 150ms var(--bezier-default), transform 150ms var(--bezier-default);
+  transition: background-color var(--duration-10) var(--bezier-default), transform var(--duration-10) var(--bezier-default);
 
   & .c-icon {
     width: 20px;

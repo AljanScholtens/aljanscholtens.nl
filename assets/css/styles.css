@@ -31,6 +31,7 @@
 @import "components.author.css";
 @import "components.button.css";
 @import "components.card.css";
+@import "components.project.css";
 @import "components.home.css";
 @import "components.comment.css";
 @import "components.lightbox.css";
@@ -46,16 +47,13 @@
 
 @import "components.header.css";
 @import "components.heading.css";
-@import "components.highlight.css";
 @import "components.icon.css";
 @import "components.list.css";
-@import "components.logo-grid.css";
 @import "components.media.css";
 @import "components.navigation-mobile.css";
 @import "components.navigation.css";
 @import "components.paragraph.css";
 @import "components.photos.css";
-@import "components.quote.css";
 
 /**
  * #UTILITIES

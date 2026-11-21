@@ -9,9 +9,18 @@
     <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
     <script>
       // Set the dark theme before the first paint, and follow later system changes.
+      // ?theme=dark or ?theme=light forces a theme for this browser tab (handy to
+      // preview); ?theme=auto goes back to the system setting.
       (() => {
         const dark = matchMedia('(prefers-color-scheme: dark)');
-        const apply = () => document.documentElement.classList.toggle('t-dark', dark.matches);
+        let forced = null;
+        try {
+          const param = new URLSearchParams(location.search).get('theme');
+          if (param === 'dark' || param === 'light') sessionStorage.setItem('theme', param);
+          if (param === 'auto') sessionStorage.removeItem('theme');
+          forced = sessionStorage.getItem('theme');
+        } catch (e) {}
+        const apply = () => document.documentElement.classList.toggle('t-dark', forced ? forced === 'dark' : dark.matches);
         apply();
         dark.addEventListener('change', apply);
       })();

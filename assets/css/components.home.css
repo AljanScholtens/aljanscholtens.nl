@@ -1,6 +1,6 @@
 /* A quiet, photographic homepage using the site's existing typefaces. */
 .c-home {
-  color: var(--color-neutral-90);
+  color: var(--color-text);
 }
 
 .c-home .c-home__section {
@@ -8,12 +8,12 @@
 }
 
 .c-home__section > .l-container {
-  padding-top: 44px;
-  padding-bottom: 44px;
+  padding-top: var(--space-45);
+  padding-bottom: var(--space-45);
 
   @media (min-width: 750px) {
-    padding-top: 80px;
-    padding-bottom: 80px;
+    padding-top: var(--space-50);
+    padding-bottom: var(--space-50);
   }
 }
 
@@ -21,35 +21,35 @@
   content: "";
   position: absolute;
   top: 0;
-  left: 16px;
-  right: 16px;
+  left: var(--space-30);
+  right: var(--space-30);
   border-top: 1px solid var(--color-line);
 
   @media (min-width: 750px) {
-    left: 64px;
-    right: 64px;
+    left: var(--space-50);
+    right: var(--space-50);
   }
 }
 
 .c-home__split {
   display: grid;
-  gap: 12px;
+  gap: var(--space-25);
 
   @media (min-width: 1000px) {
     grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
-    gap: 72px;
+    gap: var(--space-50);
   }
 }
 
 .c-home__section-heading h2 {
-  margin-bottom: 20px;
+  margin-bottom: var(--space-30);
 }
 
 .c-home__more {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: var(--space-25);
+  margin-bottom: var(--space-30);
 }
 
 .c-home .c-home__updated,
@@ -58,7 +58,7 @@
   font-weight: 400;
   line-height: var(--line-height-30);
   color: var(--color-text-muted);
-  margin-bottom: 20px;
+  margin-bottom: var(--space-30);
 }
 
 .c-home .c-now__note {

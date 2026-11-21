@@ -1,4 +1,9 @@
-/* Shared article card: standard on /blog, compact in recent-article lists. */
+/*------------------------------------*\
+  #COMPONENTS-CARD
+\*------------------------------------*/
+
+/* Article card. Phones always get the compact layout; from 750px up the
+   standard card on /blog grows, while c-card--small stays compact. */
 .c-card-grid {
   display: grid;
   gap: var(--space-40);
@@ -14,25 +19,21 @@
 .c-card__inner {
   display: flex;
   align-items: center;
-  gap: var(--space-30);
-
-  @media (min-width: 750px) {
-    gap: var(--space-40);
-  }
+  gap: var(--space-35);
 }
 
 .c-card__image {
   position: relative;
-  flex: 0 0 64px;
-  width: 64px;
-  height: 64px;
+  flex: 0 0 88px;
+  width: 88px;
+  height: 108px;
   overflow: hidden;
   border-radius: var(--border-radius-30);
 
-  @media (min-width: 750px) {
-    flex-basis: 200px;
-    width: 200px;
-    height: 200px;
+  @media (min-width: 600px) {
+    flex-basis: 112px;
+    width: 112px;
+    height: 124px;
   }
 
   & img {
@@ -40,7 +41,7 @@
     object-fit: cover;
     width: 100%;
     height: 100%;
-    transition: transform 450ms ease;
+    transition: transform var(--duration-30) var(--bezier-b);
   }
 }
 
@@ -54,174 +55,70 @@
   color: var(--color-text-muted);
   font-size: var(--font-size-20);
   line-height: var(--line-height-20);
-  margin-bottom: 10px;
+  margin-bottom: var(--space-20);
 }
 
 .c-card__content .c-card__title {
   padding-top: 0;
   margin-bottom: var(--space-20);
+  font-size: var(--font-size-45);
+  line-height: var(--line-height-20);
 }
 
 .c-card__description {
   color: var(--color-text-muted);
   margin: 0;
+  font-size: var(--font-size-default);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Without a photo the text keeps to the same column as cards with one. */
 .c-card--no-image .c-card__content {
-  padding-left: calc(64px + var(--space-30));
-
-  @media (min-width: 750px) {
-    padding-left: calc(200px + var(--space-40));
-  }
-}
-
-.c-card--small.c-card--no-image .c-card__content {
-  padding-left: calc(88px + 24px);
+  padding-left: calc(88px + var(--space-35));
 
   @media (min-width: 600px) {
-    padding-left: calc(112px + 24px);
+    padding-left: calc(112px + var(--space-35));
   }
 }
 
-/* Only dimensions, spacing and excerpt length differ in the compact variant. */
-.c-card--small {
-  & .c-card__inner {
-    gap: 24px;
-  }
+/* Standard card from 750px up: large photo, full heading and description. */
+@media (min-width: 750px) {
+  .c-card:not(.c-card--small) {
+    & .c-card__inner {
+      gap: var(--space-40);
+    }
 
-  & .c-card__image {
-    flex-basis: 88px;
-    width: 88px;
-    height: 108px;
+    & .c-card__image {
+      flex-basis: 200px;
+      width: 200px;
+      height: 200px;
+    }
 
-    @media (min-width: 600px) {
-      flex-basis: 112px;
-      width: 112px;
-      height: 124px;
+    & .c-card__content .c-card__title {
+      font-size: var(--font-size-60);
+    }
+
+    & .c-card__description {
+      display: block;
+      font-size: var(--font-size-40);
+      -webkit-line-clamp: unset;
+    }
+
+    &.c-card--no-image .c-card__content {
+      padding-left: calc(200px + var(--space-40));
     }
   }
-
-  & .c-card__description {
-    font-size: var(--font-size-default);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
 }
 
-.c-card__meta {
-  display: flex;
-  align-items: center;
-
-  & div {
-    line-height: var(--line-height-20);
-  }
-
-  & figure {
-    height: 3rem;
-    width: 3rem;
-    display: block;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 50%;
-    margin-right: var(--space-30);
-  }
-
-  & a {
-    color: var(--color-neutral-70);
-    text-decoration: none;
-    background-color: transparent;
-    padding: 0;
-  }
-}
-
-
-.c-project-grid {
-  display: grid;
-  gap: 20px;
-
-  @media (min-width: 600px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px;
-  }
-}
-
-.c-project {
-  display: grid;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  aspect-ratio: 1.2;
-  border-radius: var(--border-radius-40);
-  background: var(--color-neutral-90);
-  color: var(--color-neutral-0);
-  -webkit-tap-highlight-color: transparent;
-
-  @media (min-width: 750px) {
-    aspect-ratio: 1.25;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(180deg, transparent 35%, rgba(15, 20, 15, 0.28) 55%, rgba(15, 20, 15, 0.88));
-    z-index: -1;
-    pointer-events: none;
-  }
-
-  & img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -2;
-    transition: transform 650ms cubic-bezier(0.2, 0.65, 0.3, 1);
-  }
-
-  &:hover,
-  &:focus-visible {
-    color: var(--color-neutral-0);
-  }
-}
-
-.c-project__content {
-  align-self: end;
-  position: relative;
-  padding: var(--space-40);
-
-  & h3 {
-    font-size: var(--font-size-50);
-    line-height: var(--line-height-20);
-    text-wrap: balance;
-    margin-bottom: var(--space-10);
-  }
-
-  & p {
-    font-size: var(--font-size-30);
-    line-height: var(--line-height-30);
-    color: var(--color-neutral-0a75);
-    font-weight: 400;
-    margin: 0;
-  }
-}
-
-.c-card:focus-visible,
-.c-project:focus-visible {
+.c-card:focus-visible {
   outline: 2px solid var(--color-secondary-50);
   outline-offset: 6px;
 }
 
 @media (hover: hover) {
-  .c-project:hover img {
-    transform: scale(1.045);
-  }
-
-
   .c-card:hover .c-card__image img {
     transform: scale(1.06);
   }
@@ -232,13 +129,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .c-project img,
-  .c-card__image img,
-  .c-card__inner {
+  .c-card__image img {
     transition: none;
   }
 
-  .c-project:hover img,
   .c-card:hover .c-card__image img {
     transform: none;
   }

@@ -20,18 +20,22 @@ projects:
     subtitle: "Digital design for beautiful, shareable maps."
     url: "https://wolfmaps.com/"
     image: "/images/wolf-maps.jpg"
+    image_alt: "Hand holding a phone with a Wolf Maps map of the Isle of Skye, in front of autumn-coloured shrubs"
   - title: "Drentsche Aa Trail"
     subtitle: "A four-day walking trail through Drenthe."
     page: "/blog/2026-07-08-drentsche-aa-trail"
     image: "AJS-20260517-3549.jpg"
+    image_alt: "Grassy path along a small stream and a woodland edge, with a meadow in the morning mist"
   - title: "Waar Licht Ontstaat"
     subtitle: "A photo book with twelve years of wonder."
     page: "/blog/2025-11-16-waar-licht-ontstaat"
     image: "AJS-20260331-1783.jpg"
+    image_alt: "The photo book Waar Licht Ontstaat standing on a wooden table in the sunlight"
   - title: "Holten photo book"
     subtitle: "A photography project growing over the years."
     page: "/blog/2026-11-17-fotoboek-holten"
     image: "ree-holten.jpg"
+    image_alt: "Roe buck with antlers in the tall grass of the Holten, in front of a dark woodland edge"
 now_items:
   - >
     Focused on building [Wolf Maps](https://wolfmaps.com/), for beautiful, shareable maps. [Curious?](/en/contact/)

@@ -1,9 +1,0 @@
-</div>
-<div class="l-single">
-  <div class="c-card-grid">
-    {{ range first 2 (where .Site.RegularPages "Section" "blog").ByDate.Reverse }}
-      {{ partial "article-card.html" (dict "page" . "compact" true) }}
-    {{ end }}
-  </div>
-</div>
-<div class="l-single u-content">

@@ -5,7 +5,7 @@
 /* Quiet closing line on every page: name, mail and socials. */
 .c-footer {
   /* Room for the fixed navigation bar at the bottom on phones. */
-  padding-bottom: 3.5rem;
+  padding-bottom: var(--space-50);
 
   @media (min-width: 750px) {
     padding-bottom: 0;

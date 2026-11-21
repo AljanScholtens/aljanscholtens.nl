@@ -9,18 +9,17 @@
           {{ with .page }}{{ $page = $.Site.GetPage . }}{{ end }}
           {{ $url := .url }}
           {{ with $page }}{{ $url = .RelPermalink }}{{ end }}
-          {{ $imagePage := $page }}
+          {{ $imagePage := $ }}
+          {{ with $page }}{{ $imagePage = . }}{{ end }}
           {{ with .image_page }}{{ $imagePage = $.Site.GetPage . }}{{ end }}
-          {{ $image := false }}
-          {{ $imageName := .image }}
-          {{ with $imagePage }}{{ $image = .Resources.GetMatch $imageName }}{{ end }}
+          {{/* A bundle photo of the linked page, or a path in static/images. */}}
+          {{ $image := partial "functions/photo.html" (dict "page" $imagePage "path" .image) }}
+          {{ $alt := .image_alt | default "" }}
           <a class="c-project" href="{{ $url }}">
-            {{ if $image }}
-              {{ $small := $image.Fill "640x480 webp" }}
-              {{ $large := $image.Fill "1120x840 webp" }}
-              <img src="{{ $small.RelPermalink }}" srcset="{{ $small.RelPermalink }} 640w, {{ $large.RelPermalink }} 1120w" sizes="(min-width: 1240px) 540px, (min-width: 600px) 45vw, 100vw" width="640" height="480" alt="" loading="lazy">
-            {{ else }}
-              <img src="{{ .image }}" width="1120" height="840" alt="" loading="lazy">
+            {{ with $image }}
+              {{ $small := .Fill "640x480 webp" }}
+              {{ $large := .Fill "1120x840 webp" }}
+              <img src="{{ $small.RelPermalink }}" srcset="{{ $small.RelPermalink }} 640w, {{ $large.RelPermalink }} 1120w" sizes="(min-width: 1240px) 540px, (min-width: 600px) 45vw, 100vw" width="640" height="480" alt="{{ $alt }}" loading="lazy">
             {{ end }}
             <div class="c-project__content">
               <h3>{{ .title }}</h3>

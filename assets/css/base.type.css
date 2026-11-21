@@ -42,7 +42,7 @@ a {
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
   text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
-  transition: text-decoration-color 150ms var(--bezier-default), color 150ms var(--bezier-default);
+  transition: text-decoration-color var(--duration-10) var(--bezier-default), color var(--duration-10) var(--bezier-default);
 
   &:hover {
     text-decoration-color: currentColor;

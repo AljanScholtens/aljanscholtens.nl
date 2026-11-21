@@ -63,7 +63,9 @@
   --space-20: 8px;
   --space-25: 12px; /* Not default */
   --space-30: 16px;
+  --space-35: 24px;
   --space-40: 32px;
+  --space-45: 48px;
   --space-50: 64px;
 
   --space-stack-default: var(--space-stack-40);
@@ -170,6 +172,13 @@
   /* Animation beziers */
   --bezier-default: var(--bezier-a);
   --bezier-a: cubic-bezier(0.86, 0, 0.07, 1);
+  --bezier-b: cubic-bezier(0.2, 0.65, 0.3, 1); /* Soft ease-out, for photos zooming in */
+
+  /* Animation durations */
+  --duration-10: 150ms; /* Hover colours */
+  --duration-20: 200ms; /* Fades */
+  --duration-30: 450ms; /* Small photo zoom */
+  --duration-40: 650ms; /* Large photo zoom */
 
   /* Layers */
   --layer-10: 10;
