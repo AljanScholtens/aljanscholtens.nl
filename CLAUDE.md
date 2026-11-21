@@ -17,6 +17,22 @@ Stel het voor en wacht op een akkoord voordat je:
 
 Commit, push en deploy alleen als daarom gevraagd wordt.
 
+## Componenten en de styleguide
+
+- Een component bestaat uit: een **partial** in `layouts/partials/` (als het
+  markup heeft), een **CSS-bestand** `components.<naam>.css` en een
+  **voorbeeld in de styleguide**.
+- De styleguide staat op `/styleguide/` en bestaat **alleen op de lokale
+  dev-server** (`hugo server`), niet live. Template:
+  `layouts/_default/styleguide.html`. Tokens leest hij zelf uit `tokens.css`.
+- Een nieuw of gewijzigd component is pas **af als het in de styleguide
+  staat**, met al zijn varianten. Zet de naam dan ook in de lijst `$shown`
+  bovenin de template; onderaan de styleguide zie je welke componenten nog
+  geen voorbeeld hebben.
+- Kijk **eerst in de styleguide** of iets al bestaat voordat je iets nieuws
+  voorstelt.
+- Dark mode bekijken: zet `?theme=dark` achter de URL (`?theme=auto` voor terug).
+
 ## CSS: ITCSS + BEM + tokens
 
 - **Lagen** (volgorde in `assets/css/styles.css`): tokens → base → layout →

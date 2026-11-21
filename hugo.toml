@@ -7,6 +7,22 @@ enableRobotsTXT = true
 # Tags and categories are not used; don't publish empty overview pages.
 disableKinds = ["taxonomy", "term"]
 
+# The styleguide (/styleguide/) only exists on the local dev server
+# (hugo server); production builds skip it. It never appears in lists,
+# menus, feeds or the sitemap.
+[[cascade]]
+  [cascade.build]
+    render = "never"
+    list = "never"
+  [cascade.target]
+    path = "{/styleguide,/styleguide/**}"
+    environment = "production"
+[[cascade]]
+  [cascade.build]
+    list = "never"
+  [cascade.target]
+    path = "{/styleguide,/styleguide/**}"
+
 # llms.txt: a Markdown overview of the site for AI tools, one per language.
 [outputFormats.llms]
   mediaType = "text/plain"

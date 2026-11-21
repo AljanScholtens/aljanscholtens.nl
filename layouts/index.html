@@ -5,27 +5,7 @@
       <h2 id="projects-title" class="u-visually-hidden">{{ .Params.projects_title }}</h2>
       <div class="c-project-grid">
         {{ range .Params.projects }}
-          {{ $page := false }}
-          {{ with .page }}{{ $page = $.Site.GetPage . }}{{ end }}
-          {{ $url := .url }}
-          {{ with $page }}{{ $url = .RelPermalink }}{{ end }}
-          {{ $imagePage := $ }}
-          {{ with $page }}{{ $imagePage = . }}{{ end }}
-          {{ with .image_page }}{{ $imagePage = $.Site.GetPage . }}{{ end }}
-          {{/* A bundle photo of the linked page, or a path in static/images. */}}
-          {{ $image := partial "functions/photo.html" (dict "page" $imagePage "path" .image) }}
-          {{ $alt := .image_alt | default "" }}
-          <a class="c-project" href="{{ $url }}">
-            {{ with $image }}
-              {{ $small := .Fill "640x480 webp" }}
-              {{ $large := .Fill "1120x840 webp" }}
-              <img src="{{ $small.RelPermalink }}" srcset="{{ $small.RelPermalink }} 640w, {{ $large.RelPermalink }} 1120w" sizes="(min-width: 1240px) 540px, (min-width: 600px) 45vw, 100vw" width="640" height="480" alt="{{ $alt }}" loading="lazy">
-            {{ end }}
-            <div class="c-project__content">
-              <h3>{{ .title }}</h3>
-              <p>{{ .subtitle }}</p>
-            </div>
-          </a>
+          {{ partial "project-card.html" (dict "project" . "context" $) }}
         {{ end }}
       </div>
     </div>

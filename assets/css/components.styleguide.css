@@ -1,0 +1,113 @@
+/*------------------------------------*\
+  #COMPONENTS-STYLEGUIDE
+\*------------------------------------*/
+
+/* Only for /styleguide/ (local dev server). Loaded by that page alone, so it
+   is not part of styles.css. */
+.c-styleguide {
+  /* Token and file names: the site's Courier New is too thin at this size. */
+  & code {
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: var(--font-size-20);
+    color: var(--color-text);
+  }
+
+  & h2 small {
+    display: block;
+    margin-top: var(--space-20);
+    font-size: var(--font-size-20);
+    font-weight: 400;
+    color: var(--color-text-muted);
+  }
+}
+
+.c-styleguide__intro {
+  max-width: 62ch;
+  margin-bottom: var(--space-50);
+}
+
+.c-styleguide__section {
+  padding: var(--space-45) 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.c-styleguide__example {
+  margin: var(--space-30) 0 var(--space-40);
+}
+
+.c-styleguide__swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-30);
+  margin: var(--space-30) 0 var(--space-40);
+  padding: 0;
+  list-style: none;
+}
+
+.c-styleguide__swatch {
+  display: grid;
+  gap: var(--space-10);
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-20);
+
+  & small {
+    color: var(--color-text-muted);
+  }
+}
+
+.c-styleguide__chip {
+  display: block;
+  height: var(--space-50);
+  border: 1px solid var(--color-line);
+  border-radius: var(--border-radius-30);
+}
+
+.c-styleguide__rows {
+  display: grid;
+  gap: var(--space-30);
+  margin: var(--space-30) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.c-styleguide__row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  align-items: center;
+  gap: var(--space-30);
+
+  & small {
+    color: var(--color-text-muted);
+  }
+}
+
+.c-styleguide__bar {
+  display: block;
+  height: var(--space-30);
+  background: var(--color-primary-50);
+}
+
+.c-styleguide__box {
+  display: block;
+  width: var(--space-50);
+  height: var(--space-45);
+  border: 2px solid var(--color-primary-50);
+}
+
+.c-styleguide__coverage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-20) var(--space-30);
+  margin: var(--space-30) 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--font-size-20);
+
+  & .is-missing {
+    color: var(--color-secondary-50);
+  }
+
+  & .is-shown {
+    color: var(--color-text-muted);
+  }
+}

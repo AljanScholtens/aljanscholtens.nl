@@ -1,0 +1,204 @@
+{{ define "main" }}
+{{/* Living styleguide: every token and component, rendered with the real
+     partials and CSS. Only on the local dev server (see hugo.toml).
+     Add a section here whenever a component is added. */}}
+{{ $sg := resources.Get "css/components.styleguide.css" | css.Build (dict "minify" true "target" "safari15") | fingerprint }}
+<link rel="stylesheet" href="{{ $sg.RelPermalink }}">
+
+{{/* Components that have an example below; the overview at the end lists
+     every components.*.css file and flags the ones still missing here. */}}
+{{ $shown := slice "card" "project" "pagination" "photos" "lightbox" "heading" "paragraph" "list" "footer" "header" "navigation" "navigation-mobile" "icon" "home" }}
+
+{{/* Read the tokens straight from tokens.css, so this page never drifts. */}}
+{{ $tokens := dict }}
+{{ $order := slice }}
+{{ range findRESubmatch `(--[a-z0-9-]+):\s*([^;]+);` (resources.Get "css/tokens.css").Content }}
+  {{ $name := index . 1 }}
+  {{ if not (index $tokens $name) }}
+    {{ $tokens = merge $tokens (dict $name (index . 2 | strings.TrimSpace)) }}
+    {{ $order = $order | append $name }}
+  {{ end }}
+{{ end }}
+
+<div class="l-wrapper">
+  <article class="l-container c-styleguide">
+    <header class="c-styleguide__intro">
+      <h1 class="c-heading c-heading--50">Styleguide</h1>
+      <p class="c-paragraph c-paragraph--lead">Alle tokens en componenten van de site, met de echte partials en CSS.</p>
+      <p>Bekijk in dark mode met <a href="?theme=dark">?theme=dark</a>, terug met <a href="?theme=auto">?theme=auto</a>. Deze pagina bestaat alleen op de lokale dev-server.</p>
+    </header>
+
+    {{/* ---------------------------------------------------------- Tokens */}}
+    <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Kleuren</h2>
+      {{/* Role tokens first (they switch in dark mode), then the scales. */}}
+      {{ range slice
+        (dict "title" "Rollen" "match" `^--color-(text|text-muted|line)$`)
+        (dict "title" "Primary" "match" `^--color-primary-[0-9]+(a[0-9]+)?$`)
+        (dict "title" "Secondary" "match" `^--color-secondary-[0-9]+(a[0-9]+)?$`)
+        (dict "title" "Tertiary" "match" `^--color-tertiary-[0-9]+(a[0-9]+)?$`)
+        (dict "title" "Neutral" "match" `^--color-neutral-[0-9]+(a[0-9]+)?$`)
+      }}
+        {{ $match := .match }}
+        <h3 class="c-heading c-heading--10">{{ .title }}</h3>
+        <ul class="c-styleguide__swatches">
+          {{ range $order }}
+            {{ if findRE $match . }}
+              <li class="c-styleguide__swatch">
+                <span class="c-styleguide__chip" style="{{ printf "background: var(%s)" . | safeCSS }}"></span>
+                <code>{{ . }}</code>
+                <small>{{ index $tokens . }}</small>
+              </li>
+            {{ end }}
+          {{ end }}
+        </ul>
+      {{ end }}
+    </section>
+
+    <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Lettergroottes</h2>
+      <ul class="c-styleguide__rows">
+        {{ range $order }}
+          {{ if findRE `^--font-size-[0-9]+$` . }}
+            <li class="c-styleguide__row">
+              <code>{{ . }} <small>{{ index $tokens . }}</small></code>
+              <span style="{{ printf "font-size: var(%s); line-height: var(--line-height-20)" . | safeCSS }}">Ruimte om te maken</span>
+            </li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    </section>
+
+    <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Ruimtes</h2>
+      <ul class="c-styleguide__rows">
+        {{ range $order }}
+          {{ if findRE `^--space-[0-9]+$` . }}
+            <li class="c-styleguide__row">
+              <code>{{ . }} <small>{{ index $tokens . }}</small></code>
+              <span class="c-styleguide__bar" style="{{ printf "width: var(%s)" . | safeCSS }}"></span>
+            </li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    </section>
+
+    <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Regelafstand, hoeken en beweging</h2>
+      <ul class="c-styleguide__rows">
+        {{ range $order }}
+          {{ if findRE `^--(line-height|border-radius|duration|bezier)-[0-9a-z]+$` . }}
+            <li class="c-styleguide__row">
+              <code>{{ . }} <small>{{ index $tokens . }}</small></code>
+              {{ if hasPrefix . "--border-radius" }}
+                <span class="c-styleguide__box" style="{{ printf "border-radius: var(%s)" . | safeCSS }}"></span>
+              {{ end }}
+            </li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    </section>
+
+    {{/* ------------------------------------------------------ Typography */}}
+    <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Typografie <small><code>components.heading</code> · <code>components.paragraph</code> · <code>components.list</code></small></h2>
+      <div class="c-styleguide__example u-content">
+        <p class="c-heading c-heading--50">c-heading--50</p>
+        <p class="c-heading c-heading--30">c-heading--30</p>
+        <p class="c-heading c-heading--10">c-heading--10</p>
+        <p class="c-paragraph c-paragraph--lead">c-paragraph--lead: de eerste alinea van een artikel.</p>
+        <p>Gewone alinea met <a href="#">een link in lopende tekst</a>, zoals in artikelen.</p>
+        <p class="c-paragraph c-paragraph--soft">c-paragraph--soft: bijtekst, zoals onder een artikel.</p>
+        <ul class="c-list">
+          <li>c-list: een lijstitem</li>
+          <li>Nog een item met <a href="#">een link</a></li>
+        </ul>
+      </div>
+    </section>
+
+    {{/* ------------------------------------------------------ Components */}}
+    {{ $posts := (where site.RegularPages "Section" "blog").ByDate.Reverse }}
+    {{ $noImage := false }}
+    {{ range $posts }}{{ if and (not $noImage) (not .Params.photo) (not .Params.card_image) }}{{ $noImage = . }}{{ end }}{{ end }}
+
+    <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Artikelcard <small><code>partials/article-card.html</code> · <code>components.card</code></small></h2>
+      <h3 class="c-heading c-heading--10">Standaard (blog)</h3>
+      <div class="c-styleguide__example c-card-grid">
+        {{ partial "article-card.html" (dict "page" (index $posts 0) "headingLevel" 3) }}
+        {{ with $noImage }}{{ partial "article-card.html" (dict "page" . "headingLevel" 3) }}{{ end }}
+      </div>
+      <h3 class="c-heading c-heading--10">c-card--small (homepage)</h3>
+      <div class="c-styleguide__example c-card-grid">
+        {{ partial "article-card.html" (dict "page" (index $posts 1) "compact" true "headingLevel" 3) }}
+        {{ with $noImage }}{{ partial "article-card.html" (dict "page" . "compact" true "headingLevel" 3) }}{{ end }}
+      </div>
+    </section>
+
+    <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Projectcard <small><code>partials/project-card.html</code> · <code>components.project</code></small></h2>
+      <div class="c-styleguide__example c-project-grid">
+        {{ range first 2 site.Home.Params.projects }}
+          {{ partial "project-card.html" (dict "project" . "context" site.Home) }}
+        {{ end }}
+      </div>
+    </section>
+
+    <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Paginering <small><code>partials/pagination.html</code> · <code>components.pagination</code></small></h2>
+      <div class="c-styleguide__example">
+        {{ partial "pagination.html" (dict "TotalPages" 6 "PageNumber" 2 "Prev" (dict "URL" "#") "Next" (dict "URL" "#")) }}
+      </div>
+    </section>
+
+    <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Foto's met lightbox <small><code>partials/lightbox-photo.html</code> · <code>components.photos</code> · <code>components.lightbox</code></small></h2>
+      <p>Klik op een foto om de lightbox te openen.</p>
+      {{ with site.GetPage "/gallery" }}
+        {{ $gallery := . }}
+        <ul class="c-photos c-styleguide__example">
+          {{ range $i, $name := slice "AJS-20250119-0127-2.jpg" "aljanscholtens-23.jpg" }}
+            {{ $caption := cond (eq $i 0) "Met onderschrift" "" }}
+            <li class="c-photos__item c-photos__item--50">
+              {{ partial "lightbox-photo.html" (dict
+                "res" ($gallery.Resources.GetMatch $name)
+                "alt" $caption
+                "group" "styleguide"
+                "sizes" "(min-width: 750px) 50vw, 100vw"
+                "caption" $caption
+                "captionClass" "c-photos__caption"
+              ) }}
+            </li>
+          {{ end }}
+        </ul>
+      {{ end }}
+    </section>
+
+    <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Elders op de site</h2>
+      <ul class="c-list">
+        <li><strong>Header</strong> (<code>partials/header-image.html</code>, <code>components.header</code>): bovenaan pagina's met <code>header: true</code>, zoals de homepage.</li>
+        <li><strong>Navigatie</strong> (<code>components.navigation</code>, <code>components.navigation-mobile</code>): boven aan deze pagina; de mobiele balk onderin op een telefoon.</li>
+        <li><strong>Footer</strong> (<code>components.footer</code>): onderaan deze pagina.</li>
+        <li><strong>Homepage-secties</strong> (<code>components.home</code>): op de homepage.</li>
+      </ul>
+    </section>
+
+    {{/* -------------------------------------------- Coverage of the CSS */}}
+    <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Overzicht van componenten</h2>
+      <p>Elk <code>components.*.css</code>-bestand. Een component is pas af als het hierboven een voorbeeld heeft.</p>
+      <ul class="c-styleguide__coverage">
+        {{ range resources.Match "css/components.*.css" }}
+          {{ $name := .Name | strings.TrimPrefix "css/components." | strings.TrimPrefix "/css/components." | strings.TrimSuffix ".css" }}
+          {{ if ne $name "styleguide" }}
+            <li class="{{ if in $shown $name }}is-shown{{ else }}is-missing{{ end }}">
+              <code>{{ $name }}</code> {{ if in $shown $name }}✓{{ else }}nog geen voorbeeld{{ end }}
+            </li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    </section>
+  </article>
+</div>
+{{ end }}

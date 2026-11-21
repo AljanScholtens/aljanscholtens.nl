@@ -1,0 +1,25 @@
+{{/* Photo card for a project (c-project). Params:
+     project: a dict with title, subtitle, image, image_alt and either page
+              (a site path) or url (an external link);
+     context: the page that renders the card, used to find the photo when
+              the project has no page of its own. */}}
+{{ $p := .project }}
+{{ $page := false }}
+{{ with $p.page }}{{ $page = site.GetPage . }}{{ end }}
+{{ $url := $p.url }}
+{{ with $page }}{{ $url = .RelPermalink }}{{ end }}
+{{ $imagePage := .context }}
+{{ with $page }}{{ $imagePage = . }}{{ end }}
+{{/* A bundle photo of the linked page, or a path in static/images. */}}
+{{ $image := partial "functions/photo.html" (dict "page" $imagePage "path" $p.image) }}
+<a class="c-project" href="{{ $url }}">
+  {{ with $image }}
+    {{ $small := .Fill "640x480 webp" }}
+    {{ $large := .Fill "1120x840 webp" }}
+    <img src="{{ $small.RelPermalink }}" srcset="{{ $small.RelPermalink }} 640w, {{ $large.RelPermalink }} 1120w" sizes="(min-width: 1240px) 540px, (min-width: 600px) 45vw, 100vw" width="640" height="480" alt="{{ $p.image_alt | default "" }}" loading="lazy">
+  {{ end }}
+  <div class="c-project__content">
+    <h3>{{ $p.title }}</h3>
+    <p>{{ $p.subtitle }}</p>
+  </div>
+</a>
