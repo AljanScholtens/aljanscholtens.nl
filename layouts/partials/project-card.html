@@ -1,9 +1,13 @@
 {{/* Photo card for a project (c-project). Params:
-     project: a dict with title, subtitle, image, image_alt and either page
-              (a site path) or url (an external link);
+     project: a dict with title, subtitle, label, image, image_alt and either
+              page (a site path) or url (an external link);
      context: the page that renders the card, used to find the photo when
-              the project has no page of its own. */}}
+              the project has no page of its own;
+     variant: "overlay" (default, large photo with title and subtitle) or
+              "tile" (square photo tile, title and short label in the photo);
+     sizes:   optional `sizes` for the photo. */}}
 {{ $p := .project }}
+{{ $variant := .variant | default "overlay" }}
 {{ $page := false }}
 {{ with $p.page }}{{ $page = site.GetPage . }}{{ end }}
 {{ $url := $p.url }}
@@ -12,14 +16,30 @@
 {{ with $page }}{{ $imagePage = . }}{{ end }}
 {{/* A bundle photo of the linked page, or a path in static/images. */}}
 {{ $image := partial "functions/photo.html" (dict "page" $imagePage "path" $p.image) }}
-<a class="c-project" href="{{ $url }}">
-  {{ with $image }}
-    {{ $small := .Fill "640x480 webp" }}
-    {{ $large := .Fill "1120x840 webp" }}
-    <img src="{{ $small.RelPermalink }}" srcset="{{ $small.RelPermalink }} 640w, {{ $large.RelPermalink }} 1120w" sizes="(min-width: 1240px) 540px, (min-width: 600px) 45vw, 100vw" width="640" height="480" alt="{{ $p.image_alt | default "" }}" loading="lazy">
-  {{ end }}
-  <div class="c-project__content">
-    <h3>{{ $p.title }}</h3>
-    <p>{{ $p.subtitle }}</p>
-  </div>
-</a>
+{{ $alt := $p.image_alt | default "" }}
+
+{{ if eq $variant "tile" }}
+  <a class="c-project c-project--tile" href="{{ $url }}">
+    {{ with $image }}
+      {{ $small := .Fill "480x480 webp" }}
+      {{ $large := .Fill "960x960 webp" }}
+      <img src="{{ $small.RelPermalink }}" srcset="{{ $small.RelPermalink }} 480w, {{ $large.RelPermalink }} 960w" sizes="{{ $.sizes | default "(min-width: 1000px) 25vw, 50vw" }}" width="480" height="480" alt="{{ $alt }}" loading="lazy">
+    {{ end }}
+    <div class="c-project__content">
+      <h3 class="c-project__title">{{ $p.title }}</h3>
+      {{ with $p.label }}<span class="c-project__label">{{ . }}</span>{{ end }}
+    </div>
+  </a>
+{{ else }}
+  <a class="c-project" href="{{ $url }}">
+    {{ with $image }}
+      {{ $small := .Fill "640x480 webp" }}
+      {{ $large := .Fill "1120x840 webp" }}
+      <img src="{{ $small.RelPermalink }}" srcset="{{ $small.RelPermalink }} 640w, {{ $large.RelPermalink }} 1120w" sizes="{{ $.sizes | default "(min-width: 1240px) 540px, (min-width: 600px) 45vw, 100vw" }}" width="640" height="480" alt="{{ $alt }}" loading="lazy">
+    {{ end }}
+    <div class="c-project__content">
+      <h3>{{ $p.title }}</h3>
+      <p>{{ $p.subtitle }}</p>
+    </div>
+  </a>
+{{ end }}

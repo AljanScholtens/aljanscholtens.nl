@@ -30,6 +30,7 @@
  */
 @import "components.author.css";
 @import "components.button.css";
+@import "components.article-list.css";
 @import "components.card.css";
 @import "components.project.css";
 @import "components.home.css";

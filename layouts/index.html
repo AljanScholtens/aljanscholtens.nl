@@ -2,7 +2,7 @@
 <div class="c-home">
   <section class="l-wrapper c-home__section" aria-labelledby="projects-title">
     <div class="l-container">
-      <h2 id="projects-title" class="u-visually-hidden">{{ .Params.projects_title }}</h2>
+      <h2 id="projects-title" class="c-heading c-heading--30 c-home__heading">{{ .Params.projects_title }}</h2>
       <div class="c-project-grid">
         {{ range .Params.projects }}
           {{ partial "project-card.html" (dict "project" . "context" $) }}
@@ -18,10 +18,16 @@
           <h2 id="blog-title" class="c-heading c-heading--30">{{ .Params.blog_title }}</h2>
           {{ with .Site.GetPage "/blog" }}<a class="c-home__more" href="{{ .RelPermalink }}">{{ T "all_stories" }} <span aria-hidden="true"><svg class="c-icon c-icon--stroke" aria-hidden="true"><use href="#icon-arrow-right"></use></svg></span></a>{{ end }}
         </div>
-        <div class="c-card-grid">
-          {{ range first 2 (where .Site.RegularPages "Section" "blog").ByDate.Reverse }}
-            {{ partial "article-card.html" (dict "page" . "compact" true "headingLevel" 3) }}
+        <div>
+          {{/* Posts that are already a project card above are left out, so the
+               same photos don't show up twice. */}}
+          {{ $projectPages := slice }}
+          {{ range .Params.projects }}{{ with .page }}{{ with site.GetPage . }}{{ $projectPages = $projectPages | append .RelPermalink }}{{ end }}{{ end }}{{ end }}
+          {{ $posts := slice }}
+          {{ range (where .Site.RegularPages "Section" "blog").ByDate.Reverse }}
+            {{ if not (in $projectPages .RelPermalink) }}{{ $posts = $posts | append . }}{{ end }}
           {{ end }}
+          {{ partial "article-list.html" (dict "pages" (first 5 $posts)) }}
         </div>
       </div>
     </div>
@@ -46,18 +52,5 @@
     </div>
   </section>
 
-  <section class="l-wrapper c-home__section" aria-labelledby="about-title">
-    <div class="l-container">
-      <div class="c-home__split">
-        <div class="c-home__section-heading c-home__about-heading">
-          <h2 id="about-title" class="c-heading c-heading--30">{{ .Params.about_title }}</h2>
-          <img class="c-home__portrait" src="{{ .Params.portrait }}" alt="Aljan Scholtens" width="88" height="88" loading="lazy">
-        </div>
-        <div class="c-home__about-copy u-content">
-          {{ range .Params.about }}<p>{{ . | markdownify }}</p>{{ end }}
-        </div>
-      </div>
-    </div>
-  </section>
 </div>
 {{ end }}

@@ -17,20 +17,6 @@
   }
 }
 
-.c-home__section + .c-home__section > .l-container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: var(--space-30);
-  right: var(--space-30);
-  border-top: 1px solid var(--color-line);
-
-  @media (min-width: 750px) {
-    left: var(--space-50);
-    right: var(--space-50);
-  }
-}
-
 .c-home__split {
   display: grid;
   gap: var(--space-25);
@@ -43,6 +29,11 @@
 
 .c-home__section-heading h2 {
   margin-bottom: var(--space-30);
+}
+
+/* Heading above a full-width section, such as the projects. */
+.c-home .c-home__heading {
+  margin-bottom: var(--space-35);
 }
 
 .c-home__more {
@@ -63,34 +54,4 @@
 
 .c-home .c-now__note {
   margin-bottom: 0;
-}
-
-.c-home__about-heading {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  align-self: start;
-  gap: var(--space-30);
-  margin-bottom: var(--space-25);
-
-  & h2 {
-    margin: 0;
-  }
-}
-
-.c-home__portrait {
-  display: block;
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.c-home__about-copy p {
-  font-size: var(--font-size-40);
-  line-height: var(--line-height-30);
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 }

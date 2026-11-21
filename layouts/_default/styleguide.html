@@ -3,11 +3,10 @@
      partials and CSS. Only on the local dev server (see hugo.toml).
      Add a section here whenever a component is added. */}}
 {{ $sg := resources.Get "css/components.styleguide.css" | css.Build (dict "minify" true "target" "safari15") | fingerprint }}
-<link rel="stylesheet" href="{{ $sg.RelPermalink }}">
 
 {{/* Components that have an example below; the overview at the end lists
      every components.*.css file and flags the ones still missing here. */}}
-{{ $shown := slice "card" "project" "pagination" "photos" "lightbox" "heading" "paragraph" "list" "footer" "header" "navigation" "navigation-mobile" "icon" "home" }}
+{{ $shown := slice "article-list" "card" "project" "pagination" "photos" "lightbox" "heading" "paragraph" "list" "footer" "header" "navigation" "navigation-mobile" "icon" "home" }}
 
 {{/* Read the tokens straight from tokens.css, so this page never drifts. */}}
 {{ $tokens := dict }}
@@ -22,6 +21,7 @@
 
 <div class="l-wrapper">
   <article class="l-container c-styleguide">
+    <link rel="stylesheet" href="{{ $sg.RelPermalink }}">
     <header class="c-styleguide__intro">
       <h1 class="c-heading c-heading--50">Styleguide</h1>
       <p class="c-paragraph c-paragraph--lead">Alle tokens en componenten van de site, met de echte partials en CSS.</p>
@@ -128,7 +128,7 @@
         {{ partial "article-card.html" (dict "page" (index $posts 0) "headingLevel" 3) }}
         {{ with $noImage }}{{ partial "article-card.html" (dict "page" . "headingLevel" 3) }}{{ end }}
       </div>
-      <h3 class="c-heading c-heading--10">c-card--small (homepage)</h3>
+      <h3 class="c-heading c-heading--10">c-card--small</h3>
       <div class="c-styleguide__example c-card-grid">
         {{ partial "article-card.html" (dict "page" (index $posts 1) "compact" true "headingLevel" 3) }}
         {{ with $noImage }}{{ partial "article-card.html" (dict "page" . "compact" true "headingLevel" 3) }}{{ end }}
@@ -136,9 +136,24 @@
     </section>
 
     <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Artikellijst <small><code>partials/article-list.html</code> · <code>components.article-list</code></small></h2>
+      <p>Laatste artikelen op de homepage.</p>
+      <div class="c-styleguide__example">
+        {{ partial "article-list.html" (dict "pages" (first 4 $posts)) }}
+      </div>
+    </section>
+
+    <section class="c-styleguide__section">
       <h2 class="c-heading c-heading--30">Projectcard <small><code>partials/project-card.html</code> · <code>components.project</code></small></h2>
+      <h3 class="c-heading c-heading--10">c-project--tile in c-project-grid--tiles </h3>
+      <div class="c-styleguide__example c-project-grid c-project-grid--tiles">
+        {{ range site.Home.Params.projects }}
+          {{ partial "project-card.html" (dict "project" . "context" site.Home "variant" "tile") }}
+        {{ end }}
+      </div>
+      <h3 class="c-heading c-heading--10">Overlay, twee naast elkaar (homepage)</h3>
       <div class="c-styleguide__example c-project-grid">
-        {{ range first 2 site.Home.Params.projects }}
+        {{ range site.Home.Params.projects }}
           {{ partial "project-card.html" (dict "project" . "context" site.Home) }}
         {{ end }}
       </div>
@@ -179,7 +194,7 @@
       <ul class="c-list">
         <li><strong>Header</strong> (<code>partials/header-image.html</code>, <code>components.header</code>): bovenaan pagina's met <code>header: true</code>, zoals de homepage.</li>
         <li><strong>Navigatie</strong> (<code>components.navigation</code>, <code>components.navigation-mobile</code>): boven aan deze pagina; de mobiele balk onderin op een telefoon.</li>
-        <li><strong>Footer</strong> (<code>components.footer</code>): onderaan deze pagina.</li>
+        <li><strong>Footer met contact</strong> (<code>partials/footer.html</code>, <code>components.footer</code>): onderaan deze pagina.</li>
         <li><strong>Homepage-secties</strong> (<code>components.home</code>): op de homepage.</li>
       </ul>
     </section>

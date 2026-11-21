@@ -1,0 +1,13 @@
+{{/* List of articles as a table of contents (c-article-list): title and
+     date on one line, no photos. Params: pages, headingLevel (default 3). */}}
+{{ $tag := cond (eq (.headingLevel | default 3) 2) "h2" "h3" }}
+<ol class="c-article-list">
+  {{ range .pages }}
+    <li>
+      <a class="c-article-list__item" href="{{ .RelPermalink }}">
+        {{ printf "<%s class=%q>" $tag "c-article-list__title" | safeHTML }}{{ .Title | safeHTML }}{{ printf "</%s>" $tag | safeHTML }}
+        <time class="c-article-list__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ time.Format "January 2006" .Date }}</time>
+      </a>
+    </li>
+  {{ end }}
+</ol>

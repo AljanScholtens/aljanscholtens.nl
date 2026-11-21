@@ -26,7 +26,6 @@
   --font-size-base: 16px;
 
   --font-size-default: var(--font-size-30);
-  --font-size-10: 12px; /* Used for small all caps labels */
   --font-size-20: 14px;
   --font-size-30: 17px;
   --font-size-40: 19px; /* Body */
@@ -42,16 +41,6 @@
   --line-height-20: 1.35em;
   --line-height-30: 1.65em;
 
-  /* Letter spacing */
-  --letter-spacing-default: var(--letter-spacing-10);
-  --letter-spacing-10: 2px;
-
-  /* Font weight */
-  --font-weight-default: var(--font-weight-20);
-  --font-weight-10: 300;
-  --font-weight-20: 400;
-  --font-weight-30: 500;
-
   /*
    * Spacing
    */
@@ -60,6 +49,7 @@
 
   --space-default: var(--space-30);
   --space-10: 4px;
+  --space-15: 6px; /* Gap between photo tiles */
   --space-20: 8px;
   --space-25: 12px; /* Not default */
   --space-30: 16px;
@@ -74,18 +64,6 @@
   --space-stack-30: 0 0 16px 0;
   --space-stack-40: 0 0 32px 0;
   --space-stack-50: 0 0 64px 0;
-
-  --space-inset-default: var(--space-inset-30);
-  --space-inset-10: 4px 4px 0.1px 4px;
-  --space-inset-20: 8px 8px 0.1px 8px;
-  --space-inset-30: 16px 16px 0.1px 16px;
-  --space-inset-40: 32px 32px 16px 32px;
-  --space-inset-50: 64px 64px 48px 64px;
-
-  --space-squish-10: 4px 8px;
-  --space-squish-20: 8px 16px;
-  --space-squish-25: 12px 24px; /* Not default */
-  --space-squish-30: 16px 32px;
 
   /* Grid gutter */
   --gutter: 25px;
@@ -115,7 +93,6 @@
 
 /* Tertiary colors */
 --color-tertiary-10: hsla(30, 100%, 95%, 1);
---color-tertiary-30: hsla(32, 100%, 82%, 1);
 
 /* Success and positive colors */
 --color-success-50: hsla(143, 64%, 54%, 1);
@@ -136,13 +113,10 @@
 --color-neutral-10: hsla(36, 78%, 97%, 1);
 --color-neutral-20: hsla(36, 50%, 90%, 1);
 --color-neutral-30: hsla(38, 10%, 81%, 1);
---color-neutral-30a40: hsla(38, 10%, 81%, 0.4);
 --color-neutral-50: hsla(45, 4%, 55%, 1);
 --color-neutral-60: hsla(40, 4%, 36%, 1);
 --color-neutral-70: hsla(45, 4%, 22%, 1);
 --color-neutral-90: hsla(20, 7%, 12%, 1);
---color-neutral-90a80: hsla(20, 7%, 12%, 0.8);
---color-neutral-100: hsla(0, 0%, 0%, 1);
 --color-neutral-100a10: hsla(0, 0%, 0%, 0.1);
 --color-neutral-100a40: hsla(0, 0%, 0%, 0.4);
 --color-neutral-100a80: hsla(0, 0%, 0%, 0.8);
@@ -157,12 +131,10 @@
    */
 
   /* Rounded borders */
-  --border-radius-default: var(--border-radius-10);
-  --border-radius-10: 2px;
-  --border-radius-20: 4px;
-  --border-radius-30: 6px;
-  --border-radius-40: 12px;
-  --border-radius-50: 10rem;
+  --border-radius-default: var(--border-radius-20);
+  --border-radius-20: 4px; /* Small: form fields, buttons, code */
+  --border-radius-30: 6px; /* Photos in cards */
+  --border-radius-50: 10rem; /* Pill */
 
   /* Shadows */
   --box-shadow-default: var(--box-shadow-10);
@@ -182,7 +154,6 @@
 
   /* Layers */
   --layer-10: 10;
-  --layer-20: 20;
   --layer-30: 30;
 }
 

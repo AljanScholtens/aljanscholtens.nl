@@ -2,10 +2,11 @@
 title: "About me"
 subtitle: ""
 slug: "about"
+aliases: ["/contact/"]
 draft: false
 layout: "default"
 menu: main
-weight: 4
+weight: 3
 description: "I'm Aljan Scholtens, a landscape photographer from Groningen: why I photograph nature, how I got started and the gear I take outside."
 photo: "header-08.jpg"
 thumbnail: ""
@@ -62,4 +63,4 @@ Last year I switched from Canon to Sony, so below is my new gear. I also have a 
 
 ## What I do?
 
-Curious about my landscape photography? [See my work]({{< relref "/gallery" >}}) or [get in touch]({{< relref "/contact" >}}).
+Curious about my landscape photography? [See my work]({{< relref "/gallery" >}}) or [get in touch](#contact).

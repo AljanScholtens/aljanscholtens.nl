@@ -48,6 +48,9 @@ Commit, push en deploy alleen als daarom gevraagd wordt.
 - **Dark mode via rol-tokens** (`--color-text`, `--color-text-muted`,
   `--color-line`), die `.t-dark` omzet. Geen nieuwe `.t-dark .iets`-regels
   als een rol-token het kan oplossen.
+- **Links in lopende tekst** (`.u-content a`) hebben een zacht achtergrondvlak
+  (`--color-secondary-10`, in dark `--color-secondary-30a20`). Dat is een
+  bewuste keuze van Aljan: niet vervangen door een onderstreping.
 - **Breakpoints:** alleen deze vier, uitgeschreven:
   `600px`, `750px`, `1000px`, `1200px` (`min-width`).
 - **Eerst hergebruiken:** kijk of een bestaand component of token het al doet

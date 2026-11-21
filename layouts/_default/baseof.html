@@ -93,18 +93,7 @@
       {{ block "main" . }}{{ end }}
     </main>
 
-    <footer class="l-wrapper c-footer">
-      <div class="l-container">
-        <div class="c-footer__inner">
-          <p class="c-footer__name">© {{ now.Year }} Aljan Scholtens</p>
-          <ul class="c-footer__links">
-            <li><a href="mailto:aljan@scholtens.me">{{ T "footer_mail" }}</a></li>
-            <li><a href="https://instagram.com/aljan">Instagram</a></li>
-            <li><a href="https://www.linkedin.com/in/aljanscholtens/">LinkedIn</a></li>
-          </ul>
-        </div>
-      </div>
-    </footer>
+    {{ partial "footer.html" . }}
     
     <div class="c-navigation-mobile__wrapper">
       <ul class="c-navigation-mobile">

@@ -2,8 +2,12 @@
   #COMPONENTS-FOOTER
 \*------------------------------------*/
 
-/* Quiet closing line on every page: name, mail and socials. */
+/* Contact footer on every page: a dark block in the header's night purple,
+   with a question, the e-mail address and the socials. It carries .t-dark,
+   so the role tokens inside switch to their light-on-dark values. */
 .c-footer {
+  background: var(--color-primary-90);
+  color: var(--color-text);
   /* Room for the fixed navigation bar at the bottom on phones. */
   padding-bottom: var(--space-50);
 
@@ -12,36 +16,78 @@
   }
 }
 
-.c-footer__inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-25) var(--space-40);
-  padding: var(--space-40) 0;
+/* In dark mode the page is night purple too; a line keeps them apart. */
+html.t-dark .c-footer {
   border-top: 1px solid var(--color-line);
-  font-size: var(--font-size-20);
-  line-height: var(--line-height-20);
-  color: var(--color-text-muted);
 }
 
-.c-footer .c-footer__name {
+.c-footer__contact {
+  display: grid;
+  gap: var(--space-40);
+  padding: var(--space-50) 0 var(--space-45);
+
+  @media (min-width: 1000px) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: var(--space-50);
+  }
+}
+
+.c-footer__title {
+  max-width: 24ch;
+  text-wrap: balance;
   margin: 0;
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
+  padding: 0;
+  font-family: var(--font-family-b);
+  font-size: var(--font-size-60);
+  font-weight: 400;
+  line-height: var(--line-height-20);
+  color: var(--color-primary-30);
+
+  @media (min-width: 750px) {
+    font-size: var(--font-size-65);
+  }
 }
 
-.c-footer__links {
+.c-footer__reach {
+  display: grid;
+  gap: var(--space-30);
+
+  @media (min-width: 1000px) {
+    justify-items: end;
+  }
+}
+
+/* The e-mail address uses the site's link style: a soft background block. */
+.c-footer__mail {
+  justify-self: start;
+  padding: 0.2em 0.5rem;
+  font-size: var(--font-size-45);
+  font-weight: 500;
+  color: var(--color-secondary-30);
+  background-color: var(--color-secondary-30a20);
+  overflow-wrap: anywhere;
+
+  &:hover {
+    color: var(--color-neutral-0);
+  }
+
+  @media (min-width: 1000px) {
+    justify-self: end;
+  }
+}
+
+.c-footer__social {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-30);
   margin: 0;
   padding: 0;
   list-style: none;
+  font-size: var(--font-size-30);
 
   & a {
-    color: inherit;
+    color: var(--color-text-muted);
     font-weight: 400;
 
     &:hover {
@@ -50,3 +96,11 @@
   }
 }
 
+.c-footer .c-footer__bottom {
+  margin: 0;
+  padding: var(--space-30) 0;
+  border-top: 1px solid var(--color-line);
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-20);
+  color: var(--color-text-muted);
+}

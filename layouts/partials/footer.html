@@ -1,0 +1,18 @@
+{{/* Contact footer on every page (c-footer). Links elsewhere point here
+     with #contact; /contact/ redirects to the About page. */}}
+<footer id="contact" class="l-wrapper c-footer t-dark" aria-labelledby="contact-title">
+  <div class="l-container">
+    <div class="c-footer__contact">
+      <h2 id="contact-title" class="c-footer__title">{{ T "footer_title" }}</h2>
+      <div class="c-footer__reach">
+        <a class="c-footer__mail" href="mailto:aljan@scholtens.me">aljan@scholtens.me</a>
+        <ul class="c-footer__social">
+          <li><a href="https://instagram.com/aljan">Instagram</a></li>
+          <li><a href="https://www.youtube.com/aljanscholtens">YouTube</a></li>
+          <li><a href="https://www.linkedin.com/in/aljanscholtens/">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="c-footer__bottom">© {{ now.Year }} Aljan Scholtens</p>
+  </div>
+</footer>

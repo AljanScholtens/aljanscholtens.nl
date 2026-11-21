@@ -2,7 +2,7 @@
 title: Landscape Photography
 menuTitle: Photography
 slug: photography
-aliases: ["/en/gallery/"]
+aliases: ["/gallery/"]
 layout: default
 menu: main
 weight: '1'

@@ -19,7 +19,7 @@
   isolation: isolate;
   overflow: hidden;
   aspect-ratio: 1.2;
-  border-radius: var(--border-radius-40);
+  border-radius: var(--border-radius-30);
   background: var(--color-neutral-90);
   color: var(--color-neutral-0);
   -webkit-tap-highlight-color: transparent;
@@ -80,8 +80,69 @@
   }
 }
 
+/* Tiles: square photos close together, like the photography page. Four in
+   a row from 1000px up, two on smaller screens. */
+.c-project-grid--tiles {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-15);
+
+  @media (min-width: 1000px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Tile variant: square photo with the title in the photo, bottom left, the
+   same treatment as the captions on the photography page. */
+.c-project--tile {
+  aspect-ratio: 1;
+  border-radius: 0;
+
+  /* A light gradient under the caption only. */
+  &::after {
+    border-radius: 0;
+    background: linear-gradient(180deg, transparent 50%, var(--color-neutral-100a40));
+  }
+
+  /* Soft purple veil on hover, as on the photography page. */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: var(--color-primary-50);
+    opacity: 0;
+    transition: opacity var(--duration-20) var(--bezier-default);
+    pointer-events: none;
+  }
+
+  &:hover::before,
+  &:focus-visible::before {
+    opacity: 0.1;
+  }
+
+  & .c-project__content {
+    padding: var(--space-20) var(--space-25);
+  }
+
+  & .c-project__title {
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size-30);
+    line-height: var(--line-height-20);
+    font-weight: 500;
+    color: var(--color-neutral-0);
+  }
+
+  & .c-project__label {
+    display: block;
+    font-size: var(--font-size-20);
+    line-height: var(--line-height-20);
+    color: var(--color-neutral-0a75);
+  }
+}
+
 @media (hover: hover) {
-  .c-project:hover img {
+  .c-project:not(.c-project--tile):hover img {
     transform: scale(1.045);
   }
 }

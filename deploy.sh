@@ -2,8 +2,9 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-# Bouw de Hugo site
-hugo --minify
+# Bouw de Hugo site. --cleanDestinationDir leegt public/ eerst, zodat er geen
+# restjes van de dev-server (zoals /styleguide/) of oude pagina's meegaan.
+hugo --minify --cleanDestinationDir
 
 # Stop als de build niet alle bestanden van de weerbot heeft meegenomen.
 for file in fog-weather.php fog-feedback.php fog-alert.php fog-bot.php fog-web.php weer-data.php; do

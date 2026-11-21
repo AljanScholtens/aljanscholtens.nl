@@ -1,0 +1,56 @@
+/*------------------------------------*\
+  #COMPONENTS-ARTICLE-LIST
+\*------------------------------------*/
+
+/* Articles as a table of contents: title and month on one line, separated by
+   thin lines. Used for the latest stories on the homepage. */
+.c-article-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-line);
+}
+
+.c-article-list__item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-30);
+  padding: var(--space-30) 0;
+  border-bottom: 1px solid var(--color-line);
+  font-weight: inherit;
+
+  &:hover .c-article-list__title {
+    color: var(--color-text);
+  }
+}
+
+.c-article-list .c-article-list__title {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-40);
+  font-weight: 500;
+  line-height: var(--line-height-20);
+  color: var(--color-primary-50);
+  transition: color var(--duration-10) var(--bezier-default);
+
+  @media (min-width: 750px) {
+    font-size: var(--font-size-45);
+  }
+}
+
+.t-dark .c-article-list .c-article-list__title {
+  color: var(--color-primary-30);
+}
+
+.c-article-list__date {
+  flex-shrink: 0;
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-20);
+  color: var(--color-text-muted);
+}
+
+.t-dark .c-article-list__item:hover .c-article-list__title {
+  color: var(--color-text);
+}

@@ -28,7 +28,7 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr); 
   grid-auto-flow: dense; 
-  grid-gap: 6px;
+  grid-gap: var(--space-15);
 
   /* @media (min-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
