@@ -8,8 +8,8 @@ author: "Aljan"
 subtitle: "Vier dagen wandelen, ruim 80% onverhard." # Not required
 description: "De Drentsche Aa Trail is een onofficiële 4-daagse trektocht van ongeveer 80 kilometer door Nationaal Park Drentsche Aa."
 
-related: "" # Not required
-related_url: "" # Not required
+related_posts:
+  - "/blog/2026-04-16-het-mooiste-van-het-westerwoldepad"
 
 photo: "AJS-20260517-3549.jpg" # Not required
 thumbnail: "" # Not required

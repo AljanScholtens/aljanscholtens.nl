@@ -1,5 +1,13 @@
 {{ define "main" }}
 <div class="c-home">
+  {{ with .Params.intro }}
+  <section class="l-wrapper c-home__section c-home__intro">
+    <div class="l-container">
+      <p class="c-paragraph c-paragraph--lead">{{ . }}</p>
+    </div>
+  </section>
+  {{ end }}
+
   <section class="l-wrapper c-home__section" aria-labelledby="projects-title">
     <div class="l-container">
       <h2 id="projects-title" class="c-heading c-heading--30 c-home__heading">{{ .Params.projects_title }}</h2>

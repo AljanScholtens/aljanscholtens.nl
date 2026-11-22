@@ -55,3 +55,15 @@
 .c-home .c-now__note {
   margin-bottom: 0;
 }
+
+/* Introduction right below the header, in the lead style of the articles. */
+.c-home__intro {
+  & .c-paragraph--lead {
+    max-width: 36ch;
+    margin: 0;
+  }
+
+  & + .c-home__section > .l-container {
+    padding-top: 0;
+  }
+}

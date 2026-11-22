@@ -1,0 +1,15 @@
+{{/* Prepare publication-ordered photos for the shared photo component. */}}
+{{ $items := slice }}
+{{ range $index, $photo := .photos }}
+  {{ $image := dict
+    "res" $photo.res
+    "alt" $photo.place
+    "group" $.group
+    "widths" (slice 400 800 1200 1600)
+    "priority" (and $.prioritizeFirst (eq $index 0))
+  }}
+  {{ $items = $items | append (dict "image" $image) }}
+{{ end }}
+<div class="c-photos-wrapper c-photos-wrapper--feed">
+  {{ partial "photos.html" (dict "perRow" 2 "ordered" true "photos" $items) }}
+</div>

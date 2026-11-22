@@ -8,6 +8,7 @@ respond = "Reageren? Leuk! Mag via een"
 respond_link = "mailtje"
 written_by = "Geschreven door"
 related = "Gerelateerd"
+further_reading = "Verder lezen"
 
 page_of = "Pagina {{ .Page }} van {{ .Total }}"
 previous_page = "Vorige pagina"
@@ -16,7 +17,7 @@ pagination = "Paginering"
 
 open_photo = "Foto openen"
 
-footer_title = "Een nieuw project in gedachten, of zin om kennis te maken?"
+footer_title = "Kennismaken voor een project of om samen op pad te gaan?"
 
 job_photographer = "Landschapsfotograaf"
 job_designer = "Digital designer"

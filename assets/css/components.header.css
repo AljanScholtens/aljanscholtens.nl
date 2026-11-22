@@ -130,6 +130,7 @@
 .c-header__subtitle {
   color: var(--color-neutral-0);
   text-align: center;
+  text-wrap: balance;
   font-size: 30px;
   line-height: 1.3em;
 

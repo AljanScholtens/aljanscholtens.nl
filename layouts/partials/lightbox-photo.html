@@ -1,31 +1,49 @@
-{{/* One photo that opens in the lightbox.
-     Params: res (page resource, optional), src (fallback path), alt, group,
-     sizes, caption, captionTag (default "small") and captionClass.
+{{/* One photo, optionally linked to a lightbox group.
+     Params: res (page resource, optional), src (fallback path), alt, group (optional),
+     sizes, widths (display image candidates), priority, caption,
+     captionTag (default "small") and captionClass.
      JPG, PNG and WebP get resized WebP versions; GIF and SVG are left as they are. */}}
 {{ $tag := .captionTag | default "small" }}
+{{ $widths := .widths | default (slice 800 1600) }}
+{{ $loading := "lazy" }}
+{{ if .priority }}{{ $loading = "eager" }}{{ end }}
 {{ $href := .src }}
+{{ $full := false }}
 {{ $img := dict "src" .src }}
 {{ with .res }}
   {{ $href = .RelPermalink }}
   {{ $img = dict "src" .RelPermalink }}
   {{ if in (slice "jpeg" "png" "webp") .MediaType.SubType }}
-    {{ $small := .Fit "800x1600 webp" }}
-    {{ $large := .Fit "1600x3200 webp" }}
-    {{ $href = (.Fit "2400x2400 webp").RelPermalink }}
+    {{ $image := . }}
+    {{ $srcset := slice }}
+    {{ $lastWidth := 0 }}
+    {{ $src := "" }}
+    {{ range $widths }}
+      {{ $candidate := $image.Fit (printf "%dx%d webp" . (mul . 2)) }}
+      {{ $src = $candidate.RelPermalink }}
+      {{ if ne $candidate.Width $lastWidth }}
+        {{ $srcset = $srcset | append (printf "%s %dw" $src $candidate.Width) }}
+        {{ $lastWidth = $candidate.Width }}
+      {{ end }}
+    {{ end }}
+    {{ if $.group }}
+      {{ $full = .Fit "2400x2400 webp" }}
+      {{ $href = $full.RelPermalink }}
+    {{ end }}
     {{ $img = dict
-      "src" $large.RelPermalink
-      "srcset" (printf "%s %dw, %s %dw" $small.RelPermalink $small.Width $large.RelPermalink $large.Width)
+      "src" $src
+      "srcset" (delimit $srcset ", ")
       "width" .Width
       "height" .Height
     }}
   {{ end }}
 {{ end }}
-<a href="{{ $href }}" data-lightbox="{{ .group }}"{{ if not .alt }} aria-label="{{ T "open_photo" }}"{{ end }}>
+{{ if .group }}<a href="{{ $href }}" data-lightbox="{{ .group }}"{{ with $full }} data-lightbox-width="{{ .Width }}" data-lightbox-height="{{ .Height }}"{{ end }}{{ if not .alt }} aria-label="{{ T "open_photo" }}"{{ end }}>{{ end }}
   <img src="{{ $img.src }}"
     {{- with $img.srcset }} srcset="{{ . }}" sizes="{{ $.sizes | default "100vw" }}"{{ end }}
     {{- with $img.width }} width="{{ . }}" height="{{ $img.height }}"{{ end }}
-    alt="{{ .alt }}" loading="lazy" decoding="async">
+    alt="{{ .alt }}" loading="{{ $loading }}"{{ if .priority }} fetchpriority="high"{{ end }} decoding="async">
   {{- with .caption }}
     {{ printf "<%s class=%q>" $tag $.captionClass | safeHTML }}{{ . }}{{ printf "</%s>" $tag | safeHTML }}
   {{- end }}
-</a>
+{{ if .group }}</a>{{ end }}

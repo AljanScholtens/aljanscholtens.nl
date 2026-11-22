@@ -1,6 +1,8 @@
 ---
 title: "Ruimte om te maken"
-subtitle: "Fotograaf <em>&</em> Digital Designer"
+subtitle: "Landschapsfotograaf <em>&</em> digital designer"
+header_title: "Stille plekken, het eerste licht."
+intro: "Ik verken de natuur te voet en fotografeer wat ik in de stille uren vind. Onderweg maak ik routes en kaarten, zodat anderen daar ook hun weg kunnen vinden."
 slug: "home"
 description: "Landschapsfotografie & Digital Design. Ontdek hoe ik de wilde natuur vastleg en digitale ervaringen creëer waarin vrijheid en ontdekken centraal staan." # Not required
 photo: "/images/header-12.jpg" # Not required

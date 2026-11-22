@@ -1,4 +1,12 @@
 {{ define "main" }}
+{{ $relatedPosts := slice }}
+{{ range .Params.related_posts }}
+  {{ with $.Site.GetPage . }}
+    {{ if and .IsPage (eq .Section "blog") (ne .RelPermalink $.RelPermalink) }}
+      {{ $relatedPosts = $relatedPosts | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
 <div class="l-wrapper">
   <article class="l-container">
     <div class="l-single u-content u-content-lead">
@@ -36,14 +44,21 @@
         </p>
       </div>
 
-      <!-- Related -->
-      {{ if .Params.related }}
+      <!-- Existing related links on older posts -->
+      {{ if and (not $relatedPosts) .Params.related .Params.related_url }}
       <p class="u-text-align-center">
         <strong>{{ T "related" }}</strong>:
         <a href="{{ .Params.related_url }}">{{ .Params.related }}</a>
       </p>
       {{ end }}
     </div>
+
+    {{ with $relatedPosts }}
+    <section class="l-single" aria-labelledby="further-reading-title">
+      <h2 id="further-reading-title" class="c-heading c-heading--30">{{ T "further_reading" }}</h2>
+      {{ partial "article-list.html" (dict "pages" .) }}
+    </section>
+    {{ end }}
   </article>
 </div>
 

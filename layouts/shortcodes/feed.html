@@ -1,0 +1,47 @@
+{{/* A feed of photos, newest first (see partials/feed.html).
+     One photo per line: file | place | publication date (optional, YYYY-MM-DD).
+     Undated photos follow the dated photos in the order given.
+     Params: source (optional): the page whose photos are used, for example
+     "/gallery". Default is the current page. With file (optional), read
+     the list from that page resource instead of the shortcode body. */}}
+</div>
+{{ $page := .Page }}
+{{ with .Get "source" }}{{ $page = site.GetPage . }}{{ end }}
+{{ $lines := .Inner }}
+{{ with .Get "file" }}
+  {{ $fileName := . }}
+  {{ with $page.Resources.Get $fileName }}
+    {{ $lines = .Content }}
+  {{ else }}
+    {{ errorf "feed: fotolijst %q niet gevonden bij %s" $fileName $page.Path }}
+  {{ end }}
+{{ end }}
+{{ $dated := slice }}
+{{ $undated := slice }}
+{{ range split $lines "\n" }}
+  {{ $line := trim . " \t\r\n" }}
+  {{ if $line }}
+    {{ $parts := split $line "|" }}
+    {{ $name := trim (index $parts 0) " " }}
+    {{ $res := $page.Resources.GetMatch $name }}
+    {{ if not $res }}
+      {{ errorf "feed: foto %q niet gevonden bij %s" $name $page.Path }}
+      {{ continue }}
+    {{ end }}
+    {{ $place := "" }}
+    {{ if ge (len $parts) 2 }}{{ $place = trim (index $parts 1) " " }}{{ end }}
+    {{ $published := "" }}
+    {{ if ge (len $parts) 3 }}
+      {{ with trim (index $parts 2) " " }}{{ $published = time.AsTime . }}{{ end }}
+    {{ end }}
+    {{ $photo := dict "res" $res "place" $place "published" $published }}
+    {{ if $published }}
+      {{ $dated = $dated | append $photo }}
+    {{ else }}
+      {{ $undated = $undated | append $photo }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ $photos := (sort $dated "published" "desc") | append $undated }}
+{{ partial "feed.html" (dict "photos" $photos "group" "feed" "prioritizeFirst" true) }}
+<div class="l-single u-content">

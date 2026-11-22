@@ -8,8 +8,8 @@ author: "Aljan"
 subtitle: "Four days of hiking, more than 80% unpaved." # Not required
 description: "The Drentsche Aa Trail is an unofficial 4-day trek of about 80 kilometers through Drentsche Aa National Park."
 
-related: "" # Not required
-related_url: "" # Not required
+related_posts:
+  - "/blog/2026-04-16-het-mooiste-van-het-westerwoldepad"
 
 photo: "AJS-20260517-3549.jpg" # Not required
 thumbnail: "" # Not required

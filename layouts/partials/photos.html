@@ -1,0 +1,56 @@
+{{/* Shared photo list. Each photo has lightbox-photo params in image, plus an
+     optional caption. Legacy spans only determine where an old row breaks. */}}
+{{ $limit := .perRow | default 12 }}
+{{ $rows := slice }}
+{{ $row := slice }}
+{{ $used := 0 }}
+{{ range .photos }}
+  {{ $span := 1 }}
+  {{ if not $.perRow }}{{ $span = .span | default 12 }}{{ end }}
+  {{ if and $row (gt (add $used $span) $limit) }}
+    {{ $rows = $rows | append (dict "photos" $row "used" $used) }}
+    {{ $row = slice }}
+    {{ $used = 0 }}
+  {{ end }}
+  {{ $ratio := 1.0 }}
+  {{ with .image.res }}
+    {{ if in (slice "jpeg" "png" "webp" "gif" "tiff" "bmp") .MediaType.SubType }}
+      {{ $ratio = div (float .Width) .Height }}
+    {{ end }}
+  {{ end }}
+  {{ $row = $row | append (merge . (dict "ratio" $ratio)) }}
+  {{ $used = add $used $span }}
+{{ end }}
+{{ if $row }}{{ $rows = $rows | append (dict "photos" $row "used" $used) }}{{ end }}
+
+{{ $tag := cond .ordered "ol" "ul" }}
+{{ printf `<%s class="c-photos" role="list">` $tag | safeHTML }}
+  {{ range $rowIndex, $row := $rows }}
+    {{ $ratioSum := 0.0 }}
+    {{ range .photos }}{{ $ratioSum = add $ratioSum .ratio }}{{ end }}
+    {{ $count := len .photos }}
+    {{/* Leave space on the right of a short final row. */}}
+    {{ $slots := $count }}
+    {{ if eq $rowIndex (sub (len $rows) 1) }}
+      {{ $slots = math.Ceil (div (mul (float $count) $limit) .used) | int }}
+    {{ end }}
+    {{ $ratioSum = mul $ratioSum (div (float $slots) $count) }}
+    {{ $gaps := sub $slots 1 }}
+    {{ range .photos }}
+      {{ $share := div .ratio $ratioSum }}
+      {{ $style := printf "--share: %.9f; --gaps: %d" $share $gaps }}
+      {{ $sizes := printf "(min-width: 750px) calc(100vw * %.9f), 100vw" $share }}
+      {{ if $.ordered }}
+        {{/* The feed sits inside a 1240px container with 128px of desktop padding. */}}
+        {{ $spacing := add 128 (mul $gaps 16) }}
+        {{ $desktopMax := mul (sub 1240 $spacing) $share | int }}
+        {{ $sizes = printf "(min-width: 750px) min(%dpx, calc((100vw - %dpx) * %.9f)), calc(100vw - 32px)" $desktopMax $spacing $share }}
+      {{ end }}
+      {{ if not .image.priority }}{{ $sizes = printf "auto, %s" $sizes }}{{ end }}
+      <li class="c-photos__item" style="{{ $style | safeCSS }}">
+        {{ partial "lightbox-photo.html" (merge .image (dict "sizes" $sizes)) }}
+        {{ with .caption }}<small class="c-photos__caption">{{ . }}</small>{{ end }}
+      </li>
+    {{ end }}
+  {{ end }}
+{{ printf "</%s>" $tag | safeHTML }}

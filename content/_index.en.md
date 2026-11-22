@@ -1,6 +1,8 @@
 ---
 title: "Wildscapes"
-subtitle: "Photographer <em>&</em> Digital Designer"
+subtitle: "Landscape photographer <em>&</em> digital designer"
+header_title: "Quiet places, first light."
+intro: "I explore nature on foot and photograph what I find in the quiet hours. Along the way I make routes and maps, so others can find their way out there too."
 slug: home
 description: Landscape Photography & Digital Design. Discover how I capture the wild and create digital experiences centered around freedom and discovery.
 photo: /images/header-12.jpg

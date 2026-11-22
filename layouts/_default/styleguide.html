@@ -167,32 +167,50 @@
     </section>
 
     <section class="c-styleguide__section">
-      <h2 class="c-heading c-heading--30">Foto's met lightbox <small><code>partials/lightbox-photo.html</code> · <code>components.photos</code> · <code>components.lightbox</code></small></h2>
-      <p>Klik op een foto om de lightbox te openen.</p>
+      <h2 class="c-heading c-heading--30">Foto's met lightbox <small><code>partials/photos.html</code> · <code>components.photos</code> · <code>components.lightbox</code></small></h2>
+      <p>Klik op een foto om in te zoomen. De lightbox zoomt bij het sluiten terug naar de foto als die nog in beeld is.</p>
+      <p>Met <code>perRow="3"</code> kies je drie foto's per rij op brede schermen. Op mobiel staan ze onder elkaar. De foto's behouden hun verhouding. Een opgegeven bijschrift staat onder het beeld.</p>
       {{ with site.GetPage "/gallery" }}
         {{ $gallery := . }}
-        <ul class="c-photos c-styleguide__example">
-          {{ range $i, $name := slice "AJS-20250119-0127-2.jpg" "aljanscholtens-23.jpg" }}
-            {{ $caption := cond (eq $i 0) "Met onderschrift" "" }}
-            <li class="c-photos__item c-photos__item--50">
-              {{ partial "lightbox-photo.html" (dict
-                "res" ($gallery.Resources.GetMatch $name)
-                "alt" $caption
-                "group" "styleguide"
-                "sizes" "(min-width: 750px) 50vw, 100vw"
-                "caption" $caption
-                "captionClass" "c-photos__caption"
-              ) }}
-            </li>
-          {{ end }}
-        </ul>
+        {{ $items := slice }}
+        {{ range $i, $name := slice "AJS-20250119-0127-2.jpg" "aljanscholtens-23.jpg" "aljanscholtens-27.jpg" }}
+          {{ $caption := cond (eq $i 0) "Schipborg, Drenthe" "" }}
+          {{ $image := dict "res" ($gallery.Resources.GetMatch $name) "alt" $caption "group" "styleguide" }}
+          {{ $items = $items | append (dict "caption" $caption "image" $image) }}
+        {{ end }}
+        <div class="c-styleguide__example">
+          {{ partial "photos.html" (dict "perRow" 3 "ordered" false "photos" $items) }}
+        </div>
+      {{ end }}
+    </section>
+
+    <section class="c-styleguide__section">
+      <h2 class="c-heading c-heading--30">Fotofeed <small><code>shortcodes/feed.html</code> · <code>partials/photos.html</code> · <code>components.photos</code></small></h2>
+      <p>Op brede schermen staan twee foto's per rij, op mobiel één. Foto's behouden hun eigen beeldverhouding. Voeg een foto toe met <code>bestand | plaats | publicatiedatum</code> in <code>content/gallery/feed.txt</code>. De datum heeft het formaat <code>JJJJ-MM-DD</code>.</p>
+      <p>Op de feedpagina laadt de eerste foto met voorrang. De overige foto's laden zodra ze in de buurt van het scherm komen.</p>
+      {{ with site.GetPage "/gallery" }}
+        {{ $gallery := . }}
+        {{ $photos := slice }}
+        {{ range slice
+          (slice "AJS-20250119-0127-2.jpg" "Schipborg, Drenthe")
+          (slice "aljanscholtens-23.jpg" "Harz, Germany")
+          (slice "aljanscholtens-27.jpg" "Drenthe, Netherlands")
+          (slice "aljanscholtens-21.jpg" "Groningen, Netherlands")
+          (slice "aljanscholtens-24.jpg" "Friesland, Netherlands")
+        }}
+          {{ $res := $gallery.Resources.GetMatch (index . 0) }}
+          {{ $photos = $photos | append (dict "res" $res "place" (index . 1)) }}
+        {{ end }}
+        <div class="c-styleguide__example">
+          {{ partial "feed.html" (dict "photos" $photos "group" "styleguide-feed") }}
+        </div>
       {{ end }}
     </section>
 
     <section class="c-styleguide__section">
       <h2 class="c-heading c-heading--30">Elders op de site</h2>
       <ul class="c-list">
-        <li><strong>Header</strong> (<code>partials/header-image.html</code>, <code>components.header</code>): bovenaan pagina's met <code>header: true</code>, zoals de homepage.</li>
+        <li><strong>Header</strong> (<code>partials/header-image.html</code>, <code>components.header</code>): bovenaan pagina's met <code>header: true</code>. Met <code>header_title</code> kan de kop afwijken van de paginatitel, zoals op de homepage.</li>
         <li><strong>Navigatie</strong> (<code>components.navigation</code>, <code>components.navigation-mobile</code>): boven aan deze pagina; de mobiele balk onderin op een telefoon.</li>
         <li><strong>Footer met contact</strong> (<code>partials/footer.html</code>, <code>components.footer</code>): onderaan deze pagina.</li>
         <li><strong>Homepage-secties</strong> (<code>components.home</code>): op de homepage.</li>
