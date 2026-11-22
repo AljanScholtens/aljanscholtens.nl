@@ -16,7 +16,10 @@
 
   &::backdrop {
     background-color: var(--color-neutral-90);
-    transition: background-color var(--duration-20) var(--bezier-default);
+  }
+
+  &.is-zooming::backdrop {
+    transition: background-color var(--duration-30) var(--bezier-b);
 
     @starting-style {
       background-color: transparent;
@@ -28,9 +31,12 @@
   }
 }
 
+html:has(.c-lightbox) {
+  scrollbar-gutter: stable;
+}
+
 html:has(.c-lightbox[open]) {
   overflow: hidden;
-  scrollbar-gutter: stable;
 }
 
 .c-lightbox__figure {
@@ -54,24 +60,6 @@ html:has(.c-lightbox[open]) {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  transition: opacity var(--duration-20) var(--bezier-default);
-
-  .is-loading & {
-    opacity: 0;
-  }
-
-  .is-zooming & {
-    opacity: 1;
-    visibility: hidden;
-    transition: none;
-  }
-}
-
-.c-lightbox__zoom {
-  position: fixed;
-  object-fit: cover;
-  pointer-events: none;
-  transform-origin: top left;
 }
 
 .is-lightbox-source {
@@ -156,12 +144,5 @@ html:has(.c-lightbox[open]) {
 
   @media (min-width: 750px) {
     right: var(--space-30);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .c-lightbox::backdrop,
-  .c-lightbox__image {
-    transition: none;
   }
 }

@@ -7,14 +7,14 @@ draft: false
 layout: "default"
 menu: "main"
 weight: 3
-description: "Ik ben Aljan Scholtens, landschapsfotograaf uit Groningen: waarom ik de natuur fotografeer, hoe het begon en welke spullen ik mee naar buiten neem."
+description: "Ik ben Aljan Scholtens, landschapsfotograaf uit Vries in Drenthe: waarom ik de natuur fotografeer, hoe het begon en welke spullen ik mee naar buiten neem."
 photo: "header-08.jpg"
 thumbnail: ""
 header: true
 header_title_gradient: true
 ---
 
-Hoi, ik ben Aljan Scholtens. Ik woon in Groningen en maak [landschapsfoto’s]({{< relref "/gallery" >}}). Ik ben graag te voet op pad, vaak met Nikki, onze [Kleine Münsterländer](https://www.instagram.com/munsterlandernikki/).
+Ik ben Aljan Scholtens, [landschapsfotograaf]({{< relref "/gallery" >}}) in Vries. In mijn foto’s zoek ik eenvoud in het landschap. Ik wil iets laten voelen van wat buiten zijn met je doet.
 
 {{<photos>}}
 about-01.jpg | | 50
@@ -31,19 +31,19 @@ Binnen twee jaar kocht ik mijn eerste eigen camera, een Canon EOS 350D. Ik fotog
 
 ## Buiten met mijn camera
 
-Als de weersvoorspelling iets bijzonders belooft, zet ik de wekker. Soms kom ik thuis met een foto waar ik blij mee ben. Soms heb ik vooral aan de rand van een ven staan kijken hoe het langzaam licht werd. Vroeger kon ik daarvan balen. Nu vind ik dat ook gewoon een mooie ochtend.
+Op luchtfoto’s kies ik een gebied met heide, water of bos. Eenmaal buiten zie ik wel waar ik uitkom. Ik zoek naar eenvoudige composities met karakter. Dat kan een kromme boom zijn, of twee bomen die precies in balans staan. Met mist wordt het licht zachter en vallen details die afleiden weg.
 
-Ik ga graag alleen op pad. Dan kan ik ergens blijven staan zolang ik wil en uitproberen wat ik met het licht kan doen. Ik merk dat ik beter in mijn vel zit als ik geregeld tijd voor mezelf heb en creatief bezig kan zijn. Met mijn camera buiten komen die twee vanzelf samen.
+Ik ga graag alleen op pad. Dan kan ik ergens blijven zolang ik wil en uitproberen wat het licht met een compositie doet. Die tijd voor mezelf en de ruimte om iets te maken doen me goed.
 
 Een deel van de foto’s die ik door de jaren heen maakte, staat in mijn fotoboek [Waar Licht Ontstaat]({{< relref "/blog/2025-11-16-waar-licht-ontstaat" >}}).
 
-## Waar ik nu aan werk
+## Wat ik nog meer doe
 
 Ik ben mede-eigenaar van [Wolf Maps](https://wolfmaps.com/), een kaartplatform waarmee organisaties zelf interactieve kaarten maken die hun bezoekers helpen op ontdekking te gaan. Onder andere Nationaal Park Drentsche Aa, Amsterdam&Partners en de Marathon van Rotterdam gebruiken het platform.
 
 Zelf vind ik het leuk om uit te zoeken hoe paden op elkaar aansluiten. In Drenthe werk ik aan de [Drentsche Aa Trail]({{< relref "/blog/2026-07-08-drentsche-aa-trail" >}}), een vierdaagse wandelroute door het landschap dicht bij huis.
 
-## Uitrusting
+## Gear
 
 Ik fotografeer tegenwoordig met een Sony A7 V. Af en toe zet ik er nog een oude Pentax-lens op.
 
@@ -58,5 +58,9 @@ Ik fotografeer tegenwoordig met een Sony A7 V. Af en toe zet ik er nog een oude 
 - **Atlas Athlete-rugzak** · Ik ben altijd op zoek naar de perfecte rugzak. Deze komt dicht in de buurt.
 - **Benro Mach3-statief** · Stevig en licht. Dit gebruik ik vooral dicht bij huis.
 - **Leofoto-reisstatief** · Dit kleine statief gaat mee op lange wandeltochten.
+
+## Lezingen, workshops en coaching
+
+Je kunt me vragen als spreker over landschapsfotografie, routes maken en meerdaagse hikes. Ik geef ook workshops en 1-op-1-coaching.
 
 Je kunt me mailen op [aljan@scholtens.me](mailto:aljan@scholtens.me).

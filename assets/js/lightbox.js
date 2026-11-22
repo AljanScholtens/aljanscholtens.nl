@@ -64,7 +64,9 @@ export function initLightbox() {
 
   let group = [];
   let index = 0;
-  let stopZoom = () => {};
+  let motion;
+  let source;
+  let photoRequest = 0;
 
   function photoBounds() {
     const width = Number(image.getAttribute('width')) || image.naturalWidth;
@@ -74,78 +76,70 @@ export function initLightbox() {
     return null;
   }
 
-  function zoom(thumbnail, from, to, onFinish) {
-    const preview = new Image();
-    preview.src = onFinish && image.complete && image.naturalWidth ? image.currentSrc : thumbnail.currentSrc || thumbnail.src;
-    preview.alt = '';
-    preview.className = 'c-lightbox__zoom';
-    preview.setAttribute('aria-hidden', 'true');
-    preview.style.objectPosition = getComputedStyle(thumbnail).objectPosition;
-    dialog.append(preview);
-    dialog.classList.add('is-zooming');
-
-    const style = getComputedStyle(dialog);
-    const box = ({ left, top, width, height }) => ({
-      left: `${left}px`, top: `${top}px`, width: `${width}px`, height: `${height}px`,
-    });
-    const sameRatio = Math.abs((from.width * to.height) / (from.height * to.width) - 1) < 0.01;
-    let frames = [box(from), box(to)];
-    if (sameRatio) {
-      // Move a single layer instead of resizing the image on every frame.
-      const base = onFinish ? from : to;
-      Object.assign(preview.style, box(base));
-      frames = [from, to].map(({ left, top, width, height }) => ({
-        transform: `translate(${left - base.left}px, ${top - base.top}px) scale(${width / base.width}, ${height / base.height})`,
-      }));
+  function stopMotion() {
+    if (motion) {
+      motion.onfinish = null;
+      motion.cancel();
+      motion = null;
     }
-    const animation = preview.animate(frames, {
-      duration: parseFloat(style.getPropertyValue('--duration-30')),
-      easing: style.getPropertyValue('--bezier-default').trim(),
-      fill: 'both',
-    });
-    const hideThumbnail = preview.complete && preview.naturalWidth;
-    if (hideThumbnail) thumbnail.classList.add('is-lightbox-source');
-    let active = true;
-
-    function cleanup() {
-      active = false;
-      if (hideThumbnail) thumbnail.classList.remove('is-lightbox-source');
-      preview.remove();
-      dialog.classList.remove('is-zooming');
-      stopZoom = () => {};
-    }
-
-    function finish() {
-      cleanup();
-      onFinish?.();
-    }
-
-    animation.onfinish = async () => {
-      if (!onFinish) await image.decode().catch(() => {});
-      if (!active) return;
-      if (!onFinish) dialog.classList.remove('is-loading');
-      finish();
-    };
-    stopZoom = () => {
-      const bounds = preview.getBoundingClientRect();
-      animation.onfinish = null;
-      animation.cancel();
-      cleanup();
-      return bounds;
-    };
+    source?.classList.remove('is-lightbox-source');
+    source = null;
+    dialog.classList.remove('is-zooming', 'is-closing');
   }
 
-  function preload(i) {
-    const link = group[i];
-    if (link) new Image().src = link.href;
+  function zoom(thumbnail, closing = false) {
+    if (reducedMotion.matches || !image.animate) return false;
+    const thumb = thumbnailBounds(thumbnail);
+    const photo = photoBounds();
+    if (!thumb || !photo) return false;
+
+    const scale = thumb.width / photo.width;
+    if (Math.abs(thumb.height / (photo.height * scale) - 1) > 0.01) return false;
+
+    const x = thumb.left + thumb.width / 2 - (photo.left + photo.width / 2);
+    const y = thumb.top + thumb.height / 2 - (photo.top + photo.height / 2);
+    const small = { transform: `translate(${x}px, ${y}px) scale(${scale})` };
+    const large = { transform: 'none' };
+    const style = getComputedStyle(dialog);
+    const duration = style.getPropertyValue('--duration-30').trim();
+    // The production CSS may express a duration in seconds after minification.
+    const durationMs = parseFloat(duration) * (duration.endsWith('ms') ? 1 : 1000);
+    motion = image.animate(closing ? [large, small] : [small, large], {
+      duration: durationMs,
+      easing: style.getPropertyValue('--bezier-b').trim(),
+      fill: 'both',
+    });
+    source = thumbnail;
+    source.classList.add('is-lightbox-source');
+    dialog.classList.add('is-zooming');
+    dialog.classList.toggle('is-closing', closing);
+    motion.onfinish = () => {
+      if (closing) dialog.close();
+      stopMotion();
+    };
+    return true;
+  }
+
+  async function loadFullPhoto(url, request) {
+    const full = new Image();
+    full.src = url;
+    try {
+      await full.decode();
+    } catch {
+      return; // Keep the thumbnail if the larger file could not be loaded.
+    }
+    if (request !== photoRequest) return;
+    await motion?.finished.catch(() => {});
+    if (request === photoRequest && !dialog.classList.contains('is-closing')) image.src = url;
   }
 
   function show(i) {
     if (dialog.classList.contains('is-closing')) return;
-    stopZoom();
+    stopMotion();
     index = (i + group.length) % group.length;
     const link = group[index];
     const thumbnail = link.querySelector('img');
+    const preview = thumbnail?.complete && thumbnail.naturalWidth ? thumbnail.currentSrc : null;
     const alt = thumbnail?.alt ?? '';
     const width = link.dataset.lightboxWidth || thumbnail?.naturalWidth;
     const height = link.dataset.lightboxHeight || thumbnail?.naturalHeight;
@@ -157,9 +151,7 @@ export function initLightbox() {
       image.removeAttribute('height');
     }
 
-    dialog.classList.add('is-loading');
-    image.onload = image.onerror = () => dialog.classList.remove('is-loading');
-    image.src = link.href;
+    image.src = preview || link.href;
     image.alt = alt;
     caption.textContent = alt;
     caption.hidden = !alt;
@@ -170,47 +162,25 @@ export function initLightbox() {
     counter.hidden = single;
     counter.textContent = `${index + 1} ${labels.of} ${group.length}`;
 
-    preload(index + 1);
-    preload(index - 1);
+    const request = ++photoRequest;
+    if (preview && preview !== link.href) loadFullPhoto(link.href, request);
+    return preview ? thumbnail : null;
   }
 
   function open(link) {
-    const thumbnail = link.querySelector('img');
-    const from = thumbnailBounds(thumbnail);
-    dialog.classList.remove('is-closing');
     group = links.filter((other) => other.dataset.lightbox === link.dataset.lightbox);
-    show(group.indexOf(link));
+    const thumbnail = show(group.indexOf(link));
     dialog.showModal();
-    if (!thumbnail || reducedMotion.matches) return;
-
-    // The dialog and a newly selected image may need a layout pass after showModal.
-    dialog.classList.add('is-zooming');
-    const frame = requestAnimationFrame(() => {
-      stopZoom();
-      const start = from || thumbnailBounds(thumbnail);
-      const end = start && photoBounds();
-      if (end) zoom(thumbnail, start, end);
-    });
-    stopZoom = () => {
-      cancelAnimationFrame(frame);
-      dialog.classList.remove('is-zooming');
-      stopZoom = () => {};
-    };
+    if (thumbnail) zoom(thumbnail);
   }
 
   function close() {
     if (dialog.classList.contains('is-closing')) return;
-    const zoomBounds = stopZoom();
     const thumbnail = group[index].querySelector('img');
-    const to = !reducedMotion.matches && thumbnailBounds(thumbnail);
-    const from = to && (zoomBounds || photoBounds());
-    if (!from) {
-      dialog.close();
-      return;
-    }
-
-    dialog.classList.add('is-closing');
-    zoom(thumbnail, from, to, () => dialog.close());
+    ++photoRequest;
+    if (!motion && image.complete && image.naturalWidth && zoom(thumbnail, true)) return;
+    stopMotion();
+    dialog.close();
   }
 
   links.forEach((link) => {
@@ -252,7 +222,8 @@ export function initLightbox() {
   });
 
   dialog.addEventListener('close', () => {
-    stopZoom();
+    if (dialog.open) return;
+    stopMotion();
     image.removeAttribute('src');
   });
 }

@@ -15,6 +15,4 @@ header_studio: false
 header_title_gradient: false
 ---
 
-With my camera, I seek out the quiet hours. At the edge of a forest or beside a misty pond, I notice how much there is to see when I stop for a moment.
-
 {{< feed file="feed.txt" >}}{{< /feed >}}

@@ -7,14 +7,14 @@ draft: false
 layout: "default"
 menu: main
 weight: 3
-description: "I'm Aljan Scholtens, a landscape photographer from Groningen: why I photograph nature, how I got started and the gear I take outside."
+description: "I'm Aljan Scholtens, a landscape photographer based in Vries in northern Drenthe: why I photograph nature, how I got started and the gear I take outside."
 photo: "header-08.jpg"
 thumbnail: ""
 header: true
 header_title_gradient: true
 ---
 
-Hi, I’m Aljan Scholtens. I live in Groningen and take [landscape photos]({{< relref "/gallery" >}}). I like to explore on foot, often with Nikki, our [Small Münsterlander](https://www.instagram.com/munsterlandernikki/).
+I’m Aljan Scholtens, a [landscape photographer]({{< relref "/gallery" >}}) based in Vries, in northern Drenthe. In my photographs, I look for simplicity in the landscape. I want to convey something of how being outdoors makes you feel.
 
 {{<photos>}}
 about-01.jpg | | 50
@@ -31,13 +31,13 @@ Within two years I bought my first camera, a Canon EOS 350D. I photographed all 
 
 ## Outside with my camera
 
-If the forecast promises something special, I set my alarm. Sometimes I come home with a photo I’m happy with. Sometimes I’ve mostly stood by a pond and watched it slowly get light. That used to bother me. Now I count that as a good morning too.
+I use aerial photos to pick an area with heathland, water or woods. Once I’m out, I see where I end up. I look for simple compositions with character. It might be a crooked tree, or two trees that balance each other just right. Mist softens the light and hides distracting details.
 
-I like going out on my own. I can stay in one spot as long as I like and see what I can do with the light. I feel better when I regularly get some time to myself and a chance to make something. Going outside with my camera gives me both.
+I like going out on my own. I can stay in one spot as long as I like and see what the light does to a composition. Having that time to myself and the space to make something does me good.
 
 Some of the photos I’ve taken over the years are in my photo book [Waar Licht Ontstaat]({{< relref "/blog/2025-11-16-waar-licht-ontstaat" >}}).
 
-## What I’m working on now
+## What else I do
 
 I co-own [Wolf Maps](https://wolfmaps.com/), a platform that lets organisations create their own interactive maps to help visitors explore. It’s used by Drentsche Aa National Park, Amsterdam&Partners and the Rotterdam Marathon, among others.
 
@@ -58,5 +58,9 @@ I shoot with a Sony A7 V these days. Every now and then I put an old Pentax lens
 - **Atlas Athlete backpack** · I’m always looking for the perfect backpack. This one comes close.
 - **Benro Mach3 tripod** · Sturdy and light. I mostly use it close to home.
 - **Leofoto travel tripod** · This small tripod comes along on longer hikes.
+
+## Talks, workshops and coaching
+
+You can invite me to speak about landscape photography, making routes and multi-day hikes. I also run workshops and offer one-to-one coaching.
 
 You can email me at [aljan@scholtens.me](mailto:aljan@scholtens.me).
