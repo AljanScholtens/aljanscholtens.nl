@@ -1,5 +1,5 @@
 ---
-title: "Ruimte om te maken"
+title: "Landschapsfotograaf & routemaker"
 subtitle: "Landschapsfotograaf <em>&</em> routemaker"
 header_title: "Struinen door wilde landschappen."
 intro: "Ik ben Aljan Scholtens, landschapsfotograaf in Vries, in de Kop van Drenthe. Daarnaast ben ik mede-eigenaar van Wolf Maps, een platform voor interactieve kaarten."

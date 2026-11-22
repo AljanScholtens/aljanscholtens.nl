@@ -1,5 +1,5 @@
 ---
-title: "Wildscapes"
+title: "Landscape photographer & route maker"
 subtitle: "Landscape photographer <em>&</em> route maker"
 header_title: "Wandering through wild landscapes."
 intro: "I’m Aljan Scholtens, a landscape photographer based in Vries in northern Drenthe. I also co-own Wolf Maps, a platform for interactive maps."

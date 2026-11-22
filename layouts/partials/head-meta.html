@@ -20,7 +20,9 @@
 {{- $fullTitle := $title -}}
 {{- if gt $pageNumber 1 }}{{ $fullTitle = printf "%s – %s" $title (T "page_of" (dict "Page" $pageNumber "Total" .Paginator.TotalPages)) }}{{ end -}}
 
-<title>{{ $fullTitle }} - {{ site.Title }}</title>
+{{- $browserTitle := printf "%s - %s" $fullTitle site.Title -}}
+{{- if .IsHome }}{{ $browserTitle = printf "%s - %s" site.Title $fullTitle }}{{ end -}}
+<title>{{ $browserTitle }}</title>
 <meta name="description" content="{{ $description }}">
 <link rel="canonical" href="{{ $canonical }}">
 
